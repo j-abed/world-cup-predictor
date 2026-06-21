@@ -7,7 +7,7 @@ from copy import deepcopy
 import numpy as np
 import pandas as pd
 
-from src.bracket import build_qualifier_lookup, resolve_bracket_source
+from src.bracket import build_third_place_assignment
 from src.reporting import calculate_current_projected_qualifiers
 from src.simulator import (
     apply_result_to_state,
@@ -312,28 +312,46 @@ def compile_knockout_bracket(
 
 def build_fast_qualifier_maps(
     projected_qualifiers: pd.DataFrame,
-) -> tuple[dict[str, str], dict[str, list[str]]]:
+    bracket_slots: pd.DataFrame,
+    third_place_assignment_cache: dict[tuple[str, ...], dict[str, dict]],
+) -> tuple[dict[str, str], dict[str, str]]:
     source_to_team_id = {}
-    third_place_by_group = {}
 
     for _, row in projected_qualifiers.iterrows():
         source = str(row["source"])
         team_id = str(row["team_id"])
-
         source_to_team_id[source] = team_id
 
-        if row["qualifying_path"] == "Best third-place":
-            group = str(row["group"])
-            third_place_by_group[group] = team_id
+    third_place_groups = tuple(
+        sorted(
+            str(row["group"])
+            for _, row in projected_qualifiers[
+                projected_qualifiers["qualifying_path"] == "Best third-place"
+            ].iterrows()
+        )
+    )
 
-    return source_to_team_id, third_place_by_group
+    if third_place_groups not in third_place_assignment_cache:
+        third_place_assignment_cache[third_place_groups] = build_third_place_assignment(
+            bracket_slots=bracket_slots,
+            projected_qualifiers=projected_qualifiers,
+        )
+
+    third_place_assignment = third_place_assignment_cache[third_place_groups]
+
+    third_placeholder_to_team_id = {
+        placeholder: str(team["team_id"])
+        for placeholder, team in third_place_assignment.items()
+    }
+
+    return source_to_team_id, third_placeholder_to_team_id
 
 
 def resolve_compiled_source(
     source: CompiledSource,
     winners_by_match: dict[int, str],
     source_to_team_id: dict[str, str],
-    third_place_by_group: dict[str, str],
+    third_placeholder_to_team_id: dict[str, str],
 ) -> str:
     if source.source_type == "winner":
         match_id = int(source.value)
@@ -352,23 +370,28 @@ def resolve_compiled_source(
         return source_to_team_id[source_name]
 
     if source.source_type == "third_placeholder":
-        for group in source.allowed_groups:
-            if group in third_place_by_group:
-                return third_place_by_group[group]
+        source_name = str(source.value)
 
-        raise RuntimeError(f"Could not resolve third-place bracket source: {source.value}")
+        if source_name not in third_placeholder_to_team_id:
+            raise RuntimeError(f"Could not resolve third-place bracket source: {source_name}")
+
+        return third_placeholder_to_team_id[source_name]
 
     raise ValueError(f"Unknown compiled source type: {source.source_type}")
 
 
 def simulate_knockout_bracket_once(
     projected_qualifiers: pd.DataFrame,
+    bracket_slots: pd.DataFrame,
     compiled_bracket: list[CompiledKnockoutMatch],
     rating_lookup: dict[str, float],
     rng: np.random.Generator,
+    third_place_assignment_cache: dict[tuple[str, ...], dict[str, dict]],
 ) -> dict[str, set[str] | str]:
-    source_to_team_id, third_place_by_group = build_fast_qualifier_maps(
-        projected_qualifiers
+    source_to_team_id, third_placeholder_to_team_id = build_fast_qualifier_maps(
+        projected_qualifiers=projected_qualifiers,
+        bracket_slots=bracket_slots,
+        third_place_assignment_cache=third_place_assignment_cache,
     )
 
     winners_by_match: dict[int, str] = {}
@@ -385,14 +408,14 @@ def simulate_knockout_bracket_once(
             source=match.home_source,
             winners_by_match=winners_by_match,
             source_to_team_id=source_to_team_id,
-            third_place_by_group=third_place_by_group,
+            third_placeholder_to_team_id=third_placeholder_to_team_id,
         )
 
         away_team = resolve_compiled_source(
             source=match.away_source,
             winners_by_match=winners_by_match,
             source_to_team_id=source_to_team_id,
-            third_place_by_group=third_place_by_group,
+            third_placeholder_to_team_id=third_placeholder_to_team_id,
         )
 
         winner = advance_knockout_match(
@@ -440,6 +463,7 @@ def simulate_tournament_round_probabilities(
     rating_lookup = build_rating_lookup(ratings)
     bracket_slots = load_knockout_bracket()
     compiled_bracket = compile_knockout_bracket(bracket_slots)
+    third_place_assignment_cache: dict[tuple[str, ...], dict[str, dict]] = {}
 
     prepared_groups = {}
 
@@ -514,9 +538,11 @@ def simulate_tournament_round_probabilities(
 
         knockout_result = simulate_knockout_bracket_once(
             projected_qualifiers=qualifiers,
+            bracket_slots=bracket_slots,
             compiled_bracket=compiled_bracket,
             rating_lookup=rating_lookup,
             rng=rng,
+            third_place_assignment_cache=third_place_assignment_cache,
         )
 
         for stage in ["r32", "r16", "qf", "sf", "final"]:
