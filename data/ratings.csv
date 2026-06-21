@@ -1,49 +1,49 @@
-team_id,rating
-MEX,1700
-RSA,1500
-KOR,1650
-CZE,1600
-CAN,1625
-BIH,1550
-QAT,1475
-SUI,1725
-BRA,1850
-MAR,1725
-SCO,1580
-HTI,1425
-USA,1780
-PAR,1650
-AUS,1625
-TUR,1600
-GER,1840
-CUW,1400
-CIV,1640
-ECU,1680
-NED,1820
-JPN,1700
-SWE,1680
-TUN,1575
-BEL,1760
-EGY,1640
-IRI,1625
-NZL,1450
-ESP,1860
-CPV,1500
-KSA,1540
-URU,1760
-FRA,1880
-SEN,1690
-IRQ,1500
-NOR,1680
-ARG,1870
-DZA,1640
-AUT,1690
-JOR,1460
-POR,1840
-COD,1580
-UZB,1540
-COL,1730
-ENG,1860
-CRO,1740
-GHA,1630
-PAN,1500
+team_id,rating,source,source_url,rating_type,name,code,group
+ESP,2165,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,Spain,ESP,H
+ARG,2113,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,Argentina,ARG,J
+FRA,2081,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,France,FRA,I
+ENG,2020,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,England,ENG,L
+BRA,1984,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,Brazil,BRA,C
+POR,1980,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,Portugal,POR,K
+NED,1973,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,Netherlands,NED,F
+GER,1966,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,Germany,GER,E
+COL,1962,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,Colombia,COL,K
+URU,1957,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,Uruguay,URU,H
+BEL,1942,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,Belgium,BEL,G
+CRO,1890,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,Croatia,CRO,L
+MAR,1885,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,Morocco,MAR,C
+SUI,1878,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,Switzerland,SUI,B
+JPN,1855,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,Japan,JPN,F
+USA,1832,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,United States,USA,D
+MEX,1815,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,Mexico,MEX,A
+AUT,1808,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,Austria,AUT,J
+SEN,1800,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,Senegal,SEN,I
+SWE,1795,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,Sweden,SWE,F
+NOR,1788,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,Norway,NOR,I
+ECU,1782,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,Ecuador,ECU,E
+KOR,1776,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,South Korea,KOR,A
+IRI,1768,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,Iran,IRI,G
+AUS,1758,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,Australia,AUS,D
+EGY,1750,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,Egypt,EGY,G
+TUR,1746,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,Turkey,TUR,D
+TUN,1740,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,Tunisia,TUN,F
+CIV,1738,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,Ivory Coast,CIV,E
+DZA,1732,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,Algeria,DZA,J
+GHA,1724,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,Ghana,GHA,L
+CZE,1718,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,Czechia,CZE,A
+PAR,1712,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,Paraguay,PAR,D
+SCO,1708,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,Scotland,SCO,C
+CAN,1702,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,Canada,CAN,B
+QAT,1660,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,Qatar,QAT,B
+UZB,1656,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,Uzbekistan,UZB,K
+IRQ,1648,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,Iraq,IRQ,I
+COD,1642,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,DR Congo,COD,K
+PAN,1635,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,Panama,PAN,L
+KSA,1628,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,Saudi Arabia,KSA,H
+BIH,1620,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,Bosnia and Herzegovina,BIH,B
+NZL,1608,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,New Zealand,NZL,G
+RSA,1598,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,South Africa,RSA,A
+CPV,1588,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,Cape Verde,CPV,H
+JOR,1578,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,Jordan,JOR,J
+CUW,1540,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,Curacao,CUW,E
+HTI,1518,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,Haiti,HTI,C
