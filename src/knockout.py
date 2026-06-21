@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from collections import defaultdict
+from dataclasses import dataclass
 from copy import deepcopy
 
 import numpy as np
@@ -220,6 +221,21 @@ def advance_knockout_match(
     return team_a if rng.random() < probability_a_advances else team_b
 
 
+@dataclass(frozen=True)
+class CompiledSource:
+    source_type: str
+    value: str | int
+    allowed_groups: tuple[str, ...] = ()
+
+
+@dataclass(frozen=True)
+class CompiledKnockoutMatch:
+    match_id: int
+    home_source: CompiledSource
+    away_source: CompiledSource
+    stage_key: str
+
+
 def load_knockout_bracket(path: str = "data/bracket_slots.csv") -> pd.DataFrame:
     bracket = pd.read_csv(path)
     bracket["match_id"] = bracket["match_id"].astype(int)
@@ -233,34 +249,30 @@ def load_knockout_bracket(path: str = "data/bracket_slots.csv") -> pd.DataFrame:
     return bracket.sort_values("match_id").reset_index(drop=True)
 
 
-def resolve_team_for_knockout_source(
-    source: str,
-    winners_by_match: dict[int, str],
-    qualifier_lookup: dict[str, dict],
-    projected_qualifiers: pd.DataFrame,
-) -> str:
+def compile_source(source: str) -> CompiledSource:
     source = str(source)
-
     winner_prefix = "Winner Match "
+    third_prefix = "3rd Group "
 
     if source.startswith(winner_prefix):
-        match_id = int(source.removeprefix(winner_prefix))
+        return CompiledSource(
+            source_type="winner",
+            value=int(source.removeprefix(winner_prefix)),
+        )
 
-        if match_id not in winners_by_match:
-            raise RuntimeError(f"Winner for Match {match_id} has not been simulated yet.")
+    if source.startswith(third_prefix) and "/" in source:
+        allowed_groups = tuple(source.removeprefix(third_prefix).split("/"))
 
-        return winners_by_match[match_id]
+        return CompiledSource(
+            source_type="third_placeholder",
+            value=source,
+            allowed_groups=allowed_groups,
+        )
 
-    resolved = resolve_bracket_source(
-        source=source,
-        qualifier_lookup=qualifier_lookup,
-        projected_qualifiers=projected_qualifiers,
+    return CompiledSource(
+        source_type="qualifier",
+        value=source,
     )
-
-    if resolved is None:
-        raise RuntimeError(f"Could not resolve bracket source: {source}")
-
-    return str(resolved["team_id"])
 
 
 def stage_key_for_match(match_id: int) -> str:
@@ -278,13 +290,87 @@ def stage_key_for_match(match_id: int) -> str:
     raise ValueError(f"Unknown knockout match_id: {match_id}")
 
 
+def compile_knockout_bracket(
+    bracket_slots: pd.DataFrame,
+) -> list[CompiledKnockoutMatch]:
+    compiled_matches = []
+
+    for _, slot in bracket_slots.sort_values("match_id").iterrows():
+        match_id = int(slot["match_id"])
+
+        compiled_matches.append(
+            CompiledKnockoutMatch(
+                match_id=match_id,
+                home_source=compile_source(str(slot["home_source"])),
+                away_source=compile_source(str(slot["away_source"])),
+                stage_key=stage_key_for_match(match_id),
+            )
+        )
+
+    return compiled_matches
+
+
+def build_fast_qualifier_maps(
+    projected_qualifiers: pd.DataFrame,
+) -> tuple[dict[str, str], dict[str, list[str]]]:
+    source_to_team_id = {}
+    third_place_by_group = {}
+
+    for _, row in projected_qualifiers.iterrows():
+        source = str(row["source"])
+        team_id = str(row["team_id"])
+
+        source_to_team_id[source] = team_id
+
+        if row["qualifying_path"] == "Best third-place":
+            group = str(row["group"])
+            third_place_by_group[group] = team_id
+
+    return source_to_team_id, third_place_by_group
+
+
+def resolve_compiled_source(
+    source: CompiledSource,
+    winners_by_match: dict[int, str],
+    source_to_team_id: dict[str, str],
+    third_place_by_group: dict[str, str],
+) -> str:
+    if source.source_type == "winner":
+        match_id = int(source.value)
+
+        if match_id not in winners_by_match:
+            raise RuntimeError(f"Winner for Match {match_id} has not been simulated yet.")
+
+        return winners_by_match[match_id]
+
+    if source.source_type == "qualifier":
+        source_name = str(source.value)
+
+        if source_name not in source_to_team_id:
+            raise RuntimeError(f"Could not resolve bracket source: {source_name}")
+
+        return source_to_team_id[source_name]
+
+    if source.source_type == "third_placeholder":
+        for group in source.allowed_groups:
+            if group in third_place_by_group:
+                return third_place_by_group[group]
+
+        raise RuntimeError(f"Could not resolve third-place bracket source: {source.value}")
+
+    raise ValueError(f"Unknown compiled source type: {source.source_type}")
+
+
 def simulate_knockout_bracket_once(
     projected_qualifiers: pd.DataFrame,
-    bracket_slots: pd.DataFrame,
+    compiled_bracket: list[CompiledKnockoutMatch],
     rating_lookup: dict[str, float],
     rng: np.random.Generator,
 ) -> dict[str, set[str] | str]:
-    qualifier_lookup = build_qualifier_lookup(projected_qualifiers)
+    source_to_team_id, third_place_by_group = build_fast_qualifier_maps(
+        projected_qualifiers
+    )
+
     winners_by_match: dict[int, str] = {}
 
     r32_teams = set(projected_qualifiers["team_id"])
@@ -294,21 +380,19 @@ def simulate_knockout_bracket_once(
     final_teams: set[str] = set()
     champion: str | None = None
 
-    for _, slot in bracket_slots.sort_values("match_id").iterrows():
-        match_id = int(slot["match_id"])
-
-        home_team = resolve_team_for_knockout_source(
-            source=slot["home_source"],
+    for match in compiled_bracket:
+        home_team = resolve_compiled_source(
+            source=match.home_source,
             winners_by_match=winners_by_match,
-            qualifier_lookup=qualifier_lookup,
-            projected_qualifiers=projected_qualifiers,
+            source_to_team_id=source_to_team_id,
+            third_place_by_group=third_place_by_group,
         )
 
-        away_team = resolve_team_for_knockout_source(
-            source=slot["away_source"],
+        away_team = resolve_compiled_source(
+            source=match.away_source,
             winners_by_match=winners_by_match,
-            qualifier_lookup=qualifier_lookup,
-            projected_qualifiers=projected_qualifiers,
+            source_to_team_id=source_to_team_id,
+            third_place_by_group=third_place_by_group,
         )
 
         winner = advance_knockout_match(
@@ -318,19 +402,17 @@ def simulate_knockout_bracket_once(
             rng=rng,
         )
 
-        winners_by_match[match_id] = winner
+        winners_by_match[match.match_id] = winner
 
-        stage_key = stage_key_for_match(match_id)
-
-        if stage_key == "r16":
+        if match.stage_key == "r16":
             r16_teams.add(winner)
-        elif stage_key == "qf":
+        elif match.stage_key == "qf":
             qf_teams.add(winner)
-        elif stage_key == "sf":
+        elif match.stage_key == "sf":
             sf_teams.add(winner)
-        elif stage_key == "final":
+        elif match.stage_key == "final":
             final_teams.add(winner)
-        elif stage_key == "champion":
+        elif match.stage_key == "champion":
             champion = winner
 
     if champion is None:
@@ -357,6 +439,7 @@ def simulate_tournament_round_probabilities(
     rng = np.random.default_rng(seed)
     rating_lookup = build_rating_lookup(ratings)
     bracket_slots = load_knockout_bracket()
+    compiled_bracket = compile_knockout_bracket(bracket_slots)
 
     prepared_groups = {}
 
@@ -431,7 +514,7 @@ def simulate_tournament_round_probabilities(
 
         knockout_result = simulate_knockout_bracket_once(
             projected_qualifiers=qualifiers,
-            bracket_slots=bracket_slots,
+            compiled_bracket=compiled_bracket,
             rating_lookup=rating_lookup,
             rng=rng,
         )
