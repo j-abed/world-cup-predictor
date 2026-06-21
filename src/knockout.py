@@ -6,6 +6,7 @@ from copy import deepcopy
 import numpy as np
 import pandas as pd
 
+from src.bracket import build_qualifier_lookup, resolve_bracket_source
 from src.reporting import calculate_current_projected_qualifiers
 from src.simulator import (
     apply_result_to_state,
@@ -219,75 +220,128 @@ def advance_knockout_match(
     return team_a if rng.random() < probability_a_advances else team_b
 
 
-def pair_bracket_sequentially(team_ids: list[str]) -> list[tuple[str, str]]:
-    """
-    MVP generic knockout pairing.
+def load_knockout_bracket(path: str = "data/bracket_slots.csv") -> pd.DataFrame:
+    bracket = pd.read_csv(path)
+    bracket["match_id"] = bracket["match_id"].astype(int)
 
-    This is not the official FIFA bracket mapping.
-    It pairs teams sequentially for whatever round is being simulated:
-    - 32 teams -> 16 matches
-    - 16 teams -> 8 matches
-    - 8 teams -> 4 matches
-    - 4 teams -> 2 matches
-    - 2 teams -> 1 match
-    """
-    if len(team_ids) < 2:
-        raise ValueError(f"Expected at least 2 teams, got {len(team_ids)}")
+    if "winner_advances_to" in bracket.columns:
+        bracket["winner_advances_to"] = pd.to_numeric(
+            bracket["winner_advances_to"],
+            errors="coerce",
+        ).astype("Int64")
 
-    if len(team_ids) % 2 != 0:
-        raise ValueError(f"Expected an even number of teams, got {len(team_ids)}")
+    return bracket.sort_values("match_id").reset_index(drop=True)
 
-    return [
-        (team_ids[index], team_ids[index + 1])
-        for index in range(0, len(team_ids), 2)
-    ]
+
+def resolve_team_for_knockout_source(
+    source: str,
+    winners_by_match: dict[int, str],
+    qualifier_lookup: dict[str, dict],
+    projected_qualifiers: pd.DataFrame,
+) -> str:
+    source = str(source)
+
+    winner_prefix = "Winner Match "
+
+    if source.startswith(winner_prefix):
+        match_id = int(source.removeprefix(winner_prefix))
+
+        if match_id not in winners_by_match:
+            raise RuntimeError(f"Winner for Match {match_id} has not been simulated yet.")
+
+        return winners_by_match[match_id]
+
+    resolved = resolve_bracket_source(
+        source=source,
+        qualifier_lookup=qualifier_lookup,
+        projected_qualifiers=projected_qualifiers,
+    )
+
+    if resolved is None:
+        raise RuntimeError(f"Could not resolve bracket source: {source}")
+
+    return str(resolved["team_id"])
+
+
+def stage_key_for_match(match_id: int) -> str:
+    if 73 <= match_id <= 88:
+        return "r16"
+    if 89 <= match_id <= 96:
+        return "qf"
+    if 97 <= match_id <= 100:
+        return "sf"
+    if 101 <= match_id <= 102:
+        return "final"
+    if match_id == 103:
+        return "champion"
+
+    raise ValueError(f"Unknown knockout match_id: {match_id}")
 
 
 def simulate_knockout_bracket_once(
-    qualified_team_ids: list[str],
+    projected_qualifiers: pd.DataFrame,
+    bracket_slots: pd.DataFrame,
     rating_lookup: dict[str, float],
     rng: np.random.Generator,
 ) -> dict[str, set[str] | str]:
-    r32_teams = set(qualified_team_ids)
+    qualifier_lookup = build_qualifier_lookup(projected_qualifiers)
+    winners_by_match: dict[int, str] = {}
 
-    r32_pairings = pair_bracket_sequentially(qualified_team_ids)
+    r32_teams = set(projected_qualifiers["team_id"])
+    r16_teams: set[str] = set()
+    qf_teams: set[str] = set()
+    sf_teams: set[str] = set()
+    final_teams: set[str] = set()
+    champion: str | None = None
 
-    r16_teams = [
-        advance_knockout_match(a, b, rating_lookup, rng)
-        for a, b in r32_pairings
-    ]
+    for _, slot in bracket_slots.sort_values("match_id").iterrows():
+        match_id = int(slot["match_id"])
 
-    qf_pairings = pair_bracket_sequentially(r16_teams)
-    qf_teams = [
-        advance_knockout_match(a, b, rating_lookup, rng)
-        for a, b in qf_pairings
-    ]
+        home_team = resolve_team_for_knockout_source(
+            source=slot["home_source"],
+            winners_by_match=winners_by_match,
+            qualifier_lookup=qualifier_lookup,
+            projected_qualifiers=projected_qualifiers,
+        )
 
-    sf_pairings = pair_bracket_sequentially(qf_teams)
-    sf_teams = [
-        advance_knockout_match(a, b, rating_lookup, rng)
-        for a, b in sf_pairings
-    ]
+        away_team = resolve_team_for_knockout_source(
+            source=slot["away_source"],
+            winners_by_match=winners_by_match,
+            qualifier_lookup=qualifier_lookup,
+            projected_qualifiers=projected_qualifiers,
+        )
 
-    final_pairings = pair_bracket_sequentially(sf_teams)
-    final_teams = [
-        advance_knockout_match(a, b, rating_lookup, rng)
-        for a, b in final_pairings
-    ]
+        winner = advance_knockout_match(
+            team_a=home_team,
+            team_b=away_team,
+            rating_lookup=rating_lookup,
+            rng=rng,
+        )
 
-    champion = advance_knockout_match(
-        final_teams[0],
-        final_teams[1],
-        rating_lookup,
-        rng,
-    )
+        winners_by_match[match_id] = winner
+
+        stage_key = stage_key_for_match(match_id)
+
+        if stage_key == "r16":
+            r16_teams.add(winner)
+        elif stage_key == "qf":
+            qf_teams.add(winner)
+        elif stage_key == "sf":
+            sf_teams.add(winner)
+        elif stage_key == "final":
+            final_teams.add(winner)
+        elif stage_key == "champion":
+            champion = winner
+
+    if champion is None:
+        raise RuntimeError("Final was not simulated; no champion was produced.")
 
     return {
-        "r32": set(r32_teams),
-        "r16": set(r16_teams),
-        "qf": set(qf_teams),
-        "sf": set(sf_teams),
-        "final": set(final_teams),
+        "r32": r32_teams,
+        "r16": r16_teams,
+        "qf": qf_teams,
+        "sf": sf_teams,
+        "final": final_teams,
         "champion": champion,
     }
 
@@ -302,6 +356,7 @@ def simulate_tournament_round_probabilities(
 ) -> pd.DataFrame:
     rng = np.random.default_rng(seed)
     rating_lookup = build_rating_lookup(ratings)
+    bracket_slots = load_knockout_bracket()
 
     prepared_groups = {}
 
@@ -374,10 +429,9 @@ def simulate_tournament_round_probabilities(
             group_results=group_results,
         )
 
-        qualified_team_ids = list(qualifiers["team_id"])
-
         knockout_result = simulate_knockout_bracket_once(
-            qualified_team_ids=qualified_team_ids,
+            projected_qualifiers=qualifiers,
+            bracket_slots=bracket_slots,
             rating_lookup=rating_lookup,
             rng=rng,
         )

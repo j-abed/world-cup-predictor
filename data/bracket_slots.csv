@@ -1,5 +1,32 @@
 slot_id,round,match_id,home_source,away_source,winner_advances_to
-R32-01,Round of 32,53452545,2nd Group A,2nd Group B,53452511
-R32-02,Round of 32,53452557,1st Group C,2nd Group F,53452517
-R32-03,Round of 32,53452541,1st Group E,3rd Group A/B/C/D/F,53452509
-R32-04,Round of 32,53452547,1st Group F,2nd Group C,53452511
+R32-73,Round of 32,73,2nd Group A,2nd Group B,90
+R32-74,Round of 32,74,1st Group E,3rd Group A/B/C/D/F,89
+R32-75,Round of 32,75,1st Group F,2nd Group C,90
+R32-76,Round of 32,76,1st Group C,2nd Group F,91
+R32-77,Round of 32,77,1st Group I,3rd Group C/D/F/G/H,89
+R32-78,Round of 32,78,2nd Group E,2nd Group I,91
+R32-79,Round of 32,79,1st Group A,3rd Group C/E/F/H/I,92
+R32-80,Round of 32,80,1st Group L,3rd Group E/H/I/J/K,92
+R32-81,Round of 32,81,1st Group D,3rd Group B/E/F/I/J,94
+R32-82,Round of 32,82,1st Group G,3rd Group A/E/H/I/J,94
+R32-83,Round of 32,83,2nd Group K,2nd Group L,93
+R32-84,Round of 32,84,1st Group H,2nd Group J,93
+R32-85,Round of 32,85,1st Group B,3rd Group E/F/G/I/J,96
+R32-86,Round of 32,86,1st Group J,2nd Group H,95
+R32-87,Round of 32,87,1st Group K,3rd Group D/E/I/J/L,96
+R32-88,Round of 32,88,2nd Group D,2nd Group G,95
+R16-89,Round of 16,89,Winner Match 74,Winner Match 77,97
+R16-90,Round of 16,90,Winner Match 73,Winner Match 75,97
+R16-91,Round of 16,91,Winner Match 76,Winner Match 78,99
+R16-92,Round of 16,92,Winner Match 79,Winner Match 80,99
+R16-93,Round of 16,93,Winner Match 83,Winner Match 84,98
+R16-94,Round of 16,94,Winner Match 81,Winner Match 82,98
+R16-95,Round of 16,95,Winner Match 86,Winner Match 88,100
+R16-96,Round of 16,96,Winner Match 85,Winner Match 87,100
+QF-97,Quarterfinal,97,Winner Match 89,Winner Match 90,101
+QF-98,Quarterfinal,98,Winner Match 93,Winner Match 94,101
+QF-99,Quarterfinal,99,Winner Match 91,Winner Match 92,102
+QF-100,Quarterfinal,100,Winner Match 95,Winner Match 96,102
+SF-101,Semifinal,101,Winner Match 97,Winner Match 98,103
+SF-102,Semifinal,102,Winner Match 99,Winner Match 100,103
+F-103,Final,103,Winner Match 101,Winner Match 102,
