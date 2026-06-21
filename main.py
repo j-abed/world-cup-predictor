@@ -5,7 +5,7 @@ import time
 import pandas as pd
 
 from src.bracket import build_projected_round_of_32
-from src.exports import export_all_group_standings, export_dataframe
+from src.exports import export_all_group_standings, export_dataframe, export_html_report
 from src.knockout import simulate_tournament_round_probabilities
 from src.reporting import (
     calculate_all_group_standings,
@@ -230,6 +230,8 @@ def print_group_d_simulation(
     print(f"Group runtime: {elapsed_seconds:.2f} seconds")
     print()
 
+    return probabilities
+
 
 def print_tournament_simulation(
     teams: pd.DataFrame,
@@ -295,6 +297,8 @@ def print_tournament_simulation(
     print(f"Tournament simulations: {tournament_simulation_count:,}")
     print(f"Tournament runtime: {tournament_elapsed_seconds:.2f} seconds")
     print()
+
+    return tournament_probs
 
 
 def print_round_probabilities(
@@ -372,6 +376,8 @@ def print_round_probabilities(
     print(f"Round simulation runtime: {elapsed_seconds:.2f} seconds")
     print()
 
+    return round_probs
+
 
 
 def main() -> None:
@@ -435,12 +441,14 @@ def main() -> None:
     export_dataframe(projected_qualifiers, "projected_qualifiers.csv")
     export_dataframe(round_of_32, "projected_round_of_32.csv")
 
-    print_group_d_simulation(
+    group_d_probabilities = print_group_d_simulation(
         teams=teams,
         fixtures=fixtures,
         results=results,
         ratings=ratings,
     )
+
+    export_dataframe(group_d_probabilities, "group_d_probabilities.csv")
 
     incomplete_groups = coverage[~coverage["has_complete_fixture_set"]]
 
@@ -454,19 +462,33 @@ def main() -> None:
         print()
         return
 
-    print_tournament_simulation(
+    tournament_probabilities = print_tournament_simulation(
         teams=teams,
         fixtures=fixtures,
         results=results,
         ratings=ratings,
     )
 
-    print_round_probabilities(
+    round_probabilities = print_round_probabilities(
         teams=teams,
         fixtures=fixtures,
         results=results,
         ratings=ratings,
     )
+
+    export_html_report(
+        sections=[
+            ("Fixture Coverage", coverage),
+            ("Current Third-Place Ranking", third_place_table),
+            ("Projected Round of 32 Field", projected_qualifiers),
+            ("Projected Round of 32 Matchups", round_of_32),
+            ("Group D Probabilities", group_d_probabilities),
+            ("Tournament Qualification Probabilities", tournament_probabilities),
+            ("Tournament Round Probabilities", round_probabilities),
+        ]
+    )
+
+    print("Exported report: outputs/index.html")
 
 
 if __name__ == "__main__":
