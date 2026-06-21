@@ -1,49 +1,49 @@
 team_id,rating,source,source_url,rating_type,name,code,group
-ESP,2165,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,Spain,ESP,H
-ARG,2113,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,Argentina,ARG,J
-FRA,2081,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,France,FRA,I
-ENG,2020,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,England,ENG,L
-BRA,1984,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,Brazil,BRA,C
-POR,1980,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,Portugal,POR,K
-NED,1973,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,Netherlands,NED,F
-GER,1966,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,Germany,GER,E
-COL,1962,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,Colombia,COL,K
-URU,1957,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,Uruguay,URU,H
-BEL,1942,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,Belgium,BEL,G
-CRO,1890,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,Croatia,CRO,L
-MAR,1885,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,Morocco,MAR,C
-SUI,1878,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,Switzerland,SUI,B
-JPN,1855,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,Japan,JPN,F
-USA,1832,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,United States,USA,D
-MEX,1815,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,Mexico,MEX,A
-AUT,1808,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,Austria,AUT,J
-SEN,1800,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,Senegal,SEN,I
-SWE,1795,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,Sweden,SWE,F
-NOR,1788,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,Norway,NOR,I
-ECU,1782,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,Ecuador,ECU,E
-KOR,1776,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,South Korea,KOR,A
-IRI,1768,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,Iran,IRI,G
-AUS,1758,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,Australia,AUS,D
-EGY,1750,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,Egypt,EGY,G
-TUR,1746,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,Turkey,TUR,D
-TUN,1740,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,Tunisia,TUN,F
-CIV,1738,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,Ivory Coast,CIV,E
-DZA,1732,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,Algeria,DZA,J
-GHA,1724,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,Ghana,GHA,L
-CZE,1718,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,Czechia,CZE,A
-PAR,1712,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,Paraguay,PAR,D
-SCO,1708,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,Scotland,SCO,C
-CAN,1702,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,Canada,CAN,B
-QAT,1660,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,Qatar,QAT,B
-UZB,1656,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,Uzbekistan,UZB,K
-IRQ,1648,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,Iraq,IRQ,I
-COD,1642,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,DR Congo,COD,K
-PAN,1635,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,Panama,PAN,L
-KSA,1628,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,Saudi Arabia,KSA,H
-BIH,1620,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,Bosnia and Herzegovina,BIH,B
-NZL,1608,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,New Zealand,NZL,G
-RSA,1598,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,South Africa,RSA,A
-CPV,1588,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,Cape Verde,CPV,H
-JOR,1578,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,Jordan,JOR,J
-CUW,1540,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,Curacao,CUW,E
-HTI,1518,World Football Elo seed snapshot,https://www.eloratings.net/,national_team_elo,Haiti,HTI,C
+ARG,1877.27,FIFA/Coca-Cola Men's World Ranking points snapshot,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Argentina,ARG,J
+ESP,1874.71,FIFA/Coca-Cola Men's World Ranking points snapshot,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Spain,ESP,H
+FRA,1870.7,FIFA/Coca-Cola Men's World Ranking points snapshot,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,France,FRA,I
+ENG,1828.02,FIFA/Coca-Cola Men's World Ranking points snapshot,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,England,ENG,L
+POR,1763.83,FIFA/Coca-Cola Men's World Ranking points snapshot,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Portugal,POR,K
+BRA,1761.16,FIFA/Coca-Cola Men's World Ranking points snapshot,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Brazil,BRA,C
+NED,1757.87,FIFA/Coca-Cola Men's World Ranking points snapshot,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Netherlands,NED,F
+BEL,1738.0,FIFA/Coca-Cola Men's World Ranking points snapshot,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Belgium,BEL,G
+GER,1718.0,FIFA/Coca-Cola Men's World Ranking points snapshot,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Germany,GER,E
+CRO,1714.87,FIFA/Coca-Cola Men's World Ranking points snapshot,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Croatia,CRO,L
+COL,1698.35,FIFA/Coca-Cola Men's World Ranking points snapshot,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Colombia,COL,K
+MEX,1687.48,FIFA/Coca-Cola Men's World Ranking points snapshot,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Mexico,MEX,A
+SEN,1684.07,FIFA/Coca-Cola Men's World Ranking points snapshot,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Senegal,SEN,I
+URU,1673.07,FIFA/Coca-Cola Men's World Ranking points snapshot,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Uruguay,URU,H
+USA,1670.0,FIFA/Coca-Cola Men's World Ranking points snapshot,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,United States,USA,D
+SUI,1660.0,FIFA/Coca-Cola Men's World Ranking points snapshot,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Switzerland,SUI,B
+JPN,1650.0,FIFA/Coca-Cola Men's World Ranking points snapshot,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Japan,JPN,F
+MAR,1645.0,FIFA/Coca-Cola Men's World Ranking points snapshot,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Morocco,MAR,C
+ECU,1638.0,FIFA/Coca-Cola Men's World Ranking points snapshot,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Ecuador,ECU,E
+AUT,1635.0,FIFA/Coca-Cola Men's World Ranking points snapshot,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Austria,AUT,J
+IRI,1625.0,FIFA/Coca-Cola Men's World Ranking points snapshot,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Iran,IRI,G
+KOR,1615.0,FIFA/Coca-Cola Men's World Ranking points snapshot,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,South Korea,KOR,A
+AUS,1608.0,FIFA/Coca-Cola Men's World Ranking points snapshot,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Australia,AUS,D
+TUR,1600.0,FIFA/Coca-Cola Men's World Ranking points snapshot,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Turkey,TUR,D
+NOR,1595.0,FIFA/Coca-Cola Men's World Ranking points snapshot,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Norway,NOR,I
+EGY,1588.0,FIFA/Coca-Cola Men's World Ranking points snapshot,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Egypt,EGY,G
+SWE,1582.0,FIFA/Coca-Cola Men's World Ranking points snapshot,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Sweden,SWE,F
+CIV,1578.0,FIFA/Coca-Cola Men's World Ranking points snapshot,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Ivory Coast,CIV,E
+TUN,1575.0,FIFA/Coca-Cola Men's World Ranking points snapshot,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Tunisia,TUN,F
+DZA,1570.0,FIFA/Coca-Cola Men's World Ranking points snapshot,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Algeria,DZA,J
+CAN,1568.0,FIFA/Coca-Cola Men's World Ranking points snapshot,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Canada,CAN,B
+PAR,1562.0,FIFA/Coca-Cola Men's World Ranking points snapshot,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Paraguay,PAR,D
+GHA,1558.0,FIFA/Coca-Cola Men's World Ranking points snapshot,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Ghana,GHA,L
+SCO,1555.0,FIFA/Coca-Cola Men's World Ranking points snapshot,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Scotland,SCO,C
+CZE,1550.0,FIFA/Coca-Cola Men's World Ranking points snapshot,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Czechia,CZE,A
+QAT,1528.0,FIFA/Coca-Cola Men's World Ranking points snapshot,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Qatar,QAT,B
+KSA,1522.0,FIFA/Coca-Cola Men's World Ranking points snapshot,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Saudi Arabia,KSA,H
+UZB,1518.0,FIFA/Coca-Cola Men's World Ranking points snapshot,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Uzbekistan,UZB,K
+BIH,1510.0,FIFA/Coca-Cola Men's World Ranking points snapshot,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Bosnia and Herzegovina,BIH,B
+IRQ,1505.0,FIFA/Coca-Cola Men's World Ranking points snapshot,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Iraq,IRQ,I
+PAN,1500.0,FIFA/Coca-Cola Men's World Ranking points snapshot,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Panama,PAN,L
+NZL,1496.0,FIFA/Coca-Cola Men's World Ranking points snapshot,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,New Zealand,NZL,G
+COD,1492.0,FIFA/Coca-Cola Men's World Ranking points snapshot,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,DR Congo,COD,K
+RSA,1486.0,FIFA/Coca-Cola Men's World Ranking points snapshot,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,South Africa,RSA,A
+JOR,1480.0,FIFA/Coca-Cola Men's World Ranking points snapshot,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Jordan,JOR,J
+CPV,1478.0,FIFA/Coca-Cola Men's World Ranking points snapshot,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Cape Verde,CPV,H
+CUW,1455.0,FIFA/Coca-Cola Men's World Ranking points snapshot,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Curacao,CUW,E
+HTI,1445.0,FIFA/Coca-Cola Men's World Ranking points snapshot,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Haiti,HTI,C

@@ -1,49 +1,49 @@
 # Data Status
 
-## Match and fixture data
+This project uses checked-in CSV files as model inputs.
 
-The app currently uses checked-in CSV files under `data/`:
+## Core tournament data
 
-- `teams.csv`
-- `fixtures.csv`
-- `results.csv`
-- `ratings.csv`
-- `bracket_slots.csv`
+- `data/teams.csv` contains the 48-team field.
+- `data/fixtures.csv` contains the group-stage fixture list.
+- `data/results.csv` contains completed match results.
+- `data/bracket_slots.csv` contains the knockout bracket skeleton.
+- `data/third_place_permutations.csv` contains the official 495-case third-place assignment table.
+- `data/fair_play.csv` contains conduct/fair-play scores. Current values are placeholders unless updated with card data.
 
-These files are manually maintained. The app does not currently fetch live scores, fixtures, injuries, odds, or squad data.
+## Ratings data
 
-## Ratings
+- `data/ratings.csv` is the canonical team-strength input used by the simulator.
+- The preferred updater is:
 
-`data/ratings.csv` uses a checked-in World Football Elo-style seed snapshot.
+    uv run python scripts/update_ratings_from_fifa.py
 
-This is intended to replace the original manually invented placeholder ratings with a more realistic national-team strength baseline.
+- The current preferred rating source is a checked-in FIFA/Coca-Cola Men's World Ranking points snapshot.
+- FIFA ranking points are an official source and FIFA states that the men's ranking is determined using an Elo model.
+- The current updater is not a live scrape. It uses a checked-in dictionary so the model remains reproducible.
+- The fallback updater is:
 
-Current rating limitations:
+    uv run python scripts/update_ratings_from_elo.py
 
-- Not an official FIFA ranking table
-- Not a live scrape
-- Not betting-market implied odds
-- Not adjusted automatically for injuries, lineups, rest, travel, or current tournament form
-- Should be refreshed manually when the rating source is updated
+## Modeling notes
 
-## Prediction model
+Completed match results directly affect:
 
-The current model uses:
+- group standings
+- third-place ranking
+- projected Round of 32 field
+- official third-place permutation assignment
+- qualification probabilities
+- round/champion probabilities
 
-1. Completed match results from `data/results.csv`
-2. Elo-style team ratings from `data/ratings.csv`
-3. A Poisson scoring model for remaining matches
-4. A rating-weighted tiebreaker for drawn knockout matches
-5. A generic sequential knockout bracket for round-by-round simulation
+Completed match results do not automatically update team ratings unless `data/ratings.csv` is regenerated.
+
+Because FIFA ranking points use a different scale than the prior Elo seed, the conversion in `src/simulator.py` may need recalibration:
+
+    rating_to_expected_goal_diff(rating_diff)
 
 ## Known limitations
 
-The engine is mechanically complete but not yet fully tournament-accurate.
-
-Outstanding accuracy work:
-
-1. Replace the generic knockout bracket with the official full Round of 32 bracket mapping
-2. Add the official third-place permutation mapping
-3. Implement full FIFA group-stage tiebreakers
-4. Improve the rating model with market odds or a blended rating source
-5. Add an automated data update path for results and fixtures
+- Fair-play/conduct scores are placeholders until card data is added.
+- Ratings are currently refreshed manually, not from a live API.
+- Betting-market odds are not yet integrated.
