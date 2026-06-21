@@ -1,0 +1,41 @@
+# World Cup Predictor
+
+A Python prototype for maintaining World Cup group standings, projected qualifiers, third-place qualification, partial Round of 32 bracket mapping, and tournament qualification probabilities.
+
+## Current capabilities
+
+- Loads teams, fixtures, results, and ratings from CSV files
+- Calculates current standings for all 12 groups
+- Calculates current third-place ranking
+- Projects the 32-team knockout field:
+  - 12 group winners
+  - 12 group runners-up
+  - 8 best third-place teams
+- Runs Monte Carlo qualification simulations
+- Exports reusable CSV outputs to outputs/
+
+## Setup
+
+Run:
+
+uv sync
+
+## Run
+
+Run:
+
+uv run python main.py
+
+## Outputs
+
+Running the app generates:
+
+- outputs/group_standings.csv
+- outputs/third_place_table.csv
+- outputs/projected_qualifiers.csv
+- outputs/projected_round_of_32.csv
+- outputs/tournament_probabilities.csv
+
+## Notes
+
+The current Round of 32 bracket mapping is partial and uses a prototype heuristic for third-place matchup resolution. The next accuracy milestone is to add the official third-place permutation mapping.

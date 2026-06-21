@@ -1,0 +1,49 @@
+team_id,name,code,group
+MEX,Mexico,MEX,A
+RSA,South Africa,RSA,A
+KOR,South Korea,KOR,A
+CZE,Czechia,CZE,A
+CAN,Canada,CAN,B
+BIH,Bosnia and Herzegovina,BIH,B
+QAT,Qatar,QAT,B
+SUI,Switzerland,SUI,B
+BRA,Brazil,BRA,C
+MAR,Morocco,MAR,C
+SCO,Scotland,SCO,C
+HTI,Haiti,HTI,C
+USA,United States,USA,D
+PAR,Paraguay,PAR,D
+AUS,Australia,AUS,D
+TUR,Turkey,TUR,D
+GER,Germany,GER,E
+CUW,Curacao,CUW,E
+CIV,Ivory Coast,CIV,E
+ECU,Ecuador,ECU,E
+NED,Netherlands,NED,F
+JPN,Japan,JPN,F
+SWE,Sweden,SWE,F
+TUN,Tunisia,TUN,F
+BEL,Belgium,BEL,G
+EGY,Egypt,EGY,G
+IRI,Iran,IRI,G
+NZL,New Zealand,NZL,G
+ESP,Spain,ESP,H
+CPV,Cape Verde,CPV,H
+KSA,Saudi Arabia,KSA,H
+URU,Uruguay,URU,H
+FRA,France,FRA,I
+SEN,Senegal,SEN,I
+IRQ,Iraq,IRQ,I
+NOR,Norway,NOR,I
+ARG,Argentina,ARG,J
+DZA,Algeria,DZA,J
+AUT,Austria,AUT,J
+JOR,Jordan,JOR,J
+POR,Portugal,POR,K
+COD,DR Congo,COD,K
+UZB,Uzbekistan,UZB,K
+COL,Colombia,COL,K
+ENG,England,ENG,L
+CRO,Croatia,CRO,L
+GHA,Ghana,GHA,L
+PAN,Panama,PAN,L
