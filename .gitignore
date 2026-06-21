@@ -25,3 +25,6 @@ build/
 
 # Generated outputs
 outputs/
+
+# Local blog/research artifacts
+notes/blog-artifacts/
