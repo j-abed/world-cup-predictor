@@ -6,6 +6,7 @@ import pandas as pd
 
 from src.bracket import build_projected_round_of_32
 from src.exports import export_all_group_standings, export_dataframe
+from src.knockout import simulate_tournament_round_probabilities
 from src.reporting import (
     calculate_all_group_standings,
     calculate_current_projected_qualifiers,
@@ -296,6 +297,83 @@ def print_tournament_simulation(
     print()
 
 
+def print_round_probabilities(
+    teams: pd.DataFrame,
+    fixtures: pd.DataFrame,
+    results: pd.DataFrame,
+    ratings: pd.DataFrame,
+) -> None:
+    round_simulation_count = 10_000
+
+    print("Running tournament round simulations...")
+    print(f"Round simulations: {round_simulation_count:,}")
+    print()
+
+    start = time.perf_counter()
+
+    round_probs = simulate_tournament_round_probabilities(
+        teams=teams,
+        fixtures=fixtures,
+        results=results,
+        ratings=ratings,
+        simulations=round_simulation_count,
+        seed=42,
+    )
+
+    elapsed_seconds = time.perf_counter() - start
+
+    export_dataframe(round_probs, "tournament_round_probabilities.csv")
+
+    display = round_probs.copy()
+
+    for column in [
+        "r32_prob",
+        "r16_prob",
+        "qf_prob",
+        "sf_prob",
+        "final_prob",
+        "champion_prob",
+    ]:
+        display[column] = display[column].map(format_probability)
+
+    display = display.rename(
+        columns={
+            "team": "Team",
+            "code": "Code",
+            "group": "Group",
+            "r32_prob": "R32",
+            "r16_prob": "R16",
+            "qf_prob": "QF",
+            "sf_prob": "SF",
+            "final_prob": "Final",
+            "champion_prob": "Champion",
+        }
+    )
+
+    print("Tournament Round Probabilities")
+    print("==============================")
+    print(
+        display[
+            [
+                "Team",
+                "Code",
+                "Group",
+                "R32",
+                "R16",
+                "QF",
+                "SF",
+                "Final",
+                "Champion",
+            ]
+        ].head(25).to_string(index=False)
+    )
+    print()
+    print(f"Round simulations: {round_simulation_count:,}")
+    print(f"Round simulation runtime: {elapsed_seconds:.2f} seconds")
+    print()
+
+
+
 def main() -> None:
     teams = pd.read_csv("data/teams.csv")
     fixtures = pd.read_csv("data/fixtures.csv")
@@ -377,6 +455,13 @@ def main() -> None:
         return
 
     print_tournament_simulation(
+        teams=teams,
+        fixtures=fixtures,
+        results=results,
+        ratings=ratings,
+    )
+
+    print_round_probabilities(
         teams=teams,
         fixtures=fixtures,
         results=results,
