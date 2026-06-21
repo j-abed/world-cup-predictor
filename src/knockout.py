@@ -7,7 +7,7 @@ from copy import deepcopy
 import numpy as np
 import pandas as pd
 
-from src.bracket import build_third_place_assignment
+from src.bracket import build_third_place_assignment, load_third_place_permutations
 from src.reporting import calculate_current_projected_qualifiers
 from src.simulator import (
     apply_result_to_state,
@@ -314,6 +314,7 @@ def build_fast_qualifier_maps(
     projected_qualifiers: pd.DataFrame,
     bracket_slots: pd.DataFrame,
     third_place_assignment_cache: dict[tuple[str, ...], dict[str, dict]],
+    third_place_permutations: pd.DataFrame,
 ) -> tuple[dict[str, str], dict[str, str]]:
     source_to_team_id = {}
 
@@ -335,6 +336,7 @@ def build_fast_qualifier_maps(
         third_place_assignment_cache[third_place_groups] = build_third_place_assignment(
             bracket_slots=bracket_slots,
             projected_qualifiers=projected_qualifiers,
+            permutations=third_place_permutations,
         )
 
     third_place_assignment = third_place_assignment_cache[third_place_groups]
@@ -387,11 +389,13 @@ def simulate_knockout_bracket_once(
     rating_lookup: dict[str, float],
     rng: np.random.Generator,
     third_place_assignment_cache: dict[tuple[str, ...], dict[str, dict]],
+    third_place_permutations: pd.DataFrame,
 ) -> dict[str, set[str] | str]:
     source_to_team_id, third_placeholder_to_team_id = build_fast_qualifier_maps(
         projected_qualifiers=projected_qualifiers,
         bracket_slots=bracket_slots,
         third_place_assignment_cache=third_place_assignment_cache,
+        third_place_permutations=third_place_permutations,
     )
 
     winners_by_match: dict[int, str] = {}
@@ -463,6 +467,7 @@ def simulate_tournament_round_probabilities(
     rating_lookup = build_rating_lookup(ratings)
     bracket_slots = load_knockout_bracket()
     compiled_bracket = compile_knockout_bracket(bracket_slots)
+    third_place_permutations = load_third_place_permutations()
     third_place_assignment_cache: dict[tuple[str, ...], dict[str, dict]] = {}
 
     prepared_groups = {}
@@ -543,6 +548,7 @@ def simulate_tournament_round_probabilities(
             rating_lookup=rating_lookup,
             rng=rng,
             third_place_assignment_cache=third_place_assignment_cache,
+            third_place_permutations=third_place_permutations,
         )
 
         for stage in ["r32", "r16", "qf", "sf", "final"]:

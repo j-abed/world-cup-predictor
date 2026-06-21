@@ -5,6 +5,8 @@ from dataclasses import dataclass
 import pandas as pd
 
 
+THIRD_PLACE_PERMUTATIONS_PATH = "data/third_place_permutations.csv"
+
 @dataclass(frozen=True)
 class ThirdPlaceAssignment:
     placeholder_source: str
@@ -59,29 +61,103 @@ def get_third_place_placeholders(bracket_slots: pd.DataFrame) -> list[str]:
     return placeholders
 
 
+def build_third_place_key(third_place_qualifiers: pd.DataFrame) -> str:
+    groups = sorted(str(group) for group in third_place_qualifiers["group"].tolist())
+
+    if len(groups) != 8:
+        raise RuntimeError(
+            f"Expected exactly 8 qualifying third-place groups, found {len(groups)}: {groups}"
+        )
+
+    return "-".join(groups)
+
+
+def load_third_place_permutations(
+    path: str = THIRD_PLACE_PERMUTATIONS_PATH,
+) -> pd.DataFrame:
+    permutations = pd.read_csv(path)
+
+    required_columns = {
+        "scenario_number",
+        "qualifying_groups",
+        "slot_74",
+        "slot_77",
+        "slot_79",
+        "slot_80",
+        "slot_81",
+        "slot_82",
+        "slot_85",
+        "slot_87",
+        "source_url",
+    }
+
+    missing = required_columns - set(permutations.columns)
+
+    if missing:
+        raise RuntimeError(
+            f"Third-place permutation table is missing required columns: {sorted(missing)}"
+        )
+
+    if len(permutations) != 495:
+        raise RuntimeError(
+            f"Expected 495 third-place permutation rows, found {len(permutations)}"
+        )
+
+    if permutations["qualifying_groups"].duplicated().any():
+        duplicates = permutations[
+            permutations["qualifying_groups"].duplicated(keep=False)
+        ]["qualifying_groups"].tolist()
+        raise RuntimeError(
+            f"Duplicate third-place qualifying group combinations found: {duplicates}"
+        )
+
+    return permutations
+
+
+def get_official_third_place_row(
+    third_place_qualifiers: pd.DataFrame,
+    permutations: pd.DataFrame | None = None,
+) -> pd.Series:
+    if permutations is None:
+        permutations = load_third_place_permutations()
+
+    key = build_third_place_key(third_place_qualifiers)
+
+    rows = permutations[permutations["qualifying_groups"] == key]
+
+    if len(rows) != 1:
+        raise RuntimeError(
+            f"Expected one third-place permutation row for {key}, found {len(rows)}"
+        )
+
+    return rows.iloc[0]
+
+
+def slot_id_to_permutation_column(slot_id: str) -> str:
+    # slot_id examples: R32-74, R32-77, etc.
+    match_id = str(slot_id).split("-")[-1]
+    return f"slot_{match_id}"
+
+
 def build_third_place_assignment(
     bracket_slots: pd.DataFrame,
     projected_qualifiers: pd.DataFrame,
+    permutations: pd.DataFrame | None = None,
 ) -> dict[str, dict]:
     """
-    Assign each qualifying third-place team to exactly one compatible R32 slot.
+    Assign qualifying third-place teams to R32 slots using the official
+    2026 World Cup third-place permutation table.
 
-    This is a valid non-duplicating assignment, not yet the official FIFA
-    495-case permutation table.
-
-    It uses deterministic backtracking instead of greedy assignment because
-    some groups are valid for fewer placeholder slots than others.
+    The table is keyed by the eight third-place groups that qualify.
     """
-    placeholders = get_third_place_placeholders(bracket_slots)
-
     third_place_qualifiers = projected_qualifiers[
         projected_qualifiers["qualifying_path"] == "Best third-place"
     ].copy()
 
-    third_place_qualifiers = third_place_qualifiers.sort_values(
-        by=["group", "points", "goal_difference", "goals_for"],
-        ascending=[True, False, False, False],
-    ).reset_index(drop=True)
+    official_row = get_official_third_place_row(
+        third_place_qualifiers=third_place_qualifiers,
+        permutations=permutations,
+    )
 
     third_by_group = {
         str(row["group"]): {
@@ -94,73 +170,55 @@ def build_third_place_assignment(
         for _, row in third_place_qualifiers.iterrows()
     }
 
-    qualifying_groups = set(third_by_group)
+    assignment: dict[str, dict] = {}
 
-    placeholder_options = {
-        placeholder: [
-            group
-            for group in parse_third_place_placeholder(placeholder)
-            if group in qualifying_groups
-        ]
-        for placeholder in placeholders
-    }
+    round_of_32 = bracket_slots[bracket_slots["round"] == "Round of 32"].copy()
 
-    impossible_placeholders = [
-        placeholder
-        for placeholder, options in placeholder_options.items()
-        if not options
-    ]
+    for _, slot in round_of_32.iterrows():
+        slot_id = str(slot["slot_id"])
+        permutation_column = slot_id_to_permutation_column(slot_id)
 
-    if impossible_placeholders:
-        raise RuntimeError(
-            "Some third-place placeholders cannot be resolved by the current "
-            f"qualifying groups {sorted(qualifying_groups)}. "
-            f"Impossible placeholders: {impossible_placeholders}"
-        )
+        if permutation_column not in official_row.index:
+            continue
 
-    # Search most constrained placeholders first. Tie-break by source text so the
-    # assignment is reproducible.
-    ordered_placeholders = sorted(
-        placeholders,
-        key=lambda placeholder: (len(placeholder_options[placeholder]), placeholder),
-    )
+        for source_column in ["home_source", "away_source"]:
+            placeholder = str(slot[source_column])
 
-    assignment_by_placeholder: dict[str, str] = {}
-    assigned_groups: set[str] = set()
-
-    def backtrack(index: int) -> bool:
-        if index == len(ordered_placeholders):
-            return assigned_groups == qualifying_groups
-
-        placeholder = ordered_placeholders[index]
-
-        # Try groups in alphabetical order for deterministic output.
-        for group in sorted(placeholder_options[placeholder]):
-            if group in assigned_groups:
+            if not is_third_place_placeholder(placeholder):
                 continue
 
-            assignment_by_placeholder[placeholder] = group
-            assigned_groups.add(group)
+            group = str(official_row[permutation_column])
 
-            if backtrack(index + 1):
-                return True
+            allowed_groups = parse_third_place_placeholder(placeholder)
 
-            assigned_groups.remove(group)
-            del assignment_by_placeholder[placeholder]
+            if group not in allowed_groups:
+                raise RuntimeError(
+                    f"Official third-place assignment mismatch for {slot_id}. "
+                    f"Group {group} is not allowed by placeholder {placeholder}."
+                )
 
-        return False
+            if group not in third_by_group:
+                raise RuntimeError(
+                    f"Official third-place assignment references non-qualifying group {group}."
+                )
 
-    if not backtrack(0):
+            assignment[placeholder] = third_by_group[group]
+
+    if len(assignment) != 8:
         raise RuntimeError(
-            "Could not assign each third-place qualifier exactly once. "
-            f"Qualifying groups: {sorted(qualifying_groups)}. "
-            f"Placeholder options: {placeholder_options}"
+            f"Expected 8 official third-place assignments, found {len(assignment)}."
         )
 
-    return {
-        placeholder: third_by_group[group]
-        for placeholder, group in assignment_by_placeholder.items()
-    }
+    assigned_groups = sorted(str(team["group"]) for team in assignment.values())
+    expected_groups = sorted(str(row["group"]) for _, row in third_place_qualifiers.iterrows())
+
+    if assigned_groups != expected_groups:
+        raise RuntimeError(
+            "Official third-place assignment does not match qualifying groups. "
+            f"Assigned {assigned_groups}; expected {expected_groups}."
+        )
+
+    return assignment
 
 
 def resolve_bracket_source(
