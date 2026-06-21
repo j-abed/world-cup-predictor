@@ -10,6 +10,7 @@ from pathlib import Path
 RESULTS_PATH = Path("data/results.csv")
 SYNC_SCRIPT = Path("scripts/sync_results_from_espn.py")
 MAIN_SCRIPT = Path("main.py")
+WEB_EXPORT_SCRIPT = Path("scripts/export_web_state.py")
 
 
 def parse_args() -> argparse.Namespace:
@@ -65,6 +66,11 @@ def parse_args() -> argparse.Namespace:
         "--skip-sync",
         action="store_true",
         help="Skip ESPN sync and only run the model if --run-model is supplied.",
+    )
+    parser.add_argument(
+        "--export-web",
+        action="store_true",
+        help="Export web-app-ready JSON files to outputs/web.",
     )
 
     return parser.parse_args()
@@ -155,6 +161,10 @@ def main() -> None:
         print()
         print("Sync complete. To rerun the model:")
         print("  uv run python main.py")
+
+    if args.export_web:
+        require_file(WEB_EXPORT_SCRIPT)
+        run_command(["uv", "run", "python", str(WEB_EXPORT_SCRIPT)])
 
 
 if __name__ == "__main__":
