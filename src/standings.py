@@ -2,6 +2,13 @@ from __future__ import annotations
 
 import pandas as pd
 
+from src.tiebreakers import (
+    apply_fifa_group_tiebreakers,
+    build_match_rows,
+    load_conduct_scores,
+    load_ranking_fallback,
+)
+
 
 def initialize_standings(teams: pd.DataFrame) -> pd.DataFrame:
     rows = []
@@ -98,11 +105,17 @@ def calculate_group_standings(
             away_score=int(match["away_score"]),
         )
 
-    standings = standings.sort_values(
-        by=["points", "goal_difference", "goals_for"],
-        ascending=[False, False, False],
-    ).reset_index(drop=True)
+    match_rows = build_match_rows(
+        fixtures=fixtures,
+        results=results,
+        group=group,
+    )
 
-    standings.insert(0, "rank", range(1, len(standings) + 1))
+    standings = apply_fifa_group_tiebreakers(
+        standings=standings,
+        match_rows=match_rows,
+        conduct_scores=load_conduct_scores(),
+        ranking_fallback=load_ranking_fallback(),
+    )
 
     return standings

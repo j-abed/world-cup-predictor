@@ -16,6 +16,12 @@ from src.simulator import (
     standings_df_to_state,
 )
 from src.standings import calculate_group_standings
+from src.tiebreakers import (
+    build_match_rows,
+    load_conduct_scores,
+    load_ranking_fallback,
+    rank_third_place_rows,
+)
 
 
 GROUPS = list("ABCDEFGHIJKL")
@@ -26,6 +32,7 @@ class PreparedGroup:
     group: str
     base_state: dict[str, dict[str, int]]
     remaining_matches: list[dict[str, str]]
+    base_match_rows: list[dict]
 
 
 def prepare_groups(
@@ -51,10 +58,17 @@ def prepare_groups(
             group=group,
         )
 
+        base_match_rows = build_match_rows(
+            fixtures=fixtures,
+            results=results,
+            group=group,
+        )
+
         prepared[group] = PreparedGroup(
             group=group,
             base_state=base_state,
             remaining_matches=remaining_matches,
+            base_match_rows=base_match_rows,
         )
 
     return prepared
@@ -64,8 +78,11 @@ def simulate_prepared_group_once(
     prepared_group: PreparedGroup,
     rating_lookup: dict[str, float],
     rng: np.random.Generator,
+    conduct_scores: dict[str, float],
+    ranking_fallback: dict[str, float],
 ) -> list[dict]:
     state = deepcopy(prepared_group.base_state)
+    match_rows = deepcopy(prepared_group.base_match_rows)
 
     for match in prepared_group.remaining_matches:
         home_team = match["home_team"]
@@ -86,7 +103,22 @@ def simulate_prepared_group_once(
             away_score=away_score,
         )
 
-    ranked_team_ids = rank_state(state)
+        match_rows.append(
+            {
+                "group": prepared_group.group,
+                "home_team": home_team,
+                "away_team": away_team,
+                "home_score": home_score,
+                "away_score": away_score,
+            }
+        )
+
+    ranked_team_ids = rank_state(
+        state,
+        match_rows=match_rows,
+        conduct_scores=conduct_scores,
+        ranking_fallback=ranking_fallback,
+    )
 
     group_rows = []
 
@@ -111,6 +143,8 @@ def simulate_all_groups_once(
     prepared_groups: dict[str, PreparedGroup],
     rating_lookup: dict[str, float],
     rng: np.random.Generator,
+    conduct_scores: dict[str, float],
+    ranking_fallback: dict[str, float],
 ) -> dict[str, list[dict]]:
     group_results: dict[str, list[dict]] = {}
 
@@ -119,6 +153,8 @@ def simulate_all_groups_once(
             prepared_group=prepared_group,
             rating_lookup=rating_lookup,
             rng=rng,
+            conduct_scores=conduct_scores,
+            ranking_fallback=ranking_fallback,
         )
 
     return group_results
@@ -127,6 +163,8 @@ def simulate_all_groups_once(
 def select_best_third_place_teams(
     group_results: dict[str, list[dict]],
     count: int = 8,
+    conduct_scores: dict[str, float] | None = None,
+    ranking_fallback: dict[str, float] | None = None,
 ) -> list[dict]:
     third_place_teams = []
 
@@ -134,15 +172,10 @@ def select_best_third_place_teams(
         third_place = next(row for row in rows if row["group_rank"] == 3)
         third_place_teams.append(third_place)
 
-    third_place_teams = sorted(
-        third_place_teams,
-        key=lambda row: (
-            row["points"],
-            row["goal_difference"],
-            row["goals_for"],
-            row["team_id"],
-        ),
-        reverse=True,
+    third_place_teams = rank_third_place_rows(
+        third_place_rows=third_place_teams,
+        conduct_scores=conduct_scores,
+        ranking_fallback=ranking_fallback,
     )
 
     return third_place_teams[:count]
@@ -165,6 +198,8 @@ def simulate_qualification_probabilities(
     )
 
     rating_lookup = build_rating_lookup(ratings)
+    conduct_scores = load_conduct_scores()
+    ranking_fallback = load_ranking_fallback()
 
     qualification_counts = defaultdict(int)
     first_counts = defaultdict(int)
@@ -176,9 +211,15 @@ def simulate_qualification_probabilities(
             prepared_groups=prepared_groups,
             rating_lookup=rating_lookup,
             rng=rng,
+            conduct_scores=conduct_scores,
+            ranking_fallback=ranking_fallback,
         )
 
-        best_thirds = select_best_third_place_teams(group_results)
+        best_thirds = select_best_third_place_teams(
+            group_results,
+            conduct_scores=conduct_scores,
+            ranking_fallback=ranking_fallback,
+        )
         best_third_ids = {row["team_id"] for row in best_thirds}
 
         for rows in group_results.values():

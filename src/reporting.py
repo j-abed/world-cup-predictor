@@ -3,6 +3,11 @@ from __future__ import annotations
 import pandas as pd
 
 from src.standings import calculate_group_standings
+from src.tiebreakers import (
+    load_conduct_scores,
+    load_ranking_fallback,
+    rank_third_place_table,
+)
 
 
 GROUPS = list("ABCDEFGHIJKL")
@@ -53,17 +58,13 @@ def calculate_current_third_place_table(
 
     third_place_table = pd.DataFrame(rows)
 
-    third_place_table = third_place_table.sort_values(
-        by=[
-            "points",
-            "goal_difference",
-            "goals_for",
-            "code",
-        ],
-        ascending=[False, False, False, True],
-    ).reset_index(drop=True)
+    third_place_table = rank_third_place_table(
+        third_place_table=third_place_table,
+        conduct_scores=load_conduct_scores(),
+        ranking_fallback=load_ranking_fallback(),
+    )
 
-    third_place_table.insert(0, "third_rank", range(1, len(third_place_table) + 1))
+    third_place_table = third_place_table.rename(columns={"rank": "third_rank"})
     third_place_table["currently_qualifies"] = third_place_table["third_rank"] <= 8
 
     return third_place_table

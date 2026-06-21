@@ -7,6 +7,12 @@ import numpy as np
 import pandas as pd
 
 from src.standings import calculate_group_standings
+from src.tiebreakers import (
+    build_match_rows,
+    load_conduct_scores,
+    load_ranking_fallback,
+    rank_state_with_tiebreakers,
+)
 
 
 StandingState = dict[str, dict[str, int]]
@@ -129,16 +135,27 @@ def apply_result_to_state(
 
 def rank_state(
     state: StandingState,
+    match_rows: list[dict] | None = None,
+    conduct_scores: dict[str, float] | None = None,
+    ranking_fallback: dict[str, float] | None = None,
 ) -> list[str]:
     """
-    MVP ranking:
-    1. Points
-    2. Goal difference
-    3. Goals scored
-    4. Team ID for deterministic sorting
+    Rank a simulated group state.
 
-    Later we will add FIFA tiebreakers.
+    If match_rows are supplied, use the FIFA-style tiebreaker chain:
+    points, goal difference, goals for, head-to-head, conduct score,
+    ranking fallback, deterministic fallback.
+
+    If match_rows are not supplied, fall back to the primary ranking fields.
     """
+    if match_rows is not None:
+        return rank_state_with_tiebreakers(
+            state=state,
+            match_rows=match_rows,
+            conduct_scores=conduct_scores,
+            ranking_fallback=ranking_fallback,
+        )
+
     return sorted(
         state.keys(),
         key=lambda team_id: (
@@ -202,12 +219,22 @@ def simulate_group_finish_probabilities(
         group=group,
     )
 
+    base_match_rows = build_match_rows(
+        fixtures=fixtures,
+        results=results,
+        group=group,
+    )
+
+    conduct_scores = load_conduct_scores()
+    ranking_fallback = load_ranking_fallback()
+
     rating_lookup = build_rating_lookup(ratings)
 
     finish_counts: dict[str, dict[int, int]] = defaultdict(lambda: defaultdict(int))
 
     for _ in range(simulations):
         state = deepcopy(base_state)
+        match_rows = deepcopy(base_match_rows)
 
         for match in remaining_matches:
             home_team = match["home_team"]
@@ -228,7 +255,22 @@ def simulate_group_finish_probabilities(
                 away_score=away_score,
             )
 
-        ranked_team_ids = rank_state(state)
+            match_rows.append(
+                {
+                    "group": group,
+                    "home_team": home_team,
+                    "away_team": away_team,
+                    "home_score": home_score,
+                    "away_score": away_score,
+                }
+            )
+
+        ranked_team_ids = rank_state(
+            state,
+            match_rows=match_rows,
+            conduct_scores=conduct_scores,
+            ranking_fallback=ranking_fallback,
+        )
 
         for index, team_id in enumerate(ranked_team_ids, start=1):
             finish_counts[team_id][index] += 1
