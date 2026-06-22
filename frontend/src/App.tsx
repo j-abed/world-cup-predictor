@@ -4,6 +4,7 @@ import { ChampionOdds } from "./components/ChampionOdds";
 import { GroupStandings } from "./components/GroupStandings";
 import { Header } from "./components/Header";
 import { QualificationOdds } from "./components/QualificationOdds";
+import { TabNav, type TabId } from "./components/TabNav";
 import { TeamDetail } from "./components/TeamDetail";
 import { ThirdPlaceTable } from "./components/ThirdPlaceTable";
 import { AppStateLoadError, loadAppState } from "./lib/data";
@@ -14,6 +15,7 @@ export default function App() {
   const [appState, setAppState] = useState<AppState | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [selectedTeamCode, setSelectedTeamCode] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState<TabId>("champion");
 
   useEffect(() => {
     let cancelled = false;
@@ -73,32 +75,44 @@ export default function App() {
     <div className="min-h-screen">
       <Header metadata={appState.metadata} />
 
-      <main className="mx-auto flex max-w-7xl flex-col gap-10 px-4 py-10 sm:px-6 lg:px-8">
-        <ChampionOdds
-          round={appState.odds.round}
-          onSelectTeam={setSelectedTeamCode}
-        />
+      <main className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+        <TabNav active={activeTab} onChange={setActiveTab} />
 
-        <BracketView
-          bracket={appState.bracket}
-          onSelectTeam={setSelectedTeamCode}
-        />
+        {activeTab === "champion" && (
+          <ChampionOdds
+            round={appState.odds.round}
+            onSelectTeam={setSelectedTeamCode}
+          />
+        )}
 
-        <GroupStandings
-          standings={appState.standings}
-          thirdPlace={appState.third_place}
-          onSelectTeam={setSelectedTeamCode}
-        />
+        {activeTab === "bracket" && (
+          <BracketView
+            bracket={appState.bracket}
+            roundOdds={appState.odds.round}
+            onSelectTeam={setSelectedTeamCode}
+          />
+        )}
 
-        <ThirdPlaceTable
-          thirdPlace={appState.third_place}
-          onSelectTeam={setSelectedTeamCode}
-        />
+        {activeTab === "groups" && (
+          <div className="flex flex-col gap-10">
+            <GroupStandings
+              standings={appState.standings}
+              thirdPlace={appState.third_place}
+              onSelectTeam={setSelectedTeamCode}
+            />
+            <ThirdPlaceTable
+              thirdPlace={appState.third_place}
+              onSelectTeam={setSelectedTeamCode}
+            />
+          </div>
+        )}
 
-        <QualificationOdds
-          qualification={appState.odds.qualification}
-          onSelectTeam={setSelectedTeamCode}
-        />
+        {activeTab === "qualification" && (
+          <QualificationOdds
+            qualification={appState.odds.qualification}
+            onSelectTeam={setSelectedTeamCode}
+          />
+        )}
       </main>
 
       <footer className="border-t border-border px-4 py-6 text-center text-xs text-muted-foreground">

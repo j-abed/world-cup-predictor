@@ -48,18 +48,45 @@ npm run build
 Output goes to `frontend/dist/` and can be served as static files from
 anywhere (no server-side logic required).
 
+## Country flags
+
+`TeamBadge` renders flags via the [flag-icons](https://github.com/lipis/flag-icons)
+library, but `public/vendor/flag-icons/` is a **static copy**
+(`css/flag-icons.min.css` + the `flags/1x1/` SVGs only), not a JS import.
+Importing the package's CSS directly makes Vite inline every flag in the
+library as a bundled asset (~450KB), even though only ~48 are ever rendered.
+Serving it as a plain `<link>` (see `index.html`) lets the browser fetch only
+the flags actually used, on demand.
+
+`flag-icons` itself stays a devDependency purely as the source for that copy.
+To refresh after a version bump:
+
+```sh
+npm install flag-icons@latest
+rm -rf public/vendor/flag-icons
+mkdir -p public/vendor/flag-icons/css public/vendor/flag-icons/flags
+cp node_modules/flag-icons/css/flag-icons.min.css public/vendor/flag-icons/css/
+cp -r node_modules/flag-icons/flags/1x1 public/vendor/flag-icons/flags/
+```
+
+Team-code-to-flag mapping lives in `src/lib/flags.ts`. New teams need an
+entry there (FIFA-style 3-letter code → flag-icons code; UK home nations use
+flag-icons' `gb-eng`/`gb-sct`/`gb-wls`/`gb-nir` extensions).
+
 ## Project structure
 
 ```
 src/
-  App.tsx               Top-level layout and data loading
+  App.tsx               Top-level layout, tab state, and data loading
   types.ts               TypeScript types mirroring app_state.json
   lib/
     data.ts               Fetches and validates app_state.json
     bracket.ts             Orders bracket rounds so adjacent matches pair up
     team.ts                 Joins every section of app_state.json by team code
+    flags.ts                Team code -> flag-icons code mapping
   components/
     Header.tsx              Hero, key stats, data caveats
+    TabNav.tsx                Sticky tab bar (Champion Odds/Bracket/Groups/Qualification)
     ChampionOdds.tsx          Champion-odds leaderboard (visual centerpiece)
     BracketView.tsx           Projected knockout bracket (visual centerpiece)
     GroupStandings.tsx        Group-by-group standings cards
@@ -67,5 +94,5 @@ src/
     QualificationOdds.tsx     Sortable/filterable qualification-odds table
     TeamDetail.tsx             Slide-over panel with a team's full profile
     ProbabilityBar.tsx        Reusable animated probability bar
-    TeamBadge.tsx              Reusable team-code chip
+    TeamBadge.tsx              Reusable team flag/code chip
 ```
