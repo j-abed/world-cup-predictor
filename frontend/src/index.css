@@ -1,0 +1,65 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: "Space Grotesk", "Inter", system-ui, sans-serif;
+
+  --color-pitch-950: #06090f;
+  --color-pitch-900: #0a0e17;
+  --color-pitch-850: #0e1320;
+  --color-pitch-800: #131929;
+  --color-pitch-700: #1b2436;
+  --color-pitch-600: #263248;
+  --color-pitch-500: #36465f;
+  --color-pitch-400: #5b6f8c;
+  --color-pitch-300: #8c9cb4;
+  --color-pitch-200: #c2cce0;
+  --color-pitch-100: #e7ebf3;
+
+  --color-gold-500: #f2b341;
+  --color-gold-400: #f7cc73;
+  --color-gold-300: #fbe2a9;
+
+  --color-emerald-500: #2bd576;
+  --color-emerald-400: #5be39a;
+
+  --color-crimson-500: #f15b6c;
+  --color-crimson-400: #f68a96;
+}
+
+html {
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  background: var(--color-pitch-950);
+  color: var(--color-pitch-100);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--color-gold-500) 35%, transparent);
+}
+
+* {
+  scrollbar-color: var(--color-pitch-600) transparent;
+}
+
+@keyframes slide-in-right {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.animate-in {
+  animation: slide-in-right 220ms ease-out;
+}
