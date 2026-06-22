@@ -20,17 +20,17 @@ export function BracketView({ bracket, onSelectTeam }: BracketViewProps) {
   const rounds = useMemo(() => orderedBracketRounds(bracket), [bracket]);
 
   return (
-    <section className="rounded-3xl border border-pitch-700 bg-pitch-900/60 p-5 shadow-2xl shadow-black/40 sm:p-8">
+    <section className="pitch-card-strong rounded-3xl p-5 sm:p-8">
       <div className="mb-1 flex flex-wrap items-end justify-between gap-2">
         <div>
-          <h2 className="font-display text-2xl font-semibold text-pitch-100 sm:text-3xl">
+          <h2 className="text-2xl font-semibold text-foreground sm:text-3xl">
             Projected Knockout Bracket
           </h2>
-          <p className="text-sm text-pitch-300">
+          <p className="text-sm text-muted-foreground">
             Built from current group standings — updates as results come in.
           </p>
         </div>
-        <span className="text-xs text-pitch-400 sm:hidden">
+        <span className="text-xs text-muted-foreground sm:hidden">
           Scroll sideways to see the full bracket →
         </span>
       </div>
@@ -67,7 +67,7 @@ function BracketColumn({
 
   return (
     <div className="flex flex-col">
-      <h3 className="mb-3 text-center text-xs font-bold uppercase tracking-widest text-pitch-400">
+      <h3 className="mb-3 text-center text-xs font-bold uppercase tracking-widest text-muted-foreground">
         {title}
       </h3>
       <div
@@ -99,7 +99,7 @@ function BracketConnector() {
     <svg
       viewBox="0 0 24 100"
       preserveAspectRatio="none"
-      className="h-full w-6 shrink-0 text-pitch-600"
+      className="h-full w-6 shrink-0 text-foreground/25"
       aria-hidden
     >
       <path
@@ -121,12 +121,12 @@ function MatchCard({
   onSelectTeam: (code: string) => void;
 }) {
   return (
-    <div className="rounded-xl border border-pitch-700 bg-pitch-850/80 p-2.5 shadow-sm shadow-black/30">
+    <div className="glass rounded-xl p-2.5">
       <MatchTeamRow slot={match.home} onSelectTeam={onSelectTeam} />
-      <div className="my-1 h-px bg-pitch-700/80" />
+      <div className="my-1 h-px bg-border" />
       <MatchTeamRow slot={match.away} onSelectTeam={onSelectTeam} />
       {match.match_id != null && (
-        <div className="mt-1.5 text-center text-[10px] uppercase tracking-wider text-pitch-500">
+        <div className="mt-1.5 text-center text-[10px] uppercase tracking-wider text-muted-foreground/60">
           Match {match.match_id}
         </div>
       )}
@@ -149,19 +149,19 @@ function MatchTeamRow({
       disabled={!isResolved}
       onClick={() => isResolved && onSelectTeam(slot.code as string)}
       className={`flex w-full items-center gap-2 rounded-lg px-1 py-1 text-left transition ${
-        isResolved ? "hover:bg-pitch-700/60" : "cursor-default"
+        isResolved ? "hover:bg-accent/10" : "cursor-default"
       }`}
     >
       <TeamBadge code={slot.code} size="sm" />
       <div className="min-w-0 flex-1">
         <div
           className={`truncate text-sm font-medium ${
-            isResolved ? "text-pitch-100" : "text-pitch-500"
+            isResolved ? "text-foreground" : "text-muted-foreground/50"
           }`}
         >
           {slot.team ?? "TBD"}
         </div>
-        <div className="truncate text-[10px] text-pitch-500">
+        <div className="truncate text-[10px] text-muted-foreground/70">
           {slot.source ?? "—"}
         </div>
       </div>

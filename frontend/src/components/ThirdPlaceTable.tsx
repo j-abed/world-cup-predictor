@@ -14,19 +14,19 @@ export function ThirdPlaceTable({
   const qualifyingCount = rows.filter((r) => r.currently_qualifies).length;
 
   return (
-    <section className="rounded-2xl border border-pitch-700 bg-pitch-900/60 p-5 shadow-lg shadow-black/20">
+    <section className="pitch-card rounded-2xl p-5">
       <div className="mb-4 flex flex-wrap items-end justify-between gap-2">
         <div>
-          <h2 className="font-display text-xl font-semibold text-pitch-100">
+          <h2 className="text-xl font-semibold text-foreground">
             Third-Place Ranking
           </h2>
-          <p className="text-sm text-pitch-300">
+          <p className="text-sm text-muted-foreground">
             Ranked across all groups — the top {qualifyingCount} currently
             advance to the knockout round.
           </p>
         </div>
-        <span className="flex items-center gap-1.5 text-xs text-pitch-400">
-          <span className="h-2 w-2 rounded-full bg-emerald-400" />
+        <span className="flex items-center gap-1.5 text-xs text-muted-foreground">
+          <span className="h-2 w-2 rounded-full bg-success" />
           Currently qualifying
         </span>
       </div>
@@ -34,7 +34,7 @@ export function ThirdPlaceTable({
       <div className="overflow-x-auto">
         <table className="w-full min-w-[560px] border-collapse text-sm">
           <thead>
-            <tr className="text-left text-xs uppercase tracking-wide text-pitch-500">
+            <tr className="text-left text-xs uppercase tracking-wide text-muted-foreground/70">
               <th className="pb-2 font-medium">Rank</th>
               <th className="pb-2 font-medium">Team</th>
               <th className="pb-2 font-medium">Group</th>
@@ -48,44 +48,50 @@ export function ThirdPlaceTable({
             {rows.map((row) => (
               <tr
                 key={row.code}
+                data-group={row.group}
                 onClick={() => onSelectTeam(row.code)}
-                className={`cursor-pointer border-t border-pitch-800/80 transition hover:bg-pitch-800/60 ${
-                  row.currently_qualifies ? "bg-emerald-500/[0.06]" : ""
+                className={`cursor-pointer border-t border-border transition hover:bg-accent/10 ${
+                  row.currently_qualifies ? "bg-success/[0.08]" : ""
                 }`}
               >
-                <td className="py-2 font-mono text-pitch-400">
+                <td className="py-2 font-mono text-muted-foreground">
                   {row.third_rank}
                 </td>
                 <td className="py-2">
                   <div className="flex items-center gap-2">
-                    <TeamBadge code={row.code} size="sm" />
+                    <TeamBadge code={row.code} group={row.group} size="sm" />
                     <span
                       className={`font-medium ${
                         row.currently_qualifies
-                          ? "text-pitch-100"
-                          : "text-pitch-400"
+                          ? "text-foreground"
+                          : "text-muted-foreground"
                       }`}
                     >
                       {row.team}
                     </span>
                     {row.currently_qualifies && (
-                      <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+                      <span className="h-1.5 w-1.5 rounded-full bg-success" />
                     )}
                   </div>
                 </td>
-                <td className="py-2 text-pitch-400">Group {row.group}</td>
-                <td className="py-2 text-right tabular-nums text-pitch-300">
+                <td
+                  className="py-2 font-medium"
+                  style={{ color: "var(--group-accent)" }}
+                >
+                  Group {row.group}
+                </td>
+                <td className="py-2 text-right tabular-nums text-muted-foreground">
                   {row.played}
                 </td>
-                <td className="py-2 text-right font-mono font-semibold tabular-nums text-pitch-100">
+                <td className="py-2 text-right font-mono font-semibold tabular-nums text-foreground">
                   {row.points}
                 </td>
-                <td className="py-2 text-right tabular-nums text-pitch-300">
+                <td className="py-2 text-right tabular-nums text-muted-foreground">
                   {row.goal_difference > 0
                     ? `+${row.goal_difference}`
                     : row.goal_difference}
                 </td>
-                <td className="py-2 text-right tabular-nums text-pitch-300">
+                <td className="py-2 text-right tabular-nums text-muted-foreground">
                   {row.goals_for}
                 </td>
               </tr>

@@ -70,13 +70,13 @@ export function QualificationOdds({
   };
 
   return (
-    <section className="rounded-2xl border border-pitch-700 bg-pitch-900/60 p-5 shadow-lg shadow-black/20">
+    <section className="pitch-card rounded-2xl p-5">
       <div className="mb-4 flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h2 className="font-display text-xl font-semibold text-pitch-100">
+          <h2 className="text-xl font-semibold text-foreground">
             Qualification Odds
           </h2>
-          <p className="text-sm text-pitch-300">
+          <p className="text-sm text-muted-foreground">
             Simulated probability of advancing out of the group stage.
           </p>
         </div>
@@ -86,12 +86,12 @@ export function QualificationOdds({
             value={search}
             onChange={(event) => setSearch(event.target.value)}
             placeholder="Search team or code…"
-            className="rounded-lg border border-pitch-700 bg-pitch-850 px-3 py-1.5 text-sm text-pitch-100 placeholder:text-pitch-500 focus:border-gold-400/60 focus:outline-none"
+            className="glass rounded-lg px-3 py-1.5 text-sm text-foreground placeholder:text-muted-foreground/60 focus:border-accent/60 focus:outline-none"
           />
           <select
             value={groupFilter}
             onChange={(event) => setGroupFilter(event.target.value)}
-            className="rounded-lg border border-pitch-700 bg-pitch-850 px-3 py-1.5 text-sm text-pitch-100 focus:border-gold-400/60 focus:outline-none"
+            className="glass rounded-lg px-3 py-1.5 text-sm text-foreground focus:border-accent/60 focus:outline-none"
           >
             <option value="all">All groups</option>
             {groups.map((group) => (
@@ -106,17 +106,17 @@ export function QualificationOdds({
       <div className="overflow-x-auto">
         <table className="w-full min-w-[720px] border-collapse text-sm">
           <thead>
-            <tr className="text-left text-xs uppercase tracking-wide text-pitch-500">
+            <tr className="text-left text-xs uppercase tracking-wide text-muted-foreground/70">
               {COLUMNS.map((column) => (
                 <th key={column.key} className="pb-2 font-medium">
                   <button
                     type="button"
                     onClick={() => toggleSort(column.key)}
-                    className="inline-flex items-center gap-1 transition hover:text-pitch-200"
+                    className="inline-flex items-center gap-1 transition hover:text-foreground"
                   >
                     {column.label}
                     {sortKey === column.key && (
-                      <span className="text-gold-400">
+                      <span className="text-gold">
                         {sortDir === "asc" ? "▲" : "▼"}
                       </span>
                     )}
@@ -129,18 +129,24 @@ export function QualificationOdds({
             {rows.map((row) => (
               <tr
                 key={row.code}
+                data-group={row.group}
                 onClick={() => onSelectTeam(row.code)}
-                className="cursor-pointer border-t border-pitch-800/80 transition hover:bg-pitch-800/60"
+                className="cursor-pointer border-t border-border transition hover:bg-accent/10"
               >
                 <td className="py-2.5">
                   <div className="flex items-center gap-2">
-                    <TeamBadge code={row.code} size="sm" />
-                    <span className="font-medium text-pitch-100">
+                    <TeamBadge code={row.code} group={row.group} size="sm" />
+                    <span className="font-medium text-foreground">
                       {row.team}
                     </span>
                   </div>
                 </td>
-                <td className="py-2.5 text-pitch-400">{row.group}</td>
+                <td
+                  className="py-2.5 font-medium"
+                  style={{ color: "var(--group-accent)" }}
+                >
+                  {row.group}
+                </td>
                 <td className="w-36 py-2.5">
                   <ProbabilityBar
                     value={row.qualify_prob}
@@ -178,7 +184,7 @@ export function QualificationOdds({
           </tbody>
         </table>
         {rows.length === 0 && (
-          <p className="py-6 text-center text-sm text-pitch-500">
+          <p className="py-6 text-center text-sm text-muted-foreground">
             No teams match your filters.
           </p>
         )}

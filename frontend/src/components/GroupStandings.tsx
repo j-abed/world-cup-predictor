@@ -36,10 +36,10 @@ export function GroupStandings({
   return (
     <section>
       <div className="mb-5">
-        <h2 className="font-display text-2xl font-semibold text-pitch-100 sm:text-3xl">
+        <h2 className="text-2xl font-semibold text-foreground sm:text-3xl">
           Group Standings
         </h2>
-        <p className="text-sm text-pitch-300">
+        <p className="text-sm text-muted-foreground">
           Top two in each group advance automatically; the best third-place
           teams take the remaining knockout spots.
         </p>
@@ -49,14 +49,19 @@ export function GroupStandings({
         {groups.map(([group, rows]) => (
           <div
             key={group}
-            className="rounded-2xl border border-pitch-700 bg-pitch-900/60 p-4 shadow-lg shadow-black/20"
+            data-group={group}
+            className="pitch-card rounded-2xl border-t-2 p-4"
+            style={{ borderTopColor: "var(--group-accent)" }}
           >
-            <h3 className="mb-3 font-display text-sm font-bold uppercase tracking-widest text-pitch-400">
+            <h3
+              className="mb-3 text-sm font-bold uppercase tracking-widest"
+              style={{ color: "var(--group-accent)" }}
+            >
               Group {group}
             </h3>
             <table className="w-full border-collapse text-xs">
               <thead>
-                <tr className="text-pitch-500">
+                <tr className="text-muted-foreground/70">
                   <th className="w-6 pb-1.5 text-left font-medium" />
                   <th className="pb-1.5 text-left font-medium">Team</th>
                   <th className="pb-1.5 text-right font-medium">P</th>
@@ -75,44 +80,44 @@ export function GroupStandings({
                     <tr
                       key={row.code}
                       onClick={() => onSelectTeam(row.code)}
-                      className={`cursor-pointer border-t border-pitch-800/80 transition hover:bg-pitch-800/60 ${
-                        qualifies ? "bg-emerald-500/[0.06]" : ""
+                      className={`cursor-pointer border-t border-border transition hover:bg-accent/10 ${
+                        qualifies ? "bg-success/[0.08]" : ""
                       }`}
                     >
-                      <td className="py-1.5 text-pitch-500">{row.rank}</td>
+                      <td className="py-1.5 text-muted-foreground">{row.rank}</td>
                       <td className="py-1.5">
                         <div className="flex items-center gap-2">
                           <TeamBadge code={row.code} size="sm" />
                           <span
                             className={`truncate font-medium ${
-                              qualifies ? "text-pitch-100" : "text-pitch-300"
+                              qualifies ? "text-foreground" : "text-muted-foreground"
                             }`}
                           >
                             {row.team}
                           </span>
                           {row.rank === 3 && qualifies && (
-                            <span className="rounded-full bg-emerald-500/20 px-1.5 py-0.5 text-[9px] font-bold uppercase text-emerald-400">
+                            <span className="rounded-full bg-success/20 px-1.5 py-0.5 text-[9px] font-bold uppercase text-success">
                               3rd
                             </span>
                           )}
                         </div>
                       </td>
-                      <td className="py-1.5 text-right tabular-nums text-pitch-300">
+                      <td className="py-1.5 text-right tabular-nums text-muted-foreground">
                         {row.played}
                       </td>
-                      <td className="py-1.5 text-right tabular-nums text-pitch-300">
+                      <td className="py-1.5 text-right tabular-nums text-muted-foreground">
                         {row.wins}
                       </td>
-                      <td className="py-1.5 text-right tabular-nums text-pitch-300">
+                      <td className="py-1.5 text-right tabular-nums text-muted-foreground">
                         {row.draws}
                       </td>
-                      <td className="py-1.5 text-right tabular-nums text-pitch-300">
+                      <td className="py-1.5 text-right tabular-nums text-muted-foreground">
                         {row.losses}
                       </td>
-                      <td className="py-1.5 text-right tabular-nums text-pitch-300">
+                      <td className="py-1.5 text-right tabular-nums text-muted-foreground">
                         {row.goal_difference > 0 ? `+${row.goal_difference}` : row.goal_difference}
                       </td>
-                      <td className="py-1.5 text-right font-mono font-bold tabular-nums text-pitch-100">
+                      <td className="py-1.5 text-right font-mono font-bold tabular-nums text-foreground">
                         {row.points}
                       </td>
                     </tr>

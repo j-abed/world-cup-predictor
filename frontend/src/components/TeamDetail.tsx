@@ -24,18 +24,21 @@ export function TeamDetail({ team, onClose }: TeamDetailProps) {
     team;
 
   return (
-    <div className="fixed inset-0 z-50 flex justify-end">
+    <div
+      className="fixed inset-0 z-50 flex justify-end"
+      data-group={team.group ?? undefined}
+    >
       <button
         type="button"
         aria-label="Close team detail"
         onClick={onClose}
         className="absolute inset-0 bg-black/60 backdrop-blur-sm"
       />
-      <div className="relative flex h-full w-full max-w-md flex-col overflow-y-auto border-l border-pitch-700 bg-pitch-900 p-6 shadow-2xl animate-in">
+      <div className="pitch-card-strong animate-in slide-in-from-right fade-in relative flex h-full w-full max-w-md flex-col overflow-y-auto p-6 duration-300 ease-out">
         <button
           type="button"
           onClick={onClose}
-          className="absolute right-4 top-4 rounded-full border border-pitch-700 p-1.5 text-pitch-400 transition hover:border-pitch-500 hover:text-pitch-100"
+          className="absolute right-4 top-4 rounded-full border border-border p-1.5 text-muted-foreground transition hover:border-accent/40 hover:text-foreground"
           aria-label="Close"
         >
           ✕
@@ -44,11 +47,14 @@ export function TeamDetail({ team, onClose }: TeamDetailProps) {
         <div className="flex items-center gap-4 pr-8">
           <TeamBadge code={team.code} size="lg" />
           <div>
-            <h2 className="font-display text-2xl font-bold text-pitch-100">
-              {team.team}
-            </h2>
+            <h2 className="text-2xl font-bold text-foreground">{team.team}</h2>
             {team.group && (
-              <p className="text-sm text-pitch-400">Group {team.group}</p>
+              <p
+                className="text-sm font-medium"
+                style={{ color: "var(--group-accent)" }}
+              >
+                Group {team.group}
+              </p>
             )}
           </div>
         </div>
@@ -80,26 +86,26 @@ export function TeamDetail({ team, onClose }: TeamDetailProps) {
         {(qualifier || thirdPlace) && (
           <Section title="Qualification Path">
             {qualifier && (
-              <p className="text-sm text-pitch-300">
+              <p className="text-sm text-muted-foreground">
                 Projected as{" "}
-                <span className="font-medium text-pitch-100">
+                <span className="font-medium text-foreground">
                   {qualifier.qualifying_path}
                 </span>{" "}
                 ({qualifier.source}), seed #{qualifier.seed}.
               </p>
             )}
             {thirdPlace && (
-              <p className="mt-1.5 text-sm text-pitch-300">
+              <p className="mt-1.5 text-sm text-muted-foreground">
                 Ranked{" "}
-                <span className="font-medium text-pitch-100">
+                <span className="font-medium text-foreground">
                   #{thirdPlace.third_rank}
                 </span>{" "}
                 among third-place teams —{" "}
                 <span
                   className={
                     thirdPlace.currently_qualifies
-                      ? "font-medium text-emerald-400"
-                      : "text-crimson-400"
+                      ? "font-medium text-success"
+                      : "text-destructive"
                   }
                 >
                   {thirdPlace.currently_qualifies
@@ -230,8 +236,8 @@ function Section({
   children: React.ReactNode;
 }) {
   return (
-    <div className="mt-6 border-t border-pitch-800 pt-5">
-      <h3 className="mb-3 text-xs font-bold uppercase tracking-widest text-pitch-500">
+    <div className="mt-6 border-t border-border pt-5">
+      <h3 className="mb-3 text-xs font-bold uppercase tracking-widest text-muted-foreground">
         {title}
       </h3>
       {children}
@@ -249,13 +255,13 @@ function MiniStat({
   emphasize?: boolean;
 }) {
   return (
-    <div className="rounded-lg bg-pitch-850 py-2">
-      <div className="text-[10px] uppercase tracking-wide text-pitch-500">
+    <div className="rounded-lg bg-card/60 py-2">
+      <div className="text-[10px] uppercase tracking-wide text-muted-foreground">
         {label}
       </div>
       <div
         className={`font-mono text-sm font-bold tabular-nums ${
-          emphasize ? "text-gold-300" : "text-pitch-100"
+          emphasize ? "text-gold" : "text-foreground"
         }`}
       >
         {value}

@@ -1,6 +1,8 @@
 interface TeamBadgeProps {
   code: string | null;
   rank?: number;
+  /** Group letter (A-L) — tints the badge ring with that group's accent color. */
+  group?: string | null;
   size?: "sm" | "md" | "lg";
 }
 
@@ -11,21 +13,25 @@ const SIZE_CLASS: Record<NonNullable<TeamBadgeProps["size"]>, string> = {
 };
 
 const MEDAL_RING: Record<number, string> = {
-  1: "ring-2 ring-gold-400 shadow-[0_0_18px_-2px_rgba(242,179,65,0.7)]",
-  2: "ring-2 ring-pitch-200/70",
+  1: "ring-2 ring-accent shadow-[0_0_18px_-2px_oklch(0.84_0.17_92_/_0.55)]",
+  2: "ring-2 ring-foreground/50",
   3: "ring-2 ring-amber-700/60",
 };
 
-export function TeamBadge({ code, rank, size = "md" }: TeamBadgeProps) {
+export function TeamBadge({ code, rank, group, size = "md" }: TeamBadgeProps) {
   const isTbd = !code || code === "TBD";
   const ring = rank ? MEDAL_RING[rank] ?? "" : "";
+  const groupRingStyle =
+    !rank && group ? { borderColor: "var(--group-accent)" } : undefined;
 
   return (
     <span
+      data-group={!rank && group ? group : undefined}
+      style={groupRingStyle}
       className={`inline-flex shrink-0 items-center justify-center rounded-full border font-display font-bold tracking-wide ${SIZE_CLASS[size]} ${ring} ${
         isTbd
-          ? "border-dashed border-pitch-500 text-pitch-400"
-          : "border-pitch-600 bg-pitch-800 text-pitch-100"
+          ? "border-dashed border-muted-foreground/40 text-muted-foreground"
+          : "bg-secondary text-foreground border-border"
       }`}
     >
       {isTbd ? "—" : code}

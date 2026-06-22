@@ -43,12 +43,12 @@ export default function App() {
 
   if (error) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-pitch-950 px-4 text-center">
-        <div className="max-w-md rounded-2xl border border-crimson-500/40 bg-crimson-500/10 p-6">
-          <h1 className="font-display text-lg font-semibold text-crimson-400">
+      <div className="flex min-h-screen items-center justify-center px-4 text-center">
+        <div className="rounded-2xl border border-destructive/40 bg-destructive/10 p-6 max-w-md">
+          <h1 className="text-lg font-semibold text-destructive">
             Couldn&apos;t load prediction data
           </h1>
-          <p className="mt-2 text-sm text-pitch-300">{error}</p>
+          <p className="mt-2 text-sm text-muted-foreground">{error}</p>
         </div>
       </div>
     );
@@ -56,9 +56,9 @@ export default function App() {
 
   if (!appState || !teamIndex) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-pitch-950">
-        <div className="flex flex-col items-center gap-3 text-pitch-400">
-          <div className="h-8 w-8 animate-spin rounded-full border-2 border-pitch-700 border-t-gold-400" />
+      <div className="flex min-h-screen items-center justify-center">
+        <div className="flex flex-col items-center gap-3 text-muted-foreground">
+          <div className="h-8 w-8 animate-spin rounded-full border-2 border-border border-t-accent" />
           <p className="text-sm">Loading projections…</p>
         </div>
       </div>
@@ -70,7 +70,7 @@ export default function App() {
     : null;
 
   return (
-    <div className="min-h-screen bg-pitch-950">
+    <div className="min-h-screen">
       <Header metadata={appState.metadata} />
 
       <main className="mx-auto flex max-w-7xl flex-col gap-10 px-4 py-10 sm:px-6 lg:px-8">
@@ -101,7 +101,7 @@ export default function App() {
         />
       </main>
 
-      <footer className="border-t border-pitch-800 px-4 py-6 text-center text-xs text-pitch-500">
+      <footer className="border-t border-border px-4 py-6 text-center text-xs text-muted-foreground">
         Projections are simulation outputs, not betting odds. See the data
         caveats panel above for methodology notes.
       </footer>

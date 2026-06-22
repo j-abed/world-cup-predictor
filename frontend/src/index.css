@@ -1,65 +1,373 @@
-@import "tailwindcss";
+@import "tailwindcss" source(none);
+@import "tw-animate-css";
+@source "../src";
 
-@theme {
-  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-display: "Space Grotesk", "Inter", system-ui, sans-serif;
+@custom-variant dark (&:is(.dark *));
 
-  --color-pitch-950: #06090f;
-  --color-pitch-900: #0a0e17;
-  --color-pitch-850: #0e1320;
-  --color-pitch-800: #131929;
-  --color-pitch-700: #1b2436;
-  --color-pitch-600: #263248;
-  --color-pitch-500: #36465f;
-  --color-pitch-400: #5b6f8c;
-  --color-pitch-300: #8c9cb4;
-  --color-pitch-200: #c2cce0;
-  --color-pitch-100: #e7ebf3;
+/*
+ * Design system definition.
+ *
+ * The @theme inline block maps CSS custom properties to Tailwind utility
+ * classes (e.g. --color-primary -> bg-primary, text-primary).
+ *
+ * The :root and .dark blocks define the actual color values using oklch.
+ * All colors MUST use oklch format.
+ *
+ * To add a new semantic color:
+ * 1. Add the variable to :root (light value) and .dark (dark value)
+ * 2. Register it in @theme inline as --color-<name>: var(--<name>)
+ */
 
-  --color-gold-500: #f2b341;
-  --color-gold-400: #f7cc73;
-  --color-gold-300: #fbe2a9;
-
-  --color-emerald-500: #2bd576;
-  --color-emerald-400: #5be39a;
-
-  --color-crimson-500: #f15b6c;
-  --color-crimson-400: #f68a96;
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-ring-offset-background: var(--background);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
 }
 
-html {
-  color-scheme: dark;
+:root {
+  --radius: 0.875rem;
+  /* Pitch palette — translucent grass greens, chalk whites, scarlet & sodium-lamp amber */
+  --background: oklch(0.28 0.10 152);
+  --foreground: oklch(0.96 0.02 95);
+  /* Cards let the mowed pitch stripes show through */
+  --card: oklch(0.36 0.09 152);
+  --card-foreground: oklch(0.96 0.02 95);
+  --popover: oklch(0.34 0.09 152);
+  --popover-foreground: oklch(0.96 0.02 95);
+  --primary: oklch(0.66 0.23 28); /* scarlet — kit red / goal net */
+  --primary-foreground: oklch(0.98 0.01 95);
+  --secondary: oklch(0.40 0.10 152);
+  --secondary-foreground: oklch(0.96 0.02 95);
+  --muted: oklch(0.34 0.08 152);
+  --muted-foreground: oklch(0.78 0.04 105);
+  --accent: oklch(0.84 0.17 92); /* sodium-lamp amber */
+  --accent-foreground: oklch(0.18 0.05 158);
+  --destructive: oklch(0.62 0.24 27);
+  --destructive-foreground: oklch(0.98 0.01 95);
+  /* Success/qualifying — pitch-line green, distinct from the background green */
+  --success: oklch(0.74 0.19 145);
+  --success-foreground: oklch(0.16 0.05 158);
+  --border: oklch(0.95 0.02 95 / 0.14);
+  --input: oklch(0.95 0.02 95 / 0.18);
+  --ring: oklch(0.66 0.23 28);
+  --chart-1: oklch(0.66 0.23 28);
+  --chart-2: oklch(0.84 0.17 92);
+  --chart-3: oklch(0.70 0.16 200);
+  --chart-4: oklch(0.62 0.18 280);
+  --chart-5: oklch(0.74 0.19 145);
+  --sidebar: oklch(0.32 0.08 152);
+  --sidebar-foreground: oklch(0.97 0.01 250);
+  --sidebar-primary: oklch(0.66 0.23 28);
+  --sidebar-primary-foreground: oklch(0.98 0.01 95);
+  --sidebar-accent: oklch(0.34 0.08 152);
+  --sidebar-accent-foreground: oklch(0.97 0.01 250);
+  --sidebar-border: oklch(0.95 0.02 95 / 0.14);
+  --sidebar-ring: oklch(0.66 0.23 28);
+
+  --gradient-pitch: linear-gradient(135deg, oklch(0.30 0.09 152) 0%, oklch(0.36 0.10 152) 50%, oklch(0.26 0.08 152) 100%);
+  --gradient-gold: linear-gradient(135deg, oklch(0.88 0.16 92), oklch(0.74 0.18 70));
+  --gradient-trophy: linear-gradient(135deg, oklch(0.90 0.14 95), oklch(0.78 0.20 70) 50%, oklch(0.66 0.22 45));
+  --gradient-card: linear-gradient(180deg, oklch(0.38 0.09 152 / 0.35) 0%, oklch(0.30 0.08 152 / 0.35) 100%);
+  --shadow-glow: 0 0 40px oklch(0.66 0.23 28 / 0.28);
+  --shadow-card: 0 8px 30px oklch(0.06 0.02 158 / 0.45), inset 0 1px 0 oklch(1 0 0 / 0.05);
+
+  --font-display: "Bebas Neue", "Inter Tight", system-ui, sans-serif;
+  --font-sans: "Inter Tight", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
 }
 
-body {
-  margin: 0;
-  background: var(--color-pitch-950);
-  color: var(--color-pitch-100);
-  font-family: var(--font-sans);
-  -webkit-font-smoothing: antialiased;
+.dark {
+  --background: oklch(0.129 0.042 264.695);
+  --foreground: oklch(0.984 0.003 247.858);
+  --card: oklch(0.208 0.042 265.755);
+  --card-foreground: oklch(0.984 0.003 247.858);
+  --popover: oklch(0.208 0.042 265.755);
+  --popover-foreground: oklch(0.984 0.003 247.858);
+  --primary: oklch(0.929 0.013 255.508);
+  --primary-foreground: oklch(0.208 0.042 265.755);
+  --secondary: oklch(0.279 0.041 260.031);
+  --secondary-foreground: oklch(0.984 0.003 247.858);
+  --muted: oklch(0.279 0.041 260.031);
+  --muted-foreground: oklch(0.704 0.04 256.788);
+  --accent: oklch(0.279 0.041 260.031);
+  --accent-foreground: oklch(0.984 0.003 247.858);
+  --destructive: oklch(0.704 0.191 22.216);
+  --destructive-foreground: oklch(0.984 0.003 247.858);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.551 0.027 264.364);
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: oklch(0.208 0.042 265.755);
+  --sidebar-foreground: oklch(0.984 0.003 247.858);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
+  --sidebar-accent: oklch(0.279 0.041 260.031);
+  --sidebar-accent-foreground: oklch(0.984 0.003 247.858);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.551 0.027 264.364);
 }
 
-#root {
-  min-height: 100vh;
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  body {
+    background: var(--color-background);
+    background-image:
+      /* stadium floodlight vignette top */
+      radial-gradient(ellipse 120% 60% at 50% -10%, oklch(0.55 0.10 100 / 0.22), transparent 65%),
+      radial-gradient(ellipse 60% 40% at 15% 0%, oklch(0.60 0.12 95 / 0.14), transparent 60%),
+      radial-gradient(ellipse 60% 40% at 85% 0%, oklch(0.60 0.12 95 / 0.14), transparent 60%),
+      /* mowed pitch stripes — soft, low-contrast grass bands */
+      repeating-linear-gradient(
+        90deg,
+        oklch(0.34 0.10 152 / 0.55) 0 110px,
+        oklch(0.26 0.08 152 / 0.45) 110px 220px
+      );
+    background-attachment: fixed;
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    font-feature-settings: "ss01", "cv11", "tnum";
+  }
+
+  /* Narrower, softer stripes on mobile so the mowed pattern stays visible without dominating */
+  @media (max-width: 768px) {
+    body {
+      background-image:
+        radial-gradient(ellipse 140% 50% at 50% -10%, oklch(0.55 0.10 100 / 0.18), transparent 65%),
+        repeating-linear-gradient(
+          90deg,
+          oklch(0.34 0.10 152 / 0.50) 0 56px,
+          oklch(0.26 0.08 152 / 0.40) 56px 112px
+        );
+      background-attachment: scroll;
+    }
+  }
+
+  h1, h2, h3, .font-display {
+    font-family: var(--font-display);
+    letter-spacing: 0.01em;
+  }
+
+  .font-mono, code, kbd {
+    font-family: var(--font-mono);
+  }
 }
+
+@utility glass {
+  background:
+    repeating-linear-gradient(90deg, oklch(0.42 0.10 152 / 0.03) 0 64px, oklch(0.34 0.08 152 / 0.05) 64px 128px),
+    var(--gradient-card);
+  backdrop-filter: blur(18px) saturate(120%);
+  border: 1px solid oklch(1 0 0 / 0.08);
+  box-shadow: var(--shadow-card);
+}
+
+@utility glass-strong {
+  background:
+    repeating-linear-gradient(90deg, oklch(0.46 0.11 152 / 0.04) 0 64px, oklch(0.38 0.09 152 / 0.06) 64px 128px),
+    linear-gradient(180deg, oklch(0.38 0.09 152 / 0.55) 0%, oklch(0.30 0.08 152 / 0.55) 100%);
+  backdrop-filter: blur(28px) saturate(140%);
+  border: 1px solid oklch(1 0 0 / 0.10);
+  box-shadow: var(--shadow-card);
+}
+
+/* Translucent card surface with soft pitch texture that supports content */
+@utility pitch-card {
+  background-color: transparent;
+  background-image:
+    /* soft frosted tint */
+    linear-gradient(180deg, oklch(0.34 0.09 152 / 0.55), oklch(0.24 0.08 152 / 0.58)),
+    /* very faint turf stripes */
+    repeating-linear-gradient(
+      90deg,
+      oklch(0.38 0.10 152 / 0.12) 0 110px,
+      oklch(0.28 0.08 152 / 0.10) 110px 220px
+    );
+  background-attachment: scroll, fixed;
+  background-size: auto, auto;
+  backdrop-filter: blur(10px) saturate(105%);
+  border: 1px solid oklch(1 0 0 / 0.10);
+  box-shadow:
+    inset 0 1px 0 oklch(1 0 0 / 0.10),
+    inset 0 -1px 0 oklch(0 0 0 / 0.18),
+    inset 0 0 0 1px oklch(1 0 0 / 0.03),
+    0 6px 24px oklch(0.06 0.02 158 / 0.35);
+}
+
+@utility pitch-card-strong {
+  background-color: transparent;
+  background-image:
+    linear-gradient(180deg, oklch(0.36 0.10 152 / 0.62), oklch(0.26 0.09 152 / 0.64)),
+    repeating-linear-gradient(
+      90deg,
+      oklch(0.40 0.10 152 / 0.14) 0 110px,
+      oklch(0.30 0.08 152 / 0.12) 110px 220px
+    );
+  background-attachment: scroll, fixed;
+  backdrop-filter: blur(12px) saturate(110%);
+  border: 1px solid oklch(1 0 0 / 0.12);
+  box-shadow:
+    inset 0 1px 0 oklch(1 0 0 / 0.12),
+    inset 0 -1px 0 oklch(0 0 0 / 0.20),
+    0 10px 36px oklch(0.06 0.02 158 / 0.45);
+}
+
+/* Mobile: keep texture subtle so content remains legible */
+@media (max-width: 768px) {
+  .pitch-card {
+    background-image:
+      linear-gradient(180deg, oklch(0.34 0.09 152 / 0.52), oklch(0.24 0.08 152 / 0.55)),
+      repeating-linear-gradient(
+        90deg,
+        oklch(0.38 0.10 152 / 0.10) 0 56px,
+        oklch(0.28 0.08 152 / 0.08) 56px 112px
+      );
+    background-attachment: scroll, scroll;
+    backdrop-filter: blur(8px) saturate(105%);
+  }
+  .pitch-card-strong {
+    background-image:
+      linear-gradient(180deg, oklch(0.36 0.10 152 / 0.58), oklch(0.26 0.09 152 / 0.60)),
+      repeating-linear-gradient(
+        90deg,
+        oklch(0.40 0.10 152 / 0.12) 0 56px,
+        oklch(0.30 0.08 152 / 0.10) 56px 112px
+      );
+    background-attachment: scroll, scroll;
+    backdrop-filter: blur(10px) saturate(110%);
+  }
+}
+
+@utility text-gold {
+  background: var(--gradient-gold);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@utility animate-fade-up {
+  animation: fadeUp 0.5s ease-out both;
+}
+
+/* Soccer pitch turf stripes — alternating mowed bands */
+@utility pitch-stripes {
+  background-image: repeating-linear-gradient(
+    90deg,
+    oklch(0.40 0.10 158 / 0.06) 0 64px,
+    oklch(0.30 0.08 158 / 0.10) 64px 128px
+  );
+}
+
+/* Chalk pitch markings: center circle, halfway line, penalty arc — pure SVG-in-CSS */
+@utility pitch-markings {
+  background-image:
+    radial-gradient(circle at 50% 50%, transparent 78px, oklch(0.95 0.02 95 / 0.08) 78px, oklch(0.95 0.02 95 / 0.08) 80px, transparent 80px),
+    radial-gradient(circle at 50% 50%, oklch(0.95 0.02 95 / 0.10) 1px, transparent 2px),
+    linear-gradient(90deg, transparent calc(50% - 1px), oklch(0.95 0.02 95 / 0.08) calc(50% - 1px), oklch(0.95 0.02 95 / 0.08) calc(50% + 1px), transparent calc(50% + 1px));
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/* Chalk dashed underline used as scoreboard separator */
+@utility chalk-rule {
+  background-image: linear-gradient(90deg, oklch(0.95 0.02 95 / 0.35) 50%, transparent 50%);
+  background-size: 6px 1px;
+  background-repeat: repeat-x;
+}
+
+/* Hexagon soccer-ball pattern */
+@utility hex-pattern {
+  background-color: transparent;
+  background-image:
+    radial-gradient(circle at 50% 0%, oklch(1 0 0 / 0.04) 1.2px, transparent 1.4px),
+    radial-gradient(circle at 0% 50%, oklch(1 0 0 / 0.04) 1.2px, transparent 1.4px),
+    radial-gradient(circle at 100% 50%, oklch(1 0 0 / 0.04) 1.2px, transparent 1.4px),
+    radial-gradient(circle at 50% 100%, oklch(1 0 0 / 0.04) 1.2px, transparent 1.4px);
+  background-size: 28px 28px;
+}
+
+/* Animated stadium-light sweep behind hero title */
+@keyframes spotlight {
+  0%, 100% { transform: translateX(-20%); opacity: 0.35; }
+  50% { transform: translateX(20%); opacity: 0.6; }
+}
+@utility animate-spotlight {
+  animation: spotlight 8s ease-in-out infinite;
+}
+
+/* Group accent colors — A through L, applied via data-group attribute */
+[data-group="A"] { --group-accent: oklch(0.66 0.23 28); }   /* red */
+[data-group="B"] { --group-accent: oklch(0.74 0.18 60); }   /* orange */
+[data-group="C"] { --group-accent: oklch(0.84 0.17 92); }   /* amber */
+[data-group="D"] { --group-accent: oklch(0.78 0.18 130); }  /* lime */
+[data-group="E"] { --group-accent: oklch(0.72 0.18 162); }  /* emerald */
+[data-group="F"] { --group-accent: oklch(0.70 0.14 195); }  /* teal */
+[data-group="G"] { --group-accent: oklch(0.68 0.15 230); }  /* sky */
+[data-group="H"] { --group-accent: oklch(0.62 0.20 265); }  /* indigo */
+[data-group="I"] { --group-accent: oklch(0.62 0.22 300); }  /* violet */
+[data-group="J"] { --group-accent: oklch(0.66 0.23 335); }  /* magenta */
+[data-group="K"] { --group-accent: oklch(0.72 0.14 20); }   /* coral */
+[data-group="L"] { --group-accent: oklch(0.78 0.12 75); }   /* sand */
 
 ::selection {
-  background: color-mix(in srgb, var(--color-gold-500) 35%, transparent);
+  background: oklch(0.84 0.17 92 / 0.35);
 }
 
 * {
-  scrollbar-color: var(--color-pitch-600) transparent;
-}
-
-@keyframes slide-in-right {
-  from {
-    transform: translateX(100%);
-  }
-  to {
-    transform: translateX(0);
-  }
-}
-
-.animate-in {
-  animation: slide-in-right 220ms ease-out;
+  scrollbar-color: var(--secondary) transparent;
 }
