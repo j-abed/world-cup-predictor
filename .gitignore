@@ -28,3 +28,8 @@ outputs/
 
 # Local blog/research artifacts
 notes/blog-artifacts/
+
+# Local screenshot tooling from repo root
+/node_modules/
+/package-lock.json
+/package.json
