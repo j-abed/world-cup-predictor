@@ -31,6 +31,21 @@ const groupCoverageSchema = z.object({
   unexpected_in_fixtures: z.string(),
 });
 
+const fixtureMatchSchema = z.object({
+  match_id: z.number(),
+  group: z.string(),
+  kickoff: z.string(),
+  home_team_id: z.string(),
+  home_team: z.string(),
+  home_code: z.string(),
+  away_team_id: z.string(),
+  away_team: z.string(),
+  away_code: z.string(),
+  status: z.string(),
+  home_score: z.number().nullable(),
+  away_score: z.number().nullable(),
+});
+
 const groupStandingSchema = z.object({
   group_code: z.string(),
   rank: z.number(),
@@ -159,6 +174,7 @@ const oddsSchema = z.object({
 export const appStateSchema = z.object({
   metadata: metadataSchema,
   coverage: z.array(groupCoverageSchema),
+  fixtures: z.array(fixtureMatchSchema),
   standings: z.array(groupStandingSchema),
   third_place: z.array(thirdPlaceEntrySchema),
   projected_qualifiers: z.array(projectedQualifierSchema),

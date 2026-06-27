@@ -38,19 +38,19 @@ Phased roadmap for reliability, freshness, and product polish during the 2026 to
 
 ---
 
-## Phase 2 — Close data/UI gaps
+## Phase 2 — Close data/UI gaps (in progress)
 
 **Goal:** Show everything the model already knows.
 
-| Task | Files |
-|------|-------|
-| Coverage banner in Header | `Header.tsx` |
-| Projected R32 field view | New `ProjectedField.tsx` |
-| Fixtures & Results tab | Extend `web_exports.py`, new component |
-| URL state (`?tab=groups&team=BRA`) | `App.tsx` |
-| Generalize group finish odds (all 12 groups) | `export_web_state.py`, rename `group_d` → `group_finish` |
-| Clarify bracket probability labels | `BracketView.tsx` |
-| OG meta tags | `index.html` |
+| Task | Status |
+|------|--------|
+| Coverage banner in Header | Done |
+| Fixtures & Results tab | Done |
+| Projected R32 field view | Pending |
+| URL state (`?tab=groups&team=BRA`) | Pending |
+| Generalize group finish odds (all 12 groups) | Pending |
+| Clarify bracket probability labels | Pending |
+| OG meta tags | Pending |
 
 ---
 

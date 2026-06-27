@@ -122,6 +122,65 @@ def build_bracket_payload(bracket: pd.DataFrame) -> dict[str, list[dict[str, Any
     return payload
 
 
+def build_fixtures_payload(
+    fixtures: pd.DataFrame,
+    results: pd.DataFrame,
+    teams: pd.DataFrame,
+) -> list[dict[str, Any]]:
+    team_lookup = {
+        str(row["team_id"]): {
+            "team": str(row["name"]),
+            "code": str(row["code"]),
+        }
+        for _, row in teams.iterrows()
+    }
+
+    results_by_match = results.set_index("match_id", drop=False)
+
+    rows: list[dict[str, Any]] = []
+
+    for _, fixture in fixtures.iterrows():
+        match_id = int(fixture["match_id"])
+        home_id = str(fixture["home_team"])
+        away_id = str(fixture["away_team"])
+
+        if match_id in results_by_match.index:
+            result = results_by_match.loc[match_id]
+            if isinstance(result, pd.DataFrame):
+                result = result.iloc[0]
+
+            status = str(result["status"])
+            home_score = safe_int(result.get("home_score"))
+            away_score = safe_int(result.get("away_score"))
+        else:
+            status = "Scheduled"
+            home_score = None
+            away_score = None
+
+        home = team_lookup[home_id]
+        away = team_lookup[away_id]
+
+        rows.append(
+            {
+                "match_id": match_id,
+                "group": str(fixture["group"]),
+                "kickoff": str(fixture["kickoff"]),
+                "home_team_id": home_id,
+                "home_team": home["team"],
+                "home_code": home["code"],
+                "away_team_id": away_id,
+                "away_team": away["team"],
+                "away_code": away["code"],
+                "status": status,
+                "home_score": home_score,
+                "away_score": away_score,
+            }
+        )
+
+    rows.sort(key=lambda row: row["kickoff"])
+    return rows
+
+
 def build_metadata(
     teams: pd.DataFrame,
     fixtures: pd.DataFrame,
@@ -248,6 +307,11 @@ def export_web_state(
     third_place_payload = dataframe_records(third_place_table)
     projected_qualifiers_payload = dataframe_records(projected_qualifiers)
     bracket_payload = build_bracket_payload(bracket)
+    fixtures_payload = build_fixtures_payload(
+        fixtures=fixtures,
+        results=results,
+        teams=teams,
+    )
 
     odds_payload = {
         "group_d": dataframe_records(group_d_with_labels),
@@ -258,6 +322,7 @@ def export_web_state(
     app_state = {
         "metadata": metadata,
         "coverage": dataframe_records(coverage),
+        "fixtures": fixtures_payload,
         "standings": standings_payload,
         "third_place": third_place_payload,
         "projected_qualifiers": projected_qualifiers_payload,
@@ -268,6 +333,7 @@ def export_web_state(
     outputs = {
         "app_state": output_path / "app_state.json",
         "metadata": output_path / "metadata.json",
+        "fixtures": output_path / "fixtures.json",
         "standings": output_path / "standings.json",
         "third_place": output_path / "third_place.json",
         "projected_qualifiers": output_path / "projected_qualifiers.json",
@@ -277,6 +343,7 @@ def export_web_state(
 
     write_json(outputs["app_state"], app_state)
     write_json(outputs["metadata"], metadata)
+    write_json(outputs["fixtures"], fixtures_payload)
     write_json(outputs["standings"], standings_payload)
     write_json(outputs["third_place"], third_place_payload)
     write_json(outputs["projected_qualifiers"], projected_qualifiers_payload)

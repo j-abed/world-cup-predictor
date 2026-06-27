@@ -1,4 +1,4 @@
-export type TabId = "champion" | "bracket" | "groups" | "qualification";
+export type TabId = "champion" | "fixtures" | "bracket" | "groups" | "qualification";
 
 interface Tab {
   id: TabId;
@@ -7,6 +7,7 @@ interface Tab {
 
 const TABS: Tab[] = [
   { id: "champion", label: "Champion Odds" },
+  { id: "fixtures", label: "Fixtures" },
   { id: "bracket", label: "Bracket" },
   { id: "groups", label: "Groups" },
   { id: "qualification", label: "Qualification Odds" },

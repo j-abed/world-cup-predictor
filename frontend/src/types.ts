@@ -29,6 +29,21 @@ export interface GroupCoverage {
   unexpected_in_fixtures: string;
 }
 
+export interface FixtureMatch {
+  match_id: number;
+  group: string;
+  kickoff: string;
+  home_team_id: string;
+  home_team: string;
+  home_code: string;
+  away_team_id: string;
+  away_team: string;
+  away_code: string;
+  status: string;
+  home_score: number | null;
+  away_score: number | null;
+}
+
 export interface GroupStanding {
   group_code: string;
   rank: number;
@@ -159,6 +174,7 @@ export interface Odds {
 export interface AppState {
   metadata: Metadata;
   coverage: GroupCoverage[];
+  fixtures: FixtureMatch[];
   standings: GroupStanding[];
   third_place: ThirdPlaceEntry[];
   projected_qualifiers: ProjectedQualifier[];

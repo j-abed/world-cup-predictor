@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { BracketView } from "./components/BracketView";
 import { ChampionOdds } from "./components/ChampionOdds";
+import { FixturesView } from "./components/FixturesView";
 import { GroupStandings } from "./components/GroupStandings";
 import { Header } from "./components/Header";
 import { QualificationOdds } from "./components/QualificationOdds";
@@ -73,7 +74,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen">
-      <Header metadata={appState.metadata} />
+      <Header metadata={appState.metadata} coverage={appState.coverage} />
 
       <main className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
         <TabNav active={activeTab} onChange={setActiveTab} />
@@ -81,6 +82,13 @@ export default function App() {
         {activeTab === "champion" && (
           <ChampionOdds
             round={appState.odds.round}
+            onSelectTeam={setSelectedTeamCode}
+          />
+        )}
+
+        {activeTab === "fixtures" && (
+          <FixturesView
+            fixtures={appState.fixtures}
             onSelectTeam={setSelectedTeamCode}
           />
         )}

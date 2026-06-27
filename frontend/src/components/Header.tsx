@@ -1,7 +1,9 @@
-import type { Metadata } from "../types";
+import type { GroupCoverage, Metadata } from "../types";
+import { CoverageBanner } from "./CoverageBanner";
 
 interface HeaderProps {
   metadata: Metadata;
+  coverage: GroupCoverage[];
 }
 
 function formatGeneratedAt(value: string): string {
@@ -13,7 +15,7 @@ function formatGeneratedAt(value: string): string {
   }).format(date);
 }
 
-export function Header({ metadata }: HeaderProps) {
+export function Header({ metadata, coverage }: HeaderProps) {
   const totalSimulations =
     metadata.simulations.tournament + metadata.simulations.round;
 
@@ -51,6 +53,8 @@ export function Header({ metadata }: HeaderProps) {
             <Stat label="Teams" value={String(metadata.team_count)} />
           </dl>
         </div>
+
+        <CoverageBanner metadata={metadata} coverage={coverage} />
 
         <div className="mt-6 flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
           {metadata.ratings_source && (
