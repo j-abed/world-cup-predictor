@@ -1,18 +1,10 @@
 import type { GroupCoverage, Metadata } from "../types";
 import { CoverageBanner } from "./CoverageBanner";
+import { UpdatedAtStat } from "./UpdatedAtStat";
 
 interface HeaderProps {
   metadata: Metadata;
   coverage: GroupCoverage[];
-}
-
-function formatGeneratedAt(value: string): string {
-  const date = new Date(value);
-  if (Number.isNaN(date.getTime())) return value;
-  return new Intl.DateTimeFormat(undefined, {
-    dateStyle: "medium",
-    timeStyle: "short",
-  }).format(date);
 }
 
 export function Header({ metadata, coverage }: HeaderProps) {
@@ -41,7 +33,7 @@ export function Header({ metadata, coverage }: HeaderProps) {
           </div>
 
           <dl className="grid grid-cols-2 gap-x-6 gap-y-4 text-sm sm:grid-cols-4 lg:w-auto">
-            <Stat label="Updated" value={formatGeneratedAt(metadata.generated_at)} />
+            <UpdatedAtStat generatedAt={metadata.generated_at} />
             <Stat
               label="Results in"
               value={`${metadata.completed_result_count} / ${metadata.fixture_count}`}

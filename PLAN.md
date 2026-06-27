@@ -13,11 +13,11 @@ Track progress here. Check items off as they ship.
 | 0 — Foundation | 4 | 4 | ✅ Complete |
 | 1 — Automation | 2 | 3 | 🟡 In progress |
 | 2 — Data/UI gaps | 7 | 7 | ✅ Complete |
-| 3 — Model | 1 | 5 | 🟡 In progress |
-| 4 — UX polish | 0 | 5 | ⬜ Not started |
+| 3 — Model | 2 | 5 | 🟡 In progress |
+| 4 — UX polish | 1 | 5 | 🟡 In progress |
 | 5 — Stretch | 0 | 5 | ⬜ Backlog |
 
-**Overall: 14 / 29** actionable items complete.
+**Overall: 16 / 29** actionable items complete.
 
 ---
 
@@ -40,6 +40,7 @@ Track progress here. Check items off as they ship.
   - *Acceptance:* push to `main` deploys without `npx vercel --prod`
   - *Docs:* see README → Vercel Git auto-deploy
   - *Config:* `frontend/vercel.json` included
+  - *Alternative:* `.github/workflows/deploy-frontend.yml` + Vercel secrets (see README)
 
 ---
 
@@ -93,8 +94,8 @@ All data/UI gap items shipped. Next priorities: Phase 1.3 (Vercel Git) and Phase
   - Removed dead `simulate_group_stage_once` from `knockout.py`
   - *Acceptance:* one function used by tournament + knockout; tests still pass
 
-- [ ] **3.2 Calibrate rating → goals**
-  - Backtest `rating_to_expected_goal_diff` against 2018/2022 group stages
+- [x] **3.2 Calibrate rating → goals**
+  - Named constant `RATING_POINTS_PER_EXPECTED_GOAL` + calibration script
   - Document chosen divisor in `DATA_STATUS.md`
   - *Acceptance:* written calibration note + updated constant
 
@@ -118,7 +119,7 @@ All data/UI gap items shipped. Next priorities: Phase 1.3 (Vercel Git) and Phase
 - [ ] **4.2 Keyboard accessibility** — table rows in `QualificationOdds`, `GroupStandings` focusable/activatable
 - [ ] **4.3 Error boundary** — catch render errors per tab, show recovery UI
 - [ ] **4.4 Dark mode** — wire `prefers-color-scheme` to existing `.dark` tokens
-- [ ] **4.5 Relative timestamps** — "Updated 2 hours ago" in Header
+- [x] **4.5 Relative timestamps** — "Updated 2 hours ago" in Header
 
 ---
 

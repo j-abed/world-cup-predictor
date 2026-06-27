@@ -6,6 +6,8 @@ import pandas as pd
 import pytest
 
 from src.simulator import (
+    RATING_POINTS_PER_EXPECTED_GOAL,
+    rating_to_expected_goal_diff,
     simulate_all_group_finish_probabilities,
     simulate_group_finish_probabilities,
 )
@@ -85,3 +87,9 @@ def test_all_group_finish_probabilities_cover_every_group(
     for group, group_probs in probabilities.items():
         group_teams = teams[teams["group"] == group]
         assert len(group_probs) == len(group_teams)
+
+
+def test_rating_to_expected_goal_diff_default_scale() -> None:
+    assert RATING_POINTS_PER_EXPECTED_GOAL == 285.0
+    assert rating_to_expected_goal_diff(100) == pytest.approx(100 / 285.0)
+    assert rating_to_expected_goal_diff(0) == 0.0

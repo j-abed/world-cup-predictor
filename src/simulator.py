@@ -32,14 +32,18 @@ def format_probability(value: float) -> str:
     return f"{value * 100:5.1f}%"
 
 
+# 100 rating points ≈ 0.35 expected goals (see scripts/calibrate_rating_conversion.py)
+RATING_POINTS_PER_EXPECTED_GOAL = 285.0
+
+
 def rating_to_expected_goal_diff(rating_diff: float) -> float:
     """
-    Convert Elo-like rating difference into expected goal difference.
+    Convert rating difference into expected goal difference for one match.
 
-    MVP assumption:
-    100 rating points ≈ 0.35 expected goals.
+    Uses RATING_POINTS_PER_EXPECTED_GOAL so the divisor can be recalibrated
+    in one place. At the default of 285, a 100-point gap ≈ 0.35 goals.
     """
-    return rating_diff / 285.0
+    return rating_diff / RATING_POINTS_PER_EXPECTED_GOAL
 
 
 def build_rating_lookup(ratings: pd.DataFrame) -> dict[str, float]:

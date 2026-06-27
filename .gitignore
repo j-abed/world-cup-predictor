@@ -33,3 +33,6 @@ notes/blog-artifacts/
 /node_modules/
 /package-lock.json
 /package.json
+
+# Playwright MCP debug captures
+.playwright-mcp/

@@ -84,6 +84,13 @@ CLI deploy still works from `frontend/`:
 cd frontend && npx vercel --prod
 ```
 
+### GitHub Actions deploy (alternative)
+
+If you prefer not to link Vercel Git, add these repository secrets and pushes to `main` that touch `frontend/` or `data/` will deploy via `.github/workflows/deploy-frontend.yml`:
+
+- `VERCEL_TOKEN` — from [vercel.com/account/tokens](https://vercel.com/account/tokens)
+- `VERCEL_ORG_ID` and `VERCEL_PROJECT_ID` — from `frontend/.vercel/project.json` after `vercel link`
+
 ## Data notes
 
 See `DATA_STATUS.md` for ratings sources, fair-play placeholders, and modeling limitations.

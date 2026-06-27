@@ -38,9 +38,19 @@ Completed match results directly affect:
 
 Completed match results do not automatically update team ratings unless `data/ratings.csv` is regenerated.
 
-Because FIFA ranking points use a different scale than the prior Elo seed, the conversion in `src/simulator.py` may need recalibration:
+### Rating → goals calibration
 
-    rating_to_expected_goal_diff(rating_diff)
+FIFA ranking points use a different scale than the prior Elo seed. Group-stage goal expectations use:
+
+    expected_goal_diff = rating_diff / RATING_POINTS_PER_EXPECTED_GOAL
+
+Default constant: `285.0` in `src/simulator.py` (≈ 100 rating points → 0.35 expected goals).
+
+Recalibrate with:
+
+    uv run python scripts/calibrate_rating_conversion.py
+
+Sanity-checks against 2022 group-stage results are embedded in that script; it is not a full historical backtest.
 
 ## Known limitations
 
