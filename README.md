@@ -86,10 +86,26 @@ cd frontend && npx vercel --prod
 
 ### GitHub Actions deploy (alternative)
 
-If you prefer not to link Vercel Git, add these repository secrets and pushes to `main` that touch `frontend/` or `data/` will deploy via `.github/workflows/deploy-frontend.yml`:
+If you prefer not to link Vercel Git, configure repository secrets once and pushes to `main` that touch `frontend/` or `data/` will deploy via `.github/workflows/deploy-frontend.yml`:
 
-- `VERCEL_TOKEN` — from [vercel.com/account/tokens](https://vercel.com/account/tokens)
-- `VERCEL_ORG_ID` and `VERCEL_PROJECT_ID` — from `frontend/.vercel/project.json` after `vercel link`
+```bash
+./scripts/setup_github_vercel_secrets.sh --trigger-deploy
+```
+
+The script reads `VERCEL_ORG_ID` and `VERCEL_PROJECT_ID` from `frontend/.vercel/project.json` (create it with `cd frontend && vercel link`, or pass `--link`). It tries to create a Vercel token via the CLI; if OAuth login blocks that, it prompts you to paste a classic token from [vercel.com/account/tokens](https://vercel.com/account/tokens).
+
+Options:
+
+```bash
+./scripts/setup_github_vercel_secrets.sh --dry-run      # preview only
+VERCEL_TOKEN=... ./scripts/setup_github_vercel_secrets.sh  # use existing token
+```
+
+Required GitHub secrets (set automatically by the script):
+
+- `VERCEL_TOKEN`
+- `VERCEL_ORG_ID`
+- `VERCEL_PROJECT_ID`
 
 ## Data notes
 
