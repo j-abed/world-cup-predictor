@@ -1,6 +1,7 @@
 export const TAB_IDS = [
   "champion",
   "fixtures",
+  "field",
   "bracket",
   "groups",
   "qualification",
@@ -16,6 +17,7 @@ interface Tab {
 const TABS: Tab[] = [
   { id: "champion", label: "Champion Odds" },
   { id: "fixtures", label: "Fixtures" },
+  { id: "field", label: "R32 Field" },
   { id: "bracket", label: "Bracket" },
   { id: "groups", label: "Groups" },
   { id: "qualification", label: "Qualification Odds" },

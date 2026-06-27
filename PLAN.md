@@ -1,56 +1,80 @@
-# World Cup Predictor — Improvement Plan
+# World Cup Predictor — Burn-down Plan
 
-Phased roadmap for reliability, freshness, and product polish during the 2026 tournament.
+Track progress here. Check items off as they ship.
 
-## Principles
+**Last updated:** 2026-06-27
 
-1. **Freshness before sophistication** — automated data refresh beats a better model if results are stale.
-2. **Test the logic you fear changing** — tiebreakers, permutations, and bracket resolution first.
-3. **Ship data you already compute** — `coverage` and `projected_qualifiers` are exported but unused.
-4. **Minimize scope per phase** — each phase should be deployable on its own.
+---
+
+## Progress summary
+
+| Phase | Done | Total | Status |
+|-------|------|-------|--------|
+| 0 — Foundation | 4 | 4 | ✅ Complete |
+| 1 — Automation | 2 | 3 | 🟡 In progress |
+| 2 — Data/UI gaps | 4 | 7 | 🟡 In progress |
+| 3 — Model | 0 | 5 | ⬜ Not started |
+| 4 — UX polish | 0 | 5 | ⬜ Not started |
+| 5 — Stretch | 0 | 5 | ⬜ Backlog |
+
+**Overall: 10 / 29** actionable items complete.
 
 ---
 
 ## Phase 0 — Foundation ✅
 
-**Goal:** Safe to change code without breaking production silently.
-
-| Task | Status |
-|------|--------|
-| pytest + tests for tiebreakers, bracket, simulations | Done |
-| Zod schema validation in `loadAppState()` | Done |
-| Update README | Done |
-| Track `refresh_and_deploy.sh` | Done |
-
-**Acceptance:** `uv run pytest` passes; `npm run build` fails on malformed JSON.
+- [x] pytest suite (tiebreakers, bracket, simulations, web exports)
+- [x] Zod validation in `loadAppState()`
+- [x] README updated (architecture, tests, deploy)
+- [x] `refresh_and_deploy.sh` tracked in repo
 
 ---
 
-## Phase 1 — Automation (workflow added, needs deploy hookup)
+## Phase 1 — Automation
 
 **Goal:** Site updates after matches without manual steps.
 
-| Task | Status |
-|------|--------|
-| GitHub Action `refresh-data.yml` | Done |
-| Pipeline (ESPN sync → model → export → commit) | Done |
-| Deploy on push via Vercel Git integration | Pending — connect repo in Vercel dashboard |
+- [x] GitHub Action: `.github/workflows/refresh-data.yml`
+- [x] Pipeline: ESPN sync → model → export → pytest → commit
+- [ ] **Vercel Git integration** — link repo, Root Directory = `frontend` (or use root `vercel.json`)
+  - *Acceptance:* push to `main` deploys without `npx vercel --prod`
+  - *Where:* [vercel.com](https://vercel.com) → Import `j-abed/world-cup-predictor`
+  - *Note:* `vercel.json` at repo root is configured for monorepo deploy
 
 ---
 
-## Phase 2 — Close data/UI gaps (in progress)
+## Phase 2 — Data/UI gaps
 
-**Goal:** Show everything the model already knows.
+**Goal:** Show everything the model already computes.
 
-| Task | Status |
-|------|--------|
-| Coverage banner in Header | Done |
-| Fixtures & Results tab | Done |
-| Projected R32 field view | Pending |
-| URL state (`?tab=groups&team=BRA`) | Done |
-| Generalize group finish odds (all 12 groups) | Pending |
-| Clarify bracket probability labels | Pending |
-| OG meta tags | Pending |
+### Done
+- [x] Coverage banner (match progress in header)
+- [x] Fixtures & Results tab
+- [x] URL state (`?tab=fixtures&team=BRA`)
+
+### Next up (recommended order)
+
+- [x] **2.1 Projected R32 field view**
+  - Use existing `projected_qualifiers` from `app_state.json`
+  - New component or section: 32-team knockout field with seed/source
+  - *Files:* `ProjectedField.tsx`, `App.tsx`, `TabNav.tsx` (or section under Groups)
+  - *Acceptance:* all 32 projected teams visible without inferring from bracket
+
+- [ ] **2.2 All-group finish odds**
+  - Generalize Group D-only simulation to groups A–L
+  - Rename `odds.group_d` → `odds.group_finish` (keyed by group letter)
+  - Update `TeamDetail.tsx` for any team's group
+  - *Files:* `export_web_state.py`, `web_exports.py`, `types.ts`, `schema.ts`, `team.ts`, `TeamDetail.tsx`
+  - *Acceptance:* clicking any team shows 1st/2nd/3rd/4th finish odds for their group
+
+- [ ] **2.3 Bracket probability labels**
+  - Clarify "reach round" vs "win this match" in `BracketView.tsx`
+  - *Acceptance:* tooltip or subtitle makes semantics obvious
+
+- [ ] **2.4 OG meta tags**
+  - Title, description, `og:image` for sharing champion odds
+  - *Files:* `frontend/index.html` or Vite meta plugin
+  - *Acceptance:* link preview looks good in iMessage/Slack/Twitter
 
 ---
 
@@ -58,45 +82,88 @@ Phased roadmap for reliability, freshness, and product polish during the 2026 to
 
 **Goal:** More credible probabilities.
 
-| Priority | Task |
-|----------|------|
-| 1 | Deduplicate simulation code (`simulator.py`, `tournament.py`, `knockout.py`) |
-| 2 | Calibrate `rating_to_expected_goal_diff` against 2018/2022 |
-| 3 | Post-match rating updates in sync pipeline |
-| 4 | Separate knockout ET + penalties model |
-| 5 | Real fair-play data in `fair_play.csv` |
+- [ ] **3.1 Deduplicate simulation code**
+  - Single group-stage path for `simulator.py`, `tournament.py`, `knockout.py`
+  - Remove dead `simulate_group_stage_once` in `knockout.py`
+  - *Acceptance:* one function used by tournament + knockout; tests still pass
+
+- [ ] **3.2 Calibrate rating → goals**
+  - Backtest `rating_to_expected_goal_diff` against 2018/2022 group stages
+  - Document chosen divisor in `DATA_STATUS.md`
+  - *Acceptance:* written calibration note + updated constant
+
+- [ ] **3.3 Post-match rating updates**
+  - Elo-style step after each ESPN sync (optional toggle)
+  - *Acceptance:* `ratings.csv` updates when results sync runs
+
+- [ ] **3.4 Knockout ET + penalties model**
+  - Separate from group-stage Poisson; replace rating coin-flip on draws
+  - *Acceptance:* documented model; knockout sim uses distinct logic
+
+- [ ] **3.5 Real fair-play data**
+  - Replace placeholders in `fair_play.csv` with card data
+  - *Acceptance:* tiebreakers use real conduct scores where available
 
 ---
 
 ## Phase 4 — UX polish
 
-- Mobile bracket (vertical layout below `sm`)
-- Keyboard accessibility on clickable table rows
-- Error boundary around tab content
-- Dark mode via `prefers-color-scheme`
-- Relative "last updated" time in Header
+- [ ] **4.1 Mobile bracket** — vertical round-by-round layout below `sm`
+- [ ] **4.2 Keyboard accessibility** — table rows in `QualificationOdds`, `GroupStandings` focusable/activatable
+- [ ] **4.3 Error boundary** — catch render errors per tab, show recovery UI
+- [ ] **4.4 Dark mode** — wire `prefers-color-scheme` to existing `.dark` tokens
+- [ ] **4.5 Relative timestamps** — "Updated 2 hours ago" in Header
 
 ---
 
-## Phase 5 — Stretch goals
+## Phase 5 — Stretch / backlog
 
-- Scenario mode ("what if Brazil wins 3-0?")
-- Model vs betting markets comparison
-- Historical backtest page
-- Serverless scenario API
-- JSON on CDN for faster refresh without full redeploy
+- [ ] Scenario mode ("what if Brazil wins 3-0?")
+- [ ] Model vs betting markets comparison
+- [ ] Historical backtest page (2022 model vs actual)
+- [ ] Serverless scenario API (on-demand sim)
+- [ ] JSON on CDN (faster refresh without full redeploy)
 
 ---
 
-## Priority matrix
+## Suggested sprint order
 
-| If you care most about… | Start here |
-|-------------------------|------------|
-| Site stays current | Phase 1 |
-| Confidence to change model | Phase 0 |
-| User-facing impact quickly | Phase 2 (coverage + fixtures) |
-| Prediction quality | Phase 3 |
-| Shareability / mobile | Phase 2.5 + Phase 4 |
+If you're burning down during the tournament:
+
+```
+Week 1 (ops + visibility)
+  □ 1.3 Vercel Git integration
+  □ 2.1 Projected R32 field
+  □ 2.2 All-group finish odds
+
+Week 2 (clarity + shareability)
+  □ 2.3 Bracket probability labels
+  □ 2.4 OG meta tags
+  □ 4.5 Relative timestamps
+
+Week 3 (model trust)
+  □ 3.1 Deduplicate simulation
+  □ 3.2 Calibrate rating → goals
+
+Ongoing / when time allows
+  □ Phase 4 UX items
+  □ Phase 5 stretch
+```
+
+---
+
+## Quick commands
+
+```bash
+# Verify before shipping
+uv run pytest && cd frontend && npm run build
+
+# Manual refresh + deploy
+./refresh_and_deploy.sh
+
+# Trigger GitHub Action manually
+gh workflow run refresh-data.yml && gh run watch
+```
 
 ---
 
@@ -106,3 +173,12 @@ Phased roadmap for reliability, freshness, and product polish during the 2026 to
 - User accounts / personal brackets
 - Full backend API
 - Betting integration
+
+---
+
+## Principles
+
+1. **Freshness before sophistication** — automated refresh beats a better model if results are stale.
+2. **Test the logic you fear changing** — tiebreakers, permutations, bracket resolution.
+3. **Ship data you already compute** — don't let exported fields sit unused.
+4. **Minimize scope per item** — each checkbox should be deployable on its own.

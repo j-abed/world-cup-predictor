@@ -4,6 +4,7 @@ import { ChampionOdds } from "./components/ChampionOdds";
 import { FixturesView } from "./components/FixturesView";
 import { GroupStandings } from "./components/GroupStandings";
 import { Header } from "./components/Header";
+import { ProjectedField } from "./components/ProjectedField";
 import { QualificationOdds } from "./components/QualificationOdds";
 import { TabNav, type TabId } from "./components/TabNav";
 import { TeamDetail } from "./components/TeamDetail";
@@ -132,6 +133,13 @@ export default function App() {
         {activeTab === "fixtures" && (
           <FixturesView
             fixtures={appState.fixtures}
+            onSelectTeam={handleSelectTeam}
+          />
+        )}
+
+        {activeTab === "field" && (
+          <ProjectedField
+            qualifiers={appState.projected_qualifiers}
             onSelectTeam={handleSelectTeam}
           />
         )}
