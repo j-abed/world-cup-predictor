@@ -32,6 +32,8 @@ def group_results_to_projected_qualifiers(
     group_results: dict[str, list[dict]],
     conduct_scores: dict[str, float] | None = None,
     ranking_fallback: dict[str, float] | None = None,
+    *,
+    include_best_third: bool = True,
 ) -> pd.DataFrame:
     team_lookup = {
         row["team_id"]: {
@@ -75,29 +77,30 @@ def group_results_to_projected_qualifiers(
                 }
             )
 
-    best_thirds = select_best_third_place_teams(
-        group_results,
-        conduct_scores=conduct_scores,
-        ranking_fallback=ranking_fallback,
-    )
-
-    for row in best_thirds:
-        team_id = row["team_id"]
-        meta = team_lookup[team_id]
-
-        rows.append(
-            {
-                "source": f"3rd Group {row['group']}",
-                "group": row["group"],
-                "qualifying_path": "Best third-place",
-                "team": meta["team"],
-                "code": meta["code"],
-                "team_id": team_id,
-                "points": row["points"],
-                "goal_difference": row["goal_difference"],
-                "goals_for": row["goals_for"],
-            }
+    if include_best_third:
+        best_thirds = select_best_third_place_teams(
+            group_results,
+            conduct_scores=conduct_scores,
+            ranking_fallback=ranking_fallback,
         )
+
+        for row in best_thirds:
+            team_id = row["team_id"]
+            meta = team_lookup[team_id]
+
+            rows.append(
+                {
+                    "source": f"3rd Group {row['group']}",
+                    "group": row["group"],
+                    "qualifying_path": "Best third-place",
+                    "team": meta["team"],
+                    "code": meta["code"],
+                    "team_id": team_id,
+                    "points": row["points"],
+                    "goal_difference": row["goal_difference"],
+                    "goals_for": row["goals_for"],
+                }
+            )
 
     qualifiers = pd.DataFrame(rows)
 
@@ -261,7 +264,18 @@ def compile_source(source: str) -> CompiledSource:
     )
 
 
-def stage_key_for_match(match_id: int) -> str:
+def stage_key_for_match(match_id: int, *, tournament: str = "2026") -> str:
+    if tournament == "2022":
+        if 49 <= match_id <= 56:
+            return "r32"
+        if 57 <= match_id <= 60:
+            return "r16"
+        if 61 <= match_id <= 62:
+            return "qf"
+        if match_id == 64:
+            return "champion"
+        raise ValueError(f"Unknown 2022 knockout match_id: {match_id}")
+
     if 73 <= match_id <= 88:
         return "r16"
     if 89 <= match_id <= 96:
@@ -278,6 +292,8 @@ def stage_key_for_match(match_id: int) -> str:
 
 def compile_knockout_bracket(
     bracket_slots: pd.DataFrame,
+    *,
+    tournament: str = "2026",
 ) -> list[CompiledKnockoutMatch]:
     compiled_matches = []
 
@@ -289,7 +305,7 @@ def compile_knockout_bracket(
                 match_id=match_id,
                 home_source=compile_source(str(slot["home_source"])),
                 away_source=compile_source(str(slot["away_source"])),
-                stage_key=stage_key_for_match(match_id),
+                stage_key=stage_key_for_match(match_id, tournament=tournament),
             )
         )
 
@@ -318,19 +334,22 @@ def build_fast_qualifier_maps(
         )
     )
 
-    if third_place_groups not in third_place_assignment_cache:
-        third_place_assignment_cache[third_place_groups] = build_third_place_assignment(
-            bracket_slots=bracket_slots,
-            projected_qualifiers=projected_qualifiers,
-            permutations=third_place_permutations,
-        )
+    if third_place_groups:
+        if third_place_groups not in third_place_assignment_cache:
+            third_place_assignment_cache[third_place_groups] = build_third_place_assignment(
+                bracket_slots=bracket_slots,
+                projected_qualifiers=projected_qualifiers,
+                permutations=third_place_permutations,
+            )
 
-    third_place_assignment = third_place_assignment_cache[third_place_groups]
+        third_place_assignment = third_place_assignment_cache[third_place_groups]
 
-    third_placeholder_to_team_id = {
-        placeholder: str(team["team_id"])
-        for placeholder, team in third_place_assignment.items()
-    }
+        third_placeholder_to_team_id = {
+            placeholder: str(team["team_id"])
+            for placeholder, team in third_place_assignment.items()
+        }
+    else:
+        third_placeholder_to_team_id = {}
 
     return source_to_team_id, third_placeholder_to_team_id
 
@@ -448,12 +467,20 @@ def simulate_tournament_round_probabilities(
     ratings: pd.DataFrame,
     simulations: int = 10_000,
     seed: int = 42,
+    *,
+    bracket_slots_path: str = "data/bracket_slots.csv",
+    third_place_permutations_path: str = "data/third_place_permutations.csv",
+    tournament: str = "2026",
 ) -> pd.DataFrame:
     rng = np.random.default_rng(seed)
     rating_lookup = build_rating_lookup(ratings)
-    bracket_slots = load_knockout_bracket()
-    compiled_bracket = compile_knockout_bracket(bracket_slots)
-    third_place_permutations = load_third_place_permutations()
+    bracket_slots = load_knockout_bracket(bracket_slots_path)
+    compiled_bracket = compile_knockout_bracket(bracket_slots, tournament=tournament)
+    third_place_permutations = (
+        pd.DataFrame()
+        if tournament == "2022"
+        else load_third_place_permutations(third_place_permutations_path)
+    )
     third_place_assignment_cache: dict[tuple[str, ...], dict[str, dict]] = {}
     conduct_scores = load_conduct_scores()
     ranking_fallback = load_ranking_fallback()
@@ -480,6 +507,7 @@ def simulate_tournament_round_probabilities(
             group_results=group_results,
             conduct_scores=conduct_scores,
             ranking_fallback=ranking_fallback,
+            include_best_third=tournament != "2022",
         )
 
         knockout_result = simulate_knockout_bracket_once(

@@ -1,0 +1,33 @@
+team_id,name,code,group
+NED,Netherlands,NED,A
+SEN,Senegal,SEN,A
+ECU,Ecuador,ECU,A
+QAT,Qatar,QAT,A
+ENG,England,ENG,B
+USA,United States,USA,B
+IRN,Iran,IRN,B
+WAL,Wales,WAL,B
+ARG,Argentina,ARG,C
+POL,Poland,POL,C
+MEX,Mexico,MEX,C
+KSA,Saudi Arabia,KSA,C
+FRA,France,FRA,D
+AUS,Australia,AUS,D
+TUN,Tunisia,TUN,D
+DEN,Denmark,DEN,D
+JPN,Japan,JPN,E
+ESP,Spain,ESP,E
+GER,Germany,GER,E
+CRC,Costa Rica,CRC,E
+MAR,Morocco,MAR,F
+CRO,Croatia,CRO,F
+BEL,Belgium,BEL,F
+CAN,Canada,CAN,F
+BRA,Brazil,BRA,G
+SUI,Switzerland,SUI,G
+CMR,Cameroon,CMR,G
+SRB,Serbia,SRB,G
+POR,Portugal,POR,H
+KOR,South Korea,KOR,H
+URU,Uruguay,URU,H
+GHA,Ghana,GHA,H

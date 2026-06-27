@@ -15,9 +15,9 @@ Track progress here. Check items off as they ship.
 | 2 — Data/UI gaps | 7 | 7 | ✅ Complete |
 | 3 — Model | 5 | 5 | ✅ Complete |
 | 4 — UX polish | 5 | 5 | ✅ Complete |
-| 5 — Stretch | 0 | 5 | ⬜ Backlog |
+| 5 — Stretch | 1 | 5 | 🟡 In progress |
 
-**Overall: 25 / 29** actionable items complete. Remaining work is Phase 5 stretch only.
+**Overall: 26 / 29** actionable items complete. Remaining work is Phase 5 stretch only.
 
 ---
 
@@ -101,7 +101,7 @@ Track progress here. Check items off as they ship.
 
 - [x] Scenario mode ("what if Brazil wins 3-0?")
 - [ ] Model vs betting markets comparison
-- [ ] Historical backtest page (2022 model vs actual)
+- [x] Historical backtest page (2022 model vs actual)
 - [ ] Serverless scenario API (on-demand sim)
 - [ ] JSON on CDN (faster refresh without full redeploy)
 
@@ -118,8 +118,8 @@ Ops (automatic)
 
 Optional stretch (Phase 5)
   ✓ Scenario mode
+  ✓ 2022 backtest page
   □ Model vs betting markets
-  □ 2022 backtest page
 ```
 
 ---

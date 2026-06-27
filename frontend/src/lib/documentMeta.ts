@@ -12,6 +12,7 @@ const TAB_TITLES: Record<TabId, string> = {
   groups: "Group Standings",
   qualification: "Qualification Odds",
   scenario: "What-if Scenarios",
+  backtest: "2022 Backtest",
 };
 
 export function buildDocumentTitle(tab: TabId, teamName?: string | null): string {

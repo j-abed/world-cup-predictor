@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { BacktestView } from "./components/BacktestView";
 import { BracketView } from "./components/BracketView";
 import { ChampionOdds } from "./components/ChampionOdds";
 import { FixturesView } from "./components/FixturesView";
@@ -11,16 +12,18 @@ import { TabNav } from "./components/TabNav";
 import { TabErrorBoundary } from "./components/TabErrorBoundary";
 import { TeamDetail } from "./components/TeamDetail";
 import { ThirdPlaceTable } from "./components/ThirdPlaceTable";
-import { AppStateLoadError, loadAppState, loadScenarioAppState } from "./lib/data";
+import { AppStateLoadError, loadAppState, loadBacktest2022, loadScenarioAppState } from "./lib/data";
 import { buildDocumentTitle } from "./lib/documentMeta";
 import { TAB_LABELS, type TabId } from "./lib/tabs";
 import { buildTeamIndex } from "./lib/team";
 import { readAppUrlState, writeAppUrlState } from "./lib/urlState";
+import type { Backtest2022 } from "./types/backtest";
 import type { AppState } from "./types";
 
 export default function App() {
   const [appState, setAppState] = useState<AppState | null>(null);
   const [scenarioState, setScenarioState] = useState<AppState | null>(null);
+  const [backtestState, setBacktestState] = useState<Backtest2022 | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<TabId>(
     () => readAppUrlState().tab,
@@ -61,6 +64,18 @@ export default function App() {
       .catch(() => {
         if (!cancelled) {
           setScenarioState(null);
+        }
+      });
+
+    loadBacktest2022()
+      .then((state) => {
+        if (!cancelled) {
+          setBacktestState(state);
+        }
+      })
+      .catch(() => {
+        if (!cancelled) {
+          setBacktestState(null);
         }
       });
 
@@ -203,6 +218,14 @@ export default function App() {
             baseline={appState}
             scenario={scenarioState}
             onSelectTeam={handleSelectTeam}
+          />
+        );
+      case "backtest":
+        return (
+          <BacktestView
+            backtest={backtestState}
+            onSelectTeam={handleSelectTeam}
+            knownTeamCodes={new Set(teamIndex.keys())}
           />
         );
       default: {

@@ -97,6 +97,17 @@ uv run python scripts/run_scenario.py \
 
 The dashboard **Scenarios** tab compares a published `scenario_app_state.json` against the baseline snapshot when one is deployed.
 
+### 2022 historical backtest
+
+Replay the model on Qatar 2022 teams and pre-tournament FIFA ratings (no group results), then compare knockout probabilities to what actually happened:
+
+```bash
+uv run python scripts/generate_backtest_2022_data.py
+uv run python scripts/export_backtest_2022.py --simulations 5000 --copy-to-frontend
+```
+
+The **2022** tab in the dashboard reads `frontend/public/data/backtest_2022.json`.
+
 ### Vercel Git auto-deploy (recommended)
 
 1. Open [vercel.com/new](https://vercel.com/new) → **Import** `j-abed/world-cup-predictor`

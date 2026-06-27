@@ -1,9 +1,12 @@
 import type { AppState } from "../types";
+import type { Backtest2022 } from "../types/backtest";
+import { parseBacktest2022 } from "./backtestSchema";
 import { AppStateLoadError } from "./errors";
 import { parseAppState } from "./schema";
 
 const DATA_URL = "/data/app_state.json";
 const SCENARIO_DATA_URL = "/data/scenario_app_state.json";
+const BACKTEST_DATA_URL = "/data/backtest_2022.json";
 
 export { AppStateLoadError } from "./errors";
 
@@ -71,6 +74,38 @@ export async function loadScenarioAppState(): Promise<AppState | null> {
 
   try {
     return parseAppState(data);
+  } catch {
+    return null;
+  }
+}
+
+export async function loadBacktest2022(): Promise<Backtest2022 | null> {
+  let response: Response;
+
+  try {
+    response = await fetch(BACKTEST_DATA_URL);
+  } catch {
+    return null;
+  }
+
+  if (response.status === 404) {
+    return null;
+  }
+
+  if (!response.ok) {
+    return null;
+  }
+
+  let data: unknown;
+
+  try {
+    data = await response.json();
+  } catch {
+    return null;
+  }
+
+  try {
+    return parseBacktest2022(data);
   } catch {
     return null;
   }

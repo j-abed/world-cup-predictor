@@ -1,0 +1,16 @@
+slot_id,round,match_id,home_source,away_source,winner_advances_to
+R16-49,Round of 16,49,1st Group A,2nd Group B,57
+R16-50,Round of 16,50,1st Group C,2nd Group D,57
+R16-51,Round of 16,51,1st Group E,2nd Group F,58
+R16-52,Round of 16,52,1st Group G,2nd Group H,58
+R16-53,Round of 16,53,1st Group B,2nd Group A,59
+R16-54,Round of 16,54,1st Group D,2nd Group C,59
+R16-55,Round of 16,55,1st Group F,2nd Group E,60
+R16-56,Round of 16,56,1st Group H,2nd Group G,60
+QF-57,Quarterfinal,57,Winner Match 49,Winner Match 50,61
+QF-58,Quarterfinal,58,Winner Match 51,Winner Match 52,61
+QF-59,Quarterfinal,59,Winner Match 53,Winner Match 54,62
+QF-60,Quarterfinal,60,Winner Match 55,Winner Match 56,62
+SF-61,Semifinal,61,Winner Match 57,Winner Match 58,64
+SF-62,Semifinal,62,Winner Match 59,Winner Match 60,64
+F-64,Final,64,Winner Match 61,Winner Match 62,

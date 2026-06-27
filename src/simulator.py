@@ -246,6 +246,8 @@ def prepare_groups(
     fixtures: pd.DataFrame,
     results: pd.DataFrame,
 ) -> dict[str, PreparedGroup]:
+    active_groups = sorted(teams["group"].dropna().unique())
+
     return {
         group: prepare_group(
             teams=teams,
@@ -253,7 +255,7 @@ def prepare_groups(
             results=results,
             group=group,
         )
-        for group in GROUPS
+        for group in active_groups
     }
 
 

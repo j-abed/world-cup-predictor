@@ -1,0 +1,33 @@
+team_id,rating,source,source_url,rating_type,name,code,group
+NED,1694.51,FIFA/Coca-Cola Men's World Ranking points snapshot,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Netherlands,NED,A
+SEN,1584.38,FIFA/Coca-Cola Men's World Ranking points snapshot,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Senegal,SEN,A
+ECU,1519.3,FIFA/Coca-Cola Men's World Ranking points snapshot,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Ecuador,ECU,A
+QAT,1393.22,FIFA/Coca-Cola Men's World Ranking points snapshot,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Qatar,QAT,A
+ENG,1728.47,FIFA/Coca-Cola Men's World Ranking points snapshot,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,England,ENG,B
+USA,1549.53,FIFA/Coca-Cola Men's World Ranking points snapshot,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,United States,USA,B
+IRN,1537.72,FIFA/Coca-Cola Men's World Ranking points snapshot,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Iran,IRN,B
+WAL,1540.09,FIFA/Coca-Cola Men's World Ranking points snapshot,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Wales,WAL,B
+ARG,1775.88,FIFA/Coca-Cola Men's World Ranking points snapshot,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Argentina,ARG,C
+POL,1548.56,FIFA/Coca-Cola Men's World Ranking points snapshot,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Poland,POL,C
+MEX,1572.27,FIFA/Coca-Cola Men's World Ranking points snapshot,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Mexico,MEX,C
+KSA,1359.61,FIFA/Coca-Cola Men's World Ranking points snapshot,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Saudi Arabia,KSA,C
+FRA,1764.85,FIFA/Coca-Cola Men's World Ranking points snapshot,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,France,FRA,D
+AUS,1489.68,FIFA/Coca-Cola Men's World Ranking points snapshot,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Australia,AUS,D
+TUN,1507.54,FIFA/Coca-Cola Men's World Ranking points snapshot,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Tunisia,TUN,D
+DEN,1665.47,FIFA/Coca-Cola Men's World Ranking points snapshot,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Denmark,DEN,D
+JPN,1520.09,FIFA/Coca-Cola Men's World Ranking points snapshot,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Japan,JPN,E
+ESP,1693.73,FIFA/Coca-Cola Men's World Ranking points snapshot,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Spain,ESP,E
+GER,1650.21,FIFA/Coca-Cola Men's World Ranking points snapshot,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Germany,GER,E
+CRC,1469.0,FIFA/Coca-Cola Men's World Ranking points snapshot,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Costa Rica,CRC,E
+MAR,1635.08,FIFA/Coca-Cola Men's World Ranking points snapshot,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Morocco,MAR,F
+CRO,1643.43,FIFA/Coca-Cola Men's World Ranking points snapshot,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Croatia,CRO,F
+BEL,1816.71,FIFA/Coca-Cola Men's World Ranking points snapshot,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Belgium,BEL,F
+CAN,1473.82,FIFA/Coca-Cola Men's World Ranking points snapshot,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Canada,CAN,F
+BRA,1842.64,FIFA/Coca-Cola Men's World Ranking points snapshot,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Brazil,BRA,G
+SUI,1620.62,FIFA/Coca-Cola Men's World Ranking points snapshot,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Switzerland,SUI,G
+CMR,1414.66,FIFA/Coca-Cola Men's World Ranking points snapshot,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Cameroon,CMR,G
+SRB,1530.41,FIFA/Coca-Cola Men's World Ranking points snapshot,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Serbia,SRB,G
+POR,1678.09,FIFA/Coca-Cola Men's World Ranking points snapshot,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Portugal,POR,H
+KOR,1529.55,FIFA/Coca-Cola Men's World Ranking points snapshot,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,South Korea,KOR,H
+URU,1357.21,FIFA/Coca-Cola Men's World Ranking points snapshot,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Uruguay,URU,H
+GHA,1397.79,FIFA/Coca-Cola Men's World Ranking points snapshot,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Ghana,GHA,H

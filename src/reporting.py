@@ -19,8 +19,9 @@ def calculate_all_group_standings(
     results: pd.DataFrame,
 ) -> dict[str, pd.DataFrame]:
     standings_by_group = {}
+    active_groups = sorted(teams["group"].dropna().unique())
 
-    for group in GROUPS:
+    for group in active_groups:
         standings_by_group[group] = calculate_group_standings(
             teams=teams,
             fixtures=fixtures,
