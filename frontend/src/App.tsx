@@ -6,11 +6,12 @@ import { GroupStandings } from "./components/GroupStandings";
 import { Header } from "./components/Header";
 import { ProjectedField } from "./components/ProjectedField";
 import { QualificationOdds } from "./components/QualificationOdds";
+import { ScenarioView } from "./components/ScenarioView";
 import { TabNav } from "./components/TabNav";
 import { TabErrorBoundary } from "./components/TabErrorBoundary";
 import { TeamDetail } from "./components/TeamDetail";
 import { ThirdPlaceTable } from "./components/ThirdPlaceTable";
-import { AppStateLoadError, loadAppState } from "./lib/data";
+import { AppStateLoadError, loadAppState, loadScenarioAppState } from "./lib/data";
 import { buildDocumentTitle } from "./lib/documentMeta";
 import { TAB_LABELS, type TabId } from "./lib/tabs";
 import { buildTeamIndex } from "./lib/team";
@@ -19,6 +20,7 @@ import type { AppState } from "./types";
 
 export default function App() {
   const [appState, setAppState] = useState<AppState | null>(null);
+  const [scenarioState, setScenarioState] = useState<AppState | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<TabId>(
     () => readAppUrlState().tab,
@@ -48,6 +50,18 @@ export default function App() {
             ? err.message
             : "Something went wrong loading the prediction data.",
         );
+      });
+
+    loadScenarioAppState()
+      .then((state) => {
+        if (!cancelled) {
+          setScenarioState(state);
+        }
+      })
+      .catch(() => {
+        if (!cancelled) {
+          setScenarioState(null);
+        }
       });
 
     return () => {
@@ -180,6 +194,14 @@ export default function App() {
         return (
           <QualificationOdds
             qualification={appState.odds.qualification}
+            onSelectTeam={handleSelectTeam}
+          />
+        );
+      case "scenario":
+        return (
+          <ScenarioView
+            baseline={appState}
+            scenario={scenarioState}
             onSelectTeam={handleSelectTeam}
           />
         );

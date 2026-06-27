@@ -1,0 +1,71 @@
+name: Run scenario simulation
+
+on:
+  workflow_dispatch:
+    inputs:
+      match_id:
+        description: "Fixture match_id to override"
+        required: true
+        type: string
+      home_score:
+        description: "Hypothetical home score"
+        required: true
+        type: string
+      away_score:
+        description: "Hypothetical away score"
+        required: true
+        type: string
+      simulations:
+        description: "Monte Carlo runs (default 5000)"
+        required: false
+        default: "5000"
+        type: string
+
+concurrency:
+  group: scenario-simulation
+  cancel-in-progress: false
+
+jobs:
+  scenario:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      - name: Set up Python
+        run: uv python install 3.12
+
+      - name: Install Python dependencies
+        run: uv sync --group dev
+
+      - name: Run scenario simulation
+        run: |
+          uv run python scripts/run_scenario.py \
+            --override "${{ inputs.match_id }}:${{ inputs.home_score }}:${{ inputs.away_score }}" \
+            --simulations "${{ inputs.simulations }}" \
+            --copy-to-frontend
+
+      - name: Run tests
+        run: uv run pytest -q
+
+      - name: Commit scenario snapshot
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add frontend/public/data/scenario_app_state.json outputs/web/scenario_app_state.json
+          if git diff --staged --quiet; then
+            echo "Scenario output unchanged; skipping commit."
+            exit 0
+          fi
+          git commit -m "chore: update scenario simulation snapshot" \
+            -m "Override match ${{ inputs.match_id }} as ${{ inputs.home_score }}-${{ inputs.away_score }}."
+          git push

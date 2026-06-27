@@ -11,6 +11,7 @@ const TAB_TITLES: Record<TabId, string> = {
   bracket: "Knockout Bracket",
   groups: "Group Standings",
   qualification: "Qualification Odds",
+  scenario: "What-if Scenarios",
 };
 
 export function buildDocumentTitle(tab: TabId, teamName?: string | null): string {

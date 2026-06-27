@@ -74,6 +74,29 @@ uv run pytest
 
 GitHub Actions workflow `.github/workflows/refresh-data.yml` syncs ESPN results, updates ratings and fair-play scores, reruns the model, and commits updated data during the tournament (Jun 11 – Jul 20, 2026).
 
+`.github/workflows/ci-failure-alert.yml` opens (or comments on) a GitHub issue labeled `ci-failure` when refresh, deploy, or scenario workflows fail.
+
+### What-if scenarios
+
+Override one or more fixture results and rerun Monte Carlo odds without touching live data:
+
+```bash
+uv run python scripts/run_scenario.py \
+  --override MATCH_ID:HOME:AWAY \
+  --copy-to-frontend
+```
+
+Example:
+
+```bash
+uv run python scripts/run_scenario.py \
+  --override 66456904:3:0 \
+  --simulations 5000 \
+  --copy-to-frontend
+```
+
+The dashboard **Scenarios** tab compares a published `scenario_app_state.json` against the baseline snapshot when one is deployed.
+
 ### Vercel Git auto-deploy (recommended)
 
 1. Open [vercel.com/new](https://vercel.com/new) → **Import** `j-abed/world-cup-predictor`

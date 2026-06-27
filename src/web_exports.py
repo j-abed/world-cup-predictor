@@ -227,6 +227,8 @@ def build_metadata(
     group_simulations: int,
     tournament_simulations: int,
     round_simulations: int,
+    *,
+    scenario: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     completed_results = results[results["status"].astype(str).str.lower() == "complete"]
 
@@ -239,7 +241,7 @@ def build_metadata(
         ratings_source_url = ratings.iloc[0].get("source_url")
         rating_type = ratings.iloc[0].get("rating_type")
 
-    return {
+    metadata = {
         "generated_at": datetime.now().isoformat(timespec="seconds"),
         "team_count": int(len(teams)),
         "fixture_count": int(len(fixtures)),
@@ -255,13 +257,13 @@ def build_metadata(
         "data_caveats": build_data_caveats(ratings),
     }
 
+    if scenario is not None:
+        metadata["scenario"] = scenario
 
-def write_json(path: Path, payload: Any) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(payload, indent=2, ensure_ascii=False), encoding="utf-8")
+    return metadata
 
 
-def export_web_state(
+def build_app_state_payload(
     *,
     teams: pd.DataFrame,
     fixtures: pd.DataFrame,
@@ -275,14 +277,11 @@ def export_web_state(
     group_finish_probabilities: dict[str, pd.DataFrame],
     tournament_probabilities: pd.DataFrame,
     round_probabilities: pd.DataFrame,
-    output_dir: str = "outputs/web",
     group_simulations: int = 10_000,
     tournament_simulations: int = 10_000,
     round_simulations: int = 10_000,
-) -> dict[str, Path]:
-    output_path = Path(output_dir)
-    output_path.mkdir(parents=True, exist_ok=True)
-
+    scenario: dict[str, Any] | None = None,
+) -> dict[str, Any]:
     standings_rows = []
 
     for group, standings in standings_by_group.items():
@@ -338,34 +337,81 @@ def export_web_state(
         group_simulations=group_simulations,
         tournament_simulations=tournament_simulations,
         round_simulations=round_simulations,
+        scenario=scenario,
     )
 
-    standings_payload = dataframe_records(standings)
-    third_place_payload = dataframe_records(third_place_table)
-    projected_qualifiers_payload = dataframe_records(projected_qualifiers)
-    bracket_payload = build_bracket_payload(bracket)
-    fixtures_payload = build_fixtures_payload(
-        fixtures=fixtures,
-        results=results,
-        teams=teams,
-    )
-
-    odds_payload = {
-        "group_finish": group_finish_payload,
-        "qualification": dataframe_records(tournament_with_labels),
-        "round": dataframe_records(round_with_labels),
-    }
-
-    app_state = {
+    return {
         "metadata": metadata,
         "coverage": dataframe_records(coverage),
-        "fixtures": fixtures_payload,
-        "standings": standings_payload,
-        "third_place": third_place_payload,
-        "projected_qualifiers": projected_qualifiers_payload,
-        "bracket": bracket_payload,
-        "odds": odds_payload,
+        "fixtures": build_fixtures_payload(
+            fixtures=fixtures,
+            results=results,
+            teams=teams,
+        ),
+        "standings": dataframe_records(standings),
+        "third_place": dataframe_records(third_place_table),
+        "projected_qualifiers": dataframe_records(projected_qualifiers),
+        "bracket": build_bracket_payload(bracket),
+        "odds": {
+            "group_finish": group_finish_payload,
+            "qualification": dataframe_records(tournament_with_labels),
+            "round": dataframe_records(round_with_labels),
+        },
     }
+
+
+def write_json(path: Path, payload: Any) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(payload, indent=2, ensure_ascii=False), encoding="utf-8")
+
+
+def export_web_state(
+    *,
+    teams: pd.DataFrame,
+    fixtures: pd.DataFrame,
+    results: pd.DataFrame,
+    ratings: pd.DataFrame,
+    coverage: pd.DataFrame,
+    standings_by_group: dict[str, pd.DataFrame],
+    third_place_table: pd.DataFrame,
+    projected_qualifiers: pd.DataFrame,
+    bracket: pd.DataFrame,
+    group_finish_probabilities: dict[str, pd.DataFrame],
+    tournament_probabilities: pd.DataFrame,
+    round_probabilities: pd.DataFrame,
+    output_dir: str = "outputs/web",
+    group_simulations: int = 10_000,
+    tournament_simulations: int = 10_000,
+    round_simulations: int = 10_000,
+) -> dict[str, Path]:
+    output_path = Path(output_dir)
+    output_path.mkdir(parents=True, exist_ok=True)
+
+    app_state = build_app_state_payload(
+        teams=teams,
+        fixtures=fixtures,
+        results=results,
+        ratings=ratings,
+        coverage=coverage,
+        standings_by_group=standings_by_group,
+        third_place_table=third_place_table,
+        projected_qualifiers=projected_qualifiers,
+        bracket=bracket,
+        group_finish_probabilities=group_finish_probabilities,
+        tournament_probabilities=tournament_probabilities,
+        round_probabilities=round_probabilities,
+        group_simulations=group_simulations,
+        tournament_simulations=tournament_simulations,
+        round_simulations=round_simulations,
+    )
+
+    metadata = app_state["metadata"]
+    fixtures_payload = app_state["fixtures"]
+    standings_payload = app_state["standings"]
+    third_place_payload = app_state["third_place"]
+    projected_qualifiers_payload = app_state["projected_qualifiers"]
+    bracket_payload = app_state["bracket"]
+    odds_payload = app_state["odds"]
 
     outputs = {
         "app_state": output_path / "app_state.json",
