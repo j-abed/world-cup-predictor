@@ -12,12 +12,12 @@ Track progress here. Check items off as they ship.
 |-------|------|-------|--------|
 | 0 — Foundation | 4 | 4 | ✅ Complete |
 | 1 — Automation | 2 | 3 | 🟡 In progress |
-| 2 — Data/UI gaps | 5 | 7 | 🟡 In progress |
+| 2 — Data/UI gaps | 6 | 7 | 🟡 In progress |
 | 3 — Model | 0 | 5 | ⬜ Not started |
 | 4 — UX polish | 0 | 5 | ⬜ Not started |
 | 5 — Stretch | 0 | 5 | ⬜ Backlog |
 
-**Overall: 11 / 29** actionable items complete.
+**Overall: 12 / 29** actionable items complete.
 
 ---
 
@@ -67,7 +67,7 @@ Track progress here. Check items off as they ship.
   - *Files:* `export_web_state.py`, `web_exports.py`, `types.ts`, `schema.ts`, `team.ts`, `TeamDetail.tsx`
   - *Acceptance:* clicking any team shows 1st/2nd/3rd/4th finish odds for their group
 
-- [ ] **2.3 Bracket probability labels**
+- [x] **2.3 Bracket probability labels**
   - Clarify "reach round" vs "win this match" in `BracketView.tsx`
   - *Acceptance:* tooltip or subtitle makes semantics obvious
 

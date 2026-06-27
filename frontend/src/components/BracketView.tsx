@@ -17,33 +17,58 @@ const ROUND_TITLES: Record<BracketRoundKey, string> = {
   final: "Final",
 };
 
-/** The odds.round field that represents "wins this round's match" — i.e. reaches the next stage. */
-const WIN_PROB_FIELD: Record<
+/** Simulation odds for reaching the next knockout stage (not a head-to-head match-win %). */
+const ADVANCE_PROB_FIELD: Record<
   BracketRoundKey,
-  { value: keyof RoundOdds; label: keyof RoundOdds }
+  { value: keyof RoundOdds; label: keyof RoundOdds; reachLabel: string }
 > = {
-  round_of_32: { value: "r16_prob", label: "r16_prob_label" },
-  round_of_16: { value: "qf_prob", label: "qf_prob_label" },
-  quarterfinals: { value: "sf_prob", label: "sf_prob_label" },
-  semifinals: { value: "final_prob", label: "final_prob_label" },
-  final: { value: "champion_prob", label: "champion_prob_label" },
+  round_of_32: {
+    value: "r16_prob",
+    label: "r16_prob_label",
+    reachLabel: "Reach R16",
+  },
+  round_of_16: {
+    value: "qf_prob",
+    label: "qf_prob_label",
+    reachLabel: "Reach QF",
+  },
+  quarterfinals: {
+    value: "sf_prob",
+    label: "sf_prob_label",
+    reachLabel: "Reach SF",
+  },
+  semifinals: {
+    value: "final_prob",
+    label: "final_prob_label",
+    reachLabel: "Reach final",
+  },
+  final: {
+    value: "champion_prob",
+    label: "champion_prob_label",
+    reachLabel: "Win title",
+  },
 };
 
-interface WinProb {
+interface AdvanceProb {
   value: number;
   label: string;
+  reachLabel: string;
 }
 
-function getWinProb(
+function getAdvanceProb(
   code: string | null,
   roundKey: BracketRoundKey,
   byCode: Map<string, RoundOdds>,
-): WinProb | null {
+): AdvanceProb | null {
   if (!code || code === "TBD") return null;
   const odds = byCode.get(code);
   if (!odds) return null;
-  const field = WIN_PROB_FIELD[roundKey];
-  return { value: odds[field.value] as number, label: odds[field.label] as string };
+  const field = ADVANCE_PROB_FIELD[roundKey];
+  return {
+    value: odds[field.value] as number,
+    label: odds[field.label] as string,
+    reachLabel: field.reachLabel,
+  };
 }
 
 export function BracketView({ bracket, roundOdds, onSelectTeam }: BracketViewProps) {
@@ -62,12 +87,24 @@ export function BracketView({ bracket, roundOdds, onSelectTeam }: BracketViewPro
           </h2>
           <p className="text-sm text-muted-foreground">
             Built from current group standings — updates as results come in.
-            Percentages show each team&apos;s chance of winning that match.
           </p>
         </div>
         <span className="text-xs text-muted-foreground sm:hidden">
           Scroll sideways to see the full bracket →
         </span>
+      </div>
+
+      <div
+        className="mt-3 rounded-xl border border-border/60 bg-card/40 px-4 py-3 text-xs text-muted-foreground"
+        role="note"
+      >
+        <p className="font-medium text-foreground">How to read the percentages</p>
+        <p className="mt-1">
+          Each figure is a <span className="text-foreground">simulated chance to reach the
+          next round</span> (or win the title in the final) across thousands of full-tournament
+          runs — not a head-to-head win probability for that specific fixture. Both teams in a
+          matchup can show high reach odds when the model rates them strongly overall.
+        </p>
       </div>
 
       <div className="-mx-5 overflow-x-auto px-5 pb-2 pt-4 sm:-mx-8 sm:px-8">
@@ -108,9 +145,12 @@ function BracketColumn({
 
   return (
     <div className="flex flex-col">
-      <h3 className="mb-3 text-center text-xs font-bold uppercase tracking-widest text-muted-foreground">
+      <h3 className="mb-1 text-center text-xs font-bold uppercase tracking-widest text-muted-foreground">
         {title}
       </h3>
+      <p className="mb-3 text-center text-[10px] font-medium uppercase tracking-wide text-muted-foreground/70">
+        {ADVANCE_PROB_FIELD[roundKey].reachLabel}
+      </p>
       <div
         className={`flex flex-1 flex-col ${
           isFinal ? "justify-center" : "justify-around gap-y-3"
@@ -177,8 +217,8 @@ function MatchCard({
   roundOddsByCode: Map<string, RoundOdds>;
   onSelectTeam: (code: string) => void;
 }) {
-  const homeProb = getWinProb(match.home.code, roundKey, roundOddsByCode);
-  const awayProb = getWinProb(match.away.code, roundKey, roundOddsByCode);
+  const homeProb = getAdvanceProb(match.home.code, roundKey, roundOddsByCode);
+  const awayProb = getAdvanceProb(match.away.code, roundKey, roundOddsByCode);
   const homeFavored = Boolean(
     homeProb && (!awayProb || homeProb.value >= awayProb.value),
   );
@@ -190,14 +230,14 @@ function MatchCard({
     <div className="glass rounded-xl p-2.5">
       <MatchTeamRow
         slot={match.home}
-        winProb={homeProb}
+        advanceProb={homeProb}
         isFavored={homeProb !== null && awayProb !== null && homeFavored}
         onSelectTeam={onSelectTeam}
       />
       <div className="my-1 h-px bg-border" />
       <MatchTeamRow
         slot={match.away}
-        winProb={awayProb}
+        advanceProb={awayProb}
         isFavored={homeProb !== null && awayProb !== null && awayFavored}
         onSelectTeam={onSelectTeam}
       />
@@ -212,12 +252,12 @@ function MatchCard({
 
 function MatchTeamRow({
   slot,
-  winProb,
+  advanceProb,
   isFavored,
   onSelectTeam,
 }: {
   slot: BracketMatch["home"];
-  winProb: WinProb | null;
+  advanceProb: AdvanceProb | null;
   isFavored: boolean;
   onSelectTeam: (code: string) => void;
 }) {
@@ -245,13 +285,21 @@ function MatchTeamRow({
           {slot.source ?? "—"}
         </div>
       </div>
-      {winProb && (
+      {advanceProb && (
         <span
-          className={`shrink-0 font-mono text-xs font-bold tabular-nums ${
-            isFavored ? "text-gold" : "text-muted-foreground"
-          }`}
+          className="shrink-0 text-right"
+          title={`${advanceProb.label.trim()} simulated chance to ${advanceProb.reachLabel.toLowerCase()}`}
         >
-          {winProb.label.trim()}
+          <span
+            className={`block font-mono text-xs font-bold tabular-nums ${
+              isFavored ? "text-gold" : "text-muted-foreground"
+            }`}
+          >
+            {advanceProb.label.trim()}
+          </span>
+          <span className="block text-[9px] font-medium uppercase tracking-wide text-muted-foreground/80">
+            {advanceProb.reachLabel}
+          </span>
         </span>
       )}
     </button>
