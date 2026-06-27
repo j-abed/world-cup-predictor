@@ -1,8 +1,10 @@
 import type { AppState } from "../types";
+import { AppStateLoadError } from "./errors";
+import { parseAppState } from "./schema";
 
 const DATA_URL = "/data/app_state.json";
 
-export class AppStateLoadError extends Error {}
+export { AppStateLoadError } from "./errors";
 
 export async function loadAppState(): Promise<AppState> {
   let response: Response;
@@ -23,5 +25,20 @@ export async function loadAppState(): Promise<AppState> {
     );
   }
 
-  return (await response.json()) as AppState;
+  let data: unknown;
+
+  try {
+    data = await response.json();
+  } catch {
+    throw new AppStateLoadError(`${DATA_URL} did not contain valid JSON.`);
+  }
+
+  try {
+    return parseAppState(data);
+  } catch {
+    throw new AppStateLoadError(
+      `${DATA_URL} did not match the expected app state schema. ` +
+        "Regenerate it with export_web_state.py and refresh frontend/public/data/.",
+    );
+  }
 }
