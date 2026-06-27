@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useState, type ReactNode } from "react";
 import type { Bracket, BracketMatch, BracketRoundKey, RoundOdds } from "../types";
 import { ROUND_SEQUENCE, orderedBracketRounds, pairUp } from "../lib/bracket";
 import { TeamBadge } from "./TeamBadge";
@@ -16,6 +16,11 @@ const ROUND_TITLES: Record<BracketRoundKey, string> = {
   semifinals: "Semifinals",
   final: "Final",
 };
+
+const DEFAULT_OPEN_ROUNDS: BracketRoundKey[] = [
+  "round_of_32",
+  "final",
+];
 
 /** Simulation odds for reaching the next knockout stage (not a head-to-head match-win %). */
 const ADVANCE_PROB_FIELD: Record<
@@ -71,12 +76,48 @@ function getAdvanceProb(
   };
 }
 
+function isRoundOpen(
+  roundKey: BracketRoundKey,
+  openRounds: Set<BracketRoundKey>,
+): boolean {
+  return openRounds.has(roundKey);
+}
+
 export function BracketView({ bracket, roundOdds, onSelectTeam }: BracketViewProps) {
   const rounds = useMemo(() => orderedBracketRounds(bracket), [bracket]);
   const roundOddsByCode = useMemo(
     () => new Map(roundOdds.map((odds) => [odds.code, odds])),
     [roundOdds],
   );
+  const [openRounds, setOpenRounds] = useState<Set<BracketRoundKey>>(
+    () => new Set(ROUND_SEQUENCE),
+  );
+  const [focusedRound, setFocusedRound] = useState<BracketRoundKey | "all">("all");
+
+  const toggleRound = (roundKey: BracketRoundKey) => {
+    setOpenRounds((current) => {
+      const next = new Set(current);
+      if (next.has(roundKey)) {
+        next.delete(roundKey);
+      } else {
+        next.add(roundKey);
+      }
+      return next;
+    });
+  };
+
+  const expandAllRounds = () => {
+    setOpenRounds(new Set(ROUND_SEQUENCE));
+  };
+
+  const collapseMiddleRounds = () => {
+    setOpenRounds(new Set(DEFAULT_OPEN_ROUNDS));
+  };
+
+  const visibleDesktopRounds =
+    focusedRound === "all"
+      ? ROUND_SEQUENCE
+      : ROUND_SEQUENCE.filter((roundKey) => roundKey === focusedRound);
 
   return (
     <section className="pitch-card-strong rounded-3xl p-5 sm:p-8">
@@ -89,9 +130,6 @@ export function BracketView({ bracket, roundOdds, onSelectTeam }: BracketViewPro
             Built from current group standings — updates as results come in.
           </p>
         </div>
-        <span className="text-xs text-muted-foreground sm:hidden">
-          Rounds stack vertically on mobile — scroll down for the full path.
-        </span>
       </div>
 
       <div
@@ -107,23 +145,64 @@ export function BracketView({ bracket, roundOdds, onSelectTeam }: BracketViewPro
         </p>
       </div>
 
-      <div className="mt-4 flex flex-col gap-8 sm:hidden">
+      <div className="mt-4 flex flex-wrap items-center gap-2">
+        <span className="text-xs font-medium text-muted-foreground">Focus:</span>
+        <RoundFilterChip
+          label="All rounds"
+          active={focusedRound === "all"}
+          onClick={() => setFocusedRound("all")}
+        />
         {ROUND_SEQUENCE.map((roundKey) => (
-          <MobileBracketRound
+          <RoundFilterChip
+            key={roundKey}
+            label={ROUND_TITLES[roundKey]}
+            active={focusedRound === roundKey}
+            onClick={() => setFocusedRound(roundKey)}
+          />
+        ))}
+      </div>
+
+      <div className="mt-3 flex flex-wrap gap-2 sm:hidden">
+        <BracketControlButton onClick={expandAllRounds}>
+          Expand all
+        </BracketControlButton>
+        <BracketControlButton onClick={collapseMiddleRounds}>
+          Collapse middle rounds
+        </BracketControlButton>
+      </div>
+
+      <div className="mt-4 flex flex-col gap-3 sm:hidden">
+        {ROUND_SEQUENCE.map((roundKey) => (
+          <CollapsibleBracketRound
             key={roundKey}
             title={ROUND_TITLES[roundKey]}
             roundKey={roundKey}
             matches={rounds[roundKey]}
             roundOddsByCode={roundOddsByCode}
             onSelectTeam={onSelectTeam}
+            open={isRoundOpen(roundKey, openRounds)}
+            onToggle={() => toggleRound(roundKey)}
+            hidden={focusedRound !== "all" && focusedRound !== roundKey}
           />
         ))}
       </div>
 
       <div className="-mx-5 hidden overflow-x-auto px-5 pb-2 pt-4 sm:-mx-8 sm:block sm:px-8">
-        <div className="grid min-w-[1180px] grid-cols-5 gap-x-6">
-          {ROUND_SEQUENCE.map((roundKey) => (
-            <BracketColumn
+        <div
+          className={`grid min-w-[960px] gap-x-6 ${
+            visibleDesktopRounds.length === 1
+              ? "grid-cols-1 max-w-md mx-auto"
+              : visibleDesktopRounds.length === 2
+                ? "grid-cols-2"
+                : visibleDesktopRounds.length === 3
+                  ? "grid-cols-3"
+                  : visibleDesktopRounds.length === 4
+                    ? "grid-cols-4"
+                    : "grid-cols-5"
+          }`}
+        >
+          {visibleDesktopRounds.map((roundKey) => (
+            <CollapsibleBracketColumn
               key={roundKey}
               title={ROUND_TITLES[roundKey]}
               roundKey={roundKey}
@@ -131,6 +210,8 @@ export function BracketView({ bracket, roundOdds, onSelectTeam }: BracketViewPro
               roundOddsByCode={roundOddsByCode}
               isFinal={roundKey === "final"}
               onSelectTeam={onSelectTeam}
+              open={isRoundOpen(roundKey, openRounds)}
+              onToggle={() => toggleRound(roundKey)}
             />
           ))}
         </div>
@@ -139,49 +220,118 @@ export function BracketView({ bracket, roundOdds, onSelectTeam }: BracketViewPro
   );
 }
 
-function MobileBracketRound({
+function RoundFilterChip({
+  label,
+  active,
+  onClick,
+}: {
+  label: string;
+  active: boolean;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={`rounded-full px-3 py-1 text-xs font-semibold transition ${
+        active
+          ? "bg-accent/15 text-gold"
+          : "border border-border text-muted-foreground hover:bg-accent/5 hover:text-foreground"
+      }`}
+    >
+      {label}
+    </button>
+  );
+}
+
+function BracketControlButton({
+  children,
+  onClick,
+}: {
+  children: ReactNode;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className="rounded-full border border-border px-3 py-1 text-xs font-medium text-muted-foreground transition hover:bg-accent/5 hover:text-foreground"
+    >
+      {children}
+    </button>
+  );
+}
+
+function CollapsibleBracketRound({
   title,
   roundKey,
   matches,
   roundOddsByCode,
   onSelectTeam,
+  open,
+  onToggle,
+  hidden = false,
 }: {
   title: string;
   roundKey: BracketRoundKey;
   matches: BracketMatch[];
   roundOddsByCode: Map<string, RoundOdds>;
   onSelectTeam: (code: string) => void;
+  open: boolean;
+  onToggle: () => void;
+  hidden?: boolean;
 }) {
+  if (hidden) return null;
+
   return (
-    <section aria-label={title}>
-      <h3 className="text-xs font-bold uppercase tracking-widest text-muted-foreground">
-        {title}
-      </h3>
-      <p className="mt-0.5 text-[10px] font-medium uppercase tracking-wide text-muted-foreground/70">
-        {ADVANCE_PROB_FIELD[roundKey].reachLabel}
-      </p>
-      <div className="mt-3 flex flex-col gap-3">
-        {matches.map((match) => (
-          <MatchCard
-            key={match.slot_id}
-            match={match}
-            roundKey={roundKey}
-            roundOddsByCode={roundOddsByCode}
-            onSelectTeam={onSelectTeam}
-          />
-        ))}
-      </div>
+    <section className="rounded-2xl border border-border/60 bg-background/30">
+      <button
+        type="button"
+        onClick={onToggle}
+        aria-expanded={open}
+        className="flex w-full items-center justify-between gap-3 px-4 py-3 text-left transition hover:bg-accent/5"
+      >
+        <div>
+          <h3 className="text-xs font-bold uppercase tracking-widest text-foreground">
+            {title}
+          </h3>
+          <p className="mt-0.5 text-[10px] font-medium uppercase tracking-wide text-muted-foreground/70">
+            {ADVANCE_PROB_FIELD[roundKey].reachLabel} · {matches.length} matches
+          </p>
+        </div>
+        <span
+          className={`text-sm text-muted-foreground transition ${open ? "rotate-180" : ""}`}
+          aria-hidden
+        >
+          ▾
+        </span>
+      </button>
+      {open ? (
+        <div className="flex flex-col gap-3 border-t border-border/50 px-4 py-3">
+          {matches.map((match) => (
+            <MatchCard
+              key={match.slot_id}
+              match={match}
+              roundKey={roundKey}
+              roundOddsByCode={roundOddsByCode}
+              onSelectTeam={onSelectTeam}
+            />
+          ))}
+        </div>
+      ) : null}
     </section>
   );
 }
 
-function BracketColumn({
+function CollapsibleBracketColumn({
   title,
   roundKey,
   matches,
   roundOddsByCode,
   isFinal,
   onSelectTeam,
+  open,
+  onToggle,
 }: {
   title: string;
   roundKey: BracketRoundKey;
@@ -189,49 +339,67 @@ function BracketColumn({
   roundOddsByCode: Map<string, RoundOdds>;
   isFinal: boolean;
   onSelectTeam: (code: string) => void;
+  open: boolean;
+  onToggle: () => void;
 }) {
   const pairs = pairUp(matches);
 
   return (
-    <div className="flex flex-col">
-      <h3 className="mb-1 text-center text-xs font-bold uppercase tracking-widest text-muted-foreground">
-        {title}
-      </h3>
-      <p className="mb-3 text-center text-[10px] font-medium uppercase tracking-wide text-muted-foreground/70">
-        {ADVANCE_PROB_FIELD[roundKey].reachLabel}
-      </p>
-      <div
-        className={`flex flex-1 flex-col ${
-          isFinal ? "justify-center" : "justify-around gap-y-3"
-        }`}
+    <div className="flex min-w-0 flex-col">
+      <button
+        type="button"
+        onClick={onToggle}
+        className="mb-1 flex w-full items-center justify-center gap-2 rounded-lg px-2 py-1 text-center transition hover:bg-accent/5"
+        aria-expanded={open}
       >
-        {pairs.map(([first, second], idx) => (
+        <span className="text-xs font-bold uppercase tracking-widest text-muted-foreground">
+          {title}
+        </span>
+        <span className="text-[10px] text-muted-foreground">{open ? "▾" : "▸"}</span>
+      </button>
+      {open ? (
+        <>
+          <p className="mb-3 text-center text-[10px] font-medium uppercase tracking-wide text-muted-foreground/70">
+            {ADVANCE_PROB_FIELD[roundKey].reachLabel}
+          </p>
           <div
-            key={first.slot_id}
-            className={`flex items-stretch ${isFinal ? "" : "gap-2"}`}
+            className={`flex flex-1 flex-col ${
+              isFinal ? "justify-center" : "justify-around gap-y-3"
+            }`}
           >
-            <div className="flex min-w-0 flex-1 flex-col justify-around gap-3">
-              <MatchCard
-                match={first}
-                roundKey={roundKey}
-                roundOddsByCode={roundOddsByCode}
-                onSelectTeam={onSelectTeam}
-              />
-              {second && (
-                <MatchCard
-                  match={second}
-                  roundKey={roundKey}
-                  roundOddsByCode={roundOddsByCode}
-                  onSelectTeam={onSelectTeam}
-                />
-              )}
-            </div>
-            {!isFinal && second && (
-              <BracketConnector key={`${first.slot_id}-connector-${idx}`} />
-            )}
+            {pairs.map(([first, second], idx) => (
+              <div
+                key={first.slot_id}
+                className={`flex items-stretch ${isFinal ? "" : "gap-2"}`}
+              >
+                <div className="flex min-w-0 flex-1 flex-col justify-around gap-3">
+                  <MatchCard
+                    match={first}
+                    roundKey={roundKey}
+                    roundOddsByCode={roundOddsByCode}
+                    onSelectTeam={onSelectTeam}
+                  />
+                  {second && (
+                    <MatchCard
+                      match={second}
+                      roundKey={roundKey}
+                      roundOddsByCode={roundOddsByCode}
+                      onSelectTeam={onSelectTeam}
+                    />
+                  )}
+                </div>
+                {!isFinal && second && (
+                  <BracketConnector key={`${first.slot_id}-connector-${idx}`} />
+                )}
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
+        </>
+      ) : (
+        <p className="rounded-lg border border-dashed border-border/60 px-3 py-6 text-center text-[11px] text-muted-foreground">
+          {matches.length} matches hidden
+        </p>
+      )}
     </div>
   );
 }

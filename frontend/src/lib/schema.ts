@@ -9,6 +9,19 @@ const simulationCountsSchema = z.object({
   round: z.number(),
 });
 
+const scenarioOverrideSchema = z.object({
+  match_id: z.number(),
+  home_score: z.number(),
+  away_score: z.number(),
+});
+
+const scenarioMetadataSchema = z.object({
+  label: z.string(),
+  overrides: z.array(scenarioOverrideSchema),
+  simulations: z.number(),
+  baseline_generated_at: z.string().optional(),
+});
+
 const metadataSchema = z.object({
   generated_at: z.string(),
   team_count: z.number(),
@@ -19,6 +32,7 @@ const metadataSchema = z.object({
   rating_type: z.string().nullable(),
   simulations: simulationCountsSchema,
   data_caveats: z.array(z.string()),
+  scenario: scenarioMetadataSchema.optional(),
 });
 
 const groupCoverageSchema = z.object({

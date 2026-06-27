@@ -3,6 +3,7 @@ import { AppStateLoadError } from "./errors";
 import { parseAppState } from "./schema";
 
 const DATA_URL = "/data/app_state.json";
+const SCENARIO_DATA_URL = "/data/scenario_app_state.json";
 
 export { AppStateLoadError } from "./errors";
 
@@ -40,5 +41,37 @@ export async function loadAppState(): Promise<AppState> {
       `${DATA_URL} did not match the expected app state schema. ` +
         "Regenerate it with export_web_state.py and refresh frontend/public/data/.",
     );
+  }
+}
+
+export async function loadScenarioAppState(): Promise<AppState | null> {
+  let response: Response;
+
+  try {
+    response = await fetch(SCENARIO_DATA_URL);
+  } catch {
+    return null;
+  }
+
+  if (response.status === 404) {
+    return null;
+  }
+
+  if (!response.ok) {
+    return null;
+  }
+
+  let data: unknown;
+
+  try {
+    data = await response.json();
+  } catch {
+    return null;
+  }
+
+  try {
+    return parseAppState(data);
+  } catch {
+    return null;
   }
 }

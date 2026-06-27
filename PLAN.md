@@ -17,7 +17,7 @@ Track progress here. Check items off as they ship.
 | 4 — UX polish | 5 | 5 | ✅ Complete |
 | 5 — Stretch | 0 | 5 | ⬜ Backlog |
 
-**Overall: 24 / 29** actionable items complete. Remaining work is Phase 5 stretch only.
+**Overall: 25 / 29** actionable items complete. Remaining work is Phase 5 stretch only.
 
 ---
 
@@ -99,7 +99,7 @@ Track progress here. Check items off as they ship.
 
 ## Phase 5 — Stretch / backlog
 
-- [ ] Scenario mode ("what if Brazil wins 3-0?")
+- [x] Scenario mode ("what if Brazil wins 3-0?")
 - [ ] Model vs betting markets comparison
 - [ ] Historical backtest page (2022 model vs actual)
 - [ ] Serverless scenario API (on-demand sim)
@@ -117,7 +117,7 @@ Ops (automatic)
   ✓ deploy-frontend.yml on push
 
 Optional stretch (Phase 5)
-  □ Scenario mode
+  ✓ Scenario mode
   □ Model vs betting markets
   □ 2022 backtest page
 ```

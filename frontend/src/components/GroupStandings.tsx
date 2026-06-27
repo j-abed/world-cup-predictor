@@ -9,6 +9,9 @@ interface GroupStandingsProps {
   onSelectTeam: (code: string) => void;
 }
 
+const STANDINGS_GRID =
+  "grid grid-cols-[1.125rem_minmax(0,1fr)_1.125rem_1.125rem_1.125rem_1.125rem_1.75rem_1.75rem] items-center gap-x-1.5";
+
 export function GroupStandings({
   standings,
   thirdPlace,
@@ -46,12 +49,12 @@ export function GroupStandings({
         </p>
       </div>
 
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
         {groups.map(([group, rows]) => (
           <div
             key={group}
             data-group={group}
-            className="pitch-card rounded-2xl border-t-2 p-4"
+            className="pitch-card min-w-0 rounded-2xl border-t-2 p-4"
             style={{ borderTopColor: "var(--group-accent)" }}
           >
             <h3
@@ -60,79 +63,134 @@ export function GroupStandings({
             >
               Group {group}
             </h3>
-            <table className="w-full border-collapse text-xs">
-              <thead>
-                <tr className="text-muted-foreground/70">
-                  <th className="w-6 pb-1.5 text-left font-medium" />
-                  <th className="pb-1.5 text-left font-medium">Team</th>
-                  <th className="pb-1.5 text-right font-medium">P</th>
-                  <th className="pb-1.5 text-right font-medium">W</th>
-                  <th className="pb-1.5 text-right font-medium">D</th>
-                  <th className="pb-1.5 text-right font-medium">L</th>
-                  <th className="pb-1.5 text-right font-medium">GD</th>
-                  <th className="pb-1.5 text-right font-medium">Pts</th>
-                </tr>
-              </thead>
-              <tbody>
+
+            <div className="min-w-0" role="table" aria-label={`Group ${group} standings`}>
+              <div
+                role="row"
+                className={`${STANDINGS_GRID} border-b border-border/60 pb-1.5 text-[10px] font-medium uppercase tracking-wide text-muted-foreground/80`}
+              >
+                <span role="columnheader" aria-hidden />
+                <span role="columnheader">Team</span>
+                <span role="columnheader" className="text-center" title="Played">
+                  P
+                </span>
+                <span role="columnheader" className="text-center" title="Won">
+                  W
+                </span>
+                <span role="columnheader" className="text-center" title="Drawn">
+                  D
+                </span>
+                <span role="columnheader" className="text-center" title="Lost">
+                  L
+                </span>
+                <span role="columnheader" className="text-center" title="Goal difference">
+                  GD
+                </span>
+                <span role="columnheader" className="text-center" title="Points">
+                  Pts
+                </span>
+              </div>
+
+              <div role="rowgroup">
                 {rows.map((row) => {
                   const qualifies =
                     row.rank <= 2 || qualifyingThirdPlaceCodes.has(row.code);
+
                   return (
-                    <tr
+                    <div
                       key={row.code}
+                      role="row"
                       tabIndex={0}
-                      role="button"
                       onClick={() => onSelectTeam(row.code)}
                       onKeyDown={(event) =>
                         activateOnEnterOrSpace(event, () =>
                           onSelectTeam(row.code),
                         )
                       }
-                      className={`border-t border-border ${INTERACTIVE_ROW_CLASS} ${
-                        qualifies ? "bg-success/[0.08]" : ""
+                      className={`${STANDINGS_GRID} border-t border-border/50 py-1.5 text-xs ${INTERACTIVE_ROW_CLASS} ${
+                        qualifies
+                          ? "border-l-2 border-l-success/70 bg-success/[0.07] pl-2 -ml-2"
+                          : ""
                       }`}
                     >
-                      <td className="py-1.5 text-muted-foreground">{row.rank}</td>
-                      <td className="py-1.5">
-                        <div className="flex items-center gap-2">
-                          <TeamBadge code={row.code} size="sm" />
+                      <span
+                        role="cell"
+                        className="text-center tabular-nums text-muted-foreground"
+                      >
+                        {row.rank}
+                      </span>
+
+                      <div role="cell" className="min-w-0">
+                        <div className="flex min-w-0 items-center gap-1.5">
+                          <TeamBadge
+                            code={row.code}
+                            group={group}
+                            size="sm"
+                          />
                           <span
-                            className={`truncate font-medium ${
-                              qualifies ? "text-foreground" : "text-muted-foreground"
+                            className={`min-w-0 truncate font-medium ${
+                              qualifies
+                                ? "text-foreground"
+                                : "text-muted-foreground"
                             }`}
+                            title={row.team}
                           >
                             {row.team}
                           </span>
-                          {row.rank === 3 && qualifies && (
-                            <span className="rounded-full bg-success/20 px-1.5 py-0.5 text-[9px] font-bold uppercase text-success">
+                          {row.rank === 3 && qualifies ? (
+                            <span
+                              className="shrink-0 rounded-full bg-success/20 px-1 py-0.5 text-[8px] font-bold uppercase leading-none text-success"
+                              title="Qualifying third place"
+                            >
                               3rd
                             </span>
-                          )}
+                          ) : null}
                         </div>
-                      </td>
-                      <td className="py-1.5 text-right tabular-nums text-muted-foreground">
+                      </div>
+
+                      <span
+                        role="cell"
+                        className="text-center tabular-nums text-muted-foreground"
+                      >
                         {row.played}
-                      </td>
-                      <td className="py-1.5 text-right tabular-nums text-muted-foreground">
+                      </span>
+                      <span
+                        role="cell"
+                        className="text-center tabular-nums text-muted-foreground"
+                      >
                         {row.wins}
-                      </td>
-                      <td className="py-1.5 text-right tabular-nums text-muted-foreground">
+                      </span>
+                      <span
+                        role="cell"
+                        className="text-center tabular-nums text-muted-foreground"
+                      >
                         {row.draws}
-                      </td>
-                      <td className="py-1.5 text-right tabular-nums text-muted-foreground">
+                      </span>
+                      <span
+                        role="cell"
+                        className="text-center tabular-nums text-muted-foreground"
+                      >
                         {row.losses}
-                      </td>
-                      <td className="py-1.5 text-right tabular-nums text-muted-foreground">
-                        {row.goal_difference > 0 ? `+${row.goal_difference}` : row.goal_difference}
-                      </td>
-                      <td className="py-1.5 text-right font-mono font-bold tabular-nums text-foreground">
+                      </span>
+                      <span
+                        role="cell"
+                        className="text-center tabular-nums text-muted-foreground"
+                      >
+                        {row.goal_difference > 0
+                          ? `+${row.goal_difference}`
+                          : row.goal_difference}
+                      </span>
+                      <span
+                        role="cell"
+                        className="text-center font-mono text-xs font-bold tabular-nums text-foreground"
+                      >
                         {row.points}
-                      </td>
-                    </tr>
+                      </span>
+                    </div>
                   );
                 })}
-              </tbody>
-            </table>
+              </div>
+            </div>
           </div>
         ))}
       </div>

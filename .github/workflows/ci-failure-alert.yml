@@ -1,0 +1,72 @@
+name: CI failure alert
+
+on:
+  workflow_run:
+    workflows:
+      - Refresh tournament data
+      - Deploy frontend
+      - Run scenario simulation
+    types:
+      - completed
+
+jobs:
+  alert:
+    if: ${{ github.event.workflow_run.conclusion == 'failure' }}
+    runs-on: ubuntu-latest
+
+    permissions:
+      issues: write
+
+    steps:
+      - name: Open or update failure issue
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const run = context.payload.workflow_run;
+            const workflowName = run.name;
+            const runUrl = run.html_url;
+            const branch = run.head_branch ?? "unknown";
+            const sha = (run.head_sha ?? "").slice(0, 7);
+            const label = "ci-failure";
+            const title = `CI failed: ${workflowName}`;
+
+            const body = [
+              `Automated alert: **${workflowName}** failed.`,
+              "",
+              `- Run: ${runUrl}`,
+              `- Branch: \`${branch}\``,
+              `- Commit: \`${sha}\``,
+              "",
+              "Check the workflow logs for the root cause. Close this issue when a subsequent run succeeds.",
+            ].join("\n");
+
+            const { data: issues } = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: "open",
+              labels: label,
+              per_page: 100,
+            });
+
+            const existing = issues.find((issue) => issue.title === title);
+
+            if (existing) {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: existing.number,
+                body: `Another failure on ${new Date().toISOString()}.\n\n${body}`,
+              });
+              core.info(`Updated existing issue #${existing.number}`);
+              return;
+            }
+
+            const created = await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title,
+              body,
+              labels: [label],
+            });
+
+            core.info(`Created issue #${created.data.number}`);

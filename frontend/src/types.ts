@@ -7,6 +7,19 @@ export interface SimulationCounts {
   round: number;
 }
 
+export interface ScenarioOverride {
+  match_id: number;
+  home_score: number;
+  away_score: number;
+}
+
+export interface ScenarioMetadata {
+  label: string;
+  overrides: ScenarioOverride[];
+  simulations: number;
+  baseline_generated_at?: string;
+}
+
 export interface Metadata {
   generated_at: string;
   team_count: number;
@@ -17,6 +30,7 @@ export interface Metadata {
   rating_type: string | null;
   simulations: SimulationCounts;
   data_caveats: string[];
+  scenario?: ScenarioMetadata;
 }
 
 export interface GroupCoverage {
