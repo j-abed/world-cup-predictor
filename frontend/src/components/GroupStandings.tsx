@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import type { GroupStanding, ThirdPlaceEntry } from "../types";
+import { activateOnEnterOrSpace, INTERACTIVE_ROW_CLASS } from "../lib/keyboard";
 import { TeamBadge } from "./TeamBadge";
 
 interface GroupStandingsProps {
@@ -79,8 +80,15 @@ export function GroupStandings({
                   return (
                     <tr
                       key={row.code}
+                      tabIndex={0}
+                      role="button"
                       onClick={() => onSelectTeam(row.code)}
-                      className={`cursor-pointer border-t border-border transition hover:bg-accent/10 ${
+                      onKeyDown={(event) =>
+                        activateOnEnterOrSpace(event, () =>
+                          onSelectTeam(row.code),
+                        )
+                      }
+                      className={`border-t border-border ${INTERACTIVE_ROW_CLASS} ${
                         qualifies ? "bg-success/[0.08]" : ""
                       }`}
                     >

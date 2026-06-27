@@ -11,13 +11,13 @@ Track progress here. Check items off as they ship.
 | Phase | Done | Total | Status |
 |-------|------|-------|--------|
 | 0 — Foundation | 4 | 4 | ✅ Complete |
-| 1 — Automation | 2 | 3 | 🟡 In progress |
+| 1 — Automation | 3 | 3 | ✅ Complete |
 | 2 — Data/UI gaps | 7 | 7 | ✅ Complete |
 | 3 — Model | 2 | 5 | 🟡 In progress |
-| 4 — UX polish | 1 | 5 | 🟡 In progress |
+| 4 — UX polish | 5 | 5 | ✅ Complete |
 | 5 — Stretch | 0 | 5 | ⬜ Backlog |
 
-**Overall: 16 / 29** actionable items complete.
+**Overall: 21 / 29** actionable items complete.
 
 ---
 
@@ -36,11 +36,9 @@ Track progress here. Check items off as they ship.
 
 - [x] GitHub Action: `.github/workflows/refresh-data.yml`
 - [x] Pipeline: ESPN sync → model → export → pytest → commit
-- [ ] **Vercel Git integration** — import repo in dashboard, Root Directory = `frontend`
+- [x] **Auto-deploy on push** — `.github/workflows/deploy-frontend.yml` + Vercel secrets via `scripts/setup_github_vercel_secrets.sh`
   - *Acceptance:* push to `main` deploys without `npx vercel --prod`
-  - *Docs:* see README → Vercel Git auto-deploy
-  - *Config:* `frontend/vercel.json` included
-  - *Alternative:* `.github/workflows/deploy-frontend.yml` + Vercel secrets (see README)
+  - *Alternative to Vercel Git:* GitHub Actions deploy (documented in README)
 
 ---
 
@@ -115,10 +113,10 @@ All data/UI gap items shipped. Next priorities: Phase 1.3 (Vercel Git) and Phase
 
 ## Phase 4 — UX polish
 
-- [ ] **4.1 Mobile bracket** — vertical round-by-round layout below `sm`
-- [ ] **4.2 Keyboard accessibility** — table rows in `QualificationOdds`, `GroupStandings` focusable/activatable
-- [ ] **4.3 Error boundary** — catch render errors per tab, show recovery UI
-- [ ] **4.4 Dark mode** — wire `prefers-color-scheme` to existing `.dark` tokens
+- [x] **4.1 Mobile bracket** — vertical round-by-round layout below `sm`
+- [x] **4.2 Keyboard accessibility** — table rows in `QualificationOdds`, `GroupStandings` focusable/activatable
+- [x] **4.3 Error boundary** — catch render errors per tab, show recovery UI
+- [x] **4.4 Dark mode** — wire `prefers-color-scheme` to existing `.dark` tokens
 - [x] **4.5 Relative timestamps** — "Updated 2 hours ago" in Header
 
 ---

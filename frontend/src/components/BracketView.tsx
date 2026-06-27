@@ -90,7 +90,7 @@ export function BracketView({ bracket, roundOdds, onSelectTeam }: BracketViewPro
           </p>
         </div>
         <span className="text-xs text-muted-foreground sm:hidden">
-          Scroll sideways to see the full bracket →
+          Rounds stack vertically on mobile — scroll down for the full path.
         </span>
       </div>
 
@@ -107,7 +107,20 @@ export function BracketView({ bracket, roundOdds, onSelectTeam }: BracketViewPro
         </p>
       </div>
 
-      <div className="-mx-5 overflow-x-auto px-5 pb-2 pt-4 sm:-mx-8 sm:px-8">
+      <div className="mt-4 flex flex-col gap-8 sm:hidden">
+        {ROUND_SEQUENCE.map((roundKey) => (
+          <MobileBracketRound
+            key={roundKey}
+            title={ROUND_TITLES[roundKey]}
+            roundKey={roundKey}
+            matches={rounds[roundKey]}
+            roundOddsByCode={roundOddsByCode}
+            onSelectTeam={onSelectTeam}
+          />
+        ))}
+      </div>
+
+      <div className="-mx-5 hidden overflow-x-auto px-5 pb-2 pt-4 sm:-mx-8 sm:block sm:px-8">
         <div className="grid min-w-[1180px] grid-cols-5 gap-x-6">
           {ROUND_SEQUENCE.map((roundKey) => (
             <BracketColumn
@@ -121,6 +134,42 @@ export function BracketView({ bracket, roundOdds, onSelectTeam }: BracketViewPro
             />
           ))}
         </div>
+      </div>
+    </section>
+  );
+}
+
+function MobileBracketRound({
+  title,
+  roundKey,
+  matches,
+  roundOddsByCode,
+  onSelectTeam,
+}: {
+  title: string;
+  roundKey: BracketRoundKey;
+  matches: BracketMatch[];
+  roundOddsByCode: Map<string, RoundOdds>;
+  onSelectTeam: (code: string) => void;
+}) {
+  return (
+    <section aria-label={title}>
+      <h3 className="text-xs font-bold uppercase tracking-widest text-muted-foreground">
+        {title}
+      </h3>
+      <p className="mt-0.5 text-[10px] font-medium uppercase tracking-wide text-muted-foreground/70">
+        {ADVANCE_PROB_FIELD[roundKey].reachLabel}
+      </p>
+      <div className="mt-3 flex flex-col gap-3">
+        {matches.map((match) => (
+          <MatchCard
+            key={match.slot_id}
+            match={match}
+            roundKey={roundKey}
+            roundOddsByCode={roundOddsByCode}
+            onSelectTeam={onSelectTeam}
+          />
+        ))}
       </div>
     </section>
   );

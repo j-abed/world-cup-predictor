@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import type { QualificationOdds as QualificationOddsRow } from "../types";
+import { activateOnEnterOrSpace, INTERACTIVE_ROW_CLASS } from "../lib/keyboard";
 import { ProbabilityBar } from "./ProbabilityBar";
 import { TeamBadge } from "./TeamBadge";
 
@@ -130,8 +131,13 @@ export function QualificationOdds({
               <tr
                 key={row.code}
                 data-group={row.group}
+                tabIndex={0}
+                role="button"
                 onClick={() => onSelectTeam(row.code)}
-                className="cursor-pointer border-t border-border transition hover:bg-accent/10"
+                onKeyDown={(event) =>
+                  activateOnEnterOrSpace(event, () => onSelectTeam(row.code))
+                }
+                className={`border-t border-border ${INTERACTIVE_ROW_CLASS}`}
               >
                 <td className="py-2.5">
                   <div className="flex items-center gap-2">

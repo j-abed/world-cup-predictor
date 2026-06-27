@@ -7,6 +7,7 @@ import { Header } from "./components/Header";
 import { ProjectedField } from "./components/ProjectedField";
 import { QualificationOdds } from "./components/QualificationOdds";
 import { TabNav, type TabId } from "./components/TabNav";
+import { TabErrorBoundary } from "./components/TabErrorBoundary";
 import { TeamDetail } from "./components/TeamDetail";
 import { ThirdPlaceTable } from "./components/ThirdPlaceTable";
 import { AppStateLoadError, loadAppState } from "./lib/data";
@@ -14,6 +15,15 @@ import { buildTeamIndex } from "./lib/team";
 import { buildDocumentTitle } from "./lib/documentMeta";
 import { readAppUrlState, writeAppUrlState } from "./lib/urlState";
 import type { AppState } from "./types";
+
+const TAB_LABELS: Record<TabId, string> = {
+  champion: "Champion odds",
+  fixtures: "Fixtures",
+  field: "Projected R32 field",
+  bracket: "Knockout bracket",
+  groups: "Group standings",
+  qualification: "Qualification odds",
+};
 
 export default function App() {
   const [appState, setAppState] = useState<AppState | null>(null);
@@ -130,43 +140,39 @@ export default function App() {
     ? teamIndex.get(selectedTeamCode) ?? null
     : null;
 
-  return (
-    <div className="min-h-screen">
-      <Header metadata={appState.metadata} coverage={appState.coverage} />
-
-      <main className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-        <TabNav active={activeTab} onChange={handleTabChange} />
-
-        {activeTab === "champion" && (
+  const tabContent = (() => {
+    switch (activeTab) {
+      case "champion":
+        return (
           <ChampionOdds
             round={appState.odds.round}
             onSelectTeam={handleSelectTeam}
           />
-        )}
-
-        {activeTab === "fixtures" && (
+        );
+      case "fixtures":
+        return (
           <FixturesView
             fixtures={appState.fixtures}
             onSelectTeam={handleSelectTeam}
           />
-        )}
-
-        {activeTab === "field" && (
+        );
+      case "field":
+        return (
           <ProjectedField
             qualifiers={appState.projected_qualifiers}
             onSelectTeam={handleSelectTeam}
           />
-        )}
-
-        {activeTab === "bracket" && (
+        );
+      case "bracket":
+        return (
           <BracketView
             bracket={appState.bracket}
             roundOdds={appState.odds.round}
             onSelectTeam={handleSelectTeam}
           />
-        )}
-
-        {activeTab === "groups" && (
+        );
+      case "groups":
+        return (
           <div className="flex flex-col gap-10">
             <GroupStandings
               standings={appState.standings}
@@ -178,14 +184,31 @@ export default function App() {
               onSelectTeam={handleSelectTeam}
             />
           </div>
-        )}
-
-        {activeTab === "qualification" && (
+        );
+      case "qualification":
+        return (
           <QualificationOdds
             qualification={appState.odds.qualification}
             onSelectTeam={handleSelectTeam}
           />
-        )}
+        );
+      default: {
+        const _exhaustive: never = activeTab;
+        return _exhaustive;
+      }
+    }
+  })();
+
+  return (
+    <div className="min-h-screen">
+      <Header metadata={appState.metadata} coverage={appState.coverage} />
+
+      <main className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+        <TabNav active={activeTab} onChange={handleTabChange} />
+
+        <TabErrorBoundary key={activeTab} tabLabel={TAB_LABELS[activeTab]}>
+          {tabContent}
+        </TabErrorBoundary>
       </main>
 
       <footer className="border-t border-border px-4 py-6 text-center text-xs text-muted-foreground">

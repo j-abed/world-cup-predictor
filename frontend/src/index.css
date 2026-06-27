@@ -188,6 +188,11 @@
     }
   }
 
+  .dark body {
+    background: var(--color-background);
+    background-image: none;
+  }
+
   h1, h2, h3, .font-display {
     font-family: var(--font-display);
     letter-spacing: 0.01em;
