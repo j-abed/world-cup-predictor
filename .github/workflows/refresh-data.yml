@@ -1,0 +1,89 @@
+name: Refresh tournament data
+
+on:
+  schedule:
+    # Every 2 hours (UTC). Skipped outside tournament window unless triggered manually.
+    - cron: "0 */2 * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: refresh-data
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check tournament window
+        id: window
+        run: |
+          TODAY=$(date +%Y-%m-%d)
+          if [[ "$TODAY" < "2026-06-11" || "$TODAY" > "2026-07-20" ]]; then
+            if [[ "${{ github.event_name }}" != "workflow_dispatch" ]]; then
+              echo "skip=true" >> "$GITHUB_OUTPUT"
+              echo "Outside tournament window ($TODAY), skipping scheduled run."
+              exit 0
+            fi
+          fi
+          echo "skip=false" >> "$GITHUB_OUTPUT"
+
+      - name: Install uv
+        if: steps.window.outputs.skip != 'true'
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      - name: Set up Python
+        if: steps.window.outputs.skip != 'true'
+        run: uv python install 3.12
+
+      - name: Install Python dependencies
+        if: steps.window.outputs.skip != 'true'
+        run: uv sync --group dev
+
+      - name: Sync results, run model, export web state
+        if: steps.window.outputs.skip != 'true'
+        run: |
+          uv run python scripts/update_world_cup_data.py \
+            --last-days 3 \
+            --run-model \
+            --export-web
+
+      - name: Copy app state to frontend
+        if: steps.window.outputs.skip != 'true'
+        run: cp outputs/web/app_state.json frontend/public/data/app_state.json
+
+      - name: Run tests
+        if: steps.window.outputs.skip != 'true'
+        run: uv run pytest -q
+
+      - name: Check for data changes
+        if: steps.window.outputs.skip != 'true'
+        id: changes
+        run: |
+          if git diff --quiet data/results.csv frontend/public/data/app_state.json; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Commit and push updates
+        if: steps.window.outputs.skip != 'true' && steps.changes.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/results.csv frontend/public/data/app_state.json
+          git commit -m "$(cat <<'EOF'
+chore: refresh World Cup results and projections
+
+Automated sync from ESPN, model rerun, and web state export.
+EOF
+)"
+          git push
