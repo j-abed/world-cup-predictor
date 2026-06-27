@@ -12,12 +12,12 @@ Track progress here. Check items off as they ship.
 |-------|------|-------|--------|
 | 0 — Foundation | 4 | 4 | ✅ Complete |
 | 1 — Automation | 2 | 3 | 🟡 In progress |
-| 2 — Data/UI gaps | 6 | 7 | 🟡 In progress |
+| 2 — Data/UI gaps | 7 | 7 | ✅ Complete |
 | 3 — Model | 0 | 5 | ⬜ Not started |
 | 4 — UX polish | 0 | 5 | ⬜ Not started |
 | 5 — Stretch | 0 | 5 | ⬜ Backlog |
 
-**Overall: 12 / 29** actionable items complete.
+**Overall: 13 / 29** actionable items complete.
 
 ---
 
@@ -71,10 +71,16 @@ Track progress here. Check items off as they ship.
   - Clarify "reach round" vs "win this match" in `BracketView.tsx`
   - *Acceptance:* tooltip or subtitle makes semantics obvious
 
-- [ ] **2.4 OG meta tags**
+- [x] **2.4 OG meta tags**
   - Title, description, `og:image` for sharing champion odds
   - *Files:* `frontend/index.html` or Vite meta plugin
   - *Acceptance:* link preview looks good in iMessage/Slack/Twitter
+
+---
+
+## Phase 2 complete ✅
+
+All data/UI gap items shipped. Next priorities: Phase 1.3 (Vercel Git) and Phase 3 (model).
 
 ---
 

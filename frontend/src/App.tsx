@@ -11,6 +11,7 @@ import { TeamDetail } from "./components/TeamDetail";
 import { ThirdPlaceTable } from "./components/ThirdPlaceTable";
 import { AppStateLoadError, loadAppState } from "./lib/data";
 import { buildTeamIndex } from "./lib/team";
+import { buildDocumentTitle } from "./lib/documentMeta";
 import { readAppUrlState, writeAppUrlState } from "./lib/urlState";
 import type { AppState } from "./types";
 
@@ -75,6 +76,19 @@ export default function App() {
     if (!urlHydratedRef.current) return;
     writeAppUrlState(activeTab, selectedTeamCode);
   }, [activeTab, selectedTeamCode]);
+
+  useEffect(() => {
+    if (!appState || !teamIndex) return;
+
+    const selectedTeam = selectedTeamCode
+      ? teamIndex.get(selectedTeamCode) ?? null
+      : null;
+
+    document.title = buildDocumentTitle(
+      activeTab,
+      selectedTeam?.team ?? null,
+    );
+  }, [appState, teamIndex, activeTab, selectedTeamCode]);
 
   const handleTabChange = useCallback((tab: TabId) => {
     setActiveTab(tab);
