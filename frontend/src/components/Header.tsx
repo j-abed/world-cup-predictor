@@ -1,13 +1,50 @@
-import type { GroupCoverage, Metadata } from "../types";
+import type {
+  GroupCoverage,
+  LiveAccuracy,
+  LiveContext,
+  Metadata,
+  ModelQuality,
+} from "../types";
 import { CoverageBanner } from "./CoverageBanner";
+import { LiveMatchBanner } from "./LiveMatchBanner";
+import { NextRefreshStat } from "./NextRefreshStat";
 import { UpdatedAtStat } from "./UpdatedAtStat";
 
 interface HeaderProps {
   metadata: Metadata;
   coverage: GroupCoverage[];
+  liveContext?: LiveContext;
+  modelQuality?: ModelQuality;
+  liveAccuracy?: LiveAccuracy;
 }
 
-export function Header({ metadata, coverage }: HeaderProps) {
+const EMPTY_LIVE_CONTEXT: LiveContext = {
+  days_to_final: 0,
+  final_kickoff: "",
+  in_progress_matches: [],
+  next_match: null,
+};
+
+const EMPTY_MODEL_QUALITY: ModelQuality = {
+  confidence_score: 0,
+  confidence_label: "Unknown",
+  confidence_percent: 0,
+  components: {
+    simulation_factor: 0,
+    group_stage_completeness: 0,
+    backtest_calibration: 0,
+  },
+  backtest_reference: "2022",
+  backtest_round_of_16_overlap: 0,
+};
+
+export function Header({
+  metadata,
+  coverage,
+  liveContext = EMPTY_LIVE_CONTEXT,
+  modelQuality = EMPTY_MODEL_QUALITY,
+  liveAccuracy,
+}: HeaderProps) {
   const totalSimulations =
     metadata.simulations.tournament + metadata.simulations.round;
 
@@ -32,8 +69,24 @@ export function Header({ metadata, coverage }: HeaderProps) {
             </p>
           </div>
 
-          <dl className="grid grid-cols-2 gap-x-6 gap-y-4 text-sm sm:grid-cols-4 lg:w-auto">
+          <dl className="grid grid-cols-2 gap-x-6 gap-y-4 text-sm sm:grid-cols-3 lg:grid-cols-6 lg:w-auto">
             <UpdatedAtStat generatedAt={metadata.generated_at} />
+            {metadata.next_refresh_at ? (
+              <NextRefreshStat nextRefreshAt={metadata.next_refresh_at} />
+            ) : null}
+            {liveContext.days_to_final > 0 || liveContext.final_kickoff ? (
+              <Stat
+                label="Days to final"
+                value={String(liveContext.days_to_final)}
+              />
+            ) : null}
+            {modelQuality.confidence_percent > 0 ? (
+              <Stat
+                label="Model confidence"
+                value={`${modelQuality.confidence_percent}%`}
+                title={`${modelQuality.confidence_label} — based on simulation depth, group-stage completeness, and 2022 backtest calibration.`}
+              />
+            ) : null}
             <Stat
               label="Results in"
               value={`${metadata.completed_result_count} / ${metadata.fixture_count}`}
@@ -42,11 +95,24 @@ export function Header({ metadata, coverage }: HeaderProps) {
               label="Simulations run"
               value={totalSimulations.toLocaleString()}
             />
-            <Stat label="Teams" value={String(metadata.team_count)} />
           </dl>
         </div>
 
+        <LiveMatchBanner liveContext={liveContext} />
         <CoverageBanner metadata={metadata} coverage={coverage} />
+
+        {modelQuality.confidence_percent > 0 ? (
+          <p className="mt-4 text-xs text-muted-foreground">
+            Model confidence: {modelQuality.confidence_label} (
+            {modelQuality.confidence_percent}%) — blends simulation depth,{" "}
+            {Math.round(modelQuality.components.group_stage_completeness * 100)}%
+            group-stage coverage, and 2022 calibration.
+          </p>
+        ) : null}
+
+        {liveAccuracy?.available && liveAccuracy.summary ? (
+          <p className="mt-4 text-xs text-muted-foreground">{liveAccuracy.summary}</p>
+        ) : null}
 
         <div className="mt-6 flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
           {metadata.ratings_source && (
@@ -91,13 +157,24 @@ export function Header({ metadata, coverage }: HeaderProps) {
   );
 }
 
-function Stat({ label, value }: { label: string; value: string }) {
+function Stat({
+  label,
+  value,
+  title,
+}: {
+  label: string;
+  value: string;
+  title?: string;
+}) {
   return (
     <div>
       <dt className="text-[11px] uppercase tracking-wider text-muted-foreground">
         {label}
       </dt>
-      <dd className="mt-0.5 font-display text-base font-semibold text-foreground">
+      <dd
+        className="mt-0.5 font-display text-base font-semibold text-foreground"
+        title={title}
+      >
         {value}
       </dd>
     </div>

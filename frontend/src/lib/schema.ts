@@ -32,6 +32,9 @@ const metadataSchema = z.object({
   rating_type: z.string().nullable(),
   simulations: simulationCountsSchema,
   data_caveats: z.array(z.string()),
+  next_refresh_at: z.string().optional(),
+  refresh_interval_hours: z.number().optional(),
+  tournament_final_kickoff: z.string().optional(),
   scenario: scenarioMetadataSchema.optional(),
 });
 
@@ -185,6 +188,93 @@ const oddsSchema = z.object({
   round: z.array(roundOddsSchema),
 });
 
+const movementMetricSchema = z.enum([
+  "champion_prob",
+  "final_prob",
+  "qualify_prob",
+]);
+
+const movementMoverSchema = z.object({
+  code: z.string(),
+  team: z.string(),
+  metric: movementMetricSchema,
+  delta: z.number(),
+  previous: z.number(),
+  current: z.number(),
+});
+
+const topChampionChangeSchema = z.object({
+  code: z.string(),
+  team: z.string(),
+  rank: z.number(),
+  delta: z.number(),
+  previous: z.number(),
+  current: z.number(),
+});
+
+const movementSchema = z.object({
+  has_baseline: z.boolean(),
+  baseline_generated_at: z.string().nullable(),
+  biggest_movers: z.array(movementMoverSchema),
+  top_champion_changes: z.array(topChampionChangeSchema),
+});
+
+const liveMatchSummarySchema = z.object({
+  match_id: z.number(),
+  group: z.string(),
+  kickoff: z.string(),
+  home_team: z.string(),
+  home_code: z.string(),
+  away_team: z.string(),
+  away_code: z.string(),
+  status: z.string(),
+  home_score: z.number().nullable(),
+  away_score: z.number().nullable(),
+});
+
+const liveContextSchema = z.object({
+  days_to_final: z.number(),
+  final_kickoff: z.string(),
+  in_progress_matches: z.array(liveMatchSummarySchema),
+  next_match: liveMatchSummarySchema.nullable(),
+});
+
+const modelQualitySchema = z.object({
+  confidence_score: z.number(),
+  confidence_label: z.string(),
+  confidence_percent: z.number(),
+  components: z.object({
+    simulation_factor: z.number(),
+    group_stage_completeness: z.number(),
+    backtest_calibration: z.number(),
+  }),
+  backtest_reference: z.string(),
+  backtest_round_of_16_overlap: z.number(),
+});
+
+const pathDifficultySchema = z.object({
+  code: z.string(),
+  team: z.string(),
+  rank: z.number(),
+  score: z.number(),
+  label: z.string(),
+  avg_opponent_rating: z.number(),
+  notes: z.string(),
+});
+
+const liveAccuracyMetricSchema = z.object({
+  round: z.string(),
+  predicted_top_n: z.number(),
+  actual_teams_in_top_n: z.number(),
+  top_n: z.number(),
+});
+
+const liveAccuracySchema = z.object({
+  available: z.boolean(),
+  round_metrics: z.array(liveAccuracyMetricSchema),
+  summary: z.string().nullable(),
+});
+
 export const appStateSchema = z.object({
   metadata: metadataSchema,
   coverage: z.array(groupCoverageSchema),
@@ -194,6 +284,11 @@ export const appStateSchema = z.object({
   projected_qualifiers: z.array(projectedQualifierSchema),
   bracket: bracketSchema,
   odds: oddsSchema,
+  movement: movementSchema.optional(),
+  live_context: liveContextSchema.optional(),
+  model_quality: modelQualitySchema.optional(),
+  path_difficulty: z.array(pathDifficultySchema).optional(),
+  live_accuracy: liveAccuracySchema.optional(),
 });
 
 export type ValidatedAppState = z.infer<typeof appStateSchema>;

@@ -51,6 +51,14 @@ def parse_args() -> argparse.Namespace:
         default=42,
         help="Random seed. Default: 42",
     )
+    parser.add_argument(
+        "--baseline-path",
+        default="frontend/public/data/app_state.json",
+        help=(
+            "Previous app_state.json for movement deltas. "
+            "Default: frontend/public/data/app_state.json if present."
+        ),
+    )
     return parser.parse_args()
 
 
@@ -122,6 +130,9 @@ def main() -> None:
         seed=args.seed,
     )
 
+    baseline_path = Path(args.baseline_path)
+    baseline_app_state_path = baseline_path if baseline_path.exists() else None
+
     outputs = export_web_state(
         teams=teams,
         fixtures=fixtures,
@@ -139,6 +150,7 @@ def main() -> None:
         group_simulations=args.group_simulations,
         tournament_simulations=args.simulations,
         round_simulations=args.simulations,
+        baseline_app_state_path=baseline_app_state_path,
     )
 
     elapsed = time.perf_counter() - start

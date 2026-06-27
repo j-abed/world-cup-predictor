@@ -7,8 +7,23 @@ from typing import Any
 
 import pandas as pd
 
+from src.live_accuracy import build_live_accuracy_payload
+from src.model_quality import build_model_quality_payload
+from src.path_difficulty import build_path_difficulty_payload
 from src.simulator import format_probability
 from src.tiebreakers import FAIR_PLAY_PATH
+from src.tournament_context import (
+    build_live_context,
+    build_refresh_metadata,
+    load_tournament_schedule,
+    parse_iso_datetime,
+)
+from src.movement import (
+    build_movement_payload,
+    extract_team_snapshots,
+    resolve_baseline_snapshot,
+    write_movement_snapshot,
+)
 
 
 ROUND_LABELS = {
@@ -158,6 +173,11 @@ def build_fixtures_payload(
             home_score = None
             away_score = None
 
+        if status.lower() == "in progress":
+            # Keep live scores visible even when nullable in CSV.
+            home_score = 0 if home_score is None else home_score
+            away_score = 0 if away_score is None else away_score
+
         home = team_lookup[home_id]
         away = team_lookup[away_id]
 
@@ -228,9 +248,11 @@ def build_metadata(
     tournament_simulations: int,
     round_simulations: int,
     *,
+    generated_at: datetime | None = None,
     scenario: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     completed_results = results[results["status"].astype(str).str.lower() == "complete"]
+    export_time = generated_at or datetime.now()
 
     ratings_source = None
     ratings_source_url = None
@@ -241,8 +263,10 @@ def build_metadata(
         ratings_source_url = ratings.iloc[0].get("source_url")
         rating_type = ratings.iloc[0].get("rating_type")
 
+    schedule = load_tournament_schedule()
+
     metadata = {
-        "generated_at": datetime.now().isoformat(timespec="seconds"),
+        "generated_at": export_time.isoformat(timespec="seconds"),
         "team_count": int(len(teams)),
         "fixture_count": int(len(fixtures)),
         "completed_result_count": int(len(completed_results)),
@@ -255,6 +279,7 @@ def build_metadata(
             "round": round_simulations,
         },
         "data_caveats": build_data_caveats(ratings),
+        **build_refresh_metadata(export_time, schedule),
     }
 
     if scenario is not None:
@@ -281,6 +306,12 @@ def build_app_state_payload(
     tournament_simulations: int = 10_000,
     round_simulations: int = 10_000,
     scenario: dict[str, Any] | None = None,
+    movement: dict[str, Any] | None = None,
+    live_context: dict[str, Any] | None = None,
+    model_quality: dict[str, Any] | None = None,
+    path_difficulty: list[dict[str, Any]] | None = None,
+    live_accuracy: dict[str, Any] | None = None,
+    generated_at: datetime | None = None,
 ) -> dict[str, Any]:
     standings_rows = []
 
@@ -337,17 +368,51 @@ def build_app_state_payload(
         group_simulations=group_simulations,
         tournament_simulations=tournament_simulations,
         round_simulations=round_simulations,
+        generated_at=generated_at,
         scenario=scenario,
     )
 
-    return {
-        "metadata": metadata,
-        "coverage": dataframe_records(coverage),
-        "fixtures": build_fixtures_payload(
+    fixtures_payload = build_fixtures_payload(
+        fixtures=fixtures,
+        results=results,
+        teams=teams,
+    )
+
+    export_time = generated_at or parse_iso_datetime(str(metadata["generated_at"]))
+
+    if live_context is None:
+        live_context = build_live_context(
+            fixtures_payload,
+            generated_at=export_time,
+            final_kickoff=str(metadata["tournament_final_kickoff"]),
+        )
+
+    if model_quality is None:
+        model_quality = build_model_quality_payload(
+            completed_result_count=int(metadata["completed_result_count"]),
+            fixture_count=int(metadata["fixture_count"]),
+            round_simulations=round_simulations,
+        )
+
+    if path_difficulty is None:
+        path_difficulty = build_path_difficulty_payload(
+            bracket=bracket,
+            round_probabilities=round_probabilities,
+            ratings=ratings,
+        )
+
+    if live_accuracy is None:
+        live_accuracy = build_live_accuracy_payload(
+            round_probabilities=round_probabilities,
             fixtures=fixtures,
             results=results,
             teams=teams,
-        ),
+        )
+
+    payload: dict[str, Any] = {
+        "metadata": metadata,
+        "coverage": dataframe_records(coverage),
+        "fixtures": fixtures_payload,
         "standings": dataframe_records(standings),
         "third_place": dataframe_records(third_place_table),
         "projected_qualifiers": dataframe_records(projected_qualifiers),
@@ -357,7 +422,16 @@ def build_app_state_payload(
             "qualification": dataframe_records(tournament_with_labels),
             "round": dataframe_records(round_with_labels),
         },
+        "live_context": live_context,
+        "model_quality": model_quality,
+        "path_difficulty": path_difficulty,
+        "live_accuracy": live_accuracy,
     }
+
+    if movement is not None:
+        payload["movement"] = movement
+
+    return payload
 
 
 def write_json(path: Path, payload: Any) -> None:
@@ -383,9 +457,27 @@ def export_web_state(
     group_simulations: int = 10_000,
     tournament_simulations: int = 10_000,
     round_simulations: int = 10_000,
+    baseline_app_state_path: str | Path | None = None,
 ) -> dict[str, Path]:
     output_path = Path(output_dir)
     output_path.mkdir(parents=True, exist_ok=True)
+
+    snapshot_path = output_path / "movement_snapshot.json"
+    baseline_path = (
+        Path(baseline_app_state_path) if baseline_app_state_path is not None else None
+    )
+    previous_snapshot = resolve_baseline_snapshot(
+        snapshot_path=snapshot_path,
+        baseline_app_state_path=baseline_path,
+    )
+
+    current_team_snapshots = extract_team_snapshots(
+        round_probabilities=round_probabilities,
+        tournament_probabilities=tournament_probabilities,
+    )
+    movement = build_movement_payload(current_team_snapshots, previous_snapshot)
+
+    export_time = datetime.now()
 
     app_state = build_app_state_payload(
         teams=teams,
@@ -403,6 +495,8 @@ def export_web_state(
         group_simulations=group_simulations,
         tournament_simulations=tournament_simulations,
         round_simulations=round_simulations,
+        movement=movement,
+        generated_at=export_time,
     )
 
     metadata = app_state["metadata"]
@@ -432,5 +526,11 @@ def export_web_state(
     write_json(outputs["projected_qualifiers"], projected_qualifiers_payload)
     write_json(outputs["bracket"], bracket_payload)
     write_json(outputs["odds"], odds_payload)
+
+    write_movement_snapshot(
+        snapshot_path,
+        generated_at=str(metadata["generated_at"]),
+        teams=current_team_snapshots,
+    )
 
     return outputs

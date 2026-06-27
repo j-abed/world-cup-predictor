@@ -1,67 +1,139 @@
 # World Cup Predictor — Frontend
 
-A client-side dashboard for the projected bracket, group standings, and
-simulated championship odds. Vite + React + TypeScript + Tailwind CSS. No
-backend server is required — the app reads a static JSON snapshot.
+Client-side dashboard for projected bracket, group standings, qualification odds, what-if scenarios, and the 2022 backtest. **Vite + React + TypeScript + Tailwind CSS.** No backend at runtime.
+
+## Data files
+
+All snapshots live in `public/data/` by default and are fetched at page load.
+
+Override with Vite env vars (see `.env.example`) to load from a CDN:
+
+| Env var | Default |
+|---------|---------|
+| `VITE_APP_STATE_URL` | `/data/app_state.json` |
+| `VITE_SCENARIO_APP_STATE_URL` | `/data/scenario_app_state.json` |
+| `VITE_BACKTEST_URL` | `/data/backtest_2022.json` |
+
+When `VITE_APP_STATE_URL` is remote, the app polls for a new snapshot after each `metadata.next_refresh_at`.
+
+| File | Required | Consumed by |
+|------|----------|-------------|
+| `app_state.json` | Yes | All main tabs (champion, fixtures, field, bracket, groups, qualification) |
+| `scenario_app_state.json` | No | What-if tab — hidden gracefully if missing |
+| `backtest_2022.json` | No | 2022 tab — hidden gracefully if missing |
+
+`app_state.json` is produced by `scripts/export_web_state.py` → `outputs/web/app_state.json`. Copy into the frontend with:
+
+```bash
+npm run refresh-data   # from frontend/
+```
+
+Scenario and backtest JSON are copied manually or via `--copy-to-frontend` on their export scripts (see root `README.md`).
 
 ## Data contract
 
-The app renders `public/data/app_state.json`, a copy of
-`outputs/web/app_state.json` produced by the Python backend
-(`src/web_exports.py`). It is **not** fetched from the backend at runtime —
-it's a committed snapshot so the app runs standalone. See `src/types.ts` for
-the full TypeScript shape of the contract.
+Types mirror the Python export in `src/types.ts`. Runtime validation uses Zod in `src/lib/schema.ts` (app state) and `src/lib/backtestSchema.ts` (2022 backtest).
+
+Keep TypeScript types in sync when `src/web_exports.py` changes.
 
 ## Run locally
 
-```sh
+```bash
 cd frontend
 npm install
 npm run dev
 ```
 
-Then open the printed local URL (typically `http://localhost:5173`).
+Open the printed URL (typically `http://localhost:5173`).
 
-## Refresh the data
+## Refresh baseline data
 
-Whenever group results, the bracket, or the simulated odds change, regenerate
-the backend output and copy it into the frontend:
+From repo root:
 
-```sh
-# from the repo root
+```bash
 uv run python scripts/update_world_cup_data.py --today --run-model --export-web
-
-# from frontend/
-npm run refresh-data
+cd frontend && npm run refresh-data
 ```
 
-`npm run refresh-data` copies `../outputs/web/app_state.json` to
-`public/data/app_state.json`. Restart `npm run dev` (or just reload the page)
-to pick up the new snapshot.
+Reload the browser to pick up changes.
 
-## Build
+## Build and lint
 
-```sh
-npm run build
+```bash
+npm run lint
+npm run build      # output → dist/
+npm run preview    # serve production build locally
 ```
 
-Output goes to `frontend/dist/` and can be served as static files from
-anywhere (no server-side logic required).
+## URL state
+
+Tabs and team selection sync to the query string:
+
+- `?tab=bracket` — active tab (`src/lib/tabs.ts` for valid values)
+- `?team=BRA` — opens team detail slide-over
+
+Defaults to champion odds with no team selected. Implemented in `src/lib/urlState.ts`.
+
+## Tabs
+
+| ID | Label | Component |
+|----|-------|-----------|
+| `champion` | Champion odds | `ChampionOdds.tsx` |
+| `fixtures` | Fixtures | `FixturesView.tsx` |
+| `field` | Projected R32 field | `ProjectedField.tsx` |
+| `bracket` | Knockout bracket | `BracketView.tsx` |
+| `groups` | Group standings | `GroupStandings.tsx`, `ThirdPlaceTable.tsx` |
+| `qualification` | Qualification odds | `QualificationOdds.tsx` |
+| `scenario` | What-if scenarios | `ScenarioView.tsx` |
+| `backtest` | 2022 backtest | `BacktestView.tsx` |
+
+Tab labels for mobile/desktop: `TAB_NAV_LABELS` / `TAB_NAV_SHORT_LABELS` in `src/lib/tabs.ts`.
+
+## Project structure
+
+```
+src/
+  App.tsx                 Layout, tab routing, data loading, URL state
+  main.tsx                Entry point
+  types.ts                app_state.json TypeScript types
+  types/backtest.ts       backtest_2022.json types
+  lib/
+    data.ts               Fetch + validate JSON snapshots
+    schema.ts             Zod schema for app state
+    backtestSchema.ts     Zod schema for 2022 backtest
+    tabs.ts               Tab IDs and display labels
+    urlState.ts           ?tab= and ?team= sync
+    documentMeta.ts       Dynamic document.title
+    team.ts               Join app_state sections by team code
+    bracket.ts            Order bracket rounds for display
+    flags.ts              FIFA code → flag-icons code
+  components/
+    Header.tsx            Hero, coverage stats, data caveats
+    TabNav.tsx            Sticky tab bar
+    TabErrorBoundary.tsx  Per-tab error recovery
+    CoverageBanner.tsx    Match progress banner
+    ChampionOdds.tsx      Championship probability leaderboard
+    BracketView.tsx       Knockout bracket with round probabilities
+    GroupStandings.tsx    Group standings grid
+    ThirdPlaceTable.tsx   Third-place ranking
+    QualificationOdds.tsx Sortable qualification table
+    FixturesView.tsx      Schedule and results
+    ProjectedField.tsx    32-team projected knockout field
+    ScenarioView.tsx      Baseline vs scenario champion deltas
+    BacktestView.tsx      2022 model vs actual comparison
+    TeamDetail.tsx        Team slide-over panel
+    ProbabilityBar.tsx    Reusable probability bar
+    TeamBadge.tsx         Flag + code chip
+    UpdatedAtStat.tsx     Relative “updated … ago” timestamp
+```
 
 ## Country flags
 
-`TeamBadge` renders flags via the [flag-icons](https://github.com/lipis/flag-icons)
-library, but `public/vendor/flag-icons/` is a **static copy**
-(`css/flag-icons.min.css` + the `flags/1x1/` SVGs only), not a JS import.
-Importing the package's CSS directly makes Vite inline every flag in the
-library as a bundled asset (~450KB), even though only ~48 are ever rendered.
-Serving it as a plain `<link>` (see `index.html`) lets the browser fetch only
-the flags actually used, on demand.
+`TeamBadge` uses [flag-icons](https://github.com/lipis/flag-icons) from a **static copy** in `public/vendor/flag-icons/` (not a bundled CSS import — avoids inlining ~450KB of unused flags).
 
-`flag-icons` itself stays a devDependency purely as the source for that copy.
-To refresh after a version bump:
+Refresh the vendor copy after a version bump:
 
-```sh
+```bash
 npm install flag-icons@latest
 rm -rf public/vendor/flag-icons
 mkdir -p public/vendor/flag-icons/css public/vendor/flag-icons/flags
@@ -69,30 +141,10 @@ cp node_modules/flag-icons/css/flag-icons.min.css public/vendor/flag-icons/css/
 cp -r node_modules/flag-icons/flags/1x1 public/vendor/flag-icons/flags/
 ```
 
-Team-code-to-flag mapping lives in `src/lib/flags.ts`. New teams need an
-entry there (FIFA-style 3-letter code → flag-icons code; UK home nations use
-flag-icons' `gb-eng`/`gb-sct`/`gb-wls`/`gb-nir` extensions).
+Team-code mapping: `src/lib/flags.ts` (UK home nations use `gb-eng`, `gb-sct`, etc.).
 
-## Project structure
+## Deploy
 
-```
-src/
-  App.tsx               Top-level layout, tab state, and data loading
-  types.ts               TypeScript types mirroring app_state.json
-  lib/
-    data.ts               Fetches and validates app_state.json
-    bracket.ts             Orders bracket rounds so adjacent matches pair up
-    team.ts                 Joins every section of app_state.json by team code
-    flags.ts                Team code -> flag-icons code mapping
-  components/
-    Header.tsx              Hero, key stats, data caveats
-    TabNav.tsx                Sticky tab bar (Champion Odds/Bracket/Groups/Qualification)
-    ChampionOdds.tsx          Champion-odds leaderboard (visual centerpiece)
-    BracketView.tsx           Projected knockout bracket (visual centerpiece)
-    GroupStandings.tsx        Group-by-group standings cards
-    ThirdPlaceTable.tsx       Third-place ranking table
-    QualificationOdds.tsx     Sortable/filterable qualification-odds table
-    TeamDetail.tsx             Slide-over panel with a team's full profile
-    ProbabilityBar.tsx        Reusable animated probability bar
-    TeamBadge.tsx              Reusable team flag/code chip
-```
+Production deploys via Vercel on push to `main`. See root `README.md` for Vercel Git vs GitHub Actions setup.
+
+Optional env: `VITE_SITE_URL` for correct Open Graph URLs in `index.html`.

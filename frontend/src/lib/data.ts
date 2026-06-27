@@ -1,32 +1,23 @@
 import type { AppState } from "../types";
 import type { Backtest2022 } from "../types/backtest";
+import {
+  appStateUrl,
+  backtestUrl,
+  isRemoteDataUrl,
+  scenarioAppStateUrl,
+  withCacheBust,
+} from "./dataUrls";
 import { parseBacktest2022 } from "./backtestSchema";
 import { AppStateLoadError } from "./errors";
 import { parseAppState } from "./schema";
 
-const DATA_URL = "/data/app_state.json";
-const SCENARIO_DATA_URL = "/data/scenario_app_state.json";
-const BACKTEST_DATA_URL = "/data/backtest_2022.json";
-
 export { AppStateLoadError } from "./errors";
 
-export async function loadAppState(): Promise<AppState> {
-  let response: Response;
-
-  try {
-    response = await fetch(DATA_URL);
-  } catch {
-    throw new AppStateLoadError(
-      `Could not reach ${DATA_URL}. Is the dev server running?`,
-    );
-  }
+async function fetchJson(url: string): Promise<{ data: unknown; response: Response }> {
+  const response = await fetch(url);
 
   if (!response.ok) {
-    throw new AppStateLoadError(
-      `${DATA_URL} responded with ${response.status}. Regenerate it with ` +
-        "`uv run python scripts/update_world_cup_data.py --today --run-model --export-web` " +
-        "and copy it into frontend/public/data/.",
-    );
+    throw new AppStateLoadError(`${url} responded with ${response.status}.`);
   }
 
   let data: unknown;
@@ -34,41 +25,74 @@ export async function loadAppState(): Promise<AppState> {
   try {
     data = await response.json();
   } catch {
-    throw new AppStateLoadError(`${DATA_URL} did not contain valid JSON.`);
+    throw new AppStateLoadError(`${url} did not contain valid JSON.`);
+  }
+
+  return { data, response };
+}
+
+export async function loadAppState(options?: {
+  cacheBust?: string;
+}): Promise<AppState> {
+  const baseUrl = appStateUrl();
+  const url = withCacheBust(baseUrl, options?.cacheBust);
+
+  let data: unknown;
+
+  try {
+    ({ data } = await fetchJson(url));
+  } catch (error) {
+    if (error instanceof AppStateLoadError) {
+      if (isRemoteDataUrl(baseUrl)) {
+        throw error;
+      }
+
+      throw new AppStateLoadError(
+        `${error.message} Regenerate it with ` +
+          "`uv run python scripts/update_world_cup_data.py --today --run-model --export-web` " +
+          "and copy it into frontend/public/data/.",
+      );
+    }
+
+    throw new AppStateLoadError(
+      `Could not reach ${url}. Is the dev server running?`,
+    );
   }
 
   try {
     return parseAppState(data);
   } catch {
     throw new AppStateLoadError(
-      `${DATA_URL} did not match the expected app state schema. ` +
+      `${url} did not match the expected app state schema. ` +
         "Regenerate it with export_web_state.py and refresh frontend/public/data/.",
     );
   }
 }
 
-export async function loadScenarioAppState(): Promise<AppState | null> {
+async function fetchOptionalJson(url: string): Promise<unknown | null> {
   let response: Response;
 
   try {
-    response = await fetch(SCENARIO_DATA_URL);
+    response = await fetch(url);
   } catch {
     return null;
   }
 
-  if (response.status === 404) {
+  if (response.status === 404 || !response.ok) {
     return null;
   }
-
-  if (!response.ok) {
-    return null;
-  }
-
-  let data: unknown;
 
   try {
-    data = await response.json();
+    return await response.json();
   } catch {
+    return null;
+  }
+}
+
+export async function loadScenarioAppState(): Promise<AppState | null> {
+  const data = await fetchOptionalJson(scenarioAppStateUrl());
+
+  if (data === null) {
     return null;
   }
 
@@ -80,27 +104,9 @@ export async function loadScenarioAppState(): Promise<AppState | null> {
 }
 
 export async function loadBacktest2022(): Promise<Backtest2022 | null> {
-  let response: Response;
+  const data = await fetchOptionalJson(backtestUrl());
 
-  try {
-    response = await fetch(BACKTEST_DATA_URL);
-  } catch {
-    return null;
-  }
-
-  if (response.status === 404) {
-    return null;
-  }
-
-  if (!response.ok) {
-    return null;
-  }
-
-  let data: unknown;
-
-  try {
-    data = await response.json();
-  } catch {
+  if (data === null) {
     return null;
   }
 

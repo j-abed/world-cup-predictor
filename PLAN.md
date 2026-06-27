@@ -15,9 +15,10 @@ Track progress here. Check items off as they ship.
 | 2 — Data/UI gaps | 7 | 7 | ✅ Complete |
 | 3 — Model | 5 | 5 | ✅ Complete |
 | 4 — UX polish | 5 | 5 | ✅ Complete |
-| 5 — Stretch | 1 | 5 | 🟡 In progress |
+| 5 — Stretch | 3 | 5 | 🟡 In progress |
+| 6 — Dashboard intelligence | 7 | 7 | ✅ Complete |
 
-**Overall: 26 / 29** actionable items complete. Remaining work is Phase 5 stretch only.
+**Overall: 34 / 36** actionable items complete.
 
 ---
 
@@ -30,7 +31,7 @@ Track progress here. Check items off as they ship.
 
 ---
 
-## Phase 1 — Automation
+## Phase 1 — Automation ✅
 
 **Goal:** Site updates after matches without manual steps.
 
@@ -42,38 +43,17 @@ Track progress here. Check items off as they ship.
 
 ---
 
-## Phase 2 — Data/UI gaps
+## Phase 2 — Data/UI gaps ✅
 
 **Goal:** Show everything the model already computes.
 
-### Done
 - [x] Coverage banner (match progress in header)
 - [x] Fixtures & Results tab
 - [x] URL state (`?tab=fixtures&team=BRA`)
-
-### Next up (recommended order)
-
-- [x] **2.1 Projected R32 field view**
-  - Use existing `projected_qualifiers` from `app_state.json`
-  - New component or section: 32-team knockout field with seed/source
-  - *Files:* `ProjectedField.tsx`, `App.tsx`, `TabNav.tsx` (or section under Groups)
-  - *Acceptance:* all 32 projected teams visible without inferring from bracket
-
-- [x] **2.2 All-group finish odds**
-  - Generalize Group D-only simulation to groups A–L
-  - Rename `odds.group_d` → `odds.group_finish` (keyed by group letter)
-  - Update `TeamDetail.tsx` for any team's group
-  - *Files:* `export_web_state.py`, `web_exports.py`, `types.ts`, `schema.ts`, `team.ts`, `TeamDetail.tsx`
-  - *Acceptance:* clicking any team shows 1st/2nd/3rd/4th finish odds for their group
-
-- [x] **2.3 Bracket probability labels**
-  - Clarify "reach round" vs "win this match" in `BracketView.tsx`
-  - *Acceptance:* tooltip or subtitle makes semantics obvious
-
-- [x] **2.4 OG meta tags**
-  - Title, description, `og:image` for sharing champion odds
-  - *Files:* `frontend/index.html` or Vite meta plugin
-  - *Acceptance:* link preview looks good in iMessage/Slack/Twitter
+- [x] **2.1 Projected R32 field view** — `ProjectedField.tsx`
+- [x] **2.2 All-group finish odds** — `odds.group_finish` keyed by group letter
+- [x] **2.3 Bracket probability labels** — reach-round vs win-match semantics in `BracketView.tsx`
+- [x] **2.4 OG meta tags** — title, description, `og:image`
 
 ---
 
@@ -87,23 +67,37 @@ Track progress here. Check items off as they ship.
 
 ---
 
-## Phase 4 — UX polish
+## Phase 4 — UX polish ✅
 
 - [x] **4.1 Mobile bracket** — vertical round-by-round layout below `sm`
-- [x] **4.2 Keyboard accessibility** — table rows in `QualificationOdds`, `GroupStandings` focusable/activatable
-- [x] **4.3 Error boundary** — catch render errors per tab, show recovery UI
-- [x] **4.4 Dark mode** — wire `prefers-color-scheme` to existing `.dark` tokens
-- [x] **4.5 Relative timestamps** — "Updated 2 hours ago" in Header
+- [x] **4.2 Keyboard accessibility** — focusable rows in `QualificationOdds`, `GroupStandings`
+- [x] **4.3 Error boundary** — per-tab recovery UI
+- [x] **4.4 Dark mode** — `prefers-color-scheme` → `.dark` tokens
+- [x] **4.5 Relative timestamps** — “Updated 2 hours ago” in Header
 
 ---
 
 ## Phase 5 — Stretch / backlog
 
-- [x] Scenario mode ("what if Brazil wins 3-0?")
-- [ ] Model vs betting markets comparison
+- [x] Scenario mode (“what if Brazil wins 3-0?”)
 - [x] Historical backtest page (2022 model vs actual)
+- [ ] Model vs betting markets comparison
 - [ ] Serverless scenario API (on-demand sim)
-- [ ] JSON on CDN (faster refresh without full redeploy)
+- [x] JSON on CDN (faster refresh without full redeploy)
+
+---
+
+## Phase 6 — Dashboard intelligence ✅
+
+**Goal:** Surface tournament context, model trust signals, and run-over-run movement in the header and champion/bracket views.
+
+- [x] **6.1** Run-over-run deltas (`movement` block, biggest movers, top-3 champion changes)
+- [x] **6.2** Next refresh countdown (`metadata.next_refresh_at`)
+- [x] **6.3** Days to final (`live_context.days_to_final`, `data/tournament_schedule.json`)
+- [x] **6.4** Live / next match (ESPN in-progress sync + header banner)
+- [x] **6.5** Path difficulty for top 3 title favorites
+- [x] **6.6** Model confidence score (`model_quality`)
+- [x] **6.7** Live accuracy scaffold (`live_accuracy`, active once knockout data exists)
 
 ---
 
@@ -113,13 +107,15 @@ Phases 0–4 are complete. During the tournament, rely on automation:
 
 ```
 Ops (automatic)
-  ✓ refresh-data.yml every 2h
+  ✓ refresh-data.yml every 2h (Jun 11 – Jul 20, 2026)
   ✓ deploy-frontend.yml on push
 
 Optional stretch (Phase 5)
   ✓ Scenario mode
   ✓ 2022 backtest page
+  ✓ JSON on CDN support
   □ Model vs betting markets
+  □ Serverless scenario API
 ```
 
 ---
@@ -139,12 +135,23 @@ gh workflow run refresh-data.yml && gh run watch
 
 ---
 
+## Documentation
+
+| Doc | Purpose |
+|-----|---------|
+| `README.md` | Setup, scripts, automation, deploy |
+| `DATA_STATUS.md` | CSV inputs, JSON exports, model caveats |
+| `frontend/README.md` | Dashboard dev, tabs, component map |
+| `data/ratings_source_notes.md` | Rating source choices |
+
+---
+
 ## Out of scope (for now)
 
 - Live WebSocket updates
 - User accounts / personal brackets
 - Full backend API
-- Betting integration
+- Betting integration (comparison tab is stretch; not live odds feed)
 
 ---
 

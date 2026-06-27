@@ -26,10 +26,16 @@ def test_app_state_json_has_core_sections(app_state_path: Path) -> None:
         "projected_qualifiers",
         "bracket",
         "odds",
+        "live_context",
+        "model_quality",
+        "path_difficulty",
+        "live_accuracy",
     ):
         assert key in payload, f"missing top-level key: {key}"
 
     assert payload["metadata"]["team_count"] == 48
+    assert "next_refresh_at" in payload["metadata"]
     assert len(payload["fixtures"]) > 0
     assert len(payload["odds"]["round"]) == 48
     assert isinstance(payload["metadata"]["data_caveats"], list)
+    assert len(payload["path_difficulty"]) == 3

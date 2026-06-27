@@ -108,6 +108,19 @@ def is_completed_event(event: dict) -> bool:
     return bool(status_type.get("completed"))
 
 
+def is_in_progress_event(event: dict) -> bool:
+    status = event.get("status") or {}
+    status_type = status.get("type") or {}
+
+    if status_type.get("completed"):
+        return False
+
+    state = str(status_type.get("state", "")).lower()
+    name = str(status_type.get("name", "")).lower()
+
+    return state == "in" or "in_progress" in name or name == "status_in_progress"
+
+
 def extract_team_id(competitor: dict) -> str | None:
     team = competitor.get("team") or {}
 

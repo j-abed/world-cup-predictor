@@ -1,17 +1,36 @@
 import { useMemo, useState } from "react";
-import type { RoundOdds } from "../types";
+import type { Movement, PathDifficultyEntry, RoundOdds } from "../types";
+import { championChangeByCode } from "../lib/movement";
 import { ProbabilityBar } from "./ProbabilityBar";
+import { ProbabilityDelta } from "./MovementSummary";
 import { TeamBadge } from "./TeamBadge";
 
 interface ChampionOddsProps {
   round: RoundOdds[];
+  movement?: Movement;
+  pathDifficulty?: PathDifficultyEntry[];
   onSelectTeam: (code: string) => void;
 }
 
 const DEFAULT_VISIBLE = 10;
 
-export function ChampionOdds({ round, onSelectTeam }: ChampionOddsProps) {
+export function ChampionOdds({
+  round,
+  movement,
+  pathDifficulty = [],
+  onSelectTeam,
+}: ChampionOddsProps) {
   const [expanded, setExpanded] = useState(false);
+
+  const championChanges = useMemo(
+    () => championChangeByCode(movement),
+    [movement],
+  );
+
+  const pathByCode = useMemo(
+    () => new Map(pathDifficulty.map((entry) => [entry.code, entry])),
+    [pathDifficulty],
+  );
 
   const ranked = useMemo(
     () => [...round].sort((a, b) => b.champion_prob - a.champion_prob),
@@ -46,6 +65,9 @@ export function ChampionOdds({ round, onSelectTeam }: ChampionOddsProps) {
       <div className="relative mb-8 grid gap-4 sm:grid-cols-3">
         {podium.map((team, i) => {
           const rank = i + 1;
+          const change = championChanges.get(team.code);
+          const path = pathByCode.get(team.code);
+
           return (
             <button
               key={team.code}
@@ -68,6 +90,14 @@ export function ChampionOdds({ round, onSelectTeam }: ChampionOddsProps) {
                 <div className="text-xs text-muted-foreground">
                   Group {team.group}
                 </div>
+                {change ? (
+                  <ProbabilityDelta delta={change.delta} className="mt-1 block" />
+                ) : null}
+                {path ? (
+                  <p className="mt-1 text-[11px] text-muted-foreground">
+                    Path: {path.label}
+                  </p>
+                ) : null}
               </div>
               <div className="w-full">
                 <ProbabilityBar

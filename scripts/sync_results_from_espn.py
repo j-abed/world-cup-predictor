@@ -16,6 +16,7 @@ from src.espn_client import (
     fetch_scoreboard,
     get_competition,
     is_completed_event,
+    is_in_progress_event,
 )
 
 FIXTURES_PATH = Path("data/fixtures.csv")
@@ -134,6 +135,55 @@ def extract_completed_results(payload: dict) -> list[dict]:
     return rows
 
 
+def extract_in_progress_results(payload: dict) -> list[dict]:
+    rows = []
+
+    for event in payload.get("events", []):
+        if not is_in_progress_event(event):
+            continue
+
+        competition = get_competition(event)
+
+        if competition is None:
+            continue
+
+        competitors = competition.get("competitors") or []
+
+        if len(competitors) != 2:
+            continue
+
+        home = next(
+            (competitor for competitor in competitors if competitor.get("homeAway") == "home"),
+            None,
+        )
+        away = next(
+            (competitor for competitor in competitors if competitor.get("homeAway") == "away"),
+            None,
+        )
+
+        if home is None or away is None:
+            continue
+
+        home_team = extract_team_id(home)
+        away_team = extract_team_id(away)
+
+        if home_team is None or away_team is None:
+            continue
+
+        rows.append(
+            {
+                "home_team": home_team,
+                "away_team": away_team,
+                "home_score": int(home.get("score") or 0),
+                "away_score": int(away.get("score") or 0),
+                "event_name": event.get("name"),
+                "event_date": event.get("date"),
+            }
+        )
+
+    return rows
+
+
 def find_fixture_match(fixtures: pd.DataFrame, result: dict) -> pd.Series | None:
     # Prefer exact home/away match.
     exact = fixtures[
@@ -218,6 +268,57 @@ def upsert_results(
     return output, messages
 
 
+def upsert_in_progress_results(
+    fixtures: pd.DataFrame,
+    results: pd.DataFrame,
+    live_results: list[dict],
+) -> tuple[pd.DataFrame, list[str]]:
+    messages = []
+    output = results.copy()
+
+    for live in live_results:
+        fixture = find_fixture_match(fixtures, live)
+
+        if fixture is None:
+            messages.append(
+                "No fixture match found for live ESPN event "
+                f"{live['home_team']} vs {live['away_team']} "
+                f"({live.get('event_name')})"
+            )
+            continue
+
+        match_id = int(fixture["match_id"])
+        existing = output[output["match_id"] == match_id]
+
+        if not existing.empty:
+            current = existing.iloc[0]
+
+            if str(current["status"]).lower() == "complete":
+                continue
+
+        new_row = {
+            "match_id": match_id,
+            "home_score": int(live["home_score"]),
+            "away_score": int(live["away_score"]),
+            "status": "In Progress",
+        }
+
+        if not existing.empty:
+            output = output[output["match_id"] != match_id].copy()
+
+        output = pd.concat([output, pd.DataFrame([new_row])], ignore_index=True)
+
+        messages.append(
+            f"Marked match_id {match_id} in progress: "
+            f"{fixture['home_team']} {new_row['home_score']}-"
+            f"{new_row['away_score']} {fixture['away_team']}"
+        )
+
+    output = output.sort_values("match_id").reset_index(drop=True)
+
+    return output, messages
+
+
 def main() -> None:
     args = parse_args()
 
@@ -225,12 +326,16 @@ def main() -> None:
     results = pd.read_csv(RESULTS_PATH)
 
     all_synced_results = []
+    all_live_results = []
 
     for target_date in iter_dates(args):
         payload = fetch_scoreboard(target_date)
         synced_results = extract_completed_results(payload)
+        live_results = extract_in_progress_results(payload)
         print(f"{target_date}: found {len(synced_results)} completed ESPN events")
+        print(f"{target_date}: found {len(live_results)} in-progress ESPN events")
         all_synced_results.extend(synced_results)
+        all_live_results.extend(live_results)
 
     updated_results, messages = upsert_results(
         fixtures=fixtures,
@@ -238,6 +343,13 @@ def main() -> None:
         synced_results=all_synced_results,
         force=args.force,
     )
+
+    updated_results, live_messages = upsert_in_progress_results(
+        fixtures=fixtures,
+        results=updated_results,
+        live_results=all_live_results,
+    )
+    messages.extend(live_messages)
 
     for message in messages:
         print(message)

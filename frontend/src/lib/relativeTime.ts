@@ -55,3 +55,31 @@ export function formatUpdatedAt(value: string, now = Date.now()): string {
 
   return relative ? `${relative} · ${absolute}` : absolute;
 }
+
+export function formatUntil(value: string, now = Date.now()): string | null {
+  const timestamp = new Date(value).getTime();
+
+  if (Number.isNaN(timestamp)) {
+    return null;
+  }
+
+  const diffMs = timestamp - now;
+
+  if (diffMs <= 0) {
+    return "soon";
+  }
+
+  const formatter = new Intl.RelativeTimeFormat(undefined, {
+    numeric: "auto",
+  });
+
+  if (diffMs < HOUR_MS) {
+    return formatter.format(Math.ceil(diffMs / MINUTE_MS), "minute");
+  }
+
+  if (diffMs < DAY_MS) {
+    return formatter.format(Math.ceil(diffMs / HOUR_MS), "hour");
+  }
+
+  return formatter.format(Math.ceil(diffMs / DAY_MS), "day");
+}

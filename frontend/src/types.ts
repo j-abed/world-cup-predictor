@@ -30,6 +30,9 @@ export interface Metadata {
   rating_type: string | null;
   simulations: SimulationCounts;
   data_caveats: string[];
+  next_refresh_at?: string;
+  refresh_interval_hours?: number;
+  tournament_final_kickoff?: string;
   scenario?: ScenarioMetadata;
 }
 
@@ -188,6 +191,89 @@ export interface Odds {
   round: RoundOdds[];
 }
 
+export type MovementMetric = "champion_prob" | "final_prob" | "qualify_prob";
+
+export interface MovementMover {
+  code: string;
+  team: string;
+  metric: MovementMetric;
+  delta: number;
+  previous: number;
+  current: number;
+}
+
+export interface TopChampionChange {
+  code: string;
+  team: string;
+  rank: number;
+  delta: number;
+  previous: number;
+  current: number;
+}
+
+export interface Movement {
+  has_baseline: boolean;
+  baseline_generated_at: string | null;
+  biggest_movers: MovementMover[];
+  top_champion_changes: TopChampionChange[];
+}
+
+export interface LiveMatchSummary {
+  match_id: number;
+  group: string;
+  kickoff: string;
+  home_team: string;
+  home_code: string;
+  away_team: string;
+  away_code: string;
+  status: string;
+  home_score: number | null;
+  away_score: number | null;
+}
+
+export interface LiveContext {
+  days_to_final: number;
+  final_kickoff: string;
+  in_progress_matches: LiveMatchSummary[];
+  next_match: LiveMatchSummary | null;
+}
+
+export interface ModelQuality {
+  confidence_score: number;
+  confidence_label: string;
+  confidence_percent: number;
+  components: {
+    simulation_factor: number;
+    group_stage_completeness: number;
+    backtest_calibration: number;
+  };
+  backtest_reference: string;
+  backtest_round_of_16_overlap: number;
+}
+
+export interface PathDifficultyEntry {
+  code: string;
+  team: string;
+  rank: number;
+  score: number;
+  label: string;
+  avg_opponent_rating: number;
+  notes: string;
+}
+
+export interface LiveAccuracyMetric {
+  round: string;
+  predicted_top_n: number;
+  actual_teams_in_top_n: number;
+  top_n: number;
+}
+
+export interface LiveAccuracy {
+  available: boolean;
+  round_metrics: LiveAccuracyMetric[];
+  summary: string | null;
+}
+
 export interface AppState {
   metadata: Metadata;
   coverage: GroupCoverage[];
@@ -197,4 +283,9 @@ export interface AppState {
   projected_qualifiers: ProjectedQualifier[];
   bracket: Bracket;
   odds: Odds;
+  movement?: Movement;
+  live_context?: LiveContext;
+  model_quality?: ModelQuality;
+  path_difficulty?: PathDifficultyEntry[];
+  live_accuracy?: LiveAccuracy;
 }

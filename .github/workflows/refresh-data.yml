@@ -62,6 +62,18 @@ jobs:
         if: steps.window.outputs.skip != 'true'
         run: cp outputs/web/app_state.json frontend/public/data/app_state.json
 
+      - name: Publish app state to CDN (optional)
+        if: steps.window.outputs.skip != 'true'
+        env:
+          WEB_DATA_S3_URI: ${{ secrets.WEB_DATA_S3_URI }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.WEB_DATA_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.WEB_DATA_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: ${{ secrets.WEB_DATA_AWS_REGION }}
+          AWS_ENDPOINT_URL: ${{ secrets.WEB_DATA_AWS_ENDPOINT_URL }}
+        run: |
+          chmod +x scripts/publish_web_data.sh
+          ./scripts/publish_web_data.sh
+
       - name: Run tests
         if: steps.window.outputs.skip != 'true'
         run: uv run pytest -q
