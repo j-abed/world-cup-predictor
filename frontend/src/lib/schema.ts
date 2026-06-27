@@ -31,6 +31,7 @@ const metadataSchema = z.object({
   ratings_source_url: z.string().nullable(),
   rating_type: z.string().nullable(),
   simulations: simulationCountsSchema,
+  projection_tier: z.enum(["standard", "fast"]).optional(),
   data_caveats: z.array(z.string()),
   next_refresh_at: z.string().optional(),
   refresh_interval_hours: z.number().optional(),
@@ -243,11 +244,21 @@ const modelQualitySchema = z.object({
   confidence_score: z.number(),
   confidence_label: z.string(),
   confidence_percent: z.number(),
+  projection_tier: z.enum(["standard", "fast"]).optional(),
   components: z.object({
     simulation_factor: z.number(),
     group_stage_completeness: z.number(),
     backtest_calibration: z.number(),
   }),
+  component_weights: z
+    .object({
+      simulation_depth: z.number(),
+      group_stage_completeness: z.number(),
+      backtest_calibration: z.number(),
+    })
+    .optional(),
+  round_simulations: z.number().optional(),
+  target_simulations: z.number().optional(),
   backtest_reference: z.string(),
   backtest_round_of_16_overlap: z.number(),
 });

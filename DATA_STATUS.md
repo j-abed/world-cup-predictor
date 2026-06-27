@@ -142,9 +142,19 @@ All Phase 6 fields export from `scripts/export_web_state.py`. See `data/tourname
 
 ### Model confidence formula
 
-`confidence_score = 0.35 × simulation_factor + 0.35 × group_stage_completeness + 0.30 × backtest_calibration`
+`confidence_score` is **projection trust**, not prediction accuracy.
 
-- **simulation_factor** — `round_simulations / 10_000` (capped at 1)
+**Standard tier** (CI / production export):
+
+`confidence_score = 0.20 × simulation_factor + 0.40 × group_stage_completeness + 0.40 × backtest_calibration`
+
+**Fast tier** (`--fast` on `export_web_state.py`, or `--fast-export` on `update_world_cup_data.py`):
+
+`confidence_score = 0.45 × group_stage_completeness + 0.55 × backtest_calibration`
+
+(sim depth excluded — for local iteration at 500 sims)
+
+- **simulation_factor** — soft ramp: 0.55 at 500 sims, 1.0 at 10_000 (not linear 500/10_000)
 - **group_stage_completeness** — completed group results / total fixtures
 - **backtest_calibration** — blend of 2022 R16 overlap (12/16) and champion-in-top-5 prior
 

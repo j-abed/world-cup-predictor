@@ -1,0 +1,291 @@
+import type { ReactNode } from "react";
+import type {
+  GroupCoverage,
+  GroupStanding,
+  LiveAccuracy,
+  LiveContext,
+  Metadata,
+  ModelQuality,
+} from "../../types";
+import { CoverageBanner } from "../CoverageBanner";
+import { LiveMatchBanner } from "../LiveMatchBanner";
+import { TabNav } from "../TabNav";
+import type { TabId } from "../../lib/tabs";
+import { projectionConfidenceTooltip } from "../../lib/projectionConfidence";
+
+interface PredictorDashboardProps {
+  metadata: Metadata;
+  coverage: GroupCoverage[];
+  standings: GroupStanding[];
+  liveContext?: LiveContext;
+  modelQuality?: ModelQuality;
+  liveAccuracy?: LiveAccuracy;
+  activeTab: TabId;
+  onTabChange: (tab: TabId) => void;
+  children: ReactNode;
+}
+
+const EMPTY_LIVE_CONTEXT: LiveContext = {
+  days_to_final: 0,
+  final_kickoff: "",
+  in_progress_matches: [],
+  next_match: null,
+};
+
+const EMPTY_MODEL_QUALITY: ModelQuality = {
+  confidence_score: 0,
+  confidence_label: "Unknown",
+  confidence_percent: 0,
+  components: {
+    simulation_factor: 0,
+    group_stage_completeness: 0,
+    backtest_calibration: 0,
+  },
+  backtest_reference: "2022",
+  backtest_round_of_16_overlap: 0,
+};
+
+function formatUtcClock(iso: string): string {
+  const parsed = new Date(iso);
+
+  if (Number.isNaN(parsed.getTime())) {
+    return "—";
+  }
+
+  const hours = String(parsed.getUTCHours()).padStart(2, "0");
+  const minutes = String(parsed.getUTCMinutes()).padStart(2, "0");
+
+  return `${hours}:${minutes} UTC`;
+}
+
+function maxGroupMatchday(standings: GroupStanding[]): number {
+  if (standings.length === 0) {
+    return 0;
+  }
+
+  return standings.reduce((max, row) => Math.max(max, row.played), 0);
+}
+
+function PitchBackground() {
+  return (
+    <div className="pitch-background" aria-hidden>
+      <div className="pitch-background__grid" />
+      <div className="pitch-background__stripes" />
+      <div className="pitch-background__field">
+        <div className="pitch-background__halfway" />
+        <div className="pitch-background__center-circle" />
+        <div className="pitch-background__center-dot" />
+        <div className="pitch-background__penalty pitch-background__penalty--left" />
+        <div className="pitch-background__penalty pitch-background__penalty--right" />
+        <div className="pitch-background__penalty-arc pitch-background__penalty-arc--left" />
+        <div className="pitch-background__penalty-arc pitch-background__penalty-arc--right" />
+      </div>
+    </div>
+  );
+}
+
+interface HeroStatusProps {
+  matchday: number;
+  completedResults: number;
+  fixtureCount: number;
+  updatedAt: string;
+}
+
+function LiveBadge() {
+  return (
+    <div className="live-badge" role="status" aria-live="polite">
+      <span className="live-badge__dot" aria-hidden />
+      <span className="live-badge__text">Live projections</span>
+    </div>
+  );
+}
+
+function HeroStatusLine({
+  matchday,
+  completedResults,
+  fixtureCount,
+  updatedAt,
+}: HeroStatusProps) {
+  const matchdayLabel = matchday > 0 ? `Matchday ${matchday}` : "Matchday —";
+
+  return (
+    <p className="hero-status-line" aria-label="Model status">
+      <span>Updated {updatedAt}</span>
+      <span className="hero-status-line__sep" aria-hidden>
+        ·
+      </span>
+      <span>{matchdayLabel}</span>
+      <span className="hero-status-line__sep" aria-hidden>
+        ·
+      </span>
+      <span>
+        {completedResults}/{fixtureCount} results
+      </span>
+    </p>
+  );
+}
+
+interface HeroHeaderProps {
+  simulations: number;
+  refreshIntervalHours: number;
+}
+
+function HeroHeader({
+  simulations,
+  refreshIntervalHours,
+}: HeroHeaderProps) {
+  return (
+    <div className="hero-header">
+      <p className="hero-header__eyebrow">The 2026 World Cup</p>
+      <h1 className="hero-header__engine">PROBABILITY ENGINE</h1>
+      <p className="hero-header__tagline">
+        {simulations.toLocaleString()} Monte Carlo runs · refreshed every{" "}
+        {refreshIntervalHours} {refreshIntervalHours === 1 ? "hour" : "hours"}
+      </p>
+    </div>
+  );
+}
+
+interface KpiTileProps {
+  label: string;
+  value: string;
+  accent?: boolean;
+  title?: string;
+}
+
+function KpiTile({ label, value, accent = false, title }: KpiTileProps) {
+  return (
+    <div className="kpi-tile" title={title}>
+      <p className="kpi-tile__label">{label}</p>
+      <p
+        className={`kpi-tile__value${accent ? " kpi-tile__value--gold" : ""}`}
+      >
+        {value}
+      </p>
+    </div>
+  );
+}
+
+export function PredictorDashboard({
+  metadata,
+  coverage,
+  standings,
+  liveContext = EMPTY_LIVE_CONTEXT,
+  modelQuality = EMPTY_MODEL_QUALITY,
+  liveAccuracy,
+  activeTab,
+  onTabChange,
+  children,
+}: PredictorDashboardProps) {
+  const simulations = metadata.simulations.tournament;
+  const refreshHours = metadata.refresh_interval_hours ?? 2;
+  const matchday = maxGroupMatchday(standings);
+  const confidencePercent = modelQuality.confidence_percent;
+  const daysToFinal =
+    liveContext.days_to_final > 0 ? String(liveContext.days_to_final) : "—";
+
+  return (
+    <div className="predictor-command-center">
+      <PitchBackground />
+
+      <header className="command-shell-header">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="hero-module">
+            <div className="hero-module__bar">
+              <LiveBadge />
+              <HeroStatusLine
+                matchday={matchday}
+                completedResults={metadata.completed_result_count}
+                fixtureCount={metadata.fixture_count}
+                updatedAt={formatUtcClock(metadata.generated_at)}
+              />
+            </div>
+
+            <HeroHeader
+              simulations={simulations}
+              refreshIntervalHours={refreshHours}
+            />
+
+            <div className="kpi-grid kpi-grid--compact">
+              <KpiTile
+                label="Simulations"
+                value={simulations.toLocaleString()}
+              />
+              <KpiTile
+                label="Proj. confidence"
+                value={
+                  confidencePercent > 0
+                    ? `${Number(confidencePercent).toFixed(1)}%`
+                    : "—"
+                }
+                accent={confidencePercent > 0}
+                title={
+                  confidencePercent > 0
+                    ? projectionConfidenceTooltip(modelQuality)
+                    : "Trust in this projection run — not prediction accuracy"
+                }
+              />
+              <KpiTile label="Days to final" value={daysToFinal} />
+            </div>
+          </div>
+
+          <div className="hero-feed">
+            <LiveMatchBanner liveContext={liveContext} />
+            <CoverageBanner metadata={metadata} coverage={coverage} />
+          </div>
+
+          {liveAccuracy?.available && liveAccuracy.summary ? (
+            <p className="command-meta-strip">{liveAccuracy.summary}</p>
+          ) : null}
+
+          {metadata.ratings_source ? (
+            <div className="command-meta-strip">
+              <span>
+                Ratings:{" "}
+                {metadata.ratings_source_url ? (
+                  <a
+                    href={metadata.ratings_source_url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="underline decoration-border underline-offset-2 hover:text-gold"
+                  >
+                    {metadata.ratings_source}
+                  </a>
+                ) : (
+                  metadata.ratings_source
+                )}
+              </span>
+            </div>
+          ) : null}
+
+          {metadata.data_caveats.length > 0 ? (
+            <details className="command-caveats">
+              <summary className="flex cursor-pointer list-none items-center justify-between text-muted-foreground transition hover:text-foreground">
+                <span>Data caveats &amp; methodology notes</span>
+                <span className="text-muted-foreground/60">▾</span>
+              </summary>
+              <ul className="space-y-1 text-xs text-muted-foreground">
+                {metadata.data_caveats.map((caveat) => (
+                  <li key={caveat} className="flex gap-2">
+                    <span className="text-muted-foreground/50">•</span>
+                    <span>{caveat}</span>
+                  </li>
+                ))}
+              </ul>
+            </details>
+          ) : null}
+        </div>
+      </header>
+
+      <main className="command-main mx-auto max-w-7xl px-4 py-3 sm:px-6 sm:py-4 lg:px-8">
+        <TabNav active={activeTab} onChange={onTabChange} />
+        <div className="command-content-tight">{children}</div>
+      </main>
+
+      <footer className="command-footer">
+        Projections are simulation outputs, not betting odds. See methodology
+        notes above.
+      </footer>
+    </div>
+  );
+}

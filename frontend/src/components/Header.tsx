@@ -5,6 +5,7 @@ import type {
   Metadata,
   ModelQuality,
 } from "../types";
+import { projectionConfidenceTooltip } from "../lib/projectionConfidence";
 import { CoverageBanner } from "./CoverageBanner";
 import { LiveMatchBanner } from "./LiveMatchBanner";
 import { NextRefreshStat } from "./NextRefreshStat";
@@ -82,9 +83,9 @@ export function Header({
             ) : null}
             {modelQuality.confidence_percent > 0 ? (
               <Stat
-                label="Model confidence"
+                label="Projection confidence"
                 value={`${modelQuality.confidence_percent}%`}
-                title={`${modelQuality.confidence_label} — based on simulation depth, group-stage completeness, and 2022 backtest calibration.`}
+                title={projectionConfidenceTooltip(modelQuality)}
               />
             ) : null}
             <Stat

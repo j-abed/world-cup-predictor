@@ -59,11 +59,25 @@ def parse_args() -> argparse.Namespace:
             "Default: frontend/public/data/app_state.json if present."
         ),
     )
+    parser.add_argument(
+        "--fast",
+        action="store_true",
+        help=(
+            "Fast export: 500 simulations and fast projection tier "
+            "(confidence ignores sim depth; for local iteration)."
+        ),
+    )
     return parser.parse_args()
 
 
 def main() -> None:
     args = parse_args()
+
+    if args.fast:
+        args.simulations = 500
+        args.group_simulations = 500
+
+    projection_tier = "fast" if args.fast else "standard"
 
     start = time.perf_counter()
 
@@ -150,6 +164,7 @@ def main() -> None:
         group_simulations=args.group_simulations,
         tournament_simulations=args.simulations,
         round_simulations=args.simulations,
+        projection_tier=projection_tier,
         baseline_app_state_path=baseline_app_state_path,
     )
 

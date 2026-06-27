@@ -1,7 +1,15 @@
-import { useMemo, useState } from "react";
-import type { Movement, PathDifficultyEntry, RoundOdds } from "../types";
+import { useMemo, type ReactNode } from "react";
+import type {
+  Bracket,
+  Movement,
+  PathDifficultyEntry,
+  QualificationOdds,
+  RoundOdds,
+} from "../types";
 import { championChangeByCode } from "../lib/movement";
-import { ProbabilityBar } from "./ProbabilityBar";
+import { buildPathToFinal } from "../lib/pathToFinal";
+import { InsightRail } from "./champion/InsightRail";
+import { TitleOddsBoard } from "./champion/TitleOddsBoard";
 import { ProbabilityDelta } from "./MovementSummary";
 import { TeamBadge } from "./TeamBadge";
 
@@ -9,19 +17,242 @@ interface ChampionOddsProps {
   round: RoundOdds[];
   movement?: Movement;
   pathDifficulty?: PathDifficultyEntry[];
+  qualification: QualificationOdds[];
+  bracket: Bracket;
+  selectedTeamCode?: string | null;
   onSelectTeam: (code: string) => void;
 }
 
-const DEFAULT_VISIBLE = 10;
+interface TitleRacePodiumProps {
+  podium: RoundOdds[];
+  championChanges: Map<string, { delta: number }>;
+  pathByCode: Map<string, PathDifficultyEntry>;
+  onSelectTeam: (code: string) => void;
+}
+
+function ProbabilityDial({
+  value,
+  displayLabel,
+}: {
+  value: number;
+  displayLabel: string;
+}) {
+  const size = 112;
+  const stroke = 5;
+  const radius = (size - stroke) / 2;
+  const circumference = 2 * Math.PI * radius;
+  const progress = Math.min(1, Math.max(0, value));
+  const dashOffset = circumference * (1 - progress);
+
+  return (
+    <div className="title-race__dial">
+      <svg
+        className="title-race__dial-svg"
+        width={size}
+        height={size}
+        viewBox={`0 0 ${size} ${size}`}
+        role="img"
+        aria-label={`Title win probability ${displayLabel}`}
+      >
+        <circle
+          className="title-race__dial-track"
+          cx={size / 2}
+          cy={size / 2}
+          r={radius}
+          fill="none"
+          strokeWidth={stroke}
+        />
+        <circle
+          className="title-race__dial-progress"
+          cx={size / 2}
+          cy={size / 2}
+          r={radius}
+          fill="none"
+          strokeWidth={stroke}
+          strokeDasharray={circumference}
+          strokeDashoffset={dashOffset}
+          transform={`rotate(-90 ${size / 2} ${size / 2})`}
+        />
+      </svg>
+      <span className="title-race__dial-value">{displayLabel}</span>
+    </div>
+  );
+}
+
+function StatRow({
+  label,
+  value,
+  accent,
+}: {
+  label: string;
+  value: ReactNode;
+  accent?: boolean;
+}) {
+  return (
+    <div className="title-race__stat">
+      <dt className="title-race__stat-label">{label}</dt>
+      <dd
+        className={`title-race__stat-value${accent ? " title-race__stat-value--gold" : ""}`}
+      >
+        {value}
+      </dd>
+    </div>
+  );
+}
+
+function TitleRaceCard({
+  team,
+  rank,
+  variant,
+  change,
+  path,
+  onSelect,
+}: {
+  team: RoundOdds;
+  rank: number;
+  variant: "leader" | "flank";
+  change?: { delta: number };
+  path?: PathDifficultyEntry;
+  onSelect: () => void;
+}) {
+  const isLeader = variant === "leader";
+
+  return (
+    <button
+      type="button"
+      onClick={onSelect}
+      className={`title-race__card title-race__card--${variant}${isLeader ? " title-race__card--selected" : ""}`}
+    >
+      <span className="title-race__watermark" aria-hidden>
+        ★
+      </span>
+
+      <div className="title-race__card-head">
+        <span className="title-race__rank">#{rank}</span>
+        <TeamBadge code={team.code} rank={rank} size={isLeader ? "lg" : "md"} />
+        <div className="title-race__identity">
+          <span className="title-race__name">{team.team}</span>
+          <span className="title-race__group">Group {team.group}</span>
+        </div>
+      </div>
+
+      {isLeader ? (
+        <div className="title-race__dial-block">
+          <p className="title-race__dial-caption">Title Win Probability</p>
+          <ProbabilityDial
+            value={team.champion_prob}
+            displayLabel={team.champion_prob_label.trim()}
+          />
+        </div>
+      ) : (
+        <div className="title-race__flank-prob">
+          <p className="title-race__dial-caption">Title Win Probability</p>
+          <p className="title-race__flank-pct">
+            {team.champion_prob_label.trim()}
+          </p>
+        </div>
+      )}
+
+      <dl className="title-race__stats">
+        <StatRow
+          label="Δ Last Run"
+          value={
+            change ? (
+              <ProbabilityDelta delta={change.delta} />
+            ) : (
+              <span className="title-race__stat-muted">—</span>
+            )
+          }
+        />
+        <StatRow
+          label="Path Difficulty"
+          value={path?.label ?? "—"}
+        />
+        <StatRow
+          label="Reach R16"
+          value={team.r16_prob_label.trim()}
+          accent
+        />
+        <StatRow
+          label="Final %"
+          value={team.final_prob_label.trim()}
+        />
+        <StatRow
+          label="Semi %"
+          value={team.sf_prob_label.trim()}
+        />
+      </dl>
+    </button>
+  );
+}
+
+function TitleRacePodium({
+  podium,
+  championChanges,
+  pathByCode,
+  onSelectTeam,
+}: TitleRacePodiumProps) {
+  if (podium.length === 0) {
+    return null;
+  }
+
+  const leader = podium[0];
+  const leftFlank = podium[1];
+  const rightFlank = podium[2];
+
+  return (
+    <section className="title-race" aria-label="Title race — top three contenders">
+      <p className="title-race__module-label">Title race</p>
+
+      <div className="title-race__grid">
+        {leftFlank ? (
+          <TitleRaceCard
+            team={leftFlank}
+            rank={2}
+            variant="flank"
+            change={championChanges.get(leftFlank.code)}
+            path={pathByCode.get(leftFlank.code)}
+            onSelect={() => onSelectTeam(leftFlank.code)}
+          />
+        ) : (
+          <div className="title-race__spacer" aria-hidden />
+        )}
+
+        <TitleRaceCard
+          team={leader}
+          rank={1}
+          variant="leader"
+          change={championChanges.get(leader.code)}
+          path={pathByCode.get(leader.code)}
+          onSelect={() => onSelectTeam(leader.code)}
+        />
+
+        {rightFlank ? (
+          <TitleRaceCard
+            team={rightFlank}
+            rank={3}
+            variant="flank"
+            change={championChanges.get(rightFlank.code)}
+            path={pathByCode.get(rightFlank.code)}
+            onSelect={() => onSelectTeam(rightFlank.code)}
+          />
+        ) : (
+          <div className="title-race__spacer" aria-hidden />
+        )}
+      </div>
+    </section>
+  );
+}
 
 export function ChampionOdds({
   round,
   movement,
   pathDifficulty = [],
+  qualification,
+  bracket,
+  selectedTeamCode = null,
   onSelectTeam,
 }: ChampionOddsProps) {
-  const [expanded, setExpanded] = useState(false);
-
   const championChanges = useMemo(
     () => championChangeByCode(movement),
     [movement],
@@ -32,140 +263,80 @@ export function ChampionOdds({
     [pathDifficulty],
   );
 
+  const qualificationByCode = useMemo(
+    () =>
+      new Map(
+        qualification.map((entry) => [entry.code, entry.first_prob]),
+      ),
+    [qualification],
+  );
+
   const ranked = useMemo(
     () => [...round].sort((a, b) => b.champion_prob - a.champion_prob),
     [round],
   );
 
   const podium = ranked.slice(0, 3);
-  const rest = ranked.slice(3);
-  const visibleRest = expanded ? rest : rest.slice(0, DEFAULT_VISIBLE - 3);
+
+  const focusCode =
+    selectedTeamCode && ranked.some((team) => team.code === selectedTeamCode)
+      ? selectedTeamCode
+      : ranked[0]?.code ?? null;
+
+  const focusTeam =
+    focusCode !== null
+      ? ranked.find((team) => team.code === focusCode) ?? ranked[0]
+      : ranked[0];
+
+  const pathSteps = useMemo(() => {
+    if (!focusCode) {
+      return [];
+    }
+
+    return buildPathToFinal(focusCode, bracket, round, qualification);
+  }, [focusCode, bracket, round, qualification]);
 
   return (
-    <section className="pitch-card-strong relative overflow-hidden rounded-3xl p-5 sm:p-8">
-      <div
-        className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-accent/15 blur-3xl"
-        aria-hidden
-      />
-      <div className="relative mb-6 flex flex-wrap items-end justify-between gap-2">
+    <section className="odds-board">
+      <header className="odds-board__header">
         <div>
-          <h2 className="text-2xl font-semibold text-foreground sm:text-3xl">
-            Champion Odds
-          </h2>
-          <p className="text-sm text-muted-foreground">
+          <p className="odds-board__eyebrow">Outright market</p>
+          <h2 className="odds-board__title">Champion odds board</h2>
+          <p className="odds-board__subtitle">
             Simulated probability of winning the tournament outright.
           </p>
         </div>
-        <span className="glass rounded-full px-3 py-1 text-xs font-medium text-muted-foreground">
-          {ranked.length} teams ranked
-        </span>
-      </div>
-
-      {/* Podium — the three favourites, visually prominent */}
-      <div className="relative mb-8 grid gap-4 sm:grid-cols-3">
-        {podium.map((team, i) => {
-          const rank = i + 1;
-          const change = championChanges.get(team.code);
-          const path = pathByCode.get(team.code);
-
-          return (
-            <button
-              key={team.code}
-              type="button"
-              onClick={() => onSelectTeam(team.code)}
-              className={`group flex flex-col items-center gap-3 rounded-2xl p-5 text-center transition hover:-translate-y-0.5 hover:shadow-lg ${
-                rank === 1
-                  ? "border border-accent/50 bg-accent/10 sm:order-2 sm:scale-105"
-                  : "glass sm:order-none"
-              } ${rank === 2 ? "sm:order-1" : ""} ${rank === 3 ? "sm:order-3" : ""}`}
-            >
-              <span className="font-display text-xs font-bold uppercase tracking-widest text-muted-foreground">
-                #{rank}
-              </span>
-              <TeamBadge code={team.code} rank={rank} size="lg" />
-              <div>
-                <div className="font-display text-lg font-semibold text-foreground group-hover:text-gold">
-                  {team.team}
-                </div>
-                <div className="text-xs text-muted-foreground">
-                  Group {team.group}
-                </div>
-                {change ? (
-                  <ProbabilityDelta delta={change.delta} className="mt-1 block" />
-                ) : null}
-                {path ? (
-                  <p className="mt-1 text-[11px] text-muted-foreground">
-                    Path: {path.label}
-                  </p>
-                ) : null}
-              </div>
-              <div className="w-full">
-                <ProbabilityBar
-                  value={team.champion_prob}
-                  valueLabel={team.champion_prob_label}
-                  size="lg"
-                  tone="gold"
-                />
-              </div>
-            </button>
-          );
-        })}
-      </div>
-
-      {/* Ranked list — secondary contenders */}
-      <ul className="relative flex flex-col gap-2">
-        {visibleRest.map((team, i) => {
-          const rank = i + 4;
-          return (
-            <li key={team.code}>
-              <button
-                type="button"
-                onClick={() => onSelectTeam(team.code)}
-                className="glass flex w-full items-center gap-4 rounded-xl p-3 text-left transition hover:border-accent/40"
-              >
-                <span className="w-6 shrink-0 text-center font-mono text-sm text-muted-foreground">
-                  {rank}
-                </span>
-                <TeamBadge code={team.code} size="sm" />
-                <div className="w-36 shrink-0 truncate sm:w-44">
-                  <div className="truncate text-sm font-medium text-foreground">
-                    {team.team}
-                  </div>
-                  <div className="text-[11px] text-muted-foreground">
-                    Group {team.group}
-                  </div>
-                </div>
-                <div className="min-w-0 flex-1">
-                  <ProbabilityBar
-                    value={team.champion_prob}
-                    valueLabel={team.champion_prob_label}
-                    size="sm"
-                    tone="gold"
-                  />
-                </div>
-                <div className="hidden w-24 shrink-0 text-right text-[11px] text-muted-foreground sm:block">
-                  Final {team.final_prob_label.trim()}
-                </div>
-                <div className="hidden w-28 shrink-0 text-right text-[11px] text-muted-foreground md:block">
-                  Semifinal {team.sf_prob_label.trim()}
-                </div>
-              </button>
-            </li>
-          );
-        })}
-      </ul>
-
-      {rest.length > DEFAULT_VISIBLE - 3 && (
-        <div className="relative mt-4 flex justify-center">
-          <button
-            type="button"
-            onClick={() => setExpanded((value) => !value)}
-            className="glass rounded-full px-4 py-1.5 text-xs font-semibold text-muted-foreground transition hover:border-accent/50 hover:text-gold"
-          >
-            {expanded ? "Show fewer teams" : `Show all ${ranked.length} teams`}
-          </button>
+        <div className="odds-board__meta">
+          <span className="odds-board__meta-chip">{ranked.length} teams</span>
+          <span className="odds-board__meta-chip odds-board__meta-chip--live">
+            Live sim
+          </span>
         </div>
-      )}
+      </header>
+
+      <TitleRacePodium
+        podium={podium}
+        championChanges={championChanges}
+        pathByCode={pathByCode}
+        onSelectTeam={onSelectTeam}
+      />
+
+      <div className="board-lower">
+        <TitleOddsBoard
+          teams={ranked}
+          championChanges={championChanges}
+          pathByCode={pathByCode}
+          qualificationByCode={qualificationByCode}
+          selectedCode={focusCode ?? undefined}
+          onSelectTeam={onSelectTeam}
+        />
+        <InsightRail
+          movement={movement}
+          pathSteps={pathSteps}
+          focusTeam={focusTeam?.team ?? "—"}
+          focusCode={focusCode ?? ""}
+        />
+      </div>
     </section>
   );
 }

@@ -1,5 +1,10 @@
 import { useMemo } from "react";
 import type { AppState, RoundOdds } from "../types";
+import {
+  CommandDataRow,
+  CommandMetaChip,
+  CommandPanel,
+} from "./CommandPanel";
 import { ProbabilityBar } from "./ProbabilityBar";
 import { TeamBadge } from "./TeamBadge";
 
@@ -49,91 +54,75 @@ export function ScenarioView({
 
   if (!scenario) {
     return (
-      <section className="pitch-card-strong rounded-3xl p-5 sm:p-8">
-        <h2 className="text-2xl font-semibold text-foreground sm:text-3xl">
-          What-if scenarios
-        </h2>
-        <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
-          No active scenario right now. When a what-if projection is published,
-          this tab will show how championship odds shift compared to the current
-          baseline.
-        </p>
-      </section>
+      <CommandPanel
+        eyebrow="What-if engine"
+        title="What-if scenarios"
+        subtitle="No active scenario right now. When a what-if projection is published, this tab will show how championship odds shift compared to the current baseline."
+      />
     );
   }
 
   const scenarioLabel = scenario.metadata.scenario?.label ?? "Custom scenario";
 
   return (
-    <section className="pitch-card-strong rounded-3xl p-5 sm:p-8">
-      <div className="mb-6 flex flex-wrap items-end justify-between gap-2">
-        <div>
-          <h2 className="text-2xl font-semibold text-foreground sm:text-3xl">
-            What-if scenario
-          </h2>
-          <p className="mt-2 text-sm text-muted-foreground">{scenarioLabel}</p>
-          <p className="mt-1 text-sm text-muted-foreground">
-            Champion odds compared to the current baseline projection.
-          </p>
-        </div>
-        <span className="glass rounded-full px-3 py-1 text-xs font-medium text-muted-foreground">
+    <CommandPanel
+      eyebrow="What-if engine"
+      title="What-if scenario"
+      subtitle={`${scenarioLabel} — champion odds compared to the current baseline projection.`}
+      meta={
+        <CommandMetaChip>
           {scenario.metadata.simulations.round.toLocaleString()} simulations
-        </span>
-      </div>
-
-      <div className="flex flex-col gap-3">
+        </CommandMetaChip>
+      }
+    >
+      <ul className="command-data-list">
         {deltas.slice(0, 12).map((row) => (
-          <button
-            key={row.code}
-            type="button"
-            onClick={() => onSelectTeam(row.code)}
-            className="flex flex-col gap-2 rounded-xl border border-border/60 bg-background/40 p-4 text-left transition hover:bg-muted/40 sm:flex-row sm:items-center sm:gap-4"
-          >
-            <div className="flex min-w-0 flex-1 items-center gap-3">
-              <TeamBadge code={row.code} />
-              <span className="truncate text-sm font-medium text-foreground">
-                {row.team}
+          <li key={row.code}>
+            <CommandDataRow onClick={() => onSelectTeam(row.code)}>
+              <div className="flex min-w-0 flex-1 items-center gap-2">
+                <TeamBadge code={row.code} />
+                <span className="truncate text-sm font-medium">{row.team}</span>
+              </div>
+
+              <div className="grid w-full gap-2 sm:max-w-md sm:grid-cols-2">
+                <div>
+                  <p className="mb-1 text-[10px] uppercase tracking-wider text-muted-foreground">
+                    Baseline
+                  </p>
+                  <ProbabilityBar
+                    value={row.baselineProb}
+                    valueLabel={`${(row.baselineProb * 100).toFixed(1)}%`}
+                    size="sm"
+                  />
+                </div>
+                <div>
+                  <p className="mb-1 text-[10px] uppercase tracking-wider text-muted-foreground">
+                    Scenario
+                  </p>
+                  <ProbabilityBar
+                    value={row.scenarioProb}
+                    valueLabel={`${(row.scenarioProb * 100).toFixed(1)}%`}
+                    size="sm"
+                  />
+                </div>
+              </div>
+
+              <span
+                className={`shrink-0 font-mono text-sm font-semibold tabular-nums ${
+                  row.delta > 0
+                    ? "text-emerald-400"
+                    : row.delta < 0
+                      ? "text-rose-400"
+                      : "text-muted-foreground"
+                }`}
+              >
+                {row.delta >= 0 ? "+" : ""}
+                {(row.delta * 100).toFixed(1)} pp
               </span>
-            </div>
-
-            <div className="grid w-full gap-2 sm:max-w-md sm:grid-cols-2">
-              <div>
-                <p className="mb-1 text-[10px] uppercase tracking-wider text-muted-foreground">
-                  Baseline
-                </p>
-                <ProbabilityBar
-                  value={row.baselineProb}
-                  valueLabel={`${(row.baselineProb * 100).toFixed(1)}%`}
-                  size="sm"
-                />
-              </div>
-              <div>
-                <p className="mb-1 text-[10px] uppercase tracking-wider text-muted-foreground">
-                  Scenario
-                </p>
-                <ProbabilityBar
-                  value={row.scenarioProb}
-                  valueLabel={`${(row.scenarioProb * 100).toFixed(1)}%`}
-                  size="sm"
-                />
-              </div>
-            </div>
-
-            <span
-              className={`shrink-0 text-sm font-semibold tabular-nums ${
-                row.delta > 0
-                  ? "text-emerald-600 dark:text-emerald-400"
-                  : row.delta < 0
-                    ? "text-rose-600 dark:text-rose-400"
-                    : "text-muted-foreground"
-              }`}
-            >
-              {row.delta >= 0 ? "+" : ""}
-              {(row.delta * 100).toFixed(1)} pp
-            </span>
-          </button>
+            </CommandDataRow>
+          </li>
         ))}
-      </div>
-    </section>
+      </ul>
+    </CommandPanel>
   );
 }

@@ -18,33 +18,33 @@ export function CoverageBanner({ metadata, coverage }: CoverageBannerProps) {
 
   if (resultsComplete && incompleteGroups.length === 0) {
     return (
-      <div
-        className="mt-6 rounded-xl border border-accent/30 bg-accent/10 px-4 py-3"
-        role="status"
-      >
-        <p className="text-sm font-medium text-foreground">
-          All {total} group-stage results are in.
-        </p>
-        <p className="mt-1 text-xs text-muted-foreground">
-          Projections reflect the full group-stage picture.
-        </p>
+      <div className="command-coverage command-coverage--complete" role="status">
+        <div className="command-coverage__copy">
+          <p className="command-coverage__title">
+            All {total} group-stage results are in.
+          </p>
+          <p className="command-coverage__subtitle">
+            Projections reflect the full group-stage picture.
+          </p>
+        </div>
+        <div className="command-coverage__stat">
+          <span className="command-coverage__stat-value">100%</span>
+          <span className="command-coverage__stat-label">Complete</span>
+        </div>
       </div>
     );
   }
 
   return (
-    <div
-      className="mt-6 rounded-xl border border-amber-500/30 bg-amber-500/10 px-4 py-3"
-      role="status"
-    >
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <div>
-          <p className="text-sm font-medium text-foreground">
+    <div className="command-coverage" role="status">
+      <div className="command-coverage__main">
+        <div className="command-coverage__copy">
+          <p className="command-coverage__title">
             {resultsComplete
               ? "Group-stage results complete"
               : `${played} of ${total} group-stage matches played`}
           </p>
-          <p className="mt-1 text-xs text-muted-foreground">
+          <p className="command-coverage__subtitle">
             {resultsComplete
               ? "Fixture data still has coverage gaps — projections may shift."
               : remaining === 1
@@ -52,32 +52,27 @@ export function CoverageBanner({ metadata, coverage }: CoverageBannerProps) {
                 : `${remaining} matches remaining — odds and bracket projections update as results come in.`}
           </p>
         </div>
-        <div className="shrink-0 text-right">
-          <span className="font-display text-2xl font-bold text-gold">
+        <div className="command-coverage__stat">
+          <span className="command-coverage__stat-value">
             {Math.round(progress)}%
           </span>
-          <p className="text-[11px] uppercase tracking-wider text-muted-foreground">
-            Complete
-          </p>
+          <span className="command-coverage__stat-label">Complete</span>
         </div>
       </div>
 
-      <div
-        className="mt-3 h-1.5 overflow-hidden rounded-full bg-border/60"
-        aria-hidden
-      >
+      <div className="command-coverage__track" aria-hidden>
         <div
-          className="h-full rounded-full bg-accent transition-all"
+          className="command-coverage__fill"
           style={{ width: `${progress}%` }}
         />
       </div>
 
-      {incompleteGroups.length > 0 && (
-        <p className="mt-3 text-xs text-muted-foreground">
+      {incompleteGroups.length > 0 ? (
+        <p className="command-coverage__footnote">
           Incomplete fixture sets:{" "}
           {incompleteGroups.map((group) => `Group ${group.group}`).join(", ")}
         </p>
-      )}
+      ) : null}
     </div>
   );
 }

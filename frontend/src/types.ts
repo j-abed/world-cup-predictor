@@ -29,6 +29,7 @@ export interface Metadata {
   ratings_source_url: string | null;
   rating_type: string | null;
   simulations: SimulationCounts;
+  projection_tier?: "standard" | "fast";
   data_caveats: string[];
   next_refresh_at?: string;
   refresh_interval_hours?: number;
@@ -242,11 +243,19 @@ export interface ModelQuality {
   confidence_score: number;
   confidence_label: string;
   confidence_percent: number;
+  projection_tier?: "standard" | "fast";
   components: {
     simulation_factor: number;
     group_stage_completeness: number;
     backtest_calibration: number;
   };
+  component_weights?: {
+    simulation_depth: number;
+    group_stage_completeness: number;
+    backtest_calibration: number;
+  };
+  round_simulations?: number;
+  target_simulations?: number;
   backtest_reference: string;
   backtest_round_of_16_overlap: number;
 }

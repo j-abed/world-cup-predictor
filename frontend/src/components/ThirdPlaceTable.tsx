@@ -1,4 +1,9 @@
 import type { ThirdPlaceEntry } from "../types";
+import {
+  CommandMetaChip,
+  CommandPanel,
+  CommandTable,
+} from "./CommandPanel";
 import { TeamBadge } from "./TeamBadge";
 
 interface ThirdPlaceTableProps {
@@ -14,91 +19,74 @@ export function ThirdPlaceTable({
   const qualifyingCount = rows.filter((r) => r.currently_qualifies).length;
 
   return (
-    <section className="pitch-card rounded-2xl p-5">
-      <div className="mb-4 flex flex-wrap items-end justify-between gap-2">
-        <div>
-          <h2 className="text-xl font-semibold text-foreground">
-            Third-Place Ranking
-          </h2>
-          <p className="text-sm text-muted-foreground">
-            Ranked across all groups — the top {qualifyingCount} currently
-            advance to the knockout round.
-          </p>
-        </div>
-        <span className="flex items-center gap-1.5 text-xs text-muted-foreground">
-          <span className="h-2 w-2 rounded-full bg-success" />
-          Currently qualifying
-        </span>
-      </div>
-
-      <div className="overflow-x-auto">
-        <table className="w-full min-w-[560px] border-collapse text-sm">
-          <thead>
-            <tr className="text-left text-xs uppercase tracking-wide text-muted-foreground/70">
-              <th className="pb-2 font-medium">Rank</th>
-              <th className="pb-2 font-medium">Team</th>
-              <th className="pb-2 font-medium">Group</th>
-              <th className="pb-2 text-right font-medium">P</th>
-              <th className="pb-2 text-right font-medium">Pts</th>
-              <th className="pb-2 text-right font-medium">GD</th>
-              <th className="pb-2 text-right font-medium">GF</th>
-            </tr>
-          </thead>
-          <tbody>
-            {rows.map((row) => (
-              <tr
-                key={row.code}
-                data-group={row.group}
-                onClick={() => onSelectTeam(row.code)}
-                className={`cursor-pointer border-t border-border transition hover:bg-accent/10 ${
-                  row.currently_qualifies ? "bg-success/[0.08]" : ""
-                }`}
+    <CommandPanel
+      eyebrow="Third-place race"
+      title="Third-place ranking"
+      subtitle={`Ranked across all groups — the top ${qualifyingCount} currently advance to the knockout round.`}
+      meta={<CommandMetaChip live>Qualifying</CommandMetaChip>}
+    >
+      <CommandTable minWidth="560px">
+        <thead>
+          <tr>
+            <th>Rank</th>
+            <th>Team</th>
+            <th>Group</th>
+            <th className="text-right">P</th>
+            <th className="text-right">Pts</th>
+            <th className="text-right">GD</th>
+            <th className="text-right">GF</th>
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((row) => (
+            <tr
+              key={row.code}
+              data-group={row.group}
+              onClick={() => onSelectTeam(row.code)}
+              className={row.currently_qualifies ? "command-data-row--qualify" : ""}
+            >
+              <td className="font-mono text-muted-foreground">{row.third_rank}</td>
+              <td>
+                <div className="flex items-center gap-2">
+                  <TeamBadge code={row.code} group={row.group} size="sm" />
+                  <span
+                    className={`font-medium ${
+                      row.currently_qualifies
+                        ? "text-foreground"
+                        : "text-muted-foreground"
+                    }`}
+                  >
+                    {row.team}
+                  </span>
+                  {row.currently_qualifies ? (
+                    <span className="h-1.5 w-1.5 rounded-full bg-success" />
+                  ) : null}
+                </div>
+              </td>
+              <td
+                className="font-medium"
+                style={{ color: "var(--group-accent)" }}
               >
-                <td className="py-2 font-mono text-muted-foreground">
-                  {row.third_rank}
-                </td>
-                <td className="py-2">
-                  <div className="flex items-center gap-2">
-                    <TeamBadge code={row.code} group={row.group} size="sm" />
-                    <span
-                      className={`font-medium ${
-                        row.currently_qualifies
-                          ? "text-foreground"
-                          : "text-muted-foreground"
-                      }`}
-                    >
-                      {row.team}
-                    </span>
-                    {row.currently_qualifies && (
-                      <span className="h-1.5 w-1.5 rounded-full bg-success" />
-                    )}
-                  </div>
-                </td>
-                <td
-                  className="py-2 font-medium"
-                  style={{ color: "var(--group-accent)" }}
-                >
-                  Group {row.group}
-                </td>
-                <td className="py-2 text-right tabular-nums text-muted-foreground">
-                  {row.played}
-                </td>
-                <td className="py-2 text-right font-mono font-semibold tabular-nums text-foreground">
-                  {row.points}
-                </td>
-                <td className="py-2 text-right tabular-nums text-muted-foreground">
-                  {row.goal_difference > 0
-                    ? `+${row.goal_difference}`
-                    : row.goal_difference}
-                </td>
-                <td className="py-2 text-right tabular-nums text-muted-foreground">
-                  {row.goals_for}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </section>
+                Group {row.group}
+              </td>
+              <td className="text-right tabular-nums text-muted-foreground">
+                {row.played}
+              </td>
+              <td className="text-right font-mono font-semibold tabular-nums">
+                {row.points}
+              </td>
+              <td className="text-right tabular-nums text-muted-foreground">
+                {row.goal_difference > 0
+                  ? `+${row.goal_difference}`
+                  : row.goal_difference}
+              </td>
+              <td className="text-right tabular-nums text-muted-foreground">
+                {row.goals_for}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </CommandTable>
+    </CommandPanel>
   );
 }

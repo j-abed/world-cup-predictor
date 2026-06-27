@@ -8,10 +8,16 @@ import pytest
 
 @pytest.fixture
 def app_state_path(repo_root: Path) -> Path:
-    path = repo_root / "outputs/web/app_state.json"
-    if not path.exists():
-        pytest.skip("Run scripts/export_web_state.py to generate app_state.json")
-    return path
+    candidates = (
+        repo_root / "frontend/public/data/app_state.json",
+        repo_root / "outputs/web/app_state.json",
+    )
+
+    for path in candidates:
+        if path.exists():
+            return path
+
+    pytest.skip("Run scripts/export_web_state.py to generate app_state.json")
 
 
 def test_app_state_json_has_core_sections(app_state_path: Path) -> None:

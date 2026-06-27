@@ -90,6 +90,13 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="Refresh outright winner odds from The Odds API when ODDS_API_KEY is set.",
     )
+    parser.add_argument(
+        "--fast-export",
+        action="store_true",
+        help=(
+            "Pass --fast to export_web_state (500 sims; confidence omits sim-depth penalty)."
+        ),
+    )
 
     return parser.parse_args()
 
@@ -200,7 +207,10 @@ def main() -> None:
 
     if args.export_web:
         require_file(WEB_EXPORT_SCRIPT)
-        run_command(["uv", "run", "python", str(WEB_EXPORT_SCRIPT)])
+        export_command = ["uv", "run", "python", str(WEB_EXPORT_SCRIPT)]
+        if args.fast_export:
+            export_command.append("--fast")
+        run_command(export_command)
 
 
 if __name__ == "__main__":

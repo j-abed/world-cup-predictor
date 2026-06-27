@@ -1,6 +1,7 @@
 import { useMemo, useState, type ReactNode } from "react";
 import type { Bracket, BracketMatch, BracketRoundKey, RoundOdds } from "../types";
 import { ROUND_SEQUENCE, orderedBracketRounds, pairUp } from "../lib/bracket";
+import { CommandNote, CommandPanel } from "./CommandPanel";
 import { TeamBadge } from "./TeamBadge";
 
 interface BracketViewProps {
@@ -120,33 +121,25 @@ export function BracketView({ bracket, roundOdds, onSelectTeam }: BracketViewPro
       : ROUND_SEQUENCE.filter((roundKey) => roundKey === focusedRound);
 
   return (
-    <section className="pitch-card-strong rounded-3xl p-5 sm:p-8">
-      <div className="mb-1 flex flex-wrap items-end justify-between gap-2">
-        <div>
-          <h2 className="text-2xl font-semibold text-foreground sm:text-3xl">
-            Projected Knockout Bracket
-          </h2>
-          <p className="text-sm text-muted-foreground">
-            Built from current group standings — updates as results come in.
-          </p>
-        </div>
-      </div>
-
-      <div
-        className="mt-3 rounded-xl border border-border/60 bg-card/40 px-4 py-3 text-xs text-muted-foreground"
-        role="note"
-      >
-        <p className="font-medium text-foreground">How to read the percentages</p>
-        <p className="mt-1">
-          Each figure is a <span className="text-foreground">simulated chance to reach the
-          next round</span> (or win the title in the final) across thousands of full-tournament
-          runs — not a head-to-head win probability for that specific fixture. Both teams in a
-          matchup can show high reach odds when the model rates them strongly overall.
+    <CommandPanel
+      eyebrow="Knockout tree"
+      title="Projected knockout bracket"
+      subtitle="Built from current group standings — updates as results come in."
+    >
+      <CommandNote title="How to read the percentages">
+        <p>
+          Each figure is a simulated chance to reach the next round (or win the
+          title in the final) across thousands of full-tournament runs — not a
+          head-to-head win probability for that specific fixture. Both teams in a
+          matchup can show high reach odds when the model rates them strongly
+          overall.
         </p>
-      </div>
+      </CommandNote>
 
-      <div className="mt-4 flex flex-wrap items-center gap-2">
-        <span className="text-xs font-medium text-muted-foreground">Focus:</span>
+      <div className="mb-3 flex flex-wrap items-center gap-2">
+        <span className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
+          Focus
+        </span>
         <RoundFilterChip
           label="All rounds"
           active={focusedRound === "all"}
@@ -216,7 +209,7 @@ export function BracketView({ bracket, roundOdds, onSelectTeam }: BracketViewPro
           ))}
         </div>
       </div>
-    </section>
+    </CommandPanel>
   );
 }
 
@@ -233,11 +226,7 @@ function RoundFilterChip({
     <button
       type="button"
       onClick={onClick}
-      className={`rounded-full px-3 py-1 text-xs font-semibold transition ${
-        active
-          ? "bg-accent/15 text-gold"
-          : "border border-border text-muted-foreground hover:bg-accent/5 hover:text-foreground"
-      }`}
+      className={`command-chip${active ? " command-chip--active" : ""}`}
     >
       {label}
     </button>
@@ -255,7 +244,7 @@ function BracketControlButton({
     <button
       type="button"
       onClick={onClick}
-      className="rounded-full border border-border px-3 py-1 text-xs font-medium text-muted-foreground transition hover:bg-accent/5 hover:text-foreground"
+      className="command-chip"
     >
       {children}
     </button>
@@ -284,12 +273,12 @@ function CollapsibleBracketRound({
   if (hidden) return null;
 
   return (
-    <section className="rounded-2xl border border-border/60 bg-background/30">
+    <section className="command-bracket-round">
       <button
         type="button"
         onClick={onToggle}
         aria-expanded={open}
-        className="flex w-full items-center justify-between gap-3 px-4 py-3 text-left transition hover:bg-accent/5"
+        className="command-bracket-round__toggle"
       >
         <div>
           <h3 className="text-xs font-bold uppercase tracking-widest text-foreground">
@@ -444,7 +433,7 @@ function MatchCard({
   );
 
   return (
-    <div className="glass rounded-xl p-2.5">
+    <div className="command-bracket-card">
       <MatchTeamRow
         slot={match.home}
         advanceProb={homeProb}

@@ -251,6 +251,7 @@ def build_metadata(
     *,
     generated_at: datetime | None = None,
     scenario: dict[str, Any] | None = None,
+    projection_tier: str = "standard",
 ) -> dict[str, Any]:
     completed_results = results[results["status"].astype(str).str.lower() == "complete"]
     export_time = generated_at or datetime.now()
@@ -279,6 +280,7 @@ def build_metadata(
             "tournament": tournament_simulations,
             "round": round_simulations,
         },
+        "projection_tier": projection_tier,
         "data_caveats": build_data_caveats(ratings),
         **build_refresh_metadata(export_time, schedule),
     }
@@ -306,6 +308,7 @@ def build_app_state_payload(
     group_simulations: int = 10_000,
     tournament_simulations: int = 10_000,
     round_simulations: int = 10_000,
+    projection_tier: str = "standard",
     scenario: dict[str, Any] | None = None,
     movement: dict[str, Any] | None = None,
     live_context: dict[str, Any] | None = None,
@@ -372,6 +375,7 @@ def build_app_state_payload(
         round_simulations=round_simulations,
         generated_at=generated_at,
         scenario=scenario,
+        projection_tier=projection_tier,
     )
 
     fixtures_payload = build_fixtures_payload(
@@ -394,6 +398,7 @@ def build_app_state_payload(
             completed_result_count=int(metadata["completed_result_count"]),
             fixture_count=int(metadata["fixture_count"]),
             round_simulations=round_simulations,
+            projection_tier=metadata.get("projection_tier", projection_tier),
         )
 
     if path_difficulty is None:
@@ -466,6 +471,7 @@ def export_web_state(
     group_simulations: int = 10_000,
     tournament_simulations: int = 10_000,
     round_simulations: int = 10_000,
+    projection_tier: str = "standard",
     baseline_app_state_path: str | Path | None = None,
 ) -> dict[str, Path]:
     output_path = Path(output_dir)
@@ -504,6 +510,7 @@ def export_web_state(
         group_simulations=group_simulations,
         tournament_simulations=tournament_simulations,
         round_simulations=round_simulations,
+        projection_tier=projection_tier,
         movement=movement,
         generated_at=export_time,
     )

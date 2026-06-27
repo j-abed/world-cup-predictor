@@ -10,6 +10,7 @@ interface ProbabilityBarProps {
   label?: string;
   size?: "sm" | "md" | "lg";
   tone?: Tone;
+  variant?: "default" | "board";
   className?: string;
 }
 
@@ -32,10 +33,12 @@ export function ProbabilityBar({
   label,
   size = "md",
   tone = "gold",
+  variant = "default",
   className = "",
 }: ProbabilityBarProps) {
   const [animatedWidth, setAnimatedWidth] = useState(0);
   const clamped = Math.max(0, Math.min(1, value));
+  const isBoard = variant === "board";
 
   useEffect(() => {
     const frame = requestAnimationFrame(() => setAnimatedWidth(clamped * 100));
@@ -43,24 +46,25 @@ export function ProbabilityBar({
   }, [clamped]);
 
   const displayLabel = valueLabel?.trim() ?? `${(clamped * 100).toFixed(1)}%`;
+  const showLabel = !isBoard && (label || valueLabel);
 
   return (
-    <div className={`w-full ${className}`}>
-      {(label || valueLabel) && (
+    <div className={`w-full ${isBoard ? "prob-bar--board" : ""} ${className}`}>
+      {showLabel ? (
         <div className="mb-1 flex items-baseline justify-between gap-2 text-xs">
-          {label && (
+          {label ? (
             <span className="truncate text-muted-foreground">{label}</span>
-          )}
+          ) : null}
           <span className="font-mono font-semibold tabular-nums text-foreground">
             {displayLabel}
           </span>
         </div>
-      )}
+      ) : null}
       <div
-        className={`relative w-full overflow-hidden rounded-full bg-foreground/10 ${SIZE_TRACK[size]}`}
+        className={`prob-bar__track ${SIZE_TRACK[size]}${isBoard ? " prob-bar__track--board" : " rounded-full bg-foreground/10"}`}
       >
         <div
-          className="h-full rounded-full transition-[width] duration-700 ease-out"
+          className={`prob-bar__fill h-full transition-[width] duration-700 ease-out${isBoard ? " prob-bar__fill--board" : " rounded-full"}`}
           style={{ width: `${animatedWidth}%`, background: TONE_FILL[tone] }}
         />
       </div>
