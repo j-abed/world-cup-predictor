@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from collections import defaultdict
 from copy import deepcopy
+from dataclasses import dataclass
 
 import numpy as np
 import pandas as pd
@@ -16,6 +17,15 @@ from src.tiebreakers import (
 
 
 StandingState = dict[str, dict[str, int]]
+GROUPS = list("ABCDEFGHIJKL")
+
+
+@dataclass(frozen=True)
+class PreparedGroup:
+    group: str
+    base_state: StandingState
+    remaining_matches: list[dict[str, str]]
+    base_match_rows: list[dict]
 
 
 def format_probability(value: float) -> str:
@@ -193,6 +203,135 @@ def get_remaining_group_matches(
     ]
 
 
+def prepare_group(
+    teams: pd.DataFrame,
+    fixtures: pd.DataFrame,
+    results: pd.DataFrame,
+    group: str,
+) -> PreparedGroup:
+    current_standings = calculate_group_standings(
+        teams=teams,
+        fixtures=fixtures,
+        results=results,
+        group=group,
+    )
+
+    return PreparedGroup(
+        group=group,
+        base_state=standings_df_to_state(current_standings),
+        remaining_matches=get_remaining_group_matches(
+            fixtures=fixtures,
+            results=results,
+            group=group,
+        ),
+        base_match_rows=build_match_rows(
+            fixtures=fixtures,
+            results=results,
+            group=group,
+        ),
+    )
+
+
+def prepare_groups(
+    teams: pd.DataFrame,
+    fixtures: pd.DataFrame,
+    results: pd.DataFrame,
+) -> dict[str, PreparedGroup]:
+    return {
+        group: prepare_group(
+            teams=teams,
+            fixtures=fixtures,
+            results=results,
+            group=group,
+        )
+        for group in GROUPS
+    }
+
+
+def simulate_prepared_group_once(
+    prepared_group: PreparedGroup,
+    rating_lookup: dict[str, float],
+    rng: np.random.Generator,
+    conduct_scores: dict[str, float],
+    ranking_fallback: dict[str, float],
+) -> list[dict]:
+    state = deepcopy(prepared_group.base_state)
+    match_rows = deepcopy(prepared_group.base_match_rows)
+
+    for match in prepared_group.remaining_matches:
+        home_team = match["home_team"]
+        away_team = match["away_team"]
+
+        home_score, away_score = simulate_score(
+            home_team=home_team,
+            away_team=away_team,
+            rating_lookup=rating_lookup,
+            rng=rng,
+        )
+
+        apply_result_to_state(
+            state=state,
+            home_team=home_team,
+            away_team=away_team,
+            home_score=home_score,
+            away_score=away_score,
+        )
+
+        match_rows.append(
+            {
+                "group": prepared_group.group,
+                "home_team": home_team,
+                "away_team": away_team,
+                "home_score": home_score,
+                "away_score": away_score,
+            }
+        )
+
+    ranked_team_ids = rank_state(
+        state,
+        match_rows=match_rows,
+        conduct_scores=conduct_scores,
+        ranking_fallback=ranking_fallback,
+    )
+
+    group_rows = []
+
+    for rank, team_id in enumerate(ranked_team_ids, start=1):
+        metrics = state[team_id]
+
+        group_rows.append(
+            {
+                "team_id": team_id,
+                "group": prepared_group.group,
+                "group_rank": rank,
+                "points": metrics["points"],
+                "goal_difference": metrics["goal_difference"],
+                "goals_for": metrics["goals_for"],
+            }
+        )
+
+    return group_rows
+
+
+def simulate_all_groups_once(
+    prepared_groups: dict[str, PreparedGroup],
+    rating_lookup: dict[str, float],
+    rng: np.random.Generator,
+    conduct_scores: dict[str, float],
+    ranking_fallback: dict[str, float],
+) -> dict[str, list[dict]]:
+    return {
+        group: simulate_prepared_group_once(
+            prepared_group=prepared_group,
+            rating_lookup=rating_lookup,
+            rng=rng,
+            conduct_scores=conduct_scores,
+            ranking_fallback=ranking_fallback,
+        )
+        for group, prepared_group in prepared_groups.items()
+    }
+
+
 def simulate_group_finish_probabilities(
     teams: pd.DataFrame,
     fixtures: pd.DataFrame,
@@ -203,77 +342,29 @@ def simulate_group_finish_probabilities(
     seed: int = 42,
 ) -> pd.DataFrame:
     rng = np.random.default_rng(seed)
-
-    current_standings = calculate_group_standings(
+    prepared_group = prepare_group(
         teams=teams,
         fixtures=fixtures,
         results=results,
         group=group,
     )
-
-    base_state = standings_df_to_state(current_standings)
-
-    remaining_matches = get_remaining_group_matches(
-        fixtures=fixtures,
-        results=results,
-        group=group,
-    )
-
-    base_match_rows = build_match_rows(
-        fixtures=fixtures,
-        results=results,
-        group=group,
-    )
-
     conduct_scores = load_conduct_scores()
     ranking_fallback = load_ranking_fallback()
-
     rating_lookup = build_rating_lookup(ratings)
 
     finish_counts: dict[str, dict[int, int]] = defaultdict(lambda: defaultdict(int))
 
     for _ in range(simulations):
-        state = deepcopy(base_state)
-        match_rows = deepcopy(base_match_rows)
-
-        for match in remaining_matches:
-            home_team = match["home_team"]
-            away_team = match["away_team"]
-
-            home_score, away_score = simulate_score(
-                home_team=home_team,
-                away_team=away_team,
-                rating_lookup=rating_lookup,
-                rng=rng,
-            )
-
-            apply_result_to_state(
-                state=state,
-                home_team=home_team,
-                away_team=away_team,
-                home_score=home_score,
-                away_score=away_score,
-            )
-
-            match_rows.append(
-                {
-                    "group": group,
-                    "home_team": home_team,
-                    "away_team": away_team,
-                    "home_score": home_score,
-                    "away_score": away_score,
-                }
-            )
-
-        ranked_team_ids = rank_state(
-            state,
-            match_rows=match_rows,
+        group_rows = simulate_prepared_group_once(
+            prepared_group=prepared_group,
+            rating_lookup=rating_lookup,
+            rng=rng,
             conduct_scores=conduct_scores,
             ranking_fallback=ranking_fallback,
         )
 
-        for index, team_id in enumerate(ranked_team_ids, start=1):
-            finish_counts[team_id][index] += 1
+        for index, row in enumerate(group_rows, start=1):
+            finish_counts[row["team_id"]][index] += 1
 
     rows = []
 
@@ -306,9 +397,6 @@ def simulate_group_finish_probabilities(
     return output
 
 
-GROUPS = list("ABCDEFGHIJKL")
-
-
 def simulate_all_group_finish_probabilities(
     teams: pd.DataFrame,
     fixtures: pd.DataFrame,
@@ -317,17 +405,58 @@ def simulate_all_group_finish_probabilities(
     simulations: int = 10_000,
     seed: int = 42,
 ) -> dict[str, pd.DataFrame]:
+    prepared_groups = prepare_groups(
+        teams=teams,
+        fixtures=fixtures,
+        results=results,
+    )
+    conduct_scores = load_conduct_scores()
+    ranking_fallback = load_ranking_fallback()
+    rating_lookup = build_rating_lookup(ratings)
     probabilities: dict[str, pd.DataFrame] = {}
 
     for index, group in enumerate(GROUPS):
-        probabilities[group] = simulate_group_finish_probabilities(
-            teams=teams,
-            fixtures=fixtures,
-            results=results,
-            ratings=ratings,
-            group=group,
-            simulations=simulations,
-            seed=seed + index,
-        )
+        rng = np.random.default_rng(seed + index)
+        prepared_group = prepared_groups[group]
+        finish_counts: dict[str, dict[int, int]] = defaultdict(lambda: defaultdict(int))
+
+        for _ in range(simulations):
+            group_rows = simulate_prepared_group_once(
+                prepared_group=prepared_group,
+                rating_lookup=rating_lookup,
+                rng=rng,
+                conduct_scores=conduct_scores,
+                ranking_fallback=ranking_fallback,
+            )
+
+            for rank, row in enumerate(group_rows, start=1):
+                finish_counts[row["team_id"]][rank] += 1
+
+        group_teams = teams[teams["group"] == group].copy()
+        rows = []
+
+        for _, team in group_teams.iterrows():
+            team_id = str(team["team_id"])
+
+            row = {
+                "team_id": team_id,
+                "team": team["name"],
+                "code": team["code"],
+            }
+
+            for finish_rank in range(1, 5):
+                row[f"finish_{finish_rank}_prob"] = (
+                    finish_counts[team_id][finish_rank] / simulations
+                )
+
+            row["top_2_prob"] = row["finish_1_prob"] + row["finish_2_prob"]
+            row["top_3_prob"] = row["top_2_prob"] + row["finish_3_prob"]
+            rows.append(row)
+
+        output = pd.DataFrame(rows)
+        probabilities[group] = output.sort_values(
+            by=["finish_1_prob", "top_2_prob", "top_3_prob"],
+            ascending=[False, False, False],
+        ).reset_index(drop=True)
 
     return probabilities

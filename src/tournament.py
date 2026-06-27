@@ -1,163 +1,20 @@
 from __future__ import annotations
 
 from collections import defaultdict
-from copy import deepcopy
-from dataclasses import dataclass
 
 import numpy as np
 import pandas as pd
 
 from src.simulator import (
     build_rating_lookup,
-    get_remaining_group_matches,
-    rank_state,
-    simulate_score,
-    apply_result_to_state,
-    standings_df_to_state,
+    prepare_groups,
+    simulate_all_groups_once,
 )
-from src.standings import calculate_group_standings
 from src.tiebreakers import (
-    build_match_rows,
     load_conduct_scores,
     load_ranking_fallback,
     rank_third_place_rows,
 )
-
-
-GROUPS = list("ABCDEFGHIJKL")
-
-
-@dataclass(frozen=True)
-class PreparedGroup:
-    group: str
-    base_state: dict[str, dict[str, int]]
-    remaining_matches: list[dict[str, str]]
-    base_match_rows: list[dict]
-
-
-def prepare_groups(
-    teams: pd.DataFrame,
-    fixtures: pd.DataFrame,
-    results: pd.DataFrame,
-) -> dict[str, PreparedGroup]:
-    prepared: dict[str, PreparedGroup] = {}
-
-    for group in GROUPS:
-        current_standings = calculate_group_standings(
-            teams=teams,
-            fixtures=fixtures,
-            results=results,
-            group=group,
-        )
-
-        base_state = standings_df_to_state(current_standings)
-
-        remaining_matches = get_remaining_group_matches(
-            fixtures=fixtures,
-            results=results,
-            group=group,
-        )
-
-        base_match_rows = build_match_rows(
-            fixtures=fixtures,
-            results=results,
-            group=group,
-        )
-
-        prepared[group] = PreparedGroup(
-            group=group,
-            base_state=base_state,
-            remaining_matches=remaining_matches,
-            base_match_rows=base_match_rows,
-        )
-
-    return prepared
-
-
-def simulate_prepared_group_once(
-    prepared_group: PreparedGroup,
-    rating_lookup: dict[str, float],
-    rng: np.random.Generator,
-    conduct_scores: dict[str, float],
-    ranking_fallback: dict[str, float],
-) -> list[dict]:
-    state = deepcopy(prepared_group.base_state)
-    match_rows = deepcopy(prepared_group.base_match_rows)
-
-    for match in prepared_group.remaining_matches:
-        home_team = match["home_team"]
-        away_team = match["away_team"]
-
-        home_score, away_score = simulate_score(
-            home_team=home_team,
-            away_team=away_team,
-            rating_lookup=rating_lookup,
-            rng=rng,
-        )
-
-        apply_result_to_state(
-            state=state,
-            home_team=home_team,
-            away_team=away_team,
-            home_score=home_score,
-            away_score=away_score,
-        )
-
-        match_rows.append(
-            {
-                "group": prepared_group.group,
-                "home_team": home_team,
-                "away_team": away_team,
-                "home_score": home_score,
-                "away_score": away_score,
-            }
-        )
-
-    ranked_team_ids = rank_state(
-        state,
-        match_rows=match_rows,
-        conduct_scores=conduct_scores,
-        ranking_fallback=ranking_fallback,
-    )
-
-    group_rows = []
-
-    for rank, team_id in enumerate(ranked_team_ids, start=1):
-        metrics = state[team_id]
-
-        group_rows.append(
-            {
-                "team_id": team_id,
-                "group": prepared_group.group,
-                "group_rank": rank,
-                "points": metrics["points"],
-                "goal_difference": metrics["goal_difference"],
-                "goals_for": metrics["goals_for"],
-            }
-        )
-
-    return group_rows
-
-
-def simulate_all_groups_once(
-    prepared_groups: dict[str, PreparedGroup],
-    rating_lookup: dict[str, float],
-    rng: np.random.Generator,
-    conduct_scores: dict[str, float],
-    ranking_fallback: dict[str, float],
-) -> dict[str, list[dict]]:
-    group_results: dict[str, list[dict]] = {}
-
-    for group, prepared_group in prepared_groups.items():
-        group_results[group] = simulate_prepared_group_once(
-            prepared_group=prepared_group,
-            rating_lookup=rating_lookup,
-            rng=rng,
-            conduct_scores=conduct_scores,
-            ranking_fallback=ranking_fallback,
-        )
-
-    return group_results
 
 
 def select_best_third_place_teams(

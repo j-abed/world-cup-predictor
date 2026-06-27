@@ -2,28 +2,19 @@ from __future__ import annotations
 
 from collections import defaultdict
 from dataclasses import dataclass
-from copy import deepcopy
 
 import numpy as np
 import pandas as pd
 
 from src.bracket import build_third_place_assignment, load_third_place_permutations
-from src.reporting import calculate_current_projected_qualifiers
 from src.simulator import (
-    apply_result_to_state,
     build_rating_lookup,
-    get_remaining_group_matches,
-    rank_state,
+    prepare_groups,
+    simulate_all_groups_once,
     simulate_score,
-    standings_df_to_state,
 )
-from src.standings import calculate_group_standings
-from src.tournament import GROUPS, select_best_third_place_teams
-from src.tiebreakers import (
-    build_match_rows,
-    load_conduct_scores,
-    load_ranking_fallback,
-)
+from src.tournament import select_best_third_place_teams
+from src.tiebreakers import load_conduct_scores, load_ranking_fallback
 
 
 ROUND_COLUMNS = {
@@ -34,97 +25,6 @@ ROUND_COLUMNS = {
     "final": "final_count",
     "champion": "champion_count",
 }
-
-
-def simulate_group_stage_once(
-    teams: pd.DataFrame,
-    fixtures: pd.DataFrame,
-    results: pd.DataFrame,
-    rating_lookup: dict[str, float],
-    rng: np.random.Generator,
-) -> dict[str, list[dict]]:
-    group_results: dict[str, list[dict]] = {}
-
-    conduct_scores = load_conduct_scores()
-    ranking_fallback = load_ranking_fallback()
-
-    for group in GROUPS:
-        current_standings = calculate_group_standings(
-            teams=teams,
-            fixtures=fixtures,
-            results=results,
-            group=group,
-        )
-
-        state = standings_df_to_state(current_standings)
-
-        remaining_matches = get_remaining_group_matches(
-            fixtures=fixtures,
-            results=results,
-            group=group,
-        )
-
-        match_rows = build_match_rows(
-            fixtures=fixtures,
-            results=results,
-            group=group,
-        )
-
-        for match in remaining_matches:
-            home_team = match["home_team"]
-            away_team = match["away_team"]
-
-            home_score, away_score = simulate_score(
-                home_team=home_team,
-                away_team=away_team,
-                rating_lookup=rating_lookup,
-                rng=rng,
-            )
-
-            apply_result_to_state(
-                state=state,
-                home_team=home_team,
-                away_team=away_team,
-                home_score=home_score,
-                away_score=away_score,
-            )
-
-            match_rows.append(
-                {
-                    "group": group,
-                    "home_team": home_team,
-                    "away_team": away_team,
-                    "home_score": home_score,
-                    "away_score": away_score,
-                }
-            )
-
-        ranked_team_ids = rank_state(
-            state,
-            match_rows=match_rows,
-            conduct_scores=conduct_scores,
-            ranking_fallback=ranking_fallback,
-        )
-
-        rows = []
-
-        for rank, team_id in enumerate(ranked_team_ids, start=1):
-            metrics = state[team_id]
-
-            rows.append(
-                {
-                    "team_id": team_id,
-                    "group": group,
-                    "group_rank": rank,
-                    "points": metrics["points"],
-                    "goal_difference": metrics["goal_difference"],
-                    "goals_for": metrics["goals_for"],
-                }
-            )
-
-        group_results[group] = rows
-
-    return group_results
 
 
 def group_results_to_projected_qualifiers(
@@ -507,96 +407,28 @@ def simulate_tournament_round_probabilities(
     conduct_scores = load_conduct_scores()
     ranking_fallback = load_ranking_fallback()
 
-    prepared_groups = {}
-
-    for group in GROUPS:
-        current_standings = calculate_group_standings(
-            teams=teams,
-            fixtures=fixtures,
-            results=results,
-            group=group,
-        )
-
-        prepared_groups[group] = {
-            "base_state": standings_df_to_state(current_standings),
-            "remaining_matches": get_remaining_group_matches(
-                fixtures=fixtures,
-                results=results,
-                group=group,
-            ),
-            "base_match_rows": build_match_rows(
-                fixtures=fixtures,
-                results=results,
-                group=group,
-            ),
-        }
+    prepared_groups = prepare_groups(
+        teams=teams,
+        fixtures=fixtures,
+        results=results,
+    )
 
     counts: dict[str, dict[str, int]] = defaultdict(lambda: defaultdict(int))
 
     for _ in range(simulations):
-        group_results: dict[str, list[dict]] = {}
-
-        for group, prepared_group in prepared_groups.items():
-            state = deepcopy(prepared_group["base_state"])
-            match_rows = deepcopy(prepared_group["base_match_rows"])
-
-            for match in prepared_group["remaining_matches"]:
-                home_team = match["home_team"]
-                away_team = match["away_team"]
-
-                home_score, away_score = simulate_score(
-                    home_team=home_team,
-                    away_team=away_team,
-                    rating_lookup=rating_lookup,
-                    rng=rng,
-                )
-
-                apply_result_to_state(
-                    state=state,
-                    home_team=home_team,
-                    away_team=away_team,
-                    home_score=home_score,
-                    away_score=away_score,
-                )
-
-                match_rows.append(
-                    {
-                        "group": group,
-                        "home_team": home_team,
-                        "away_team": away_team,
-                        "home_score": home_score,
-                        "away_score": away_score,
-                    }
-                )
-
-            ranked_team_ids = rank_state(
-                state,
-                match_rows=match_rows,
-                conduct_scores=conduct_scores,
-                ranking_fallback=ranking_fallback,
-            )
-
-            rows = []
-
-            for rank, team_id in enumerate(ranked_team_ids, start=1):
-                metrics = state[team_id]
-
-                rows.append(
-                    {
-                        "team_id": team_id,
-                        "group": group,
-                        "group_rank": rank,
-                        "points": metrics["points"],
-                        "goal_difference": metrics["goal_difference"],
-                        "goals_for": metrics["goals_for"],
-                    }
-                )
-
-            group_results[group] = rows
+        group_results = simulate_all_groups_once(
+            prepared_groups=prepared_groups,
+            rating_lookup=rating_lookup,
+            rng=rng,
+            conduct_scores=conduct_scores,
+            ranking_fallback=ranking_fallback,
+        )
 
         qualifiers = group_results_to_projected_qualifiers(
             teams=teams,
             group_results=group_results,
+            conduct_scores=conduct_scores,
+            ranking_fallback=ranking_fallback,
         )
 
         knockout_result = simulate_knockout_bracket_once(

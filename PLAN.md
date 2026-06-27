@@ -13,11 +13,11 @@ Track progress here. Check items off as they ship.
 | 0 — Foundation | 4 | 4 | ✅ Complete |
 | 1 — Automation | 2 | 3 | 🟡 In progress |
 | 2 — Data/UI gaps | 7 | 7 | ✅ Complete |
-| 3 — Model | 0 | 5 | ⬜ Not started |
+| 3 — Model | 1 | 5 | 🟡 In progress |
 | 4 — UX polish | 0 | 5 | ⬜ Not started |
 | 5 — Stretch | 0 | 5 | ⬜ Backlog |
 
-**Overall: 13 / 29** actionable items complete.
+**Overall: 14 / 29** actionable items complete.
 
 ---
 
@@ -36,10 +36,10 @@ Track progress here. Check items off as they ship.
 
 - [x] GitHub Action: `.github/workflows/refresh-data.yml`
 - [x] Pipeline: ESPN sync → model → export → pytest → commit
-- [ ] **Vercel Git integration** — link repo, Root Directory = `frontend` (or use root `vercel.json`)
+- [ ] **Vercel Git integration** — import repo in dashboard, Root Directory = `frontend`
   - *Acceptance:* push to `main` deploys without `npx vercel --prod`
-  - *Where:* [vercel.com](https://vercel.com) → Import `j-abed/world-cup-predictor`
-  - *Note:* `vercel.json` at repo root is configured for monorepo deploy
+  - *Docs:* see README → Vercel Git auto-deploy
+  - *Config:* `frontend/vercel.json` included
 
 ---
 
@@ -88,9 +88,9 @@ All data/UI gap items shipped. Next priorities: Phase 1.3 (Vercel Git) and Phase
 
 **Goal:** More credible probabilities.
 
-- [ ] **3.1 Deduplicate simulation code**
-  - Single group-stage path for `simulator.py`, `tournament.py`, `knockout.py`
-  - Remove dead `simulate_group_stage_once` in `knockout.py`
+- [x] **3.1 Deduplicate simulation code**
+  - Single group-stage path in `simulator.py` (`prepare_groups`, `simulate_prepared_group_once`, `simulate_all_groups_once`)
+  - Removed dead `simulate_group_stage_once` from `knockout.py`
   - *Acceptance:* one function used by tournament + knockout; tests still pass
 
 - [ ] **3.2 Calibrate rating → goals**

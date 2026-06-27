@@ -67,7 +67,22 @@ uv run pytest
 
 ## Automation
 
-GitHub Actions workflow `.github/workflows/refresh-data.yml` syncs ESPN results, reruns the model, and commits updated data during the tournament (Jun 11 – Jul 20, 2026). Connect the repo to Vercel for auto-deploy on push.
+GitHub Actions workflow `.github/workflows/refresh-data.yml` syncs ESPN results, reruns the model, and commits updated data during the tournament (Jun 11 – Jul 20, 2026).
+
+### Vercel Git auto-deploy (recommended)
+
+1. Open [vercel.com/new](https://vercel.com/new) → **Import** `j-abed/world-cup-predictor`
+2. Set **Root Directory** to `frontend`
+3. **Framework Preset:** Vite (or detect automatically)
+4. Add environment variable (optional, for correct social preview URLs):
+   - `VITE_SITE_URL` = your production URL (e.g. `https://frontend-two-weld-14.vercel.app`)
+5. Deploy — every push to `main` (including GitHub Action data commits) auto-deploys
+
+CLI deploy still works from `frontend/`:
+
+```bash
+cd frontend && npx vercel --prod
+```
 
 ## Data notes
 
