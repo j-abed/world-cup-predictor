@@ -119,3 +119,35 @@ def test_rank_third_place_table_orders_by_points_then_goal_difference() -> None:
     assert ranked.iloc[0]["team_id"] == "t2"
     assert ranked.iloc[1]["team_id"] == "t1"
     assert ranked.iloc[2]["team_id"] == "t3"
+
+
+def test_rank_third_place_table_uses_conduct_score_when_points_are_tied() -> None:
+    third_place = pd.DataFrame(
+        [
+            {
+                "team_id": "clean",
+                "group": "A",
+                "points": 4,
+                "goal_difference": 0,
+                "goals_for": 3,
+                "goals_against": 3,
+            },
+            {
+                "team_id": "cards",
+                "group": "B",
+                "points": 4,
+                "goal_difference": 0,
+                "goals_for": 3,
+                "goals_against": 3,
+            },
+        ]
+    )
+
+    ranked = rank_third_place_table(
+        third_place,
+        conduct_scores={"clean": 0.0, "cards": -2.0},
+        ranking_fallback={"clean": 100.0, "cards": 200.0},
+    )
+
+    assert ranked.iloc[0]["team_id"] == "clean"
+    assert ranked.iloc[1]["team_id"] == "cards"

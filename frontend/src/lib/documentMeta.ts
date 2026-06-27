@@ -1,4 +1,4 @@
-import type { TabId } from "../components/TabNav";
+import type { TabId } from "./tabs";
 
 const SITE_NAME = "World Cup Predictor";
 const DEFAULT_DESCRIPTION =

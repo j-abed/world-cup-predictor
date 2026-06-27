@@ -6,24 +6,16 @@ import { GroupStandings } from "./components/GroupStandings";
 import { Header } from "./components/Header";
 import { ProjectedField } from "./components/ProjectedField";
 import { QualificationOdds } from "./components/QualificationOdds";
-import { TabNav, type TabId } from "./components/TabNav";
+import { TabNav } from "./components/TabNav";
 import { TabErrorBoundary } from "./components/TabErrorBoundary";
 import { TeamDetail } from "./components/TeamDetail";
 import { ThirdPlaceTable } from "./components/ThirdPlaceTable";
 import { AppStateLoadError, loadAppState } from "./lib/data";
-import { buildTeamIndex } from "./lib/team";
 import { buildDocumentTitle } from "./lib/documentMeta";
+import { TAB_LABELS, type TabId } from "./lib/tabs";
+import { buildTeamIndex } from "./lib/team";
 import { readAppUrlState, writeAppUrlState } from "./lib/urlState";
 import type { AppState } from "./types";
-
-const TAB_LABELS: Record<TabId, string> = {
-  champion: "Champion odds",
-  fixtures: "Fixtures",
-  field: "Projected R32 field",
-  bracket: "Knockout bracket",
-  groups: "Group standings",
-  qualification: "Qualification odds",
-};
 
 export default function App() {
   const [appState, setAppState] = useState<AppState | null>(null);
@@ -39,7 +31,15 @@ export default function App() {
 
     loadAppState()
       .then((state) => {
-        if (!cancelled) setAppState(state);
+        if (cancelled) return;
+
+        const index = buildTeamIndex(state);
+        const { tab, team } = readAppUrlState();
+
+        setAppState(state);
+        setActiveTab(tab);
+        setSelectedTeamCode(team && index.has(team) ? team : null);
+        urlHydratedRef.current = true;
       })
       .catch((err) => {
         if (cancelled) return;
@@ -59,15 +59,6 @@ export default function App() {
     () => (appState ? buildTeamIndex(appState) : null),
     [appState],
   );
-
-  useEffect(() => {
-    if (!teamIndex) return;
-
-    const { tab, team } = readAppUrlState();
-    setActiveTab(tab);
-    setSelectedTeamCode(team && teamIndex.has(team) ? team : null);
-    urlHydratedRef.current = true;
-  }, [teamIndex]);
 
   useEffect(() => {
     const onPopState = () => {

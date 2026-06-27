@@ -13,11 +13,11 @@ Track progress here. Check items off as they ship.
 | 0 — Foundation | 4 | 4 | ✅ Complete |
 | 1 — Automation | 3 | 3 | ✅ Complete |
 | 2 — Data/UI gaps | 7 | 7 | ✅ Complete |
-| 3 — Model | 2 | 5 | 🟡 In progress |
+| 3 — Model | 5 | 5 | ✅ Complete |
 | 4 — UX polish | 5 | 5 | ✅ Complete |
 | 5 — Stretch | 0 | 5 | ⬜ Backlog |
 
-**Overall: 21 / 29** actionable items complete.
+**Overall: 24 / 29** actionable items complete. Remaining work is Phase 5 stretch only.
 
 ---
 
@@ -77,37 +77,13 @@ Track progress here. Check items off as they ship.
 
 ---
 
-## Phase 2 complete ✅
-
-All data/UI gap items shipped. Next priorities: Phase 1.3 (Vercel Git) and Phase 3 (model).
-
----
-
-## Phase 3 — Model improvements
-
-**Goal:** More credible probabilities.
+## Phase 3 — Model ✅
 
 - [x] **3.1 Deduplicate simulation code**
-  - Single group-stage path in `simulator.py` (`prepare_groups`, `simulate_prepared_group_once`, `simulate_all_groups_once`)
-  - Removed dead `simulate_group_stage_once` from `knockout.py`
-  - *Acceptance:* one function used by tournament + knockout; tests still pass
-
 - [x] **3.2 Calibrate rating → goals**
-  - Named constant `RATING_POINTS_PER_EXPECTED_GOAL` + calibration script
-  - Document chosen divisor in `DATA_STATUS.md`
-  - *Acceptance:* written calibration note + updated constant
-
-- [ ] **3.3 Post-match rating updates**
-  - Elo-style step after each ESPN sync (optional toggle)
-  - *Acceptance:* `ratings.csv` updates when results sync runs
-
-- [ ] **3.4 Knockout ET + penalties model**
-  - Separate from group-stage Poisson; replace rating coin-flip on draws
-  - *Acceptance:* documented model; knockout sim uses distinct logic
-
-- [ ] **3.5 Real fair-play data**
-  - Replace placeholders in `fair_play.csv` with card data
-  - *Acceptance:* tiebreakers use real conduct scores where available
+- [x] **3.3 Post-match rating updates** (`--update-ratings`, `data/ratings_applied_matches.csv`)
+- [x] **3.4 Knockout ET + penalties model**
+- [x] **3.5 Real fair-play data** (`--update-fair-play`, ESPN card sync)
 
 ---
 
@@ -131,28 +107,19 @@ All data/UI gap items shipped. Next priorities: Phase 1.3 (Vercel Git) and Phase
 
 ---
 
-## Suggested sprint order
+## Suggested next steps
 
-If you're burning down during the tournament:
+Phases 0–4 are complete. During the tournament, rely on automation:
 
 ```
-Week 1 (ops + visibility)
-  □ 1.3 Vercel Git integration
-  □ 2.1 Projected R32 field
-  □ 2.2 All-group finish odds
+Ops (automatic)
+  ✓ refresh-data.yml every 2h
+  ✓ deploy-frontend.yml on push
 
-Week 2 (clarity + shareability)
-  □ 2.3 Bracket probability labels
-  □ 2.4 OG meta tags
-  □ 4.5 Relative timestamps
-
-Week 3 (model trust)
-  □ 3.1 Deduplicate simulation
-  □ 3.2 Calibrate rating → goals
-
-Ongoing / when time allows
-  □ Phase 4 UX items
-  □ Phase 5 stretch
+Optional stretch (Phase 5)
+  □ Scenario mode
+  □ Model vs betting markets
+  □ 2022 backtest page
 ```
 
 ---
@@ -160,8 +127,8 @@ Ongoing / when time allows
 ## Quick commands
 
 ```bash
-# Verify before shipping
-uv run pytest && cd frontend && npm run build
+# Full verify before shipping
+uv run pytest && cd frontend && npm run lint && npm run build
 
 # Manual refresh + deploy
 ./refresh_and_deploy.sh

@@ -1,13 +1,4 @@
-export const TAB_IDS = [
-  "champion",
-  "fixtures",
-  "field",
-  "bracket",
-  "groups",
-  "qualification",
-] as const;
-
-export type TabId = (typeof TAB_IDS)[number];
+import type { TabId } from "../lib/tabs";
 
 interface Tab {
   id: TabId;

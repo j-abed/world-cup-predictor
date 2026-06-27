@@ -1,22 +1,26 @@
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 import { formatUpdatedAt } from "../lib/relativeTime";
 
 interface UpdatedAtStatProps {
   generatedAt: string;
 }
 
+function subscribeToMinuteTicks(onStoreChange: () => void) {
+  const interval = window.setInterval(onStoreChange, 60_000);
+  return () => window.clearInterval(interval);
+}
+
+function useMinuteTick() {
+  return useSyncExternalStore(
+    subscribeToMinuteTicks,
+    () => Date.now(),
+    () => Date.now(),
+  );
+}
+
 export function UpdatedAtStat({ generatedAt }: UpdatedAtStatProps) {
-  const [label, setLabel] = useState(() => formatUpdatedAt(generatedAt));
-
-  useEffect(() => {
-    setLabel(formatUpdatedAt(generatedAt));
-
-    const interval = window.setInterval(() => {
-      setLabel(formatUpdatedAt(generatedAt));
-    }, 60_000);
-
-    return () => window.clearInterval(interval);
-  }, [generatedAt]);
+  const now = useMinuteTick();
+  const label = formatUpdatedAt(generatedAt, now);
 
   return (
     <div>

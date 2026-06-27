@@ -119,6 +119,43 @@ def group_results_to_projected_qualifiers(
     return qualifiers.drop(columns=["path_order"])
 
 
+# Extra-time scoring intensity relative to regulation (single 15-minute period proxy).
+EXTRA_TIME_GOAL_FACTOR = 0.35
+
+# Elo divisor for knockout advancement after ET / in penalty shootouts.
+KNOCKOUT_RATING_ELO_DIVISOR = 400.0
+
+
+def rating_knockout_advance_probability(
+    team_a: str,
+    team_b: str,
+    rating_lookup: dict[str, float],
+) -> float:
+    rating_a = rating_lookup[team_a]
+    rating_b = rating_lookup[team_b]
+    return 1 / (
+        1 + 10 ** ((rating_b - rating_a) / KNOCKOUT_RATING_ELO_DIVISOR)
+    )
+
+
+def simulate_penalty_shootout(
+    team_a: str,
+    team_b: str,
+    rating_lookup: dict[str, float],
+    rng: np.random.Generator,
+) -> str:
+    """
+    Penalty shootout resolution using rating-based win probability.
+
+    Individual kicks are not modeled; the stronger side is more likely to
+    advance after a drawn extra time.
+    """
+    probability_a = rating_knockout_advance_probability(
+        team_a, team_b, rating_lookup
+    )
+    return team_a if rng.random() < probability_a else team_b
+
+
 def advance_knockout_match(
     team_a: str,
     team_b: str,
@@ -128,12 +165,9 @@ def advance_knockout_match(
     """
     Simulate a knockout match winner.
 
-    MVP behavior:
-    - simulate regulation score using Poisson
-    - if draw, use rating-weighted coin flip for extra time / penalties
-
-    Later:
-    - model extra time and penalties separately
+    1. Regulation Poisson score (same model as group stage)
+    2. If tied, extra time with reduced goal rates
+    3. If still tied, penalty shootout
     """
     score_a, score_b = simulate_score(
         home_team=team_a,
@@ -148,12 +182,29 @@ def advance_knockout_match(
     if score_b > score_a:
         return team_b
 
-    rating_a = rating_lookup[team_a]
-    rating_b = rating_lookup[team_b]
+    et_a, et_b = simulate_score(
+        home_team=team_a,
+        away_team=team_b,
+        rating_lookup=rating_lookup,
+        rng=rng,
+        goal_factor=EXTRA_TIME_GOAL_FACTOR,
+    )
 
-    probability_a_advances = 1 / (1 + 10 ** ((rating_b - rating_a) / 400))
+    score_a += et_a
+    score_b += et_b
 
-    return team_a if rng.random() < probability_a_advances else team_b
+    if score_a > score_b:
+        return team_a
+
+    if score_b > score_a:
+        return team_b
+
+    return simulate_penalty_shootout(
+        team_a=team_a,
+        team_b=team_b,
+        rating_lookup=rating_lookup,
+        rng=rng,
+    )
 
 
 @dataclass(frozen=True)

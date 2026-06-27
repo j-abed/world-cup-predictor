@@ -53,6 +53,8 @@ jobs:
         run: |
           uv run python scripts/update_world_cup_data.py \
             --last-days 3 \
+            --update-ratings \
+            --update-fair-play \
             --run-model \
             --export-web
 
@@ -68,7 +70,12 @@ jobs:
         if: steps.window.outputs.skip != 'true'
         id: changes
         run: |
-          if git diff --quiet data/results.csv frontend/public/data/app_state.json; then
+          if git diff --quiet \
+            data/results.csv \
+            data/ratings.csv \
+            data/ratings_applied_matches.csv \
+            data/fair_play.csv \
+            frontend/public/data/app_state.json; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
           else
             echo "changed=true" >> "$GITHUB_OUTPUT"
@@ -79,7 +86,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/results.csv frontend/public/data/app_state.json
+          git add data/results.csv data/ratings.csv data/ratings_applied_matches.csv data/fair_play.csv frontend/public/data/app_state.json
           git commit -m "chore: refresh World Cup results and projections" \
             -m "Automated sync from ESPN, model rerun, and web state export."
           git push

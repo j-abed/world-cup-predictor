@@ -37,7 +37,12 @@ Outputs land in `outputs/` (gitignored).
 ## Refresh data and export for the web app
 
 ```bash
-uv run python scripts/update_world_cup_data.py --today --run-model --export-web
+uv run python scripts/update_world_cup_data.py \
+  --today \
+  --update-ratings \
+  --update-fair-play \
+  --run-model \
+  --export-web
 cd frontend && npm run refresh-data
 ```
 
@@ -47,7 +52,7 @@ Or use the all-in-one deploy script:
 ./refresh_and_deploy.sh
 ```
 
-That script syncs ESPN results, runs the model, copies JSON into the frontend, and deploys to Vercel.
+That script syncs ESPN results, updates ratings and fair-play data, runs the model, copies JSON into the frontend, and deploys to Vercel.
 
 ## Frontend
 
@@ -67,7 +72,7 @@ uv run pytest
 
 ## Automation
 
-GitHub Actions workflow `.github/workflows/refresh-data.yml` syncs ESPN results, reruns the model, and commits updated data during the tournament (Jun 11 – Jul 20, 2026).
+GitHub Actions workflow `.github/workflows/refresh-data.yml` syncs ESPN results, updates ratings and fair-play scores, reruns the model, and commits updated data during the tournament (Jun 11 – Jul 20, 2026).
 
 ### Vercel Git auto-deploy (recommended)
 
@@ -109,7 +114,7 @@ Required GitHub secrets (set automatically by the script):
 
 ## Data notes
 
-See `DATA_STATUS.md` for ratings sources, fair-play placeholders, and modeling limitations.
+See `DATA_STATUS.md` for ratings, fair-play, knockout modeling, and data limitations.
 
 ## Improvement plan
 

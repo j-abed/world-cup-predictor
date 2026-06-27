@@ -77,12 +77,17 @@ def simulate_score(
     away_team: str,
     rating_lookup: dict[str, float],
     rng: np.random.Generator,
+    *,
+    goal_factor: float = 1.0,
 ) -> tuple[int, int]:
     home_lambda, away_lambda = get_match_goal_expectations(
         home_team=home_team,
         away_team=away_team,
         rating_lookup=rating_lookup,
     )
+
+    home_lambda = max(0.05, home_lambda * goal_factor)
+    away_lambda = max(0.05, away_lambda * goal_factor)
 
     home_score = int(rng.poisson(home_lambda))
     away_score = int(rng.poisson(away_lambda))

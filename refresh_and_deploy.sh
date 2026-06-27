@@ -5,22 +5,19 @@ TOURNAMENT_START="2026-06-11"
 TODAY="$(date +%Y-%m-%d)"
 ROOT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
-echo "=== Syncing results from ESPN ($TOURNAMENT_START → $TODAY) ==="
-uv run python scripts/sync_results_from_espn.py \
+echo "=== Syncing results, ratings, and fair-play data ($TOURNAMENT_START → $TODAY) ==="
+uv run python scripts/update_world_cup_data.py \
   --start-date "$TOURNAMENT_START" \
-  --end-date "$TODAY"
-
-echo ""
-echo "=== Running simulator ==="
-uv run python main.py
-
-echo ""
-echo "=== Exporting web state ==="
-uv run python scripts/export_web_state.py
+  --end-date "$TODAY" \
+  --force \
+  --update-ratings \
+  --update-fair-play \
+  --run-model \
+  --export-web
 
 echo ""
 echo "=== Copying app state to frontend ==="
-cp outputs/web/app_state.json frontend/public/data/app_state.json
+cp "$ROOT_DIR/outputs/web/app_state.json" "$ROOT_DIR/frontend/public/data/app_state.json"
 
 echo ""
 echo "=== Deploying to Vercel ==="

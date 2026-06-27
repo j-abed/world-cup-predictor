@@ -9,6 +9,8 @@ from pathlib import Path
 
 RESULTS_PATH = Path("data/results.csv")
 SYNC_SCRIPT = Path("scripts/sync_results_from_espn.py")
+RATINGS_UPDATE_SCRIPT = Path("scripts/update_ratings_from_results.py")
+FAIR_PLAY_SCRIPT = Path("scripts/update_fair_play_from_espn.py")
 MAIN_SCRIPT = Path("main.py")
 WEB_EXPORT_SCRIPT = Path("scripts/export_web_state.py")
 
@@ -71,6 +73,16 @@ def parse_args() -> argparse.Namespace:
         "--export-web",
         action="store_true",
         help="Export web-app-ready JSON files to outputs/web.",
+    )
+    parser.add_argument(
+        "--update-ratings",
+        action="store_true",
+        help="Apply Elo-style rating updates for newly completed matches.",
+    )
+    parser.add_argument(
+        "--update-fair-play",
+        action="store_true",
+        help="Rebuild fair-play conduct scores from ESPN card data.",
     )
 
     return parser.parse_args()
@@ -154,6 +166,20 @@ def main() -> None:
     if not args.skip_sync:
         require_file(SYNC_SCRIPT)
         run_command(build_sync_command(args))
+
+    if args.update_ratings:
+        require_file(RATINGS_UPDATE_SCRIPT)
+        command = ["uv", "run", "python", str(RATINGS_UPDATE_SCRIPT)]
+        if args.dry_run:
+            command.append("--dry-run")
+        run_command(command)
+
+    if args.update_fair_play:
+        require_file(FAIR_PLAY_SCRIPT)
+        command = ["uv", "run", "python", str(FAIR_PLAY_SCRIPT)]
+        if args.dry_run:
+            command.append("--dry-run")
+        run_command(command)
 
     if args.run_model:
         run_command(["uv", "run", "python", str(MAIN_SCRIPT)])

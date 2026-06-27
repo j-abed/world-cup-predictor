@@ -9,19 +9,21 @@ This project uses checked-in CSV files as model inputs.
 - `data/results.csv` contains completed match results.
 - `data/bracket_slots.csv` contains the knockout bracket skeleton.
 - `data/third_place_permutations.csv` contains the official 495-case third-place assignment table.
-- `data/fair_play.csv` contains conduct/fair-play scores. Current values are placeholders unless updated with card data.
+- `data/fair_play.csv` contains conduct/fair-play scores (yellow/red cards aggregated from ESPN when synced).
 
 ## Ratings data
 
 - `data/ratings.csv` is the canonical team-strength input used by the simulator.
-- The preferred updater is:
+- The preferred manual updater is:
 
     uv run python scripts/update_ratings_from_fifa.py
 
 - The current preferred rating source is a checked-in FIFA/Coca-Cola Men's World Ranking points snapshot.
-- FIFA ranking points are an official source and FIFA states that the men's ranking is determined using an Elo model.
-- The current updater is not a live scrape. It uses a checked-in dictionary so the model remains reproducible.
-- The fallback updater is:
+- Post-match updates (optional, used in the refresh pipeline):
+
+    uv run python scripts/update_ratings_from_results.py
+
+- The fallback manual updater is:
 
     uv run python scripts/update_ratings_from_elo.py
 
@@ -36,7 +38,9 @@ Completed match results directly affect:
 - qualification probabilities
 - round/champion probabilities
 
-Completed match results do not automatically update team ratings unless `data/ratings.csv` is regenerated.
+Completed match results do not automatically update team ratings unless the refresh pipeline runs with `--update-ratings` or you run `scripts/update_ratings_from_results.py`.
+
+On first run, existing completed matches are recorded in `data/ratings_applied_matches.csv` without retroactive changes. Only newly completed fixtures after that receive Elo-style updates (`K=40`, divisor `400` on the FIFA-point scale).
 
 ### Rating → goals calibration
 
@@ -50,10 +54,25 @@ Recalibrate with:
 
     uv run python scripts/calibrate_rating_conversion.py
 
-Sanity-checks against 2022 group-stage results are embedded in that script; it is not a full historical backtest.
+### Knockout resolution model
+
+Group-stage matches can end in draws. Knockout matches in `src/knockout.py` use:
+
+1. Regulation Poisson score (same as group stage)
+2. Extra time with `EXTRA_TIME_GOAL_FACTOR = 0.35` of regulation scoring rates
+3. Penalty shootout with rating-based advance probability if still tied
+
+### Fair-play / conduct scores
+
+`data/fair_play.csv` columns: `team_id`, `yellow_cards`, `red_cards`, `conduct_score`, `source`.
+
+Rebuild from ESPN match summaries:
+
+    uv run python scripts/update_fair_play_from_espn.py
+
+Conduct score is `-1` per yellow and `-4` per direct red (higher is better for tiebreakers).
 
 ## Known limitations
 
-- Fair-play/conduct scores are placeholders until card data is added.
-- Ratings are currently refreshed manually, not from a live API.
+- ESPN card sync depends on summary API availability for each completed match.
 - Betting-market odds are not yet integrated.

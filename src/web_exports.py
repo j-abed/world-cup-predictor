@@ -8,6 +8,7 @@ from typing import Any
 import pandas as pd
 
 from src.simulator import format_probability
+from src.tiebreakers import FAIR_PLAY_PATH
 
 
 ROUND_LABELS = {
@@ -181,6 +182,43 @@ def build_fixtures_payload(
     return rows
 
 
+def build_data_caveats(ratings: pd.DataFrame) -> list[str]:
+    caveats = [
+        "ESPN result sync uses a public scoreboard endpoint and should be treated as best-effort.",
+        "Knockout odds are simulation outputs, not betting market odds.",
+        "Knockout draws are resolved with extra time, then penalties (see DATA_STATUS.md).",
+    ]
+
+    ratings_source = None
+    if not ratings.empty:
+        ratings_source = str(ratings.iloc[0].get("source") or "")
+
+    if ratings_source == "post_match_elo_updates":
+        caveats.append(
+            "Ratings include Elo-style post-match updates for newly completed fixtures."
+        )
+    else:
+        caveats.append(
+            "Ratings start from a checked-in FIFA snapshot; enable --update-ratings in the refresh pipeline to move them after matches."
+        )
+
+    if FAIR_PLAY_PATH.exists():
+        fair_play = pd.read_csv(FAIR_PLAY_PATH)
+        sources = set(fair_play.get("source", pd.Series(dtype=str)).astype(str))
+        if sources == {"placeholder"} or not sources:
+            caveats.append(
+                "Fair-play/conduct scores are placeholders until ESPN card sync runs."
+            )
+        else:
+            caveats.append(
+                "Fair-play conduct scores are aggregated from ESPN yellow/red card data."
+            )
+    else:
+        caveats.append("Fair-play/conduct scores are unavailable.")
+
+    return caveats
+
+
 def build_metadata(
     teams: pd.DataFrame,
     fixtures: pd.DataFrame,
@@ -214,12 +252,7 @@ def build_metadata(
             "tournament": tournament_simulations,
             "round": round_simulations,
         },
-        "data_caveats": [
-            "ESPN result sync uses a public scoreboard endpoint and should be treated as best-effort.",
-            "FIFA ranking points are currently refreshed from a checked-in snapshot, not a live FIFA API.",
-            "Fair-play/conduct scores are placeholders unless data/fair_play.csv is updated.",
-            "Knockout odds are simulation outputs, not betting market odds.",
-        ],
+        "data_caveats": build_data_caveats(ratings),
     }
 
 

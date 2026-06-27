@@ -1,78 +1,25 @@
 from __future__ import annotations
 
 import argparse
-import json
+import sys
 from datetime import date, datetime, timedelta
 from pathlib import Path
-from urllib.parse import urlencode
-from urllib.request import Request, urlopen
 
 import pandas as pd
 
+REPO_ROOT = Path(__file__).resolve().parents[1]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
+from src.espn_client import (
+    extract_team_id,
+    fetch_scoreboard,
+    get_competition,
+    is_completed_event,
+)
 
 FIXTURES_PATH = Path("data/fixtures.csv")
 RESULTS_PATH = Path("data/results.csv")
-
-ESPN_SCOREBOARD_URL = (
-    "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard"
-)
-
-# ESPN abbreviations are usually close to our team codes, but keep this explicit
-# so mismatches are easy to fix.
-ESPN_CODE_TO_TEAM_ID = {
-    "MEX": "MEX",
-    "RSA": "RSA",
-    "KOR": "KOR",
-    "CZE": "CZE",
-    "CAN": "CAN",
-    "BIH": "BIH",
-    "QAT": "QAT",
-    "SUI": "SUI",
-    "BRA": "BRA",
-    "MAR": "MAR",
-    "SCO": "SCO",
-    "HAI": "HTI",
-    "HTI": "HTI",
-    "USA": "USA",
-    "PAR": "PAR",
-    "AUS": "AUS",
-    "TUR": "TUR",
-    "GER": "GER",
-    "CUW": "CUW",
-    "CIV": "CIV",
-    "ECU": "ECU",
-    "NED": "NED",
-    "JPN": "JPN",
-    "SWE": "SWE",
-    "TUN": "TUN",
-    "BEL": "BEL",
-    "EGY": "EGY",
-    "IRN": "IRI",
-    "IRI": "IRI",
-    "NZL": "NZL",
-    "ESP": "ESP",
-    "CPV": "CPV",
-    "KSA": "KSA",
-    "URU": "URU",
-    "FRA": "FRA",
-    "SEN": "SEN",
-    "IRQ": "IRQ",
-    "NOR": "NOR",
-    "ARG": "ARG",
-    "ALG": "DZA",
-    "DZA": "DZA",
-    "AUT": "AUT",
-    "JOR": "JOR",
-    "POR": "POR",
-    "COD": "COD",
-    "DRC": "COD",
-    "UZB": "UZB",
-    "COL": "COL",
-    "ENG": "ENG",
-    "CRO": "CRO",
-    "GHA": "GHA",
-    "PAN": "PAN",
-}
 
 
 def parse_args() -> argparse.Namespace:
@@ -132,65 +79,6 @@ def iter_dates(args: argparse.Namespace) -> list[date]:
         return [parse_date(args.date)]
 
     return [date.today()]
-
-
-def fetch_scoreboard(target_date: date) -> dict:
-    # ESPN soccer scoreboard commonly accepts dates as YYYYMMDD.
-    params = urlencode({"dates": target_date.strftime("%Y%m%d")})
-    url = f"{ESPN_SCOREBOARD_URL}?{params}"
-
-    request = Request(
-        url,
-        headers={
-            "User-Agent": (
-                "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
-                "AppleWebKit/537.36 (KHTML, like Gecko) "
-                "Chrome/126.0 Safari/537.36"
-            ),
-            "Accept": "application/json",
-        },
-    )
-
-    with urlopen(request, timeout=30) as response:
-        return json.loads(response.read().decode("utf-8"))
-
-
-def get_competition(event: dict) -> dict | None:
-    competitions = event.get("competitions") or []
-
-    if not competitions:
-        return None
-
-    return competitions[0]
-
-
-def is_completed_event(event: dict) -> bool:
-    status = event.get("status") or {}
-    status_type = status.get("type") or {}
-
-    return bool(status_type.get("completed"))
-
-
-def extract_team_id(competitor: dict) -> str | None:
-    team = competitor.get("team") or {}
-
-    candidates = [
-        team.get("abbreviation"),
-        team.get("shortDisplayName"),
-        team.get("displayName"),
-        team.get("name"),
-    ]
-
-    for candidate in candidates:
-        if candidate is None:
-            continue
-
-        normalized = str(candidate).strip().upper()
-
-        if normalized in ESPN_CODE_TO_TEAM_ID:
-            return ESPN_CODE_TO_TEAM_ID[normalized]
-
-    return None
 
 
 def extract_completed_results(payload: dict) -> list[dict]:

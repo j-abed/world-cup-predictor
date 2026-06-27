@@ -4,7 +4,7 @@ from pathlib import Path
 
 import pandas as pd
 
-from src.web_exports import build_fixtures_payload
+from src.web_exports import build_data_caveats, build_fixtures_payload
 
 
 def test_build_fixtures_payload_joins_results_and_teams(repo_root: Path) -> None:
@@ -39,3 +39,18 @@ def test_build_fixtures_payload_joins_results_and_teams(repo_root: Path) -> None
     scheduled_row = next(row for row in payload if row["status"] == "Scheduled")
     assert scheduled_row["home_score"] is None
     assert scheduled_row["away_score"] is None
+
+
+def test_build_data_caveats_reflect_fair_play_source(repo_root: Path) -> None:
+    ratings = pd.read_csv(repo_root / "data/ratings.csv")
+    caveats = build_data_caveats(ratings)
+
+    assert any("Knockout draws" in caveat for caveat in caveats)
+    assert any("Fair-play" in caveat for caveat in caveats)
+
+    fair_play = pd.read_csv(repo_root / "data/fair_play.csv")
+    if "espn_summary" in set(fair_play["source"].astype(str)):
+        assert any("ESPN yellow/red card" in caveat for caveat in caveats)
+    else:
+        assert any("placeholder" in caveat for caveat in caveats)
+

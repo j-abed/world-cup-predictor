@@ -1,14 +1,10 @@
-import { TAB_IDS, type TabId } from "../components/TabNav";
+import { isTabId, type TabId } from "./tabs";
 
 export const DEFAULT_TAB: TabId = "champion";
 
 export interface AppUrlState {
   tab: TabId;
   team: string | null;
-}
-
-function isTabId(value: string): value is TabId {
-  return (TAB_IDS as readonly string[]).includes(value);
 }
 
 export function parseTab(value: string | null): TabId {
