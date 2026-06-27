@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { BracketView } from "./components/BracketView";
 import { ChampionOdds } from "./components/ChampionOdds";
 import { FixturesView } from "./components/FixturesView";
@@ -10,13 +10,17 @@ import { TeamDetail } from "./components/TeamDetail";
 import { ThirdPlaceTable } from "./components/ThirdPlaceTable";
 import { AppStateLoadError, loadAppState } from "./lib/data";
 import { buildTeamIndex } from "./lib/team";
+import { readAppUrlState, writeAppUrlState } from "./lib/urlState";
 import type { AppState } from "./types";
 
 export default function App() {
   const [appState, setAppState] = useState<AppState | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState<TabId>(
+    () => readAppUrlState().tab,
+  );
   const [selectedTeamCode, setSelectedTeamCode] = useState<string | null>(null);
-  const [activeTab, setActiveTab] = useState<TabId>("champion");
+  const urlHydratedRef = useRef(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -43,6 +47,45 @@ export default function App() {
     () => (appState ? buildTeamIndex(appState) : null),
     [appState],
   );
+
+  useEffect(() => {
+    if (!teamIndex) return;
+
+    const { tab, team } = readAppUrlState();
+    setActiveTab(tab);
+    setSelectedTeamCode(team && teamIndex.has(team) ? team : null);
+    urlHydratedRef.current = true;
+  }, [teamIndex]);
+
+  useEffect(() => {
+    const onPopState = () => {
+      const { tab, team } = readAppUrlState();
+      setActiveTab(tab);
+      setSelectedTeamCode(
+        team && teamIndex?.has(team) ? team : null,
+      );
+    };
+
+    window.addEventListener("popstate", onPopState);
+    return () => window.removeEventListener("popstate", onPopState);
+  }, [teamIndex]);
+
+  useEffect(() => {
+    if (!urlHydratedRef.current) return;
+    writeAppUrlState(activeTab, selectedTeamCode);
+  }, [activeTab, selectedTeamCode]);
+
+  const handleTabChange = useCallback((tab: TabId) => {
+    setActiveTab(tab);
+  }, []);
+
+  const handleSelectTeam = useCallback((code: string) => {
+    setSelectedTeamCode(code);
+  }, []);
+
+  const handleCloseTeam = useCallback(() => {
+    setSelectedTeamCode(null);
+  }, []);
 
   if (error) {
     return (
@@ -77,19 +120,19 @@ export default function App() {
       <Header metadata={appState.metadata} coverage={appState.coverage} />
 
       <main className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-        <TabNav active={activeTab} onChange={setActiveTab} />
+        <TabNav active={activeTab} onChange={handleTabChange} />
 
         {activeTab === "champion" && (
           <ChampionOdds
             round={appState.odds.round}
-            onSelectTeam={setSelectedTeamCode}
+            onSelectTeam={handleSelectTeam}
           />
         )}
 
         {activeTab === "fixtures" && (
           <FixturesView
             fixtures={appState.fixtures}
-            onSelectTeam={setSelectedTeamCode}
+            onSelectTeam={handleSelectTeam}
           />
         )}
 
@@ -97,7 +140,7 @@ export default function App() {
           <BracketView
             bracket={appState.bracket}
             roundOdds={appState.odds.round}
-            onSelectTeam={setSelectedTeamCode}
+            onSelectTeam={handleSelectTeam}
           />
         )}
 
@@ -106,11 +149,11 @@ export default function App() {
             <GroupStandings
               standings={appState.standings}
               thirdPlace={appState.third_place}
-              onSelectTeam={setSelectedTeamCode}
+              onSelectTeam={handleSelectTeam}
             />
             <ThirdPlaceTable
               thirdPlace={appState.third_place}
-              onSelectTeam={setSelectedTeamCode}
+              onSelectTeam={handleSelectTeam}
             />
           </div>
         )}
@@ -118,7 +161,7 @@ export default function App() {
         {activeTab === "qualification" && (
           <QualificationOdds
             qualification={appState.odds.qualification}
-            onSelectTeam={setSelectedTeamCode}
+            onSelectTeam={handleSelectTeam}
           />
         )}
       </main>
@@ -128,7 +171,7 @@ export default function App() {
         caveats panel above for methodology notes.
       </footer>
 
-      <TeamDetail team={selectedTeam} onClose={() => setSelectedTeamCode(null)} />
+      <TeamDetail team={selectedTeam} onClose={handleCloseTeam} />
     </div>
   );
 }

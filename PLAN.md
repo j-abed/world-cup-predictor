@@ -47,7 +47,7 @@ Phased roadmap for reliability, freshness, and product polish during the 2026 to
 | Coverage banner in Header | Done |
 | Fixtures & Results tab | Done |
 | Projected R32 field view | Pending |
-| URL state (`?tab=groups&team=BRA`) | Pending |
+| URL state (`?tab=groups&team=BRA`) | Done |
 | Generalize group finish odds (all 12 groups) | Pending |
 | Clarify bracket probability labels | Pending |
 | OG meta tags | Pending |
