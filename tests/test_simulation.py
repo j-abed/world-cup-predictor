@@ -5,7 +5,10 @@ from pathlib import Path
 import pandas as pd
 import pytest
 
-from src.simulator import simulate_group_finish_probabilities
+from src.simulator import (
+    simulate_all_group_finish_probabilities,
+    simulate_group_finish_probabilities,
+)
 from src.tournament import simulate_qualification_probabilities
 
 
@@ -61,3 +64,24 @@ def test_group_finish_probabilities_sum_to_one_per_team(
     )
 
     assert (finish_totals - 1.0).abs().max() < 1e-9
+
+
+def test_all_group_finish_probabilities_cover_every_group(
+    tournament_data: tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.DataFrame],
+) -> None:
+    teams, fixtures, results, ratings = tournament_data
+
+    probabilities = simulate_all_group_finish_probabilities(
+        teams=teams,
+        fixtures=fixtures,
+        results=results,
+        ratings=ratings,
+        simulations=100,
+        seed=42,
+    )
+
+    assert set(probabilities.keys()) == set("ABCDEFGHIJKL")
+
+    for group, group_probs in probabilities.items():
+        group_teams = teams[teams["group"] == group]
+        assert len(group_probs) == len(group_teams)

@@ -113,7 +113,7 @@ export interface Bracket {
 
 export type BracketRoundKey = keyof Bracket;
 
-export interface GroupDProbability {
+export interface GroupFinishProbability {
   team_id: string;
   team: string;
   code: string;
@@ -130,6 +130,9 @@ export interface GroupDProbability {
   top_2_prob_label: string;
   top_3_prob_label: string;
 }
+
+/** @deprecated Use GroupFinishProbability */
+export type GroupDProbability = GroupFinishProbability;
 
 export interface QualificationOdds {
   team_id: string;
@@ -166,7 +169,7 @@ export interface RoundOdds {
 }
 
 export interface Odds {
-  group_d: GroupDProbability[];
+  group_finish: Record<string, GroupFinishProbability[]>;
   qualification: QualificationOdds[];
   round: RoundOdds[];
 }

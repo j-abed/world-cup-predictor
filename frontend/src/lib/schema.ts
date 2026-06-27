@@ -113,7 +113,7 @@ const bracketSchema = z.object({
   final: z.array(bracketMatchSchema),
 });
 
-const groupDProbabilitySchema = z.object({
+const groupFinishProbabilitySchema = z.object({
   team_id: z.string(),
   team: z.string(),
   code: z.string(),
@@ -166,7 +166,7 @@ const roundOddsSchema = z.object({
 });
 
 const oddsSchema = z.object({
-  group_d: z.array(groupDProbabilitySchema),
+  group_finish: z.record(z.string(), z.array(groupFinishProbabilitySchema)),
   qualification: z.array(qualificationOddsSchema),
   round: z.array(roundOddsSchema),
 });

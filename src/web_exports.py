@@ -239,7 +239,7 @@ def export_web_state(
     third_place_table: pd.DataFrame,
     projected_qualifiers: pd.DataFrame,
     bracket: pd.DataFrame,
-    group_d_probabilities: pd.DataFrame,
+    group_finish_probabilities: dict[str, pd.DataFrame],
     tournament_probabilities: pd.DataFrame,
     round_probabilities: pd.DataFrame,
     output_dir: str = "outputs/web",
@@ -259,17 +259,21 @@ def export_web_state(
 
     standings = pd.concat(standings_rows, ignore_index=True)
 
-    group_d_with_labels = add_probability_labels(
-        group_d_probabilities,
-        [
-            "finish_1_prob",
-            "finish_2_prob",
-            "finish_3_prob",
-            "finish_4_prob",
-            "top_2_prob",
-            "top_3_prob",
-        ],
-    )
+    group_finish_payload: dict[str, list[dict[str, Any]]] = {}
+
+    for group, probabilities in sorted(group_finish_probabilities.items()):
+        with_labels = add_probability_labels(
+            probabilities,
+            [
+                "finish_1_prob",
+                "finish_2_prob",
+                "finish_3_prob",
+                "finish_4_prob",
+                "top_2_prob",
+                "top_3_prob",
+            ],
+        )
+        group_finish_payload[group] = dataframe_records(with_labels)
 
     tournament_with_labels = add_probability_labels(
         tournament_probabilities,
@@ -314,7 +318,7 @@ def export_web_state(
     )
 
     odds_payload = {
-        "group_d": dataframe_records(group_d_with_labels),
+        "group_finish": group_finish_payload,
         "qualification": dataframe_records(tournament_with_labels),
         "round": dataframe_records(round_with_labels),
     }

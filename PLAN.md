@@ -12,12 +12,12 @@ Track progress here. Check items off as they ship.
 |-------|------|-------|--------|
 | 0 — Foundation | 4 | 4 | ✅ Complete |
 | 1 — Automation | 2 | 3 | 🟡 In progress |
-| 2 — Data/UI gaps | 4 | 7 | 🟡 In progress |
+| 2 — Data/UI gaps | 5 | 7 | 🟡 In progress |
 | 3 — Model | 0 | 5 | ⬜ Not started |
 | 4 — UX polish | 0 | 5 | ⬜ Not started |
 | 5 — Stretch | 0 | 5 | ⬜ Backlog |
 
-**Overall: 10 / 29** actionable items complete.
+**Overall: 11 / 29** actionable items complete.
 
 ---
 
@@ -60,7 +60,7 @@ Track progress here. Check items off as they ship.
   - *Files:* `ProjectedField.tsx`, `App.tsx`, `TabNav.tsx` (or section under Groups)
   - *Acceptance:* all 32 projected teams visible without inferring from bracket
 
-- [ ] **2.2 All-group finish odds**
+- [x] **2.2 All-group finish odds**
   - Generalize Group D-only simulation to groups A–L
   - Rename `odds.group_d` → `odds.group_finish` (keyed by group letter)
   - Update `TeamDetail.tsx` for any team's group

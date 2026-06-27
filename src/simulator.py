@@ -304,3 +304,30 @@ def simulate_group_finish_probabilities(
     ).reset_index(drop=True)
 
     return output
+
+
+GROUPS = list("ABCDEFGHIJKL")
+
+
+def simulate_all_group_finish_probabilities(
+    teams: pd.DataFrame,
+    fixtures: pd.DataFrame,
+    results: pd.DataFrame,
+    ratings: pd.DataFrame,
+    simulations: int = 10_000,
+    seed: int = 42,
+) -> dict[str, pd.DataFrame]:
+    probabilities: dict[str, pd.DataFrame] = {}
+
+    for index, group in enumerate(GROUPS):
+        probabilities[group] = simulate_group_finish_probabilities(
+            teams=teams,
+            fixtures=fixtures,
+            results=results,
+            ratings=ratings,
+            group=group,
+            simulations=simulations,
+            seed=seed + index,
+        )
+
+    return probabilities

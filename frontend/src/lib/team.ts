@@ -1,6 +1,6 @@
 import type {
   AppState,
-  GroupDProbability,
+  GroupFinishProbability,
   GroupStanding,
   ProjectedQualifier,
   QualificationOdds,
@@ -17,7 +17,7 @@ export interface TeamProfile {
   qualifier?: ProjectedQualifier;
   qualificationOdds?: QualificationOdds;
   roundOdds?: RoundOdds;
-  groupDOdds?: GroupDProbability;
+  groupFinishOdds?: GroupFinishProbability;
 }
 
 /**
@@ -55,9 +55,11 @@ export function buildTeamIndex(appState: AppState): Map<string, TeamProfile> {
     ensure(odds.code, odds.team, odds.group).roundOdds = odds;
   }
 
-  for (const odds of appState.odds.group_d) {
-    const profile = ensure(odds.code, odds.team, "D");
-    profile.groupDOdds = odds;
+  for (const [group, oddsRows] of Object.entries(appState.odds.group_finish)) {
+    for (const odds of oddsRows) {
+      const profile = ensure(odds.code, odds.team, group);
+      profile.groupFinishOdds = odds;
+    }
   }
 
   return index;

@@ -18,7 +18,7 @@ from src.reporting import (
     calculate_current_projected_qualifiers,
     calculate_current_third_place_table,
 )
-from src.simulator import simulate_group_finish_probabilities
+from src.simulator import simulate_all_group_finish_probabilities
 from src.tournament import simulate_qualification_probabilities
 from src.validation import validate_group_fixture_coverage
 from src.web_exports import export_web_state
@@ -43,7 +43,7 @@ def parse_args() -> argparse.Namespace:
         "--group-simulations",
         type=int,
         default=10_000,
-        help="Simulation count for Group D odds. Default: 10000",
+        help="Simulation count per group for finish odds. Default: 10000",
     )
     parser.add_argument(
         "--seed",
@@ -95,12 +95,11 @@ def main() -> None:
         projected_qualifiers=projected_qualifiers,
     )
 
-    group_d_probabilities = simulate_group_finish_probabilities(
+    group_finish_probabilities = simulate_all_group_finish_probabilities(
         teams=teams,
         fixtures=fixtures,
         results=results,
         ratings=ratings,
-        group="D",
         simulations=args.group_simulations,
         seed=args.seed,
     )
@@ -133,7 +132,7 @@ def main() -> None:
         third_place_table=third_place_table,
         projected_qualifiers=projected_qualifiers,
         bracket=bracket,
-        group_d_probabilities=group_d_probabilities,
+        group_finish_probabilities=group_finish_probabilities,
         tournament_probabilities=tournament_probabilities,
         round_probabilities=round_probabilities,
         output_dir=args.output_dir,

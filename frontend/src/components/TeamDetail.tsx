@@ -20,7 +20,7 @@ export function TeamDetail({ team, onClose }: TeamDetailProps) {
 
   if (!team) return null;
 
-  const { standing, thirdPlace, qualifier, qualificationOdds, roundOdds, groupDOdds } =
+  const { standing, thirdPlace, qualifier, qualificationOdds, roundOdds, groupFinishOdds } =
     team;
 
   return (
@@ -193,31 +193,37 @@ export function TeamDetail({ team, onClose }: TeamDetailProps) {
           </Section>
         )}
 
-        {groupDOdds && (
-          <Section title="Group D Finish Odds">
+        {groupFinishOdds && (
+          <Section
+            title={
+              team.group
+                ? `Group ${team.group} Finish Odds`
+                : "Group Finish Odds"
+            }
+          >
             <div className="flex flex-col gap-2.5">
               <ProbabilityBar
                 label="Finish 1st"
-                value={groupDOdds.finish_1_prob}
-                valueLabel={groupDOdds.finish_1_prob_label}
+                value={groupFinishOdds.finish_1_prob}
+                valueLabel={groupFinishOdds.finish_1_prob_label}
                 tone="gold"
               />
               <ProbabilityBar
                 label="Finish 2nd"
-                value={groupDOdds.finish_2_prob}
-                valueLabel={groupDOdds.finish_2_prob_label}
+                value={groupFinishOdds.finish_2_prob}
+                valueLabel={groupFinishOdds.finish_2_prob_label}
                 tone="neutral"
               />
               <ProbabilityBar
                 label="Finish 3rd"
-                value={groupDOdds.finish_3_prob}
-                valueLabel={groupDOdds.finish_3_prob_label}
+                value={groupFinishOdds.finish_3_prob}
+                valueLabel={groupFinishOdds.finish_3_prob_label}
                 tone="crimson"
               />
               <ProbabilityBar
                 label="Finish 4th"
-                value={groupDOdds.finish_4_prob}
-                valueLabel={groupDOdds.finish_4_prob_label}
+                value={groupFinishOdds.finish_4_prob}
+                valueLabel={groupFinishOdds.finish_4_prob_label}
                 tone="crimson"
               />
             </div>
