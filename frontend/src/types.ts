@@ -274,6 +274,34 @@ export interface LiveAccuracy {
   summary: string | null;
 }
 
+export interface MarketComparisonTeam {
+  code: string;
+  team: string;
+  model_champion_prob: number;
+  market_implied_prob: number;
+  delta: number;
+  decimal_odds: number;
+}
+
+export interface MarketComparisonSummary {
+  model_favorite_code: string;
+  model_favorite_team: string;
+  market_favorite_code: string;
+  market_favorite_team: string;
+  mean_absolute_gap: number;
+  compared_team_count: number;
+  favorites_agree: boolean;
+}
+
+export interface MarketComparison {
+  available: boolean;
+  source: string | null;
+  as_of: string | null;
+  methodology: string;
+  teams: MarketComparisonTeam[];
+  summary: MarketComparisonSummary | null;
+}
+
 export interface AppState {
   metadata: Metadata;
   coverage: GroupCoverage[];
@@ -288,4 +316,5 @@ export interface AppState {
   model_quality?: ModelQuality;
   path_difficulty?: PathDifficultyEntry[];
   live_accuracy?: LiveAccuracy;
+  market_comparison?: MarketComparison;
 }

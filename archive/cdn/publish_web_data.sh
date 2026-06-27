@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-ROOT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
+ROOT_DIR="$(cd "$(dirname "$0")/../.." && pwd)"
 SOURCE="${1:-$ROOT_DIR/outputs/web/app_state.json}"
 
 if [[ ! -f "$SOURCE" ]]; then

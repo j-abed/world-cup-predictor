@@ -15,10 +15,10 @@ Track progress here. Check items off as they ship.
 | 2 — Data/UI gaps | 7 | 7 | ✅ Complete |
 | 3 — Model | 5 | 5 | ✅ Complete |
 | 4 — UX polish | 5 | 5 | ✅ Complete |
-| 5 — Stretch | 3 | 5 | 🟡 In progress |
+| 5 — Stretch | 4 | 5 | 🟡 In progress |
 | 6 — Dashboard intelligence | 7 | 7 | ✅ Complete |
 
-**Overall: 34 / 36** actionable items complete.
+**Overall: 35 / 36** actionable items complete.
 
 ---
 
@@ -81,9 +81,9 @@ Track progress here. Check items off as they ship.
 
 - [x] Scenario mode (“what if Brazil wins 3-0?”)
 - [x] Historical backtest page (2022 model vs actual)
-- [ ] Model vs betting markets comparison
+- [x] Model vs betting markets comparison
 - [ ] Serverless scenario API (on-demand sim)
-- [x] JSON on CDN (faster refresh without full redeploy)
+- [x] JSON on CDN — archived in `archive/cdn/` (prod: commit + Vercel deploy)
 
 ---
 
@@ -113,8 +113,8 @@ Ops (automatic)
 Optional stretch (Phase 5)
   ✓ Scenario mode
   ✓ 2022 backtest page
-  ✓ JSON on CDN support
-  □ Model vs betting markets
+  ✓ JSON on CDN (archived — see `archive/cdn/`)
+  ✓ Model vs betting markets
   □ Serverless scenario API
 ```
 
@@ -151,7 +151,7 @@ gh workflow run refresh-data.yml && gh run watch
 - Live WebSocket updates
 - User accounts / personal brackets
 - Full backend API
-- Betting integration (comparison tab is stretch; not live odds feed)
+- Betting integration (live in-play odds feed)
 
 ---
 

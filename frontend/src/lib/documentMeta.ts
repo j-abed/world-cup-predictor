@@ -6,6 +6,7 @@ const DEFAULT_DESCRIPTION =
 
 const TAB_TITLES: Record<TabId, string> = {
   champion: "Champion Odds",
+  markets: "Markets vs Model",
   fixtures: "Fixtures & Results",
   field: "Projected R32 Field",
   bracket: "Knockout Bracket",

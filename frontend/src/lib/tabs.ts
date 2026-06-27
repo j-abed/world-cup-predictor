@@ -1,5 +1,6 @@
 export const TAB_IDS = [
   "champion",
+  "markets",
   "fixtures",
   "field",
   "bracket",
@@ -13,6 +14,7 @@ export type TabId = (typeof TAB_IDS)[number];
 
 export const TAB_LABELS: Record<TabId, string> = {
   champion: "Champion odds",
+  markets: "Markets vs model",
   fixtures: "Fixtures",
   field: "Projected R32 field",
   bracket: "Knockout bracket",
@@ -25,6 +27,7 @@ export const TAB_LABELS: Record<TabId, string> = {
 /** Compact labels for the sticky tab bar on narrow viewports. */
 export const TAB_NAV_LABELS: Record<TabId, string> = {
   champion: "Champion Odds",
+  markets: "Markets",
   fixtures: "Fixtures",
   field: "R32 Field",
   bracket: "Knockout",
@@ -36,6 +39,7 @@ export const TAB_NAV_LABELS: Record<TabId, string> = {
 
 export const TAB_NAV_SHORT_LABELS: Record<TabId, string> = {
   champion: "Champ",
+  markets: "Markets",
   fixtures: "Fixtures",
   field: "R32",
   bracket: "KO",

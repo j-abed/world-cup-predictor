@@ -13,6 +13,7 @@ This project uses checked-in CSV files as model inputs and committed JSON snapsh
 | `data/bracket_slots.csv` | Knockout bracket skeleton (R32 → final) |
 | `data/third_place_permutations.csv` | Official 495-case third-place → R32 table |
 | `data/fair_play.csv` | Conduct scores (yellow/red cards from ESPN when synced) |
+| `data/market_odds.csv` | Outright winner odds for model vs market comparison |
 | `data/ratings_applied_matches.csv` | Tracks which results already updated ratings |
 
 ## 2022 backtest pack
@@ -104,10 +105,22 @@ uv run python scripts/update_fair_play_from_espn.py
 
 Conduct score: `-1` per yellow, `-4` per direct red (higher is better for tiebreakers).
 
+## Market odds
+
+`data/market_odds.csv` columns: `code`, `team`, `decimal_odds`, `implied_prob`, `source`, `as_of`.
+
+Refresh from [The Odds API](https://the-odds-api.com/) when `ODDS_API_KEY` is set; otherwise the refresh pipeline keeps the checked-in CSV (or writes a seed snapshot on first run).
+
+```bash
+uv run python scripts/update_market_odds.py
+```
+
+Exported in `app_state.json` as `market_comparison` for the **Markets vs model** tab.
+
 ## Known limitations
 
 - ESPN card sync depends on summary API availability per completed match.
-- Betting-market odds are not integrated (see Phase 5 in `PLAN.md`).
+- Market odds are outright-winner snapshots only (not live in-play prices).
 - What-if scenarios require a separate export/deploy of `scenario_app_state.json`.
 - The 2022 backtest replays the **current** simulator logic on 2022 data — not a frozen 2022-era model.
 

@@ -4,17 +4,9 @@ Client-side dashboard for projected bracket, group standings, qualification odds
 
 ## Data files
 
-All snapshots live in `public/data/` by default and are fetched at page load.
+All snapshots live in `public/data/` and are fetched at page load. Tournament refreshes commit updated JSON and redeploy via Vercel.
 
-Override with Vite env vars (see `.env.example`) to load from a CDN:
-
-| Env var | Default |
-|---------|---------|
-| `VITE_APP_STATE_URL` | `/data/app_state.json` |
-| `VITE_SCENARIO_APP_STATE_URL` | `/data/scenario_app_state.json` |
-| `VITE_BACKTEST_URL` | `/data/backtest_2022.json` |
-
-When `VITE_APP_STATE_URL` is remote, the app polls for a new snapshot after each `metadata.next_refresh_at`.
+Optional remote URLs via `VITE_*` env vars are documented in `archive/cdn/README.md` if you enable CDN publish later.
 
 | File | Required | Consumed by |
 |------|----------|-------------|
@@ -79,6 +71,7 @@ Defaults to champion odds with no team selected. Implemented in `src/lib/urlStat
 | ID | Label | Component |
 |----|-------|-----------|
 | `champion` | Champion odds | `ChampionOdds.tsx` |
+| `markets` | Model vs betting markets | `MarketsView.tsx` |
 | `fixtures` | Fixtures | `FixturesView.tsx` |
 | `field` | Projected R32 field | `ProjectedField.tsx` |
 | `bracket` | Knockout bracket | `BracketView.tsx` |

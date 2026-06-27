@@ -1,0 +1,11 @@
+code,team,decimal_odds,implied_prob,source,as_of
+ESP,Spain,4.5,0.222222,seed_snapshot,2026-06-27T22:26:52+00:00
+BRA,Brazil,5.0,0.2,seed_snapshot,2026-06-27T22:26:52+00:00
+FRA,France,5.5,0.181818,seed_snapshot,2026-06-27T22:26:52+00:00
+ARG,Argentina,6.5,0.153846,seed_snapshot,2026-06-27T22:26:52+00:00
+ENG,England,7.0,0.142857,seed_snapshot,2026-06-27T22:26:52+00:00
+POR,Portugal,9.0,0.111111,seed_snapshot,2026-06-27T22:26:52+00:00
+GER,Germany,10.0,0.1,seed_snapshot,2026-06-27T22:26:52+00:00
+NED,Netherlands,12.0,0.083333,seed_snapshot,2026-06-27T22:26:52+00:00
+BEL,Belgium,17.0,0.058824,seed_snapshot,2026-06-27T22:26:52+00:00
+COL,Colombia,21.0,0.047619,seed_snapshot,2026-06-27T22:26:52+00:00

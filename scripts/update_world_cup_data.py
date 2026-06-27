@@ -11,6 +11,7 @@ RESULTS_PATH = Path("data/results.csv")
 SYNC_SCRIPT = Path("scripts/sync_results_from_espn.py")
 RATINGS_UPDATE_SCRIPT = Path("scripts/update_ratings_from_results.py")
 FAIR_PLAY_SCRIPT = Path("scripts/update_fair_play_from_espn.py")
+MARKET_ODDS_SCRIPT = Path("scripts/update_market_odds.py")
 MAIN_SCRIPT = Path("main.py")
 WEB_EXPORT_SCRIPT = Path("scripts/export_web_state.py")
 
@@ -83,6 +84,11 @@ def parse_args() -> argparse.Namespace:
         "--update-fair-play",
         action="store_true",
         help="Rebuild fair-play conduct scores from ESPN card data.",
+    )
+    parser.add_argument(
+        "--update-market-odds",
+        action="store_true",
+        help="Refresh outright winner odds from The Odds API when ODDS_API_KEY is set.",
     )
 
     return parser.parse_args()
@@ -180,6 +186,10 @@ def main() -> None:
         if args.dry_run:
             command.append("--dry-run")
         run_command(command)
+
+    if args.update_market_odds:
+        require_file(MARKET_ODDS_SCRIPT)
+        run_command(["uv", "run", "python", str(MARKET_ODDS_SCRIPT)])
 
     if args.run_model:
         run_command(["uv", "run", "python", str(MAIN_SCRIPT)])

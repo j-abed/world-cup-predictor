@@ -50,29 +50,20 @@ jobs:
 
       - name: Sync results, run model, export web state
         if: steps.window.outputs.skip != 'true'
+        env:
+          ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
         run: |
           uv run python scripts/update_world_cup_data.py \
             --last-days 3 \
             --update-ratings \
             --update-fair-play \
+            --update-market-odds \
             --run-model \
             --export-web
 
       - name: Copy app state to frontend
         if: steps.window.outputs.skip != 'true'
         run: cp outputs/web/app_state.json frontend/public/data/app_state.json
-
-      - name: Publish app state to CDN (optional)
-        if: steps.window.outputs.skip != 'true'
-        env:
-          WEB_DATA_S3_URI: ${{ secrets.WEB_DATA_S3_URI }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.WEB_DATA_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.WEB_DATA_SECRET_ACCESS_KEY }}
-          AWS_DEFAULT_REGION: ${{ secrets.WEB_DATA_AWS_REGION }}
-          AWS_ENDPOINT_URL: ${{ secrets.WEB_DATA_AWS_ENDPOINT_URL }}
-        run: |
-          chmod +x scripts/publish_web_data.sh
-          ./scripts/publish_web_data.sh
 
       - name: Run tests
         if: steps.window.outputs.skip != 'true'
@@ -87,6 +78,7 @@ jobs:
             data/ratings.csv \
             data/ratings_applied_matches.csv \
             data/fair_play.csv \
+            data/market_odds.csv \
             frontend/public/data/app_state.json; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
           else
@@ -98,7 +90,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/results.csv data/ratings.csv data/ratings_applied_matches.csv data/fair_play.csv frontend/public/data/app_state.json
+          git add data/results.csv data/ratings.csv data/ratings_applied_matches.csv data/fair_play.csv data/market_odds.csv frontend/public/data/app_state.json
           git commit -m "chore: refresh World Cup results and projections" \
             -m "Automated sync from ESPN, model rerun, and web state export."
           git push

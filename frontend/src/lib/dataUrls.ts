@@ -1,6 +1,6 @@
 /**
- * Data snapshot URLs. Override with Vite env vars to load JSON from a CDN
- * instead of the committed files in public/data/.
+ * Data snapshot URLs. Defaults to bundled public/data/ snapshots.
+ * Remote URLs (CDN) are optional — see archive/cdn/README.md.
  */
 const DEFAULT_APP_STATE_URL = "/data/app_state.json";
 const DEFAULT_SCENARIO_URL = "/data/scenario_app_state.json";

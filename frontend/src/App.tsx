@@ -6,6 +6,7 @@ import { FixturesView } from "./components/FixturesView";
 import { GroupStandings } from "./components/GroupStandings";
 import { Header } from "./components/Header";
 import { ProjectedField } from "./components/ProjectedField";
+import { MarketsView } from "./components/MarketsView";
 import { MovementSummary } from "./components/MovementSummary";
 import { QualificationOdds } from "./components/QualificationOdds";
 import { ScenarioView } from "./components/ScenarioView";
@@ -198,6 +199,13 @@ export default function App() {
               onSelectTeam={handleSelectTeam}
             />
           </>
+        );
+      case "markets":
+        return (
+          <MarketsView
+            marketComparison={appState.market_comparison}
+            onSelectTeam={handleSelectTeam}
+          />
         );
       case "fixtures":
         return (

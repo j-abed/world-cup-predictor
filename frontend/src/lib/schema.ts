@@ -275,6 +275,34 @@ const liveAccuracySchema = z.object({
   summary: z.string().nullable(),
 });
 
+const marketComparisonTeamSchema = z.object({
+  code: z.string(),
+  team: z.string(),
+  model_champion_prob: z.number(),
+  market_implied_prob: z.number(),
+  delta: z.number(),
+  decimal_odds: z.number(),
+});
+
+const marketComparisonSummarySchema = z.object({
+  model_favorite_code: z.string(),
+  model_favorite_team: z.string(),
+  market_favorite_code: z.string(),
+  market_favorite_team: z.string(),
+  mean_absolute_gap: z.number(),
+  compared_team_count: z.number(),
+  favorites_agree: z.boolean(),
+});
+
+const marketComparisonSchema = z.object({
+  available: z.boolean(),
+  source: z.string().nullable(),
+  as_of: z.string().nullable(),
+  methodology: z.string(),
+  teams: z.array(marketComparisonTeamSchema),
+  summary: marketComparisonSummarySchema.nullable(),
+});
+
 export const appStateSchema = z.object({
   metadata: metadataSchema,
   coverage: z.array(groupCoverageSchema),
@@ -289,6 +317,7 @@ export const appStateSchema = z.object({
   model_quality: modelQualitySchema.optional(),
   path_difficulty: z.array(pathDifficultySchema).optional(),
   live_accuracy: liveAccuracySchema.optional(),
+  market_comparison: marketComparisonSchema.optional(),
 });
 
 export type ValidatedAppState = z.infer<typeof appStateSchema>;

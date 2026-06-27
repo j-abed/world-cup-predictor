@@ -8,6 +8,7 @@ from typing import Any
 import pandas as pd
 
 from src.live_accuracy import build_live_accuracy_payload
+from src.market_comparison import build_market_comparison_payload, load_market_odds
 from src.model_quality import build_model_quality_payload
 from src.path_difficulty import build_path_difficulty_payload
 from src.simulator import format_probability
@@ -311,6 +312,7 @@ def build_app_state_payload(
     model_quality: dict[str, Any] | None = None,
     path_difficulty: list[dict[str, Any]] | None = None,
     live_accuracy: dict[str, Any] | None = None,
+    market_comparison: dict[str, Any] | None = None,
     generated_at: datetime | None = None,
 ) -> dict[str, Any]:
     standings_rows = []
@@ -409,6 +411,12 @@ def build_app_state_payload(
             teams=teams,
         )
 
+    if market_comparison is None:
+        market_comparison = build_market_comparison_payload(
+            round_probabilities=round_probabilities,
+            market_odds=load_market_odds(),
+        )
+
     payload: dict[str, Any] = {
         "metadata": metadata,
         "coverage": dataframe_records(coverage),
@@ -426,6 +434,7 @@ def build_app_state_payload(
         "model_quality": model_quality,
         "path_difficulty": path_difficulty,
         "live_accuracy": live_accuracy,
+        "market_comparison": market_comparison,
     }
 
     if movement is not None:

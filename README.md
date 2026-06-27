@@ -114,38 +114,13 @@ That syncs ESPN results, updates ratings and fair-play data, runs the model, cop
 | `scripts/calibrate_rating_conversion.py` | Tune rating → expected goals constant |
 | `scripts/add_result.py` | Manually append one result row |
 | `refresh_and_deploy.sh` | Full local refresh + Vercel CLI deploy |
-| `scripts/publish_web_data.sh` | Upload `app_state.json` to S3/R2 (optional CDN publish) |
+| `scripts/update_market_odds.py` | Refresh outright winner odds (The Odds API or seed CSV) |
 
-Common flags for `update_world_cup_data.py`: `--today`, `--date YYYY-MM-DD`, `--start-date` / `--end-date`, `--force`, `--dry-run`, `--skip-sync`, `--run-model`, `--export-web`, `--update-ratings`, `--update-fair-play`.
+Common flags for `update_world_cup_data.py`: `--today`, `--date YYYY-MM-DD`, `--start-date` / `--end-date`, `--force`, `--dry-run`, `--skip-sync`, `--run-model`, `--export-web`, `--update-ratings`, `--update-fair-play`, `--update-market-odds`.
 
-## JSON on CDN (optional)
+Optional GitHub secret for live market odds: `ODDS_API_KEY` ([The Odds API](https://the-odds-api.com/)). Without it, refresh keeps the checked-in `data/market_odds.csv` seed.
 
-By default the dashboard reads committed snapshots from `frontend/public/data/`. For faster data refresh without a full frontend redeploy:
-
-1. **Host** `app_state.json` on a public bucket (Cloudflare R2, S3, etc.).
-2. **Point the frontend** at the remote URL via Vercel env:
-   - `VITE_APP_STATE_URL` = `https://your-cdn.example.com/app_state.json`
-3. **Publish after export** (local or CI):
-
-```bash
-export WEB_DATA_S3_URI=s3://your-bucket/world-cup-predictor
-export AWS_ACCESS_KEY_ID=...
-export AWS_SECRET_ACCESS_KEY=...
-export AWS_ENDPOINT_URL=https://...   # R2 only
-./scripts/publish_web_data.sh
-```
-
-When `VITE_APP_STATE_URL` is set, the app auto-refreshes after each scheduled `next_refresh_at` without reloading the page.
-
-Optional GitHub secrets for automated publish in `refresh-data.yml`:
-
-- `WEB_DATA_S3_URI`
-- `WEB_DATA_ACCESS_KEY_ID`
-- `WEB_DATA_SECRET_ACCESS_KEY`
-- `WEB_DATA_AWS_REGION`
-- `WEB_DATA_AWS_ENDPOINT_URL` (R2)
-
-See `frontend/.env.example` for all `VITE_*` data URL overrides.
+Optional CDN publish (S3/R2, skip full redeploy) is archived in [`archive/cdn/`](archive/cdn/README.md). Default: commit + Vercel deploy.
 
 ## What-if scenarios
 
