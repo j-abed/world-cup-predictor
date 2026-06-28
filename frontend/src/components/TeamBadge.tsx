@@ -1,4 +1,4 @@
-import { flagCodeFor } from "../lib/flags";
+import { flagSvgUrl } from "../lib/flags";
 
 interface TeamBadgeProps {
   code: string | null;
@@ -22,7 +22,7 @@ const MEDAL_RING: Record<number, string> = {
 
 export function TeamBadge({ code, rank, group, size = "md" }: TeamBadgeProps) {
   const isTbd = !code || code === "TBD";
-  const flagSuffix = flagCodeFor(code);
+  const flagUrl = flagSvgUrl(code);
   const ring = rank ? MEDAL_RING[rank] ?? "" : "";
   const groupRingStyle =
     !rank && group ? { borderColor: "var(--group-accent)" } : undefined;
@@ -32,7 +32,7 @@ export function TeamBadge({ code, rank, group, size = "md" }: TeamBadgeProps) {
       data-group={!rank && group ? group : undefined}
       style={groupRingStyle}
       title={isTbd ? undefined : code ?? undefined}
-      className={`inline-flex shrink-0 items-center justify-center overflow-hidden rounded-full border ${SIZE_CLASS[size]} ${ring} ${
+      className={`team-badge inline-flex shrink-0 items-center justify-center overflow-hidden rounded-full border ${SIZE_CLASS[size]} ${ring} ${
         isTbd
           ? "border-dashed border-muted-foreground/40 bg-secondary/40"
           : "border-border bg-secondary"
@@ -42,11 +42,13 @@ export function TeamBadge({ code, rank, group, size = "md" }: TeamBadgeProps) {
         <span className="font-display font-bold tracking-wide text-muted-foreground">
           —
         </span>
-      ) : flagSuffix ? (
-        <span
-          className={`fi fis fi-${flagSuffix}`}
-          style={{ width: "100%", height: "100%" }}
-          aria-hidden
+      ) : flagUrl ? (
+        <img
+          src={flagUrl}
+          alt=""
+          className="team-badge__flag"
+          loading="lazy"
+          decoding="async"
         />
       ) : (
         <span className="font-display font-bold tracking-wide text-foreground">
