@@ -8,6 +8,7 @@ import type {
   ModelQuality,
 } from "../../types";
 import type { TabId } from "../../lib/tabs";
+import { useMediaQuery } from "../../lib/useMediaQuery";
 import { MatchdayStatus } from "../MatchdayStatus";
 import { TabNav } from "../TabNav";
 import { InsightRail } from "../champion/InsightRail";
@@ -205,6 +206,10 @@ export function PredictorDashboard({
     liveContext.days_to_final > 0 ? String(liveContext.days_to_final) : "—";
   const showInsightRail = activeTab === "champion" && insightContext !== null;
 
+  // Sidebar is only visible at ≥1024px; TabNav is only visible below 1024px.
+  // We hide the non-visible nav from the AT and tab order to prevent duplication.
+  const isDesktopNav = useMediaQuery("(min-width: 1024px)");
+
   return (
     <div
       className={`predictor-command-center${showInsightRail ? " predictor-command-center--with-rail" : ""}`}
@@ -216,7 +221,11 @@ export function PredictorDashboard({
       <PitchBackground />
 
       <div className="cockpit-shell">
-        <CommandSidebar activeTab={activeTab} onTabChange={onTabChange} />
+        <CommandSidebar
+          activeTab={activeTab}
+          onTabChange={onTabChange}
+          visuallyHidden={!isDesktopNav}
+        />
 
         <div className="cockpit-main">
           <header className="command-shell-header command-shell-header--compact">
@@ -297,7 +306,7 @@ export function PredictorDashboard({
             <details className="command-caveats command-caveats--compact">
                 <summary className="flex cursor-pointer list-none items-center justify-between text-muted-foreground transition hover:text-foreground">
                   <span>Data caveats &amp; methodology notes</span>
-                  <span className="text-muted-foreground/60">▾</span>
+                  <span className="text-muted-foreground/60" aria-hidden>▾</span>
                 </summary>
                 <p className="mt-2 text-xs">
                   <a
@@ -323,20 +332,19 @@ export function PredictorDashboard({
           <div
             className={`cockpit-workspace${showInsightRail ? " cockpit-workspace--with-rail" : ""}`}
           >
-            <div className="cockpit-center">
-              <TabNav
-                active={activeTab}
-                onChange={onTabChange}
-                className="cockpit-tabs-mobile"
-              />
-              <main id="main-content" className="command-main command-main--cockpit">
-                <div className="command-content-tight">
-                  <div key={activeTab} className="animate-fade-up">
-                    {children}
-                  </div>
+            <TabNav
+              active={activeTab}
+              onChange={onTabChange}
+              className="cockpit-tabs-mobile"
+              visuallyHidden={isDesktopNav}
+            />
+            <main id="main-content" className="command-main command-main--cockpit">
+              <div className="command-content-tight">
+                <div key={activeTab} className="animate-fade-up">
+                  {children}
                 </div>
-              </main>
-            </div>
+              </div>
+            </main>
 
             {showInsightRail && insightContext ? (
               <aside className="cockpit-rail-right">

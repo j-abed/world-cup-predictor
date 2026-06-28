@@ -2975,6 +2975,7 @@
 
 .cockpit-workspace {
   display: flex;
+  flex-direction: column;
   flex: 1;
   min-width: 0;
   padding: 0 0.65rem 0.75rem;
@@ -3004,11 +3005,6 @@
   .cockpit-workspace--with-rail {
     grid-template-columns: minmax(0, 1fr) 21.25rem;
   }
-}
-
-.cockpit-center {
-  min-width: 0;
-  width: 100%;
 }
 
 /* Dashboard: title race is the hero — hide duplicate odds-board header */
