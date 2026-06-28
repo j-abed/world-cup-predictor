@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "generated_at": "2026-06-28T18:55:33",
+    "generated_at": "2026-06-28T23:12:16",
     "team_count": 48,
     "fixture_count": 72,
     "completed_result_count": 69,
@@ -19,7 +19,7 @@
       "Ratings include Elo-style post-match updates for newly completed fixtures.",
       "Fair-play conduct scores are aggregated from ESPN yellow/red card data."
     ],
-    "next_refresh_at": "2026-06-28T20:00:00+00:00",
+    "next_refresh_at": "2026-06-29T00:00:00+00:00",
     "refresh_interval_hours": 2,
     "tournament_final_kickoff": "2026-07-19T18:00:00-04:00",
     "projected_bracket_simulations": 10000
@@ -5859,108 +5859,9 @@
       "notes": "Projected path unavailable"
     },
     {
-      "code": "IRI",
-      "team": "Iran",
+      "code": "CZE",
+      "team": "Czechia",
       "rank": 34,
-      "score": 0.5,
-      "label": "Moderate",
-      "avg_opponent_rating": 0.0,
-      "notes": "Projected path unavailable"
-    },
-    {
-      "code": "UZB",
-      "team": "Uzbekistan",
-      "rank": 35,
-      "score": 0.5,
-      "label": "Moderate",
-      "avg_opponent_rating": 0.0,
-      "notes": "Projected path unavailable"
-    },
-    {
-      "code": "JOR",
-      "team": "Jordan",
-      "rank": 36,
-      "score": 0.5,
-      "label": "Moderate",
-      "avg_opponent_rating": 0.0,
-      "notes": "Projected path unavailable"
-    },
-    {
-      "code": "IRQ",
-      "team": "Iraq",
-      "rank": 37,
-      "score": 0.5,
-      "label": "Moderate",
-      "avg_opponent_rating": 0.0,
-      "notes": "Projected path unavailable"
-    },
-    {
-      "code": "URU",
-      "team": "Uruguay",
-      "rank": 38,
-      "score": 0.5,
-      "label": "Moderate",
-      "avg_opponent_rating": 0.0,
-      "notes": "Projected path unavailable"
-    },
-    {
-      "code": "KSA",
-      "team": "Saudi Arabia",
-      "rank": 39,
-      "score": 0.5,
-      "label": "Moderate",
-      "avg_opponent_rating": 0.0,
-      "notes": "Projected path unavailable"
-    },
-    {
-      "code": "NZL",
-      "team": "New Zealand",
-      "rank": 40,
-      "score": 0.5,
-      "label": "Moderate",
-      "avg_opponent_rating": 0.0,
-      "notes": "Projected path unavailable"
-    },
-    {
-      "code": "HTI",
-      "team": "Haiti",
-      "rank": 41,
-      "score": 0.5,
-      "label": "Moderate",
-      "avg_opponent_rating": 0.0,
-      "notes": "Projected path unavailable"
-    },
-    {
-      "code": "TUN",
-      "team": "Tunisia",
-      "rank": 42,
-      "score": 0.5,
-      "label": "Moderate",
-      "avg_opponent_rating": 0.0,
-      "notes": "Projected path unavailable"
-    },
-    {
-      "code": "CUW",
-      "team": "Curacao",
-      "rank": 43,
-      "score": 0.5,
-      "label": "Moderate",
-      "avg_opponent_rating": 0.0,
-      "notes": "Projected path unavailable"
-    },
-    {
-      "code": "TUR",
-      "team": "Turkey",
-      "rank": 44,
-      "score": 0.5,
-      "label": "Moderate",
-      "avg_opponent_rating": 0.0,
-      "notes": "Projected path unavailable"
-    },
-    {
-      "code": "SCO",
-      "team": "Scotland",
-      "rank": 45,
       "score": 0.5,
       "label": "Moderate",
       "avg_opponent_rating": 0.0,
@@ -5969,6 +5870,105 @@
     {
       "code": "QAT",
       "team": "Qatar",
+      "rank": 35,
+      "score": 0.5,
+      "label": "Moderate",
+      "avg_opponent_rating": 0.0,
+      "notes": "Projected path unavailable"
+    },
+    {
+      "code": "SCO",
+      "team": "Scotland",
+      "rank": 36,
+      "score": 0.5,
+      "label": "Moderate",
+      "avg_opponent_rating": 0.0,
+      "notes": "Projected path unavailable"
+    },
+    {
+      "code": "HTI",
+      "team": "Haiti",
+      "rank": 37,
+      "score": 0.5,
+      "label": "Moderate",
+      "avg_opponent_rating": 0.0,
+      "notes": "Projected path unavailable"
+    },
+    {
+      "code": "TUR",
+      "team": "Turkey",
+      "rank": 38,
+      "score": 0.5,
+      "label": "Moderate",
+      "avg_opponent_rating": 0.0,
+      "notes": "Projected path unavailable"
+    },
+    {
+      "code": "CUW",
+      "team": "Curacao",
+      "rank": 39,
+      "score": 0.5,
+      "label": "Moderate",
+      "avg_opponent_rating": 0.0,
+      "notes": "Projected path unavailable"
+    },
+    {
+      "code": "TUN",
+      "team": "Tunisia",
+      "rank": 40,
+      "score": 0.5,
+      "label": "Moderate",
+      "avg_opponent_rating": 0.0,
+      "notes": "Projected path unavailable"
+    },
+    {
+      "code": "IRI",
+      "team": "Iran",
+      "rank": 41,
+      "score": 0.5,
+      "label": "Moderate",
+      "avg_opponent_rating": 0.0,
+      "notes": "Projected path unavailable"
+    },
+    {
+      "code": "NZL",
+      "team": "New Zealand",
+      "rank": 42,
+      "score": 0.5,
+      "label": "Moderate",
+      "avg_opponent_rating": 0.0,
+      "notes": "Projected path unavailable"
+    },
+    {
+      "code": "KSA",
+      "team": "Saudi Arabia",
+      "rank": 43,
+      "score": 0.5,
+      "label": "Moderate",
+      "avg_opponent_rating": 0.0,
+      "notes": "Projected path unavailable"
+    },
+    {
+      "code": "URU",
+      "team": "Uruguay",
+      "rank": 44,
+      "score": 0.5,
+      "label": "Moderate",
+      "avg_opponent_rating": 0.0,
+      "notes": "Projected path unavailable"
+    },
+    {
+      "code": "IRQ",
+      "team": "Iraq",
+      "rank": 45,
+      "score": 0.5,
+      "label": "Moderate",
+      "avg_opponent_rating": 0.0,
+      "notes": "Projected path unavailable"
+    },
+    {
+      "code": "JOR",
+      "team": "Jordan",
       "rank": 46,
       "score": 0.5,
       "label": "Moderate",
@@ -5976,8 +5976,8 @@
       "notes": "Projected path unavailable"
     },
     {
-      "code": "CZE",
-      "team": "Czechia",
+      "code": "UZB",
+      "team": "Uzbekistan",
       "rank": 47,
       "score": 0.5,
       "label": "Moderate",
@@ -6002,7 +6002,7 @@
   "market_comparison": {
     "available": true,
     "source": "the_odds_api:soccer_fifa_world_cup_winner",
-    "as_of": "2026-06-28T21:06:54+00:00",
+    "as_of": "2026-06-28T23:07:32+00:00",
     "methodology": "Compares model championship probability to average implied probability from outright winner odds. Positive delta means the model is more bullish than the market.",
     "teams": [
       {
@@ -6025,33 +6025,33 @@
         "code": "POR",
         "team": "Portugal",
         "model_champion_prob": 0.0469,
-        "market_implied_prob": 0.071429,
-        "delta": -0.024529,
-        "decimal_odds": 14.0
+        "market_implied_prob": 0.070175,
+        "delta": -0.023275,
+        "decimal_odds": 14.25
       },
       {
         "code": "BEL",
         "team": "Belgium",
         "model_champion_prob": 0.0391,
-        "market_implied_prob": 0.015873,
-        "delta": 0.023227,
-        "decimal_odds": 63.0
-      },
-      {
-        "code": "NOR",
-        "team": "Norway",
-        "model_champion_prob": 0.0083,
-        "market_implied_prob": 0.025478,
-        "delta": -0.017178,
-        "decimal_odds": 39.25
+        "market_implied_prob": 0.016529,
+        "delta": 0.022571,
+        "decimal_odds": 60.5
       },
       {
         "code": "CRO",
         "team": "Croatia",
         "model_champion_prob": 0.0221,
-        "market_implied_prob": 0.005391,
-        "delta": 0.016709,
-        "decimal_odds": 185.5
+        "market_implied_prob": 0.005249,
+        "delta": 0.016851,
+        "decimal_odds": 190.5
+      },
+      {
+        "code": "NOR",
+        "team": "Norway",
+        "model_champion_prob": 0.0083,
+        "market_implied_prob": 0.024845,
+        "delta": -0.016545,
+        "decimal_odds": 40.25
       },
       {
         "code": "GER",
@@ -6065,9 +6065,9 @@
         "code": "BRA",
         "team": "Brazil",
         "model_champion_prob": 0.0567,
-        "market_implied_prob": 0.067797,
-        "delta": -0.011097,
-        "decimal_odds": 14.75
+        "market_implied_prob": 0.068966,
+        "delta": -0.012266,
+        "decimal_odds": 14.5
       },
       {
         "code": "USA",
@@ -6081,9 +6081,9 @@
         "code": "NED",
         "team": "Netherlands",
         "model_champion_prob": 0.0469,
-        "market_implied_prob": 0.056738,
-        "delta": -0.009838,
-        "decimal_odds": 17.625
+        "market_implied_prob": 0.056338,
+        "delta": -0.009438,
+        "decimal_odds": 17.75
       },
       {
         "code": "SUI",
@@ -6105,25 +6105,25 @@
         "code": "EGY",
         "team": "Egypt",
         "model_champion_prob": 0.0077,
-        "market_implied_prob": 0.002594,
-        "delta": 0.005106,
-        "decimal_odds": 385.5
+        "market_implied_prob": 0.002628,
+        "delta": 0.005072,
+        "decimal_odds": 380.5
       },
       {
         "code": "SEN",
         "team": "Senegal",
         "model_champion_prob": 0.0113,
-        "market_implied_prob": 0.006536,
-        "delta": 0.004764,
-        "decimal_odds": 153.0
+        "market_implied_prob": 0.006329,
+        "delta": 0.004971,
+        "decimal_odds": 158.0
       },
       {
         "code": "AUS",
         "team": "Australia",
         "model_champion_prob": 0.0077,
-        "market_implied_prob": 0.003049,
-        "delta": 0.004651,
-        "decimal_odds": 328.0
+        "market_implied_prob": 0.002774,
+        "delta": 0.004926,
+        "decimal_odds": 360.5
       },
       {
         "code": "ARG",
@@ -6153,25 +6153,33 @@
         "code": "DZA",
         "team": "Algeria",
         "model_champion_prob": 0.0041,
-        "market_implied_prob": 0.001701,
-        "delta": 0.002399,
-        "decimal_odds": 588.0
+        "market_implied_prob": 0.001672,
+        "delta": 0.002428,
+        "decimal_odds": 598.0
       },
       {
         "code": "AUT",
         "team": "Austria",
         "model_champion_prob": 0.0044,
-        "market_implied_prob": 0.002959,
-        "delta": 0.001441,
-        "decimal_odds": 338.0
+        "market_implied_prob": 0.002915,
+        "delta": 0.001485,
+        "decimal_odds": 343.0
       },
       {
         "code": "GHA",
         "team": "Ghana",
         "model_champion_prob": 0.0031,
-        "market_implied_prob": 0.001894,
-        "delta": 0.001206,
-        "decimal_odds": 528.0
+        "market_implied_prob": 0.001825,
+        "delta": 0.001275,
+        "decimal_odds": 548.0
+      },
+      {
+        "code": "COL",
+        "team": "Colombia",
+        "model_champion_prob": 0.0272,
+        "market_implied_prob": 0.028169,
+        "delta": -0.000969,
+        "decimal_odds": 35.5
       },
       {
         "code": "COD",
@@ -6182,20 +6190,20 @@
         "decimal_odds": 875.5
       },
       {
-        "code": "CIV",
-        "team": "Ivory Coast",
-        "model_champion_prob": 0.004,
-        "market_implied_prob": 0.004751,
-        "delta": -0.000751,
-        "decimal_odds": 210.5
-      },
-      {
         "code": "SWE",
         "team": "Sweden",
         "model_champion_prob": 0.0037,
-        "market_implied_prob": 0.003026,
-        "delta": 0.000674,
-        "decimal_odds": 330.5
+        "market_implied_prob": 0.002853,
+        "delta": 0.000847,
+        "decimal_odds": 350.5
+      },
+      {
+        "code": "CIV",
+        "team": "Ivory Coast",
+        "model_champion_prob": 0.004,
+        "market_implied_prob": 0.004535,
+        "delta": -0.000535,
+        "decimal_odds": 220.5
       },
       {
         "code": "PAR",
@@ -6214,22 +6222,6 @@
         "decimal_odds": 8.175
       },
       {
-        "code": "RSA",
-        "team": "South Africa",
-        "model_champion_prob": 0.0013,
-        "market_implied_prob": 0.001,
-        "delta": 0.0003,
-        "decimal_odds": 1000.0
-      },
-      {
-        "code": "COL",
-        "team": "Colombia",
-        "model_champion_prob": 0.0272,
-        "market_implied_prob": 0.027397,
-        "delta": -0.000197,
-        "decimal_odds": 36.5
-      },
-      {
         "code": "CPV",
         "team": "Cape Verde",
         "model_champion_prob": 0.001,
@@ -6241,17 +6233,17 @@
         "code": "CAN",
         "team": "Canada",
         "model_champion_prob": 0.0044,
-        "market_implied_prob": 0.004338,
-        "delta": 6.2e-05,
-        "decimal_odds": 230.5
+        "market_implied_prob": 0.004292,
+        "delta": 0.000108,
+        "decimal_odds": 233.0
       },
       {
         "code": "ECU",
         "team": "Ecuador",
         "model_champion_prob": 0.0071,
-        "market_implied_prob": 0.007055,
-        "delta": 4.5e-05,
-        "decimal_odds": 141.75
+        "market_implied_prob": 0.007181,
+        "delta": -8.1e-05,
+        "decimal_odds": 139.25
       }
     ],
     "summary": {
@@ -6259,14 +6251,14 @@
       "model_favorite_team": "Argentina",
       "market_favorite_code": "FRA",
       "market_favorite_team": "France",
-      "mean_absolute_gap": 0.008638,
-      "compared_team_count": 31,
+      "mean_absolute_gap": 0.008908,
+      "compared_team_count": 30,
       "favorites_agree": false
     }
   },
   "movement": {
     "has_baseline": true,
-    "baseline_generated_at": "2026-06-28T18:24:28",
+    "baseline_generated_at": "2026-06-28T18:55:33",
     "biggest_movers": [],
     "top_champion_changes": [
       {
