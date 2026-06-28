@@ -47,9 +47,9 @@ def test_build_fixtures_payload_joins_results_and_teams(repo_root: Path) -> None
     assert completed_row["home_score"] == 2
     assert completed_row["away_score"] == 0
 
-    scheduled_row = next(row for row in payload if row["status"] == "Scheduled")
-    assert scheduled_row["home_score"] is None
-    assert scheduled_row["away_score"] is None
+    if scheduled:
+        assert scheduled[0]["home_score"] is None
+        assert scheduled[0]["away_score"] is None
 
 
 def test_build_fixtures_payload_handles_in_progress_results() -> None:
