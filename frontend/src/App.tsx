@@ -9,13 +9,13 @@ import { PredictorDashboard } from "./components/predictor/PredictorDashboard";
 import { ProjectedField } from "./components/ProjectedField";
 import { MarketsView } from "./components/MarketsView";
 import { QualificationOdds } from "./components/QualificationOdds";
-import { ScenarioView } from "./components/ScenarioView";
 import { TabErrorBoundary } from "./components/TabErrorBoundary";
 import { TeamDetail } from "./components/TeamDetail";
 import { ThirdPlaceTable } from "./components/ThirdPlaceTable";
-import { AppStateLoadError, loadAppState, loadBacktest2022, loadScenarioAppState } from "./lib/data";
+import { AppStateLoadError, loadAppState, loadBacktest2022 } from "./lib/data";
 import { appStateUrl, isRemoteDataUrl } from "./lib/dataUrls";
 import { buildDocumentTitle } from "./lib/documentMeta";
+import { buildInsightContext } from "./lib/insightContext";
 import { TAB_LABELS, type TabId } from "./lib/tabs";
 import { buildTeamIndex } from "./lib/team";
 import { readAppUrlState, writeAppUrlState } from "./lib/urlState";
@@ -24,7 +24,6 @@ import type { AppState } from "./types";
 
 export default function App() {
   const [appState, setAppState] = useState<AppState | null>(null);
-  const [scenarioState, setScenarioState] = useState<AppState | null>(null);
   const [backtestState, setBacktestState] = useState<Backtest2022 | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<TabId>(
@@ -55,18 +54,6 @@ export default function App() {
             ? err.message
             : "Something went wrong loading the prediction data.",
         );
-      });
-
-    loadScenarioAppState()
-      .then((state) => {
-        if (!cancelled) {
-          setScenarioState(state);
-        }
-      })
-      .catch(() => {
-        if (!cancelled) {
-          setScenarioState(null);
-        }
       });
 
     loadBacktest2022()
@@ -112,6 +99,11 @@ export default function App() {
   const teamIndex = useMemo(
     () => (appState ? buildTeamIndex(appState) : null),
     [appState],
+  );
+
+  const insightContext = useMemo(
+    () => (appState ? buildInsightContext(appState, selectedTeamCode) : null),
+    [appState, selectedTeamCode],
   );
 
   useEffect(() => {
@@ -194,7 +186,6 @@ export default function App() {
             movement={appState.movement}
             pathDifficulty={appState.path_difficulty}
             qualification={appState.odds.qualification}
-            bracket={appState.bracket}
             selectedTeamCode={selectedTeamCode}
             onSelectTeam={handleSelectTeam}
           />
@@ -249,14 +240,6 @@ export default function App() {
             onSelectTeam={handleSelectTeam}
           />
         );
-      case "scenario":
-        return (
-          <ScenarioView
-            baseline={appState}
-            scenario={scenarioState}
-            onSelectTeam={handleSelectTeam}
-          />
-        );
       case "backtest":
         return (
           <BacktestView
@@ -283,6 +266,7 @@ export default function App() {
         liveAccuracy={appState.live_accuracy}
         activeTab={activeTab}
         onTabChange={handleTabChange}
+        insightContext={insightContext}
       >
         <TabErrorBoundary key={activeTab} tabLabel={TAB_LABELS[activeTab]}>
           {tabContent}

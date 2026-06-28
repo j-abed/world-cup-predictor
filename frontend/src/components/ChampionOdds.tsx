@@ -1,14 +1,11 @@
 import { useMemo, type ReactNode } from "react";
 import type {
-  Bracket,
   Movement,
   PathDifficultyEntry,
   QualificationOdds,
   RoundOdds,
 } from "../types";
 import { championChangeByCode } from "../lib/movement";
-import { buildPathToFinal } from "../lib/pathToFinal";
-import { InsightRail } from "./champion/InsightRail";
 import { TitleOddsBoard } from "./champion/TitleOddsBoard";
 import { ProbabilityDelta } from "./MovementSummary";
 import { TeamBadge } from "./TeamBadge";
@@ -18,7 +15,6 @@ interface ChampionOddsProps {
   movement?: Movement;
   pathDifficulty?: PathDifficultyEntry[];
   qualification: QualificationOdds[];
-  bracket: Bracket;
   selectedTeamCode?: string | null;
   onSelectTeam: (code: string) => void;
 }
@@ -27,6 +23,7 @@ interface TitleRacePodiumProps {
   podium: RoundOdds[];
   championChanges: Map<string, { delta: number }>;
   pathByCode: Map<string, PathDifficultyEntry>;
+  selectedCode: string | null;
   onSelectTeam: (code: string) => void;
 }
 
@@ -106,6 +103,7 @@ function TitleRaceCard({
   variant,
   change,
   path,
+  selected,
   onSelect,
 }: {
   team: RoundOdds;
@@ -113,6 +111,7 @@ function TitleRaceCard({
   variant: "leader" | "flank";
   change?: { delta: number };
   path?: PathDifficultyEntry;
+  selected: boolean;
   onSelect: () => void;
 }) {
   const isLeader = variant === "leader";
@@ -121,7 +120,7 @@ function TitleRaceCard({
     <button
       type="button"
       onClick={onSelect}
-      className={`title-race__card title-race__card--${variant}${isLeader ? " title-race__card--selected" : ""}`}
+      className={`title-race__card title-race__card--${variant}${selected ? " title-race__card--selected" : ""}${isLeader ? " title-race__card--leader" : ""}`}
     >
       <span className="title-race__watermark" aria-hidden>
         ★
@@ -165,21 +164,21 @@ function TitleRaceCard({
           }
         />
         <StatRow
-          label="Path Difficulty"
-          value={path?.label ?? "—"}
-        />
-        <StatRow
           label="Reach R16"
           value={team.r16_prob_label.trim()}
           accent
+        />
+        <StatRow
+          label="Semi %"
+          value={team.sf_prob_label.trim()}
         />
         <StatRow
           label="Final %"
           value={team.final_prob_label.trim()}
         />
         <StatRow
-          label="Semi %"
-          value={team.sf_prob_label.trim()}
+          label="Path Difficulty"
+          value={path?.label ?? "—"}
         />
       </dl>
     </button>
@@ -190,6 +189,7 @@ function TitleRacePodium({
   podium,
   championChanges,
   pathByCode,
+  selectedCode,
   onSelectTeam,
 }: TitleRacePodiumProps) {
   if (podium.length === 0) {
@@ -212,6 +212,7 @@ function TitleRacePodium({
             variant="flank"
             change={championChanges.get(leftFlank.code)}
             path={pathByCode.get(leftFlank.code)}
+            selected={leftFlank.code === selectedCode}
             onSelect={() => onSelectTeam(leftFlank.code)}
           />
         ) : (
@@ -224,6 +225,7 @@ function TitleRacePodium({
           variant="leader"
           change={championChanges.get(leader.code)}
           path={pathByCode.get(leader.code)}
+          selected={leader.code === selectedCode}
           onSelect={() => onSelectTeam(leader.code)}
         />
 
@@ -234,6 +236,7 @@ function TitleRacePodium({
             variant="flank"
             change={championChanges.get(rightFlank.code)}
             path={pathByCode.get(rightFlank.code)}
+            selected={rightFlank.code === selectedCode}
             onSelect={() => onSelectTeam(rightFlank.code)}
           />
         ) : (
@@ -249,7 +252,6 @@ export function ChampionOdds({
   movement,
   pathDifficulty = [],
   qualification,
-  bracket,
   selectedTeamCode = null,
   onSelectTeam,
 }: ChampionOddsProps) {
@@ -283,19 +285,6 @@ export function ChampionOdds({
       ? selectedTeamCode
       : ranked[0]?.code ?? null;
 
-  const focusTeam =
-    focusCode !== null
-      ? ranked.find((team) => team.code === focusCode) ?? ranked[0]
-      : ranked[0];
-
-  const pathSteps = useMemo(() => {
-    if (!focusCode) {
-      return [];
-    }
-
-    return buildPathToFinal(focusCode, bracket, round, qualification);
-  }, [focusCode, bracket, round, qualification]);
-
   return (
     <section className="odds-board">
       <header className="odds-board__header">
@@ -318,10 +307,11 @@ export function ChampionOdds({
         podium={podium}
         championChanges={championChanges}
         pathByCode={pathByCode}
+        selectedCode={focusCode}
         onSelectTeam={onSelectTeam}
       />
 
-      <div className="board-lower">
+      <div className="board-lower board-lower--solo">
         <TitleOddsBoard
           teams={ranked}
           championChanges={championChanges}
@@ -329,12 +319,6 @@ export function ChampionOdds({
           qualificationByCode={qualificationByCode}
           selectedCode={focusCode ?? undefined}
           onSelectTeam={onSelectTeam}
-        />
-        <InsightRail
-          movement={movement}
-          pathSteps={pathSteps}
-          focusTeam={focusTeam?.team ?? "—"}
-          focusCode={focusCode ?? ""}
         />
       </div>
     </section>

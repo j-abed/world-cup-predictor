@@ -6,7 +6,6 @@ export const TAB_IDS = [
   "bracket",
   "groups",
   "qualification",
-  "scenario",
   "backtest",
 ] as const;
 
@@ -20,7 +19,6 @@ export const TAB_LABELS: Record<TabId, string> = {
   bracket: "Knockout bracket",
   groups: "Group standings",
   qualification: "Qualification odds",
-  scenario: "What-if scenarios",
   backtest: "2022 backtest",
 };
 
@@ -33,7 +31,6 @@ export const TAB_NAV_LABELS: Record<TabId, string> = {
   bracket: "Knockout",
   groups: "Groups",
   qualification: "Qualify",
-  scenario: "What-if",
   backtest: "2022",
 };
 
@@ -45,7 +42,6 @@ export const TAB_NAV_SHORT_LABELS: Record<TabId, string> = {
   bracket: "KO",
   groups: "Groups",
   qualification: "Qual",
-  scenario: "Scen",
   backtest: "2022",
 };
 

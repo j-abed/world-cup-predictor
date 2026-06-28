@@ -1,6 +1,6 @@
 # World Cup Predictor — Frontend
 
-Client-side dashboard for projected bracket, group standings, qualification odds, what-if scenarios, and the 2022 backtest. **Vite + React + TypeScript + Tailwind CSS.** No backend at runtime.
+Client-side dashboard for projected bracket, group standings, qualification odds, and the 2022 backtest. **Vite + React + TypeScript + Tailwind CSS.** No backend at runtime.
 
 ## Data files
 
@@ -11,8 +11,9 @@ Optional remote URLs via `VITE_*` env vars are documented in `archive/cdn/README
 | File | Required | Consumed by |
 |------|----------|-------------|
 | `app_state.json` | Yes | All main tabs (champion, fixtures, field, bracket, groups, qualification) |
-| `scenario_app_state.json` | No | What-if tab — hidden gracefully if missing |
 | `backtest_2022.json` | No | 2022 tab — hidden gracefully if missing |
+
+What-if scenarios are **backend-only** (`scripts/run_scenario.py`, `.github/workflows/scenario.yml`). They export `scenario_app_state.json` for CLI/reporting; the dashboard tab was removed until interactive scenarios ship.
 
 `app_state.json` is produced by `scripts/export_web_state.py` → `outputs/web/app_state.json`. Copy into the frontend with:
 
@@ -20,7 +21,7 @@ Optional remote URLs via `VITE_*` env vars are documented in `archive/cdn/README
 npm run refresh-data   # from frontend/
 ```
 
-Scenario and backtest JSON are copied manually or via `--copy-to-frontend` on their export scripts (see root `README.md`).
+Scenario and backtest JSON are copied manually or via `--copy-to-frontend` on their export scripts (see root `README.md`). Scenario JSON is not loaded by the dashboard UI today.
 
 ## Data contract
 
@@ -77,7 +78,6 @@ Defaults to champion odds with no team selected. Implemented in `src/lib/urlStat
 | `bracket` | Knockout bracket | `BracketView.tsx` |
 | `groups` | Group standings | `GroupStandings.tsx`, `ThirdPlaceTable.tsx` |
 | `qualification` | Qualification odds | `QualificationOdds.tsx` |
-| `scenario` | What-if scenarios | `ScenarioView.tsx` |
 | `backtest` | 2022 backtest | `BacktestView.tsx` |
 
 Tab labels for mobile/desktop: `TAB_NAV_LABELS` / `TAB_NAV_SHORT_LABELS` in `src/lib/tabs.ts`.
@@ -112,7 +112,7 @@ src/
     QualificationOdds.tsx Sortable qualification table
     FixturesView.tsx      Schedule and results
     ProjectedField.tsx    32-team projected knockout field
-    ScenarioView.tsx      Baseline vs scenario champion deltas
+    ScenarioView.tsx      (unused) baseline vs scenario — kept for future UI
     BacktestView.tsx      2022 model vs actual comparison
     TeamDetail.tsx        Team slide-over panel
     ProbabilityBar.tsx    Reusable probability bar

@@ -12,7 +12,6 @@ const TAB_TITLES: Record<TabId, string> = {
   bracket: "Knockout Bracket",
   groups: "Group Standings",
   qualification: "Qualification Odds",
-  scenario: "What-if Scenarios",
   backtest: "2022 Backtest",
 };
 
