@@ -90,6 +90,24 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="Refresh outright winner odds from The Odds API when ODDS_API_KEY is set.",
     )
+    parser.add_argument(
+        "--simulations",
+        type=int,
+        default=10_000,
+        help="Simulation count for export_web_state (odds + most-likely bracket). Default: 10000",
+    )
+    parser.add_argument(
+        "--group-simulations",
+        type=int,
+        default=None,
+        help="Group finish simulation count for export_web_state. Default: same as --simulations",
+    )
+    parser.add_argument(
+        "--seed",
+        type=int,
+        default=42,
+        help="Random seed for export_web_state. Default: 42",
+    )
 
     return parser.parse_args()
 
@@ -200,7 +218,21 @@ def main() -> None:
 
     if args.export_web:
         require_file(WEB_EXPORT_SCRIPT)
-        run_command(["uv", "run", "python", str(WEB_EXPORT_SCRIPT)])
+        group_simulations = args.group_simulations or args.simulations
+        run_command(
+            [
+                "uv",
+                "run",
+                "python",
+                str(WEB_EXPORT_SCRIPT),
+                "--simulations",
+                str(args.simulations),
+                "--group-simulations",
+                str(group_simulations),
+                "--seed",
+                str(args.seed),
+            ]
+        )
 
 
 if __name__ == "__main__":

@@ -99,6 +99,28 @@ def test_path_difficulty_covers_all_teams(app_state_payload: dict) -> None:
     assert path_codes == codes
 
 
+def test_most_likely_bracket_is_exported_on_refresh(app_state_payload: dict) -> None:
+    metadata = app_state_payload["metadata"]
+    round_sims = metadata["simulations"]["round"]
+
+    assert metadata.get("projected_bracket_simulations") == round_sims
+
+    knockout_rounds = (
+        "round_of_16",
+        "quarterfinals",
+        "semifinals",
+        "final",
+    )
+
+    for round_key in knockout_rounds:
+        for match in app_state_payload["bracket"][round_key]:
+            projected_winner = match.get("projected_winner")
+            assert projected_winner is not None
+            assert projected_winner["code"] not in (None, "", "TBD")
+            assert match["home"]["code"] not in (None, "", "TBD")
+            assert match["away"]["code"] not in (None, "", "TBD")
+
+
 def test_bracket_teams_are_known_or_tbd(app_state_payload: dict) -> None:
     codes = {team["code"] for team in app_state_payload["odds"]["round"]} | {"TBD"}
 

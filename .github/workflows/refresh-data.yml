@@ -59,7 +59,8 @@ jobs:
             --update-fair-play \
             --update-market-odds \
             --run-model \
-            --export-web
+            --export-web \
+            --simulations 10000
 
       - name: Copy app state to frontend
         if: steps.window.outputs.skip != 'true'

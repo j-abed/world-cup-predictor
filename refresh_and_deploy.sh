@@ -13,7 +13,8 @@ uv run python scripts/update_world_cup_data.py \
   --update-ratings \
   --update-fair-play \
   --run-model \
-  --export-web
+  --export-web \
+  --simulations 10000
 
 echo ""
 echo "=== Copying app state to frontend ==="
