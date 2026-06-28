@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import type { FixtureMatch } from "../types";
+import { partitionFixtures, fixtureBucket } from "../lib/fixtures";
 import { CommandEmpty, CommandPanel, CommandSection } from "./CommandPanel";
 import { TeamBadge } from "./TeamBadge";
 
@@ -23,6 +24,10 @@ function formatKickoff(value: string): string {
 
 function isComplete(match: FixtureMatch): boolean {
   return match.status.toLowerCase() === "complete";
+}
+
+function isLiveOrAwaiting(match: FixtureMatch): boolean {
+  return fixtureBucket(match) === "in_progress";
 }
 
 function MatchRow({
@@ -54,6 +59,16 @@ function MatchRow({
           {complete ? (
             <span>
               {match.home_score}–{match.away_score}
+            </span>
+          ) : isLiveOrAwaiting(match) ? (
+            <span
+              className={`text-xs font-semibold uppercase tracking-wider ${
+                match.status.toLowerCase() === "in progress"
+                  ? "text-success"
+                  : "text-muted-foreground"
+              }`}
+            >
+              {match.status.toLowerCase() === "in progress" ? "Live" : "Awaiting"}
             </span>
           ) : (
             <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
@@ -120,15 +135,10 @@ function MatchSection({
 }
 
 export function FixturesView({ fixtures, onSelectTeam }: FixturesViewProps) {
-  const { upcoming, recent } = useMemo(() => {
-    const completed = fixtures.filter(isComplete);
-    const scheduled = fixtures.filter((match) => !isComplete(match));
-
-    return {
-      recent: [...completed].reverse(),
-      upcoming: scheduled,
-    };
-  }, [fixtures]);
+  const { recent, inProgress, upcoming } = useMemo(
+    () => partitionFixtures(fixtures),
+    [fixtures],
+  );
 
   return (
     <CommandPanel
@@ -145,11 +155,19 @@ export function FixturesView({ fixtures, onSelectTeam }: FixturesViewProps) {
       />
 
       <MatchSection
+        title="In progress & awaiting results"
+        description="Kickoff has passed — live now or waiting for ESPN sync."
+        matches={inProgress}
+        onSelectTeam={onSelectTeam}
+        emptyMessage="No matches waiting on a result right now."
+      />
+
+      <MatchSection
         title="Upcoming"
         description="Scheduled matches yet to kick off."
         matches={upcoming}
         onSelectTeam={onSelectTeam}
-        emptyMessage="All group-stage matches are complete."
+        emptyMessage="No upcoming group-stage matches on the calendar."
       />
     </CommandPanel>
   );

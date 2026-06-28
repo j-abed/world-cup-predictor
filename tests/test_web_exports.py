@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from datetime import datetime, timezone
 from pathlib import Path
 
 import pandas as pd
@@ -96,6 +97,40 @@ def test_build_fixtures_payload_handles_in_progress_results() -> None:
     assert len(scheduled) == 1
     assert in_progress[0]["home_score"] == 1
     assert in_progress[0]["away_score"] == 1
+
+
+def test_build_fixtures_payload_promotes_past_scheduled_to_in_progress() -> None:
+    teams = pd.DataFrame(
+        {
+            "team_id": [1, 2],
+            "name": ["Home", "Away"],
+            "code": ["HOM", "AWY"],
+            "group": ["A", "A"],
+        }
+    )
+    fixtures = pd.DataFrame(
+        {
+            "match_id": [99],
+            "home_team": [1],
+            "away_team": [2],
+            "group": ["A"],
+            "kickoff": ["2026-06-21T18:00:00-04:00"],
+            "stage": ["Group"],
+        }
+    )
+    results = pd.DataFrame(columns=["match_id", "home_score", "away_score", "status"])
+
+    payload = build_fixtures_payload(
+        fixtures=fixtures,
+        results=results,
+        teams=teams,
+        generated_at=datetime(2026, 6, 27, 12, 0, tzinfo=timezone.utc),
+    )
+
+    assert len(payload) == 1
+    assert payload[0]["status"] == "In Progress"
+    assert payload[0]["home_score"] == 0
+    assert payload[0]["away_score"] == 0
 
 
 def test_build_data_caveats_reflect_fair_play_source(repo_root: Path) -> None:

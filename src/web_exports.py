@@ -16,6 +16,7 @@ from src.tiebreakers import FAIR_PLAY_PATH
 from src.tournament_context import (
     build_live_context,
     build_refresh_metadata,
+    ensure_aware,
     load_tournament_schedule,
     parse_iso_datetime,
 )
@@ -143,6 +144,8 @@ def build_fixtures_payload(
     fixtures: pd.DataFrame,
     results: pd.DataFrame,
     teams: pd.DataFrame,
+    *,
+    generated_at: datetime | None = None,
 ) -> list[dict[str, Any]]:
     team_lookup = {
         str(row["team_id"]): {
@@ -160,6 +163,7 @@ def build_fixtures_payload(
     )
 
     rows: list[dict[str, Any]] = []
+    now = ensure_aware(generated_at) if generated_at is not None else None
 
     for _, fixture in fixtures.iterrows():
         match_id = int(fixture["match_id"])
@@ -178,6 +182,13 @@ def build_fixtures_payload(
             status = "Scheduled"
             home_score = None
             away_score = None
+
+        if (
+            status == "Scheduled"
+            and now is not None
+            and ensure_aware(parse_iso_datetime(str(fixture["kickoff"]))) <= now
+        ):
+            status = "In Progress"
 
         if status.lower() == "in progress":
             # Keep live scores visible even when nullable in CSV.
@@ -379,13 +390,14 @@ def build_app_state_payload(
         scenario=scenario,
     )
 
+    export_time = generated_at or parse_iso_datetime(str(metadata["generated_at"]))
+
     fixtures_payload = build_fixtures_payload(
         fixtures=fixtures,
         results=results,
         teams=teams,
+        generated_at=export_time,
     )
-
-    export_time = generated_at or parse_iso_datetime(str(metadata["generated_at"]))
 
     if live_context is None:
         live_context = build_live_context(
