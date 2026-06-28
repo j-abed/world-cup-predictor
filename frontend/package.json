@@ -8,7 +8,9 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "refresh-data": "cp ../outputs/web/app_state.json public/data/app_state.json"
+    "refresh-data": "cp ../outputs/web/app_state.json public/data/app_state.json",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui"
   },
   "dependencies": {
     "katex": "^0.17.0",
@@ -19,6 +21,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@playwright/test": "^1.61.1",
     "@tailwindcss/postcss": "^4.3.1",
     "@types/node": "^24.12.3",
     "@types/react": "^19.2.14",
