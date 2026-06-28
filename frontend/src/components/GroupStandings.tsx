@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import type { GroupStanding, ThirdPlaceEntry } from "../types";
 import { activateOnEnterOrSpace, INTERACTIVE_ROW_CLASS } from "../lib/keyboard";
+import { CommandPanel } from "./CommandPanel";
 import { TeamBadge } from "./TeamBadge";
 
 interface GroupStandingsProps {
@@ -38,27 +39,21 @@ export function GroupStandings({
   }, [standings]);
 
   return (
-    <section>
-      <div className="mb-5">
-        <h2 className="text-2xl font-semibold text-foreground sm:text-3xl">
-          Group Standings
-        </h2>
-        <p className="text-sm text-muted-foreground">
-          Top two in each group advance automatically; the best third-place
-          teams take the remaining knockout spots.
-        </p>
-      </div>
-
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
+    <CommandPanel
+      eyebrow="Group stage"
+      title="Group standings"
+      subtitle="Top two in each group advance automatically; the best third-place teams take the remaining knockout spots."
+    >
+      <div className="command-group-grid">
         {groups.map(([group, rows]) => (
           <div
             key={group}
             data-group={group}
-            className="pitch-card min-w-0 rounded-2xl border-t-2 p-4"
+            className="command-subcard"
             style={{ borderTopColor: "var(--group-accent)" }}
           >
             <h3
-              className="mb-3 text-sm font-bold uppercase tracking-widest"
+              className="mb-2 text-sm font-bold uppercase tracking-widest"
               style={{ color: "var(--group-accent)" }}
             >
               Group {group}
@@ -67,7 +62,7 @@ export function GroupStandings({
             <div className="min-w-0" role="table" aria-label={`Group ${group} standings`}>
               <div
                 role="row"
-                className={`${STANDINGS_GRID} border-b border-border/60 pb-1.5 text-[10px] font-medium uppercase tracking-wide text-muted-foreground/80`}
+                className={`${STANDINGS_GRID} border-b border-border/60 pb-1.5 font-mono text-[10px] font-medium uppercase tracking-wide text-muted-foreground/80`}
               >
                 <span role="columnheader" aria-hidden />
                 <span role="columnheader">Team</span>
@@ -109,7 +104,7 @@ export function GroupStandings({
                       }
                       className={`${STANDINGS_GRID} border-t border-border/50 py-1.5 text-xs ${INTERACTIVE_ROW_CLASS} ${
                         qualifies
-                          ? "border-l-2 border-l-success/70 bg-success/[0.07] pl-2 -ml-2"
+                          ? "command-data-row--qualify border-l-2 pl-2 -ml-2"
                           : ""
                       }`}
                     >
@@ -122,11 +117,7 @@ export function GroupStandings({
 
                       <div role="cell" className="min-w-0">
                         <div className="flex min-w-0 items-center gap-1.5">
-                          <TeamBadge
-                            code={row.code}
-                            group={group}
-                            size="sm"
-                          />
+                          <TeamBadge code={row.code} group={group} size="sm" />
                           <span
                             className={`min-w-0 truncate font-medium ${
                               qualifies
@@ -194,6 +185,6 @@ export function GroupStandings({
           </div>
         ))}
       </div>
-    </section>
+    </CommandPanel>
   );
 }
