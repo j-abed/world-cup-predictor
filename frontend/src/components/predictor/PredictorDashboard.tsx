@@ -190,7 +190,9 @@ export function PredictorDashboard({
   const showInsightRail = activeTab === "champion" && insightContext !== null;
 
   return (
-    <div className="predictor-command-center">
+    <div
+      className={`predictor-command-center${showInsightRail ? " predictor-command-center--with-rail" : ""}`}
+    >
       <PitchBackground />
 
       <div className="cockpit-shell">
@@ -311,13 +313,24 @@ export function PredictorDashboard({
               </aside>
             ) : null}
           </div>
+
+          <footer className="command-footer command-footer--cockpit">
+            <div className="command-footer__inner">
+              <p className="command-footer__disclaimer">
+                Projections are simulation outputs, not betting odds. See
+                methodology notes above.
+              </p>
+              <p className="command-footer__credit">
+                Made with{" "}
+                <span className="command-footer__heart" aria-hidden>
+                  ♥
+                </span>{" "}
+                in NYC
+              </p>
+            </div>
+          </footer>
         </div>
       </div>
-
-      <footer className="command-footer command-footer--cockpit">
-        Projections are simulation outputs, not betting odds. See methodology
-        notes above.
-      </footer>
     </div>
   );
 }

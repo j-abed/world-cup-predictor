@@ -41,14 +41,3 @@ export function championChangeByCode(
 
   return map;
 }
-
-/** Two-point series for run-over-run title odds sparkline (previous → current). */
-export function championTrendSeries(
-  change: TopChampionChange | undefined,
-): number[] | null {
-  if (!change) {
-    return null;
-  }
-
-  return [change.previous, change.current];
-}

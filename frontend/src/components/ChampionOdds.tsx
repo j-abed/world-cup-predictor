@@ -286,7 +286,7 @@ export function ChampionOdds({
       : ranked[0]?.code ?? null;
 
   return (
-    <section className="odds-board">
+    <section className="odds-board champion-odds-board">
       <header className="odds-board__header">
         <div>
           <p className="odds-board__eyebrow">Outright market</p>
