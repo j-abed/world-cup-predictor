@@ -7,8 +7,8 @@ BIH,6,1,-10.0,espn_summary
 BRA,5,0,-5.0,espn_summary
 CAN,5,0,-5.0,espn_summary
 CIV,4,0,-4.0,espn_summary
-COD,2,0,-2.0,espn_summary
-COL,3,0,-3.0,espn_summary
+COD,5,0,-5.0,espn_summary
+COL,4,0,-4.0,espn_summary
 CPV,4,0,-4.0,espn_summary
 CRO,2,0,-2.0,espn_summary
 CUW,7,0,-7.0,espn_summary
@@ -24,7 +24,7 @@ GHA,3,0,-3.0,espn_summary
 HTI,7,0,-7.0,espn_summary
 IRI,6,0,-6.0,espn_summary
 IRQ,4,1,-8.0,espn_summary
-JOR,1,0,-1.0,espn_summary
+JOR,4,0,-4.0,espn_summary
 JPN,1,0,-1.0,espn_summary
 KOR,4,0,-4.0,espn_summary
 KSA,6,0,-6.0,espn_summary
@@ -46,4 +46,4 @@ TUN,1,0,-1.0,espn_summary
 TUR,2,0,-2.0,espn_summary
 URU,5,1,-9.0,espn_summary
 USA,5,0,-5.0,espn_summary
-UZB,2,0,-2.0,espn_summary
+UZB,4,0,-4.0,espn_summary

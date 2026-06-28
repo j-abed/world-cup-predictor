@@ -51,14 +51,14 @@ match_id,home_score,away_score,status
 66457020,3,1,Complete
 66457022,2,0,Complete
 66457024,1,2,Complete
-66457026,0,0,In Progress
+66457026,1,3,Complete
 66457028,3,3,Complete
 66457030,1,1,Complete
 66457032,1,3,Complete
 66457034,5,0,Complete
 66457036,1,0,Complete
-66457038,0,0,In Progress
-66457040,0,1,In Progress
+66457038,0,0,Complete
+66457040,3,1,Complete
 66457042,4,2,Complete
 66457044,1,0,Complete
 66457046,0,0,Complete

@@ -244,13 +244,14 @@ def upsert_results(
 
         if not existing.empty and not force:
             current = existing.iloc[0]
-            messages.append(
-                f"Skipping existing match_id {match_id}: "
-                f"{fixture['home_team']} {int(current['home_score'])}-"
-                f"{int(current['away_score'])} {fixture['away_team']} "
-                "(use --force to overwrite)"
-            )
-            continue
+            if str(current["status"]).lower() == "complete":
+                messages.append(
+                    f"Skipping existing match_id {match_id}: "
+                    f"{fixture['home_team']} {int(current['home_score'])}-"
+                    f"{int(current['away_score'])} {fixture['away_team']} "
+                    "(use --force to overwrite)"
+                )
+                continue
 
         if not existing.empty:
             output = output[output["match_id"] != match_id].copy()
