@@ -1,12 +1,9 @@
 name: Deploy frontend
 
+# Production deploys run via Vercel Git on push to main (project root directory: frontend).
+# This workflow is a manual fallback only — do not re-enable push here unless you disable
+# Vercel Git production deploys, or you'll double-deploy and hit frontend/frontend path errors.
 on:
-  push:
-    branches: [main]
-    paths:
-      - "frontend/**"
-      - "data/**"
-      - ".github/workflows/deploy-frontend.yml"
   workflow_dispatch:
 
 jobs:
@@ -29,14 +26,12 @@ jobs:
         run: npm install -g vercel@latest
 
       - name: Pull Vercel environment
-        working-directory: frontend
         run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
         env:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
 
       - name: Build and deploy
-        working-directory: frontend
         run: vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }}
         env:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}

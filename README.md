@@ -169,7 +169,7 @@ uv run pytest && cd frontend && npm run lint && npm run build
 | Workflow | Trigger | What it does |
 |----------|---------|--------------|
 | `refresh-data.yml` | Every 2h (Jun 11–Jul 20, 2026 UTC) + manual | Sync ESPN → ratings → fair-play → model → export → pytest → commit |
-| `deploy-frontend.yml` | Push to `main` (frontend/data paths) | Build and deploy to Vercel |
+| `deploy-frontend.yml` | Manual dispatch | Token-based Vercel prod deploy (fallback; Vercel Git owns prod on push) |
 | `scenario.yml` | Manual dispatch | Run a what-if scenario and commit `scenario_app_state.json` |
 | `ci-failure-alert.yml` | Failed refresh/deploy/scenario runs | Open or comment on a `ci-failure` GitHub issue |
 
@@ -183,27 +183,42 @@ gh workflow run refresh-data.yml && gh run watch
 
 ### Vercel Git auto-deploy (recommended)
 
+```bash
+./scripts/setup_vercel_git.sh          # link GitHub + set root directory to frontend
+./scripts/setup_vercel_git.sh --dry-run
+```
+
+Requires `vercel login`, `gh auth login`, and `VERCEL_TOKEN` (classic token from https://vercel.com/account/tokens). Use `--link` if `frontend/.vercel/project.json` is missing. Use `--trigger-preview` to push an empty commit after setup.
+
+Manual dashboard steps (if the script cannot connect Git):
+
 1. Open [vercel.com/new](https://vercel.com/new) → **Import** this repo
 2. Set **Root Directory** to `frontend`
 3. **Framework Preset:** Vite
 4. Optional env var for social preview URLs: `VITE_SITE_URL` = production URL
 5. Every push to `main` auto-deploys (including data commits from GitHub Actions)
 
-CLI deploy from `frontend/`:
+CLI deploy from the **repository root** (project root directory is `frontend` in Vercel settings — do not `cd frontend` or the CLI looks for `frontend/frontend`):
 
 ```bash
-cd frontend && npx vercel --prod
+vercel deploy --prod
 ```
 
-### GitHub Actions deploy (alternative)
+### GitHub Actions deploy (manual fallback)
 
-Configure repository secrets once; pushes touching `frontend/` or `data/` deploy via `deploy-frontend.yml`:
+Vercel Git should own production. Use GHA only when you need a token-based redeploy without pushing:
 
 ```bash
-./scripts/setup_github_vercel_secrets.sh --trigger-deploy
+gh workflow run deploy-frontend.yml && gh run watch
 ```
 
-Required secrets: `VERCEL_TOKEN`, `VERCEL_ORG_ID`, `VERCEL_PROJECT_ID`. See script help for `--dry-run` and manual token options.
+Configure secrets once:
+
+```bash
+./scripts/setup_github_vercel_secrets.sh
+```
+
+Required secrets: `VERCEL_TOKEN`, `VERCEL_ORG_ID`, `VERCEL_PROJECT_ID`. The workflow runs `vercel deploy` from the repo root to match the Vercel project's `frontend` root directory.
 
 ## Documentation
 
