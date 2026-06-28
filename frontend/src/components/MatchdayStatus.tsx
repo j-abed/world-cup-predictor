@@ -1,4 +1,5 @@
 import type { GroupCoverage, LiveContext, Metadata } from "../types";
+import { isMatchLikelyOver, useMinuteTick } from "../lib/useClock";
 import { TeamBadge } from "./TeamBadge";
 
 interface MatchdayStatusProps {
@@ -12,10 +13,18 @@ export function MatchdayStatus({
   metadata,
   coverage,
 }: MatchdayStatusProps) {
+  useMinuteTick();
+
   const liveMatch = liveContext.in_progress_matches[0];
   const nextMatch = liveContext.next_match;
+
+  // If the match has been "in progress" longer than a typical game window,
+  // the backend JSON is stale — treat it as awaiting a result sync.
+  const likelyOver = liveMatch ? isMatchLikelyOver(liveMatch.kickoff) : false;
+
   const displayMatch = liveMatch ?? nextMatch;
-  const isLive = Boolean(liveMatch);
+  const isLive = Boolean(liveMatch) && !likelyOver;
+  const isAwaiting = Boolean(liveMatch) && likelyOver;
 
   const played = metadata.completed_result_count;
   const total = metadata.fixture_count;
@@ -43,8 +52,9 @@ export function MatchdayStatus({
         >
           <span
             className={`matchday-status__badge${isLive ? " matchday-status__badge--live" : ""}`}
+            title={isAwaiting ? "Match window has passed — awaiting result sync" : undefined}
           >
-            {isLive ? "Live" : "Next"}
+            {isLive ? "Live" : isAwaiting ? "Awaiting" : "Next"}
           </span>
           <div className="matchday-status__match-teams">
             <TeamBadge code={displayMatch.home_code} size="sm" />
