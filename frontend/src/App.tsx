@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { BacktestView } from "./components/BacktestView";
 import { BracketView } from "./components/BracketView";
 import { ChampionOdds } from "./components/ChampionOdds";
@@ -8,9 +8,17 @@ import { CommandPanelStack } from "./components/CommandPanel";
 import { PredictorDashboard } from "./components/predictor/PredictorDashboard";
 import { ProjectedField } from "./components/ProjectedField";
 import { MarketsView } from "./components/MarketsView";
-import { MethodologyView } from "./components/MethodologyView";
-import { GuidePage } from "./pages/GuidePage";
 import { QualificationOdds } from "./components/QualificationOdds";
+
+const MethodologyView = lazy(() =>
+  import("./components/MethodologyView").then((m) => ({
+    default: m.MethodologyView,
+  })),
+);
+
+const GuidePage = lazy(() =>
+  import("./pages/GuidePage").then((m) => ({ default: m.GuidePage })),
+);
 import { TabErrorBoundary } from "./components/TabErrorBoundary";
 import { TeamDetail } from "./components/TeamDetail";
 import { ThirdPlaceTable } from "./components/ThirdPlaceTable";
@@ -28,6 +36,25 @@ import { buildTeamIndex } from "./lib/team";
 import { readAppUrlState, writeAppUrlState } from "./lib/urlState";
 import type { Backtest2022 } from "./types/backtest";
 import type { AppState } from "./types";
+
+function AppLoadingSpinner() {
+  return (
+    <div className="flex min-h-screen items-center justify-center">
+      <div className="flex flex-col items-center gap-3 text-muted-foreground">
+        <div className="h-8 w-8 animate-spin rounded-full border-2 border-border border-t-accent" />
+        <p className="text-sm">Loading…</p>
+      </div>
+    </div>
+  );
+}
+
+function TabLoadingSpinner() {
+  return (
+    <div className="flex items-center justify-center py-16">
+      <div className="h-6 w-6 animate-spin rounded-full border-2 border-border border-t-accent" />
+    </div>
+  );
+}
 
 export default function App() {
   const [appState, setAppState] = useState<AppState | null>(null);
@@ -188,7 +215,11 @@ export default function App() {
   }
 
   if (standaloneGuide) {
-    return <GuidePage appState={appState} mode="standalone" />;
+    return (
+      <Suspense fallback={<AppLoadingSpinner />}>
+        <GuidePage appState={appState} mode="standalone" />
+      </Suspense>
+    );
   }
 
   const selectedTeam = selectedTeamCode
@@ -259,7 +290,11 @@ export default function App() {
           />
         );
       case "methodology":
-        return <MethodologyView appState={appState} />;
+        return (
+          <Suspense fallback={<TabLoadingSpinner />}>
+            <MethodologyView appState={appState} />
+          </Suspense>
+        );
       case "backtest":
         return (
           <BacktestView
@@ -286,6 +321,7 @@ export default function App() {
         liveAccuracy={appState.live_accuracy}
         activeTab={activeTab}
         onTabChange={handleTabChange}
+        onSelectTeam={handleSelectTeam}
         insightContext={insightContext}
       >
         <TabErrorBoundary key={activeTab} tabLabel={TAB_LABELS[activeTab]}>

@@ -5,6 +5,8 @@ interface NavItem {
   id: TabId;
   label: string;
   icon: ReactNode;
+  /** When set the item renders as an anchor tag navigating here instead of switching tabs. */
+  href?: string;
 }
 
 function IconDashboard() {
@@ -105,19 +107,29 @@ const NAV_ITEMS: NavItem[] = [
   { id: "bracket", label: "Knockout", icon: <IconKnockout /> },
   { id: "groups", label: "Groups", icon: <IconGroups /> },
   { id: "qualification", label: "Qualify", icon: <IconQualify /> },
-  { id: "methodology", label: "Guide", icon: <IconMethodology /> },
+  { id: "methodology", label: "Guide", icon: <IconMethodology />, href: "/guide" },
   { id: "backtest", label: "2022", icon: <IconBacktest /> },
 ];
 
 interface CommandSidebarProps {
   activeTab: TabId;
   onTabChange: (tab: TabId) => void;
+  /** True when the sidebar is hidden by CSS (mobile) — removes from tab order + AT. */
+  visuallyHidden?: boolean;
 }
 
-export function CommandSidebar({ activeTab, onTabChange }: CommandSidebarProps) {
+export function CommandSidebar({
+  activeTab,
+  onTabChange,
+  visuallyHidden = false,
+}: CommandSidebarProps) {
   return (
-    <aside className="command-sidebar" aria-label="Command navigation">
-      <div className="command-sidebar__brand">
+    <nav
+      className="command-sidebar"
+      aria-label="Main navigation"
+      aria-hidden={visuallyHidden || undefined}
+    >
+      <div className="command-sidebar__brand" aria-hidden={visuallyHidden || undefined}>
         <div className="command-sidebar__icon" aria-hidden>
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
             <path
@@ -134,27 +146,42 @@ export function CommandSidebar({ activeTab, onTabChange }: CommandSidebarProps) 
         </div>
       </div>
 
-      <nav className="command-sidebar__nav">
+      <div className="command-sidebar__nav">
         <ul className="command-sidebar__list">
           {NAV_ITEMS.map((item) => {
             const isActive = item.id === activeTab;
 
+            const linkClass = `command-sidebar__link${isActive ? " command-sidebar__link--active" : ""}`;
+
             return (
               <li key={item.id}>
-                <button
-                  type="button"
-                  onClick={() => onTabChange(item.id)}
-                  className={`command-sidebar__link${isActive ? " command-sidebar__link--active" : ""}`}
-                  aria-current={isActive ? "page" : undefined}
-                >
-                  <span className="command-sidebar__link-icon">{item.icon}</span>
-                  <span className="command-sidebar__link-label">{item.label}</span>
-                </button>
+                {item.href ? (
+                  <a
+                    href={item.href}
+                    tabIndex={visuallyHidden ? -1 : undefined}
+                    className={linkClass}
+                    aria-current={isActive ? "page" : undefined}
+                  >
+                    <span className="command-sidebar__link-icon">{item.icon}</span>
+                    <span className="command-sidebar__link-label">{item.label}</span>
+                  </a>
+                ) : (
+                  <button
+                    type="button"
+                    tabIndex={visuallyHidden ? -1 : undefined}
+                    onClick={() => onTabChange(item.id)}
+                    className={linkClass}
+                    aria-current={isActive ? "page" : undefined}
+                  >
+                    <span className="command-sidebar__link-icon">{item.icon}</span>
+                    <span className="command-sidebar__link-label">{item.label}</span>
+                  </button>
+                )}
               </li>
             );
           })}
         </ul>
-      </nav>
-    </aside>
+      </div>
+    </nav>
   );
 }

@@ -8,6 +8,7 @@ import type {
   ModelQuality,
 } from "../../types";
 import type { TabId } from "../../lib/tabs";
+import { useMediaQuery } from "../../lib/useMediaQuery";
 import { MatchdayStatus } from "../MatchdayStatus";
 import { TabNav } from "../TabNav";
 import { InsightRail } from "../champion/InsightRail";
@@ -28,6 +29,7 @@ interface PredictorDashboardProps {
   liveAccuracy?: LiveAccuracy;
   activeTab: TabId;
   onTabChange: (tab: TabId) => void;
+  onSelectTeam?: (code: string) => void;
   insightContext?: InsightContext | null;
   children: ReactNode;
 }
@@ -51,6 +53,17 @@ const EMPTY_MODEL_QUALITY: ModelQuality = {
   backtest_reference: "2022",
   backtest_round_of_16_overlap: 0,
 };
+
+/** Converts snake_case identifiers to Title Case for display. */
+function formatRatingsSource(source: string): string {
+  if (/^[a-z][a-z0-9_]*$/.test(source)) {
+    return source
+      .split("_")
+      .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+      .join(" ");
+  }
+  return source;
+}
 
 function formatUtcClock(iso: string): string {
   const parsed = new Date(iso);
@@ -192,6 +205,7 @@ export function PredictorDashboard({
   liveAccuracy,
   activeTab,
   onTabChange,
+  onSelectTeam,
   insightContext = null,
   children,
 }: PredictorDashboardProps) {
@@ -203,20 +217,36 @@ export function PredictorDashboard({
     liveContext.days_to_final > 0 ? String(liveContext.days_to_final) : "—";
   const showInsightRail = activeTab === "champion" && insightContext !== null;
 
+  // On the Guide tab the cockpit chrome (live stats, KPI tiles, matchday) is
+  // irrelevant and crowds the long-form content — collapse to a thin strip.
+  const isGuideTab = activeTab === "methodology";
+
+  // Sidebar is only visible at ≥1024px; TabNav is only visible below 1024px.
+  // We hide the non-visible nav from the AT and tab order to prevent duplication.
+  const isDesktopNav = useMediaQuery("(min-width: 1024px)");
+
   return (
     <div
       className={`predictor-command-center${showInsightRail ? " predictor-command-center--with-rail" : ""}`}
     >
+      <a href="#main-content" className="skip-to-content">
+        Skip to main content
+      </a>
+
       <PitchBackground />
 
       <div className="cockpit-shell">
-        <CommandSidebar activeTab={activeTab} onTabChange={onTabChange} />
+        <CommandSidebar
+          activeTab={activeTab}
+          onTabChange={onTabChange}
+          visuallyHidden={!isDesktopNav}
+        />
 
         <div className="cockpit-main">
           <header className="command-shell-header command-shell-header--compact">
             <div className="hero-module hero-module--compact">
               <div className="hero-module__bar">
-                <LiveBadge />
+                {!isGuideTab && <LiveBadge />}
                 <HeroStatusLine
                   matchday={matchday}
                   completedResults={metadata.completed_result_count}
@@ -225,108 +255,73 @@ export function PredictorDashboard({
                 />
               </div>
 
-              <HeroHeader
-                simulations={simulations}
-                refreshIntervalHours={refreshHours}
-              />
+              {!isGuideTab && (
+                <HeroHeader
+                  simulations={simulations}
+                  refreshIntervalHours={refreshHours}
+                />
+              )}
 
-              <div className="kpi-grid kpi-grid--compact">
-                <KpiTile
-                  label="Simulations"
-                  value={simulations.toLocaleString()}
-                  hint={KPI_HINTS.simulations}
-                />
-                <KpiTile
-                  label="Proj. confidence"
-                  value={
-                    confidencePercent > 0
-                      ? `${Number(confidencePercent).toFixed(1)}%`
-                      : "—"
-                  }
-                  accent={confidencePercent > 0}
-                  hint={
-                    confidencePercent > 0
-                      ? projectionConfidenceHint(modelQuality)
-                      : KPI_HINTS.projectionConfidenceFallback
-                  }
-                />
-                <KpiTile
-                  label="Days to final"
-                  value={daysToFinal}
-                  hint={KPI_HINTS.daysToFinal}
-                />
-              </div>
+              {!isGuideTab && (
+                <div className="kpi-grid kpi-grid--compact">
+                  <KpiTile
+                    label="Simulations"
+                    value={simulations.toLocaleString()}
+                    hint={KPI_HINTS.simulations}
+                  />
+                  <KpiTile
+                    label="Proj. confidence"
+                    value={
+                      confidencePercent > 0
+                        ? `${Number(confidencePercent).toFixed(1)}%`
+                        : "—"
+                    }
+                    accent={confidencePercent > 0}
+                    hint={
+                      confidencePercent > 0
+                        ? projectionConfidenceHint(modelQuality)
+                        : KPI_HINTS.projectionConfidenceFallback
+                    }
+                  />
+                  <KpiTile
+                    label="Days to final"
+                    value={daysToFinal}
+                    hint={KPI_HINTS.daysToFinal}
+                  />
+                </div>
+              )}
             </div>
 
-            <MatchdayStatus
-              liveContext={liveContext}
-              metadata={metadata}
-              coverage={coverage}
-            />
+            {!isGuideTab && (
+              <MatchdayStatus
+                liveContext={liveContext}
+                metadata={metadata}
+                coverage={coverage}
+              />
+            )}
 
-            {liveAccuracy?.available && liveAccuracy.summary ? (
+            {!isGuideTab && liveAccuracy?.available && liveAccuracy.summary ? (
               <p className="command-meta-strip">{liveAccuracy.summary}</p>
             ) : null}
 
-            {metadata.ratings_source ? (
-              <div className="command-meta-strip command-meta-strip--compact">
-                <span>
-                  Ratings:{" "}
-                  {metadata.ratings_source_url ? (
-                    <a
-                      href={metadata.ratings_source_url}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="underline decoration-border underline-offset-2 hover:text-gold"
-                    >
-                      {metadata.ratings_source}
-                    </a>
-                  ) : (
-                    metadata.ratings_source
-                  )}
-                </span>
-              </div>
-            ) : null}
-
-            <details className="command-caveats command-caveats--compact">
-                <summary className="flex cursor-pointer list-none items-center justify-between text-muted-foreground transition hover:text-foreground">
-                  <span>Data caveats &amp; methodology notes</span>
-                  <span className="text-muted-foreground/60">▾</span>
-                </summary>
-                <p className="mt-2 text-xs">
-                  <a
-                    href="/guide"
-                    className="guide-link guide-link--inline"
-                  >
-                    How the World Cup Probability Engine Works →
-                  </a>
-                </p>
-                {metadata.data_caveats.length > 0 ? (
-                  <ul className="mt-2 space-y-1 text-xs text-muted-foreground">
-                    {metadata.data_caveats.map((caveat) => (
-                      <li key={caveat} className="flex gap-2">
-                        <span className="text-muted-foreground/50">•</span>
-                        <span>{caveat}</span>
-                      </li>
-                    ))}
-                  </ul>
-                ) : null}
-              </details>
           </header>
 
           <div
             className={`cockpit-workspace${showInsightRail ? " cockpit-workspace--with-rail" : ""}`}
           >
-            <div className="cockpit-center">
-              <TabNav
-                active={activeTab}
-                onChange={onTabChange}
-                className="cockpit-tabs-mobile"
-              />
-              <main className="command-main command-main--cockpit">
-                <div className="command-content-tight">{children}</div>
-              </main>
-            </div>
+            <TabNav
+              active={activeTab}
+              onChange={onTabChange}
+              className="cockpit-tabs-mobile"
+              visuallyHidden={isDesktopNav}
+            />
+            <main id="main-content" className="command-main command-main--cockpit">
+              <div className="command-content-tight">
+                <div key={activeTab} className="animate-fade-up">
+                  {children}
+                </div>
+              </div>
+            </main>
 
             {showInsightRail && insightContext ? (
               <aside className="cockpit-rail-right">
@@ -336,6 +331,7 @@ export function PredictorDashboard({
                   pathSteps={insightContext.pathSteps}
                   focusTeam={insightContext.focusTeam}
                   focusCode={insightContext.focusCode}
+                  onSelectTeam={onSelectTeam}
                 />
               </aside>
             ) : null}
@@ -343,15 +339,64 @@ export function PredictorDashboard({
 
           <footer className="command-footer command-footer--cockpit">
             <div className="command-footer__inner">
-              <p className="command-footer__disclaimer">
-                Projections are simulation outputs, not betting odds. See
-                methodology notes above.
-              </p>
+              <div className="command-footer__meta">
+                <p className="command-footer__disclaimer">
+                  Projections are simulation outputs, not betting odds.
+                </p>
+
+                {metadata.ratings_source ? (
+                  <p className="command-footer__attribution">
+                    Ratings:{" "}
+                    {metadata.ratings_source_url ? (
+                      <a
+                        href={metadata.ratings_source_url}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="underline decoration-border underline-offset-2 hover:text-gold"
+                      >
+                        {formatRatingsSource(metadata.ratings_source)}
+                      </a>
+                    ) : (
+                      formatRatingsSource(metadata.ratings_source)
+                    )}
+                  </p>
+                ) : null}
+
+                <details className="command-caveats command-caveats--footer">
+                  <summary>
+                    <span>Data caveats &amp; methodology notes</span>
+                    <span aria-hidden>▾</span>
+                  </summary>
+                  <p className="mt-2 text-xs">
+                    <a href="/guide" className="guide-link guide-link--inline">
+                      How the World Cup Probability Engine Works →
+                    </a>
+                  </p>
+                  {metadata.data_caveats.length > 0 ? (
+                    <ul className="mt-2 space-y-1 text-xs text-muted-foreground">
+                      {metadata.data_caveats.map((caveat) => (
+                        <li key={caveat} className="flex gap-2">
+                          <span className="text-muted-foreground/50">•</span>
+                          <span>{caveat}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : null}
+                </details>
+              </div>
+
               <p className="command-footer__credit">
                 Made with{" "}
-                <span className="command-footer__heart" aria-hidden>
-                  ♥
-                </span>{" "}
+                <svg
+                  width="12"
+                  height="11"
+                  viewBox="0 0 12 11"
+                  fill="currentColor"
+                  aria-hidden
+                  className="command-footer__heart"
+                >
+                  <path d="M6 10.25C5.5 10.25 1 7.15 1 3.75a2.75 2.75 0 0 1 5-1.57A2.75 2.75 0 0 1 11 3.75c0 3.4-4.5 6.5-5 6.5Z" />
+                </svg>{" "}
                 in NYC
               </p>
             </div>

@@ -1,24 +1,42 @@
 import type { LiveContext, LiveMatchSummary } from "../types";
+import { isMatchLikelyOver, useMinuteTick } from "../lib/useClock";
 import { TeamBadge } from "./TeamBadge";
 
 interface LiveMatchBannerProps {
   liveContext: LiveContext;
 }
 
-function MatchChip({ match, live }: { match: LiveMatchSummary; live?: boolean }) {
+function MatchChip({
+  match,
+  live,
+}: {
+  match: LiveMatchSummary;
+  live?: boolean;
+}) {
   const hasScore =
     match.home_score !== null &&
     match.home_score !== undefined &&
     match.away_score !== null &&
     match.away_score !== undefined;
 
+  const likelyOver = live ? isMatchLikelyOver(match.kickoff) : false;
+  const showLive = live && !likelyOver;
+  const showAwaiting = live && likelyOver;
+
   return (
     <div
-      className={`command-match-banner${live ? " command-match-banner--live" : ""}`}
+      className={`command-match-banner${showLive ? " command-match-banner--live" : ""}`}
     >
-      {live ? (
+      {showLive ? (
         <span className="command-match-banner__badge command-match-banner__badge--live">
           Live
+        </span>
+      ) : showAwaiting ? (
+        <span
+          className="command-match-banner__badge"
+          title="Match window has passed — awaiting result sync"
+        >
+          Awaiting result
         </span>
       ) : (
         <span className="command-match-banner__badge">Next up</span>
@@ -40,6 +58,8 @@ function MatchChip({ match, live }: { match: LiveMatchSummary; live?: boolean })
 }
 
 export function LiveMatchBanner({ liveContext }: LiveMatchBannerProps) {
+  useMinuteTick();
+
   const liveMatch = liveContext.in_progress_matches[0];
   const nextMatch = liveContext.next_match;
 

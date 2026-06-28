@@ -37,5 +37,11 @@ notes/blog-artifacts/
 # Playwright MCP debug captures
 .playwright-mcp/
 
+# Playwright test output
+frontend/test-results/
+frontend/playwright-report/
+frontend/blob-report/
+
 # Local visual QA screenshots
 .visual-check/
+.vercel

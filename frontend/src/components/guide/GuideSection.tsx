@@ -56,10 +56,34 @@ interface GuideNoteProps {
   children: ReactNode;
 }
 
+function NoteIcon() {
+  return (
+    <svg
+      width="11"
+      height="11"
+      viewBox="0 0 12 12"
+      fill="none"
+      aria-hidden
+      className="guide-note__icon"
+    >
+      <circle cx="6" cy="6" r="5.25" stroke="currentColor" strokeWidth="1.2" />
+      <path
+        d="M6 5v3.5M6 3.5v.5"
+        stroke="currentColor"
+        strokeWidth="1.4"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
 export function GuideNote({ title, children }: GuideNoteProps) {
   return (
     <aside className="guide-note">
-      <p className="guide-note__title">{title}</p>
+      <p className="guide-note__title">
+        <NoteIcon />
+        {title}
+      </p>
       <div className="guide-note__body">{children}</div>
     </aside>
   );

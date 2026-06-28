@@ -136,10 +136,8 @@ export function BracketView({ bracket, roundOdds, onSelectTeam }: BracketViewPro
         </p>
       </CommandNote>
 
-      <div className="mb-3 flex flex-wrap items-center gap-2">
-        <span className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
-          Focus
-        </span>
+      <div className="bracket-filter-strip">
+        <span className="bracket-filter-strip__label">Focus</span>
         <RoundFilterChip
           label="All rounds"
           active={focusedRound === "all"}
@@ -288,12 +286,16 @@ function CollapsibleBracketRound({
             {ADVANCE_PROB_FIELD[roundKey].reachLabel} · {matches.length} matches
           </p>
         </div>
-        <span
-          className={`text-sm text-muted-foreground transition ${open ? "rotate-180" : ""}`}
+        <svg
+          width="12"
+          height="12"
+          viewBox="0 0 12 12"
+          fill="none"
           aria-hidden
+          className={`text-muted-foreground transition-transform duration-200 ${open ? "rotate-180" : ""}`}
         >
-          ▾
-        </span>
+          <path d="M2 4l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
       </button>
       {open ? (
         <div className="flex flex-col gap-3 border-t border-border/50 px-4 py-3">
