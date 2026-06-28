@@ -1,49 +1,49 @@
 team_id,rating,source,source_url,rating_type,name,code,group
-ARG,1877.27,post_match_elo_updates,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Argentina,ARG,J
+ARG,1885.2168602687016,post_match_elo_updates,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Argentina,ARG,J
 ESP,1874.71,post_match_elo_updates,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Spain,ESP,H
-FRA,1870.7,post_match_elo_updates,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,France,FRA,I
-ENG,1833.2778342163122,post_match_elo_updates,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,England,ENG,L
-POR,1763.83,post_match_elo_updates,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Portugal,POR,K
-BRA,1761.16,post_match_elo_updates,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Brazil,BRA,C
+FRA,1875.0439358441213,post_match_elo_updates,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,France,FRA,I
+ENG,1819.7165702284929,post_match_elo_updates,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,England,ENG,L
+POR,1771.6471652861537,post_match_elo_updates,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Portugal,POR,K
+BRA,1770.5136110898034,post_match_elo_updates,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Brazil,BRA,C
 NED,1757.87,post_match_elo_updates,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Netherlands,NED,F
 BEL,1738.0,post_match_elo_updates,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Belgium,BEL,G
 GER,1718.0,post_match_elo_updates,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Germany,GER,E
-CRO,1726.407241584162,post_match_elo_updates,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Croatia,CRO,L
-COL,1698.35,post_match_elo_updates,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Colombia,COL,K
-MEX,1687.48,post_match_elo_updates,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Mexico,MEX,A
-SEN,1684.07,post_match_elo_updates,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Senegal,SEN,I
-URU,1673.07,post_match_elo_updates,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Uruguay,URU,H
+CRO,1734.7500108429335,post_match_elo_updates,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Croatia,CRO,L
+COL,1707.6957753235279,post_match_elo_updates,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Colombia,COL,K
+MEX,1699.9547385606193,post_match_elo_updates,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Mexico,MEX,A
+SEN,1659.0521681977511,post_match_elo_updates,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Senegal,SEN,I
+URU,1662.8888527006384,post_match_elo_updates,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Uruguay,URU,H
 USA,1670.0,post_match_elo_updates,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,United States,USA,D
-SUI,1660.0,post_match_elo_updates,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Switzerland,SUI,B
+SUI,1674.8244581113,post_match_elo_updates,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Switzerland,SUI,B
 JPN,1650.0,post_match_elo_updates,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Japan,JPN,F
-MAR,1645.0,post_match_elo_updates,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Morocco,MAR,C
+MAR,1654.6101229340816,post_match_elo_updates,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Morocco,MAR,C
 ECU,1638.0,post_match_elo_updates,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Ecuador,ECU,E
-AUT,1635.0,post_match_elo_updates,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Austria,AUT,J
+AUT,1624.640263850461,post_match_elo_updates,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Austria,AUT,J
 IRI,1625.0,post_match_elo_updates,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Iran,IRI,G
-KOR,1615.0,post_match_elo_updates,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,South Korea,KOR,A
+KOR,1587.897576796596,post_match_elo_updates,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,South Korea,KOR,A
 AUS,1608.0,post_match_elo_updates,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Australia,AUS,D
 TUR,1600.0,post_match_elo_updates,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Turkey,TUR,D
-NOR,1595.0,post_match_elo_updates,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Norway,NOR,I
-EGY,1588.0,post_match_elo_updates,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Egypt,EGY,G
+NOR,1620.0178318022488,post_match_elo_updates,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Norway,NOR,I
+EGY,1602.8244581113,post_match_elo_updates,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Egypt,EGY,G
 SWE,1582.0,post_match_elo_updates,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Sweden,SWE,F
 CIV,1578.0,post_match_elo_updates,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Ivory Coast,CIV,E
 TUN,1575.0,post_match_elo_updates,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Tunisia,TUN,F
-DZA,1570.0,post_match_elo_updates,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Algeria,DZA,J
-CAN,1568.0,post_match_elo_updates,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Canada,CAN,B
+DZA,1587.3449126141682,post_match_elo_updates,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Algeria,DZA,J
+CAN,1553.1755418887,post_match_elo_updates,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Canada,CAN,B
 PAR,1562.0,post_match_elo_updates,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Paraguay,PAR,D
-GHA,1546.462758415838,post_match_elo_updates,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Ghana,GHA,L
-SCO,1555.0,post_match_elo_updates,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Scotland,SCO,C
-CZE,1550.0,post_match_elo_updates,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Czechia,CZE,A
-QAT,1528.0,post_match_elo_updates,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Qatar,QAT,B
+GHA,1560.024022403657,post_match_elo_updates,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Ghana,GHA,L
+SCO,1545.6463889101967,post_match_elo_updates,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Scotland,SCO,C
+CZE,1537.5252614393808,post_match_elo_updates,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Czechia,CZE,A
+QAT,1506.9647627643533,post_match_elo_updates,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Qatar,QAT,B
 KSA,1522.0,post_match_elo_updates,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Saudi Arabia,KSA,H
-UZB,1518.0,post_match_elo_updates,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Uzbekistan,UZB,K
-BIH,1510.0,post_match_elo_updates,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Bosnia and Herzegovina,BIH,B
-IRQ,1505.0,post_match_elo_updates,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Iraq,IRQ,I
-PAN,1494.7421657836878,post_match_elo_updates,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Panama,PAN,L
-NZL,1496.0,post_match_elo_updates,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,New Zealand,NZL,G
-COD,1492.0,post_match_elo_updates,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,DR Congo,COD,K
-RSA,1486.0,post_match_elo_updates,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,South Africa,RSA,A
-JOR,1480.0,post_match_elo_updates,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Jordan,JOR,J
-CPV,1478.0,post_match_elo_updates,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Cape Verde,CPV,H
+UZB,1510.1828347138462,post_match_elo_updates,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Uzbekistan,UZB,K
+BIH,1531.0352372356467,post_match_elo_updates,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Bosnia and Herzegovina,BIH,B
+IRQ,1500.6560641558788,post_match_elo_updates,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Iraq,IRQ,I
+PAN,1486.3993965249163,post_match_elo_updates,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Panama,PAN,L
+NZL,1481.1755418887,post_match_elo_updates,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,New Zealand,NZL,G
+COD,1482.654224676472,post_match_elo_updates,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,DR Congo,COD,K
+RSA,1513.102423203404,post_match_elo_updates,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,South Africa,RSA,A
+JOR,1465.0679632666693,post_match_elo_updates,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Jordan,JOR,J
+CPV,1488.1811472993616,post_match_elo_updates,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Cape Verde,CPV,H
 CUW,1455.0,post_match_elo_updates,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Curacao,CUW,E
-HTI,1445.0,post_match_elo_updates,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Haiti,HTI,C
+HTI,1435.3898770659184,post_match_elo_updates,https://inside.fifa.com/fifa-world-ranking/men,fifa_world_ranking_points,Haiti,HTI,C
