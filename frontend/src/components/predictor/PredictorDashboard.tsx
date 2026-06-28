@@ -304,50 +304,6 @@ export function PredictorDashboard({
               <p className="command-meta-strip">{liveAccuracy.summary}</p>
             ) : null}
 
-            {metadata.ratings_source ? (
-              <div className="command-meta-strip command-meta-strip--compact">
-                <span>
-                  Ratings:{" "}
-                  {metadata.ratings_source_url ? (
-                    <a
-                      href={metadata.ratings_source_url}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="underline decoration-border underline-offset-2 hover:text-gold"
-                    >
-                      {formatRatingsSource(metadata.ratings_source)}
-                    </a>
-                  ) : (
-                    formatRatingsSource(metadata.ratings_source)
-                  )}
-                </span>
-              </div>
-            ) : null}
-
-            <details className="command-caveats command-caveats--compact">
-                <summary className="flex cursor-pointer list-none items-center justify-between text-muted-foreground transition hover:text-foreground">
-                  <span>Data caveats &amp; methodology notes</span>
-                  <span className="text-muted-foreground/60" aria-hidden>▾</span>
-                </summary>
-                <p className="mt-2 text-xs">
-                  <a
-                    href="/guide"
-                    className="guide-link guide-link--inline"
-                  >
-                    How the World Cup Probability Engine Works →
-                  </a>
-                </p>
-                {metadata.data_caveats.length > 0 ? (
-                  <ul className="mt-2 space-y-1 text-xs text-muted-foreground">
-                    {metadata.data_caveats.map((caveat) => (
-                      <li key={caveat} className="flex gap-2">
-                        <span className="text-muted-foreground/50">•</span>
-                        <span>{caveat}</span>
-                      </li>
-                    ))}
-                  </ul>
-                ) : null}
-              </details>
           </header>
 
           <div
@@ -383,10 +339,52 @@ export function PredictorDashboard({
 
           <footer className="command-footer command-footer--cockpit">
             <div className="command-footer__inner">
-              <p className="command-footer__disclaimer">
-                Projections are simulation outputs, not betting odds. See
-                methodology notes above.
-              </p>
+              <div className="command-footer__meta">
+                <p className="command-footer__disclaimer">
+                  Projections are simulation outputs, not betting odds.
+                </p>
+
+                {metadata.ratings_source ? (
+                  <p className="command-footer__attribution">
+                    Ratings:{" "}
+                    {metadata.ratings_source_url ? (
+                      <a
+                        href={metadata.ratings_source_url}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="underline decoration-border underline-offset-2 hover:text-gold"
+                      >
+                        {formatRatingsSource(metadata.ratings_source)}
+                      </a>
+                    ) : (
+                      formatRatingsSource(metadata.ratings_source)
+                    )}
+                  </p>
+                ) : null}
+
+                <details className="command-caveats command-caveats--footer">
+                  <summary>
+                    <span>Data caveats &amp; methodology notes</span>
+                    <span aria-hidden>▾</span>
+                  </summary>
+                  <p className="mt-2 text-xs">
+                    <a href="/guide" className="guide-link guide-link--inline">
+                      How the World Cup Probability Engine Works →
+                    </a>
+                  </p>
+                  {metadata.data_caveats.length > 0 ? (
+                    <ul className="mt-2 space-y-1 text-xs text-muted-foreground">
+                      {metadata.data_caveats.map((caveat) => (
+                        <li key={caveat} className="flex gap-2">
+                          <span className="text-muted-foreground/50">•</span>
+                          <span>{caveat}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : null}
+                </details>
+              </div>
+
               <p className="command-footer__credit">
                 Made with{" "}
                 <svg
