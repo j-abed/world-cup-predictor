@@ -217,6 +217,7 @@ const movementSchema = z.object({
   baseline_generated_at: z.string().nullable(),
   biggest_movers: z.array(movementMoverSchema),
   top_champion_changes: z.array(topChampionChangeSchema),
+  champion_changes: z.array(topChampionChangeSchema).optional(),
 });
 
 const liveMatchSummarySchema = z.object({

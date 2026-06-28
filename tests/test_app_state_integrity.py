@@ -92,11 +92,11 @@ def test_qualification_first_prob_labels(app_state_payload: dict) -> None:
         assert parsed == pytest.approx(team["first_prob"], abs=0.002)
 
 
-def test_path_difficulty_entries_reference_real_teams(app_state_payload: dict) -> None:
+def test_path_difficulty_covers_all_teams(app_state_payload: dict) -> None:
     codes = {team["code"] for team in app_state_payload["odds"]["round"]}
+    path_codes = {entry["code"] for entry in app_state_payload.get("path_difficulty", [])}
 
-    for entry in app_state_payload.get("path_difficulty", []):
-        assert entry["code"] in codes
+    assert path_codes == codes
 
 
 def test_bracket_teams_are_known_or_tbd(app_state_payload: dict) -> None:

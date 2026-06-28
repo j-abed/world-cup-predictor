@@ -1,7 +1,8 @@
 import { useMemo, useState } from "react";
 import type { PathDifficultyEntry, RoundOdds } from "../../types";
 import type { TopChampionChange } from "../../types";
-import { computeVolatility, trendSeries } from "../../lib/pathToFinal";
+import { championTrendSeries } from "../../lib/movement";
+import { computeVolatility } from "../../lib/pathToFinal";
 import { ProbabilityDelta } from "../MovementSummary";
 import { TeamBadge } from "../TeamBadge";
 import { TrendSparkline } from "./TrendSparkline";
@@ -44,7 +45,7 @@ export function TitleOddsBoard({
         "Semi %",
         "Path Diff",
         "Vol",
-        "Trend",
+        "Run",
       ] as const,
     [],
   );
@@ -79,7 +80,7 @@ export function TitleOddsBoard({
             const conf = qualificationByCode.get(team.code);
             const isSelected = selectedCode !== undefined && team.code === selectedCode;
             const vol = computeVolatility(team);
-            const trend = trendSeries(team, change?.delta);
+            const trend = championTrendSeries(change);
 
             return (
               <li key={team.code} role="none">
@@ -135,7 +136,11 @@ export function TitleOddsBoard({
                   </span>
 
                   <span className="terminal-board__cell terminal-board__cell--trend">
-                    <TrendSparkline values={trend} />
+                    {trend ? (
+                      <TrendSparkline values={trend} />
+                    ) : (
+                      <span className="terminal-board__muted">—</span>
+                    )}
                   </span>
                 </button>
               </li>

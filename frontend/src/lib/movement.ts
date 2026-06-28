@@ -1,4 +1,4 @@
-import type { Movement, MovementMetric } from "../types";
+import type { Movement, MovementMetric, TopChampionChange } from "../types";
 
 export function formatProbabilityDelta(delta: number): string {
   const points = delta * 100;
@@ -23,16 +23,32 @@ export function movementMetricLabel(metric: MovementMetric): string {
 
 export function championChangeByCode(
   movement: Movement | null | undefined,
-): Map<string, Movement["top_champion_changes"][number]> {
-  const map = new Map<string, Movement["top_champion_changes"][number]>();
+): Map<string, TopChampionChange> {
+  const map = new Map<string, TopChampionChange>();
 
   if (!movement?.has_baseline) {
     return map;
   }
 
-  for (const row of movement.top_champion_changes) {
+  const rows =
+    movement.champion_changes?.length
+      ? movement.champion_changes
+      : movement.top_champion_changes;
+
+  for (const row of rows) {
     map.set(row.code, row);
   }
 
   return map;
+}
+
+/** Two-point series for run-over-run title odds sparkline (previous → current). */
+export function championTrendSeries(
+  change: TopChampionChange | undefined,
+): number[] | null {
+  if (!change) {
+    return null;
+  }
+
+  return [change.previous, change.current];
 }

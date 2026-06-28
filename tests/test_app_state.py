@@ -38,4 +38,4 @@ def test_app_state_json_has_core_sections(app_state_path: Path) -> None:
     assert len(payload["fixtures"]) > 0
     assert len(payload["odds"]["round"]) == 48
     assert isinstance(payload["metadata"]["data_caveats"], list)
-    assert len(payload["path_difficulty"]) == 3
+    assert len(payload["path_difficulty"]) == payload["metadata"]["team_count"]

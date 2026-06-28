@@ -216,6 +216,8 @@ export interface Movement {
   baseline_generated_at: string | null;
   biggest_movers: MovementMover[];
   top_champion_changes: TopChampionChange[];
+  /** Per-team title odds delta vs previous export (all teams when baseline exists). */
+  champion_changes?: TopChampionChange[];
 }
 
 export interface LiveMatchSummary {

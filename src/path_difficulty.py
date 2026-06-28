@@ -152,7 +152,7 @@ def build_path_difficulty_payload(
     round_probabilities: pd.DataFrame,
     ratings: pd.DataFrame,
     *,
-    top_n: int = 3,
+    top_n: int | None = None,
 ) -> list[dict[str, Any]]:
     rating_lookup = build_rating_lookup(ratings)
     rating_values = list(rating_lookup.values())
@@ -166,7 +166,10 @@ def build_path_difficulty_payload(
     ranked = round_probabilities.sort_values(
         "champion_prob",
         ascending=False,
-    ).head(top_n)
+    )
+
+    if top_n is not None:
+        ranked = ranked.head(top_n)
 
     payload: list[dict[str, Any]] = []
 

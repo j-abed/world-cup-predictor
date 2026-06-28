@@ -203,6 +203,7 @@ def build_movement_payload(
             "baseline_generated_at": None,
             "biggest_movers": [],
             "top_champion_changes": [],
+            "champion_changes": [],
         }
 
     movers: list[dict[str, Any]] = []
@@ -245,34 +246,38 @@ def build_movement_payload(
 
     movers.sort(key=lambda row: abs(row["delta"]), reverse=True)
 
+    top_champion_changes: list[dict[str, Any]] = []
+    champion_changes: list[dict[str, Any]] = []
+
     ranked_current = sorted(
         current_teams.values(),
         key=lambda team: team.champion_prob,
         reverse=True,
     )
 
-    top_champion_changes: list[dict[str, Any]] = []
-
-    for rank, current in enumerate(ranked_current[:3], start=1):
+    for rank, current in enumerate(ranked_current, start=1):
         prior = previous.teams.get(current.code)
 
         if prior is None:
             continue
 
-        top_champion_changes.append(
-            {
-                "code": current.code,
-                "team": current.team,
-                "rank": rank,
-                "delta": _round_prob(current.champion_prob - prior.champion_prob),
-                "previous": prior.champion_prob,
-                "current": current.champion_prob,
-            }
-        )
+        row = {
+            "code": current.code,
+            "team": current.team,
+            "rank": rank,
+            "delta": _round_prob(current.champion_prob - prior.champion_prob),
+            "previous": prior.champion_prob,
+            "current": current.champion_prob,
+        }
+        champion_changes.append(row)
+
+        if rank <= 3:
+            top_champion_changes.append(row)
 
     return {
         "has_baseline": True,
         "baseline_generated_at": previous.generated_at,
         "biggest_movers": movers[:biggest_mover_count],
         "top_champion_changes": top_champion_changes,
+        "champion_changes": champion_changes,
     }

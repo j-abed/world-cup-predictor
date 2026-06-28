@@ -56,6 +56,7 @@ def test_build_movement_without_baseline() -> None:
     assert payload["has_baseline"] is False
     assert payload["biggest_movers"] == []
     assert payload["top_champion_changes"] == []
+    assert payload["champion_changes"] == []
 
 
 def test_build_movement_detects_biggest_movers_and_top_three() -> None:
@@ -92,6 +93,9 @@ def test_build_movement_detects_biggest_movers_and_top_three() -> None:
     top_three_codes = [row["code"] for row in payload["top_champion_changes"]]
     assert top_three_codes == ["BRA", "ARG", "FRA"]
     assert payload["top_champion_changes"][0]["delta"] == 0.02
+
+    assert len(payload["champion_changes"]) == 3
+    assert payload["champion_changes"][0]["code"] == "BRA"
 
 
 def test_snapshot_round_trip(tmp_path: Path) -> None:
