@@ -1,5 +1,7 @@
 import type { Movement } from "../../types";
 import type { PathTimelineStep } from "../../lib/pathToFinal";
+import { INSIGHT_RAIL_HINTS } from "../../lib/dashboardHints";
+import { HoverHint } from "../HoverHint";
 import { TeamBadge } from "../TeamBadge";
 import { ProbabilityDelta } from "../MovementSummary";
 
@@ -62,7 +64,12 @@ export function InsightRail({
       <section className="insight-card insight-card--broadcast">
         <header className="insight-card__header">
           <h3 className="insight-card__title insight-card__title--broadcast">
-            Biggest movers
+            <HoverHint
+              label="Biggest movers"
+              hint={INSIGHT_RAIL_HINTS.biggestMovers}
+              compact
+              align="start"
+            />
           </h3>
           <p className="insight-card__subtitle">vs last simulation</p>
         </header>
@@ -97,7 +104,12 @@ export function InsightRail({
       <section className="insight-card insight-card--path insight-card--broadcast">
         <header className="insight-card__header">
           <h3 className="insight-card__title insight-card__title--broadcast">
-            {focusTeam} path to the final
+            <HoverHint
+              label={`${focusTeam} path to the final`}
+              hint={INSIGHT_RAIL_HINTS.pathToFinal}
+              compact
+              align="start"
+            />
           </h3>
           <p className="insight-card__subtitle">Most likely bracket route</p>
         </header>

@@ -4,6 +4,8 @@ import type { TopChampionChange } from "../../types";
 import { computeVolatility } from "../../lib/pathToFinal";
 import { ProbabilityDelta } from "../MovementSummary";
 import { TeamBadge } from "../TeamBadge";
+import { TITLE_BOARD_COLUMN_HINTS } from "../../lib/dashboardHints";
+import { HoverHint } from "../HoverHint";
 import { RunTrendArrow } from "./RunTrendArrow";
 
 interface TitleOddsBoardProps {
@@ -59,18 +61,40 @@ export function TitleOddsBoard({
         <span className="terminal-board__count">{teams.length} teams</span>
       </header>
 
-      <div className="terminal-board__scroll">
+      <div className="terminal-board__head-wrap">
         <div
           className="terminal-board__grid terminal-board__grid--head"
           role="row"
         >
-          {columns.map((column) => (
-            <span key={column} className="terminal-board__head-cell" role="columnheader">
-              {column}
-            </span>
-          ))}
-        </div>
+          {columns.map((column) => {
+            const hint =
+              column in TITLE_BOARD_COLUMN_HINTS
+                ? TITLE_BOARD_COLUMN_HINTS[
+                    column as keyof typeof TITLE_BOARD_COLUMN_HINTS
+                  ]
+                : undefined;
 
+            return (
+              <span key={column} className="terminal-board__head-cell" role="columnheader">
+                {hint ? (
+                  <HoverHint
+                    label={column}
+                    hint={hint}
+                    compact
+                    showIcon={false}
+                    placement="bottom"
+                    align="start"
+                  />
+                ) : (
+                  column
+                )}
+              </span>
+            );
+          })}
+        </div>
+      </div>
+
+      <div className="terminal-board__scroll">
         <ul className="terminal-board__body">
           {visibleTeams.map((team, index) => {
             const rank = index + 1;

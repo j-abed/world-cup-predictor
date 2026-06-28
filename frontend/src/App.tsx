@@ -9,6 +9,7 @@ import { PredictorDashboard } from "./components/predictor/PredictorDashboard";
 import { ProjectedField } from "./components/ProjectedField";
 import { MarketsView } from "./components/MarketsView";
 import { MethodologyView } from "./components/MethodologyView";
+import { GuidePage } from "./pages/GuidePage";
 import { QualificationOdds } from "./components/QualificationOdds";
 import { TabErrorBoundary } from "./components/TabErrorBoundary";
 import { TeamDetail } from "./components/TeamDetail";
@@ -21,6 +22,7 @@ import {
 import { appStateUrl, isRemoteDataUrl } from "./lib/dataUrls";
 import { buildDocumentTitle } from "./lib/documentMeta";
 import { buildInsightContext } from "./lib/insightContext";
+import { isStandaloneGuidePath } from "./lib/guideRouting";
 import { TAB_LABELS, type TabId } from "./lib/tabs";
 import { buildTeamIndex } from "./lib/team";
 import { readAppUrlState, writeAppUrlState } from "./lib/urlState";
@@ -35,6 +37,9 @@ export default function App() {
     () => readAppUrlState().tab,
   );
   const [selectedTeamCode, setSelectedTeamCode] = useState<string | null>(null);
+  const [standaloneGuide, setStandaloneGuide] = useState(() =>
+    isStandaloneGuidePath(),
+  );
   const urlHydratedRef = useRef(false);
 
   useEffect(() => {
@@ -113,11 +118,15 @@ export default function App() {
 
   useEffect(() => {
     const onPopState = () => {
-      const { tab, team } = readAppUrlState();
-      setActiveTab(tab);
-      setSelectedTeamCode(
-        team && teamIndex?.has(team) ? team : null,
-      );
+      setStandaloneGuide(isStandaloneGuidePath());
+
+      if (!isStandaloneGuidePath()) {
+        const { tab, team } = readAppUrlState();
+        setActiveTab(tab);
+        setSelectedTeamCode(
+          team && teamIndex?.has(team) ? team : null,
+        );
+      }
     };
 
     window.addEventListener("popstate", onPopState);
@@ -176,6 +185,10 @@ export default function App() {
         </div>
       </div>
     );
+  }
+
+  if (standaloneGuide) {
+    return <GuidePage appState={appState} mode="standalone" />;
   }
 
   const selectedTeam = selectedTeamCode
@@ -246,15 +259,7 @@ export default function App() {
           />
         );
       case "methodology":
-        return (
-          <MethodologyView
-            metadata={appState.metadata}
-            modelQuality={appState.model_quality}
-            pathDifficulty={appState.path_difficulty}
-            movement={appState.movement}
-            marketComparison={appState.market_comparison}
-          />
-        );
+        return <MethodologyView appState={appState} />;
       case "backtest":
         return (
           <BacktestView

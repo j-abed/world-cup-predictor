@@ -12,7 +12,11 @@ import { MatchdayStatus } from "../MatchdayStatus";
 import { TabNav } from "../TabNav";
 import { InsightRail } from "../champion/InsightRail";
 import type { InsightContext } from "../../lib/insightContext";
-import { projectionConfidenceTooltip } from "../../lib/projectionConfidence";
+import {
+  KPI_HINTS,
+  projectionConfidenceHint,
+} from "../../lib/dashboardHints";
+import { HoverHint } from "../HoverHint";
 import { CommandSidebar } from "./CommandSidebar";
 
 interface PredictorDashboardProps {
@@ -153,13 +157,23 @@ interface KpiTileProps {
   label: string;
   value: string;
   accent?: boolean;
-  title?: string;
+  hint?: string;
 }
 
-function KpiTile({ label, value, accent = false, title }: KpiTileProps) {
+function KpiTile({ label, value, accent = false, hint }: KpiTileProps) {
   return (
-    <div className="kpi-tile" title={title}>
-      <p className="kpi-tile__label">{label}</p>
+    <div className="kpi-tile">
+      {hint ? (
+        <HoverHint
+          label={label}
+          hint={hint}
+          compact
+          align="start"
+          className="kpi-tile__hint"
+        />
+      ) : (
+        <p className="kpi-tile__label">{label}</p>
+      )}
       <p
         className={`kpi-tile__value${accent ? " kpi-tile__value--gold" : ""}`}
       >
@@ -220,6 +234,7 @@ export function PredictorDashboard({
                 <KpiTile
                   label="Simulations"
                   value={simulations.toLocaleString()}
+                  hint={KPI_HINTS.simulations}
                 />
                 <KpiTile
                   label="Proj. confidence"
@@ -229,13 +244,17 @@ export function PredictorDashboard({
                       : "—"
                   }
                   accent={confidencePercent > 0}
-                  title={
+                  hint={
                     confidencePercent > 0
-                      ? projectionConfidenceTooltip(modelQuality)
-                      : "Trust in this projection run — not prediction accuracy"
+                      ? projectionConfidenceHint(modelQuality)
+                      : KPI_HINTS.projectionConfidenceFallback
                   }
                 />
-                <KpiTile label="Days to final" value={daysToFinal} />
+                <KpiTile
+                  label="Days to final"
+                  value={daysToFinal}
+                  hint={KPI_HINTS.daysToFinal}
+                />
               </div>
             </div>
 
@@ -269,22 +288,30 @@ export function PredictorDashboard({
               </div>
             ) : null}
 
-            {metadata.data_caveats.length > 0 ? (
-              <details className="command-caveats command-caveats--compact">
+            <details className="command-caveats command-caveats--compact">
                 <summary className="flex cursor-pointer list-none items-center justify-between text-muted-foreground transition hover:text-foreground">
                   <span>Data caveats &amp; methodology notes</span>
                   <span className="text-muted-foreground/60">▾</span>
                 </summary>
-                <ul className="space-y-1 text-xs text-muted-foreground">
-                  {metadata.data_caveats.map((caveat) => (
-                    <li key={caveat} className="flex gap-2">
-                      <span className="text-muted-foreground/50">•</span>
-                      <span>{caveat}</span>
-                    </li>
-                  ))}
-                </ul>
+                <p className="mt-2 text-xs">
+                  <a
+                    href="/guide"
+                    className="guide-link guide-link--inline"
+                  >
+                    How the World Cup Probability Engine Works →
+                  </a>
+                </p>
+                {metadata.data_caveats.length > 0 ? (
+                  <ul className="mt-2 space-y-1 text-xs text-muted-foreground">
+                    {metadata.data_caveats.map((caveat) => (
+                      <li key={caveat} className="flex gap-2">
+                        <span className="text-muted-foreground/50">•</span>
+                        <span>{caveat}</span>
+                      </li>
+                    ))}
+                  </ul>
+                ) : null}
               </details>
-            ) : null}
           </header>
 
           <div
