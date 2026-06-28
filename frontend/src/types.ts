@@ -33,6 +33,7 @@ export interface Metadata {
   next_refresh_at?: string;
   refresh_interval_hours?: number;
   tournament_final_kickoff?: string;
+  projected_bracket_simulations?: number;
   scenario?: ScenarioMetadata;
 }
 
@@ -118,6 +119,7 @@ export interface BracketMatch {
   home: BracketTeamSlot;
   away: BracketTeamSlot;
   winner_advances_to: number | null;
+  projected_winner?: BracketTeamSlot | null;
 }
 
 export interface Bracket {

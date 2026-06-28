@@ -126,8 +126,7 @@ def build_bracket_payload(bracket: pd.DataFrame) -> dict[str, list[dict[str, Any
         if payload_key is None:
             continue
 
-        payload[payload_key].append(
-            {
+        match_payload: dict[str, Any] = {
                 "slot_id": row.get("slot_id"),
                 "round": ROUND_LABELS.get(round_key, round_key),
                 "match_id": safe_int(row.get("match_id")),
@@ -135,7 +134,19 @@ def build_bracket_payload(bracket: pd.DataFrame) -> dict[str, list[dict[str, Any
                 "away": match_team_payload(row, "away"),
                 "winner_advances_to": safe_int(row.get("winner_advances_to")),
             }
-        )
+
+        if "projected_winner_code" in row.index:
+            winner_code = clean_value(row.get("projected_winner_code"))
+            winner_team = clean_value(row.get("projected_winner_team"))
+
+            if winner_code and winner_team:
+                match_payload["projected_winner"] = {
+                    "source": None,
+                    "team": winner_team,
+                    "code": winner_code,
+                }
+
+        payload[payload_key].append(match_payload)
 
     return payload
 
@@ -267,6 +278,7 @@ def build_metadata(
     *,
     generated_at: datetime | None = None,
     scenario: dict[str, Any] | None = None,
+    projected_bracket_simulations: int | None = None,
 ) -> dict[str, Any]:
     completed_results = results[results["status"].astype(str).str.lower() == "complete"]
     export_time = generated_at or datetime.now()
@@ -302,6 +314,9 @@ def build_metadata(
     if scenario is not None:
         metadata["scenario"] = scenario
 
+    if projected_bracket_simulations is not None:
+        metadata["projected_bracket_simulations"] = projected_bracket_simulations
+
     return metadata
 
 
@@ -330,6 +345,7 @@ def build_app_state_payload(
     live_accuracy: dict[str, Any] | None = None,
     market_comparison: dict[str, Any] | None = None,
     generated_at: datetime | None = None,
+    projected_bracket_simulations: int | None = None,
 ) -> dict[str, Any]:
     standings_rows = []
 
@@ -388,6 +404,7 @@ def build_app_state_payload(
         round_simulations=round_simulations,
         generated_at=generated_at,
         scenario=scenario,
+        projected_bracket_simulations=projected_bracket_simulations,
     )
 
     export_time = generated_at or parse_iso_datetime(str(metadata["generated_at"]))
@@ -484,6 +501,7 @@ def export_web_state(
     tournament_simulations: int = 10_000,
     round_simulations: int = 10_000,
     baseline_app_state_path: str | Path | None = None,
+    projected_bracket_simulations: int | None = None,
 ) -> dict[str, Path]:
     output_path = Path(output_dir)
     output_path.mkdir(parents=True, exist_ok=True)
@@ -523,6 +541,7 @@ def export_web_state(
         round_simulations=round_simulations,
         movement=movement,
         generated_at=export_time,
+        projected_bracket_simulations=projected_bracket_simulations,
     )
 
     metadata = app_state["metadata"]

@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "generated_at": "2026-06-28T17:20:28",
+    "generated_at": "2026-06-28T18:24:28",
     "team_count": 48,
     "fixture_count": 72,
     "completed_result_count": 69,
@@ -19,9 +19,10 @@
       "Ratings include Elo-style post-match updates for newly completed fixtures.",
       "Fair-play conduct scores are aggregated from ESPN yellow/red card data."
     ],
-    "next_refresh_at": "2026-06-28T18:00:00+00:00",
+    "next_refresh_at": "2026-06-28T20:00:00+00:00",
     "refresh_interval_hours": 2,
-    "tournament_final_kickoff": "2026-07-19T18:00:00-04:00"
+    "tournament_final_kickoff": "2026-07-19T18:00:00-04:00",
+    "projected_bracket_simulations": 10000
   },
   "coverage": [
     {
@@ -2473,7 +2474,12 @@
           "team": "Canada",
           "code": "CAN"
         },
-        "winner_advances_to": 90
+        "winner_advances_to": 90,
+        "projected_winner": {
+          "source": null,
+          "team": "Canada",
+          "code": "CAN"
+        }
       },
       {
         "slot_id": "R32-74",
@@ -2489,7 +2495,12 @@
           "team": "Paraguay",
           "code": "PAR"
         },
-        "winner_advances_to": 89
+        "winner_advances_to": 89,
+        "projected_winner": {
+          "source": null,
+          "team": "Germany",
+          "code": "GER"
+        }
       },
       {
         "slot_id": "R32-75",
@@ -2505,7 +2516,12 @@
           "team": "Morocco",
           "code": "MAR"
         },
-        "winner_advances_to": 90
+        "winner_advances_to": 90,
+        "projected_winner": {
+          "source": null,
+          "team": "Netherlands",
+          "code": "NED"
+        }
       },
       {
         "slot_id": "R32-76",
@@ -2521,7 +2537,12 @@
           "team": "Japan",
           "code": "JPN"
         },
-        "winner_advances_to": 91
+        "winner_advances_to": 91,
+        "projected_winner": {
+          "source": null,
+          "team": "Brazil",
+          "code": "BRA"
+        }
       },
       {
         "slot_id": "R32-77",
@@ -2537,7 +2558,12 @@
           "team": "Sweden",
           "code": "SWE"
         },
-        "winner_advances_to": 89
+        "winner_advances_to": 89,
+        "projected_winner": {
+          "source": null,
+          "team": "France",
+          "code": "FRA"
+        }
       },
       {
         "slot_id": "R32-78",
@@ -2553,7 +2579,12 @@
           "team": "Norway",
           "code": "NOR"
         },
-        "winner_advances_to": 91
+        "winner_advances_to": 91,
+        "projected_winner": {
+          "source": null,
+          "team": "Norway",
+          "code": "NOR"
+        }
       },
       {
         "slot_id": "R32-79",
@@ -2569,7 +2600,12 @@
           "team": "Ecuador",
           "code": "ECU"
         },
-        "winner_advances_to": 92
+        "winner_advances_to": 92,
+        "projected_winner": {
+          "source": null,
+          "team": "Mexico",
+          "code": "MEX"
+        }
       },
       {
         "slot_id": "R32-80",
@@ -2585,7 +2621,12 @@
           "team": "Senegal",
           "code": "SEN"
         },
-        "winner_advances_to": 92
+        "winner_advances_to": 92,
+        "projected_winner": {
+          "source": null,
+          "team": "England",
+          "code": "ENG"
+        }
       },
       {
         "slot_id": "R32-81",
@@ -2601,7 +2642,12 @@
           "team": "Bosnia and Herzegovina",
           "code": "BIH"
         },
-        "winner_advances_to": 94
+        "winner_advances_to": 94,
+        "projected_winner": {
+          "source": null,
+          "team": "United States",
+          "code": "USA"
+        }
       },
       {
         "slot_id": "R32-82",
@@ -2617,7 +2663,12 @@
           "team": "South Korea",
           "code": "KOR"
         },
-        "winner_advances_to": 94
+        "winner_advances_to": 94,
+        "projected_winner": {
+          "source": null,
+          "team": "Belgium",
+          "code": "BEL"
+        }
       },
       {
         "slot_id": "R32-83",
@@ -2633,7 +2684,12 @@
           "team": "Croatia",
           "code": "CRO"
         },
-        "winner_advances_to": 93
+        "winner_advances_to": 93,
+        "projected_winner": {
+          "source": null,
+          "team": "Portugal",
+          "code": "POR"
+        }
       },
       {
         "slot_id": "R32-84",
@@ -2649,7 +2705,12 @@
           "team": "Austria",
           "code": "AUT"
         },
-        "winner_advances_to": 93
+        "winner_advances_to": 93,
+        "projected_winner": {
+          "source": null,
+          "team": "Spain",
+          "code": "ESP"
+        }
       },
       {
         "slot_id": "R32-85",
@@ -2665,7 +2726,12 @@
           "team": "Algeria",
           "code": "DZA"
         },
-        "winner_advances_to": 96
+        "winner_advances_to": 96,
+        "projected_winner": {
+          "source": null,
+          "team": "Switzerland",
+          "code": "SUI"
+        }
       },
       {
         "slot_id": "R32-86",
@@ -2681,7 +2747,12 @@
           "team": "Cape Verde",
           "code": "CPV"
         },
-        "winner_advances_to": 95
+        "winner_advances_to": 95,
+        "projected_winner": {
+          "source": null,
+          "team": "Argentina",
+          "code": "ARG"
+        }
       },
       {
         "slot_id": "R32-87",
@@ -2697,7 +2768,12 @@
           "team": "Ghana",
           "code": "GHA"
         },
-        "winner_advances_to": 96
+        "winner_advances_to": 96,
+        "projected_winner": {
+          "source": null,
+          "team": "Colombia",
+          "code": "COL"
+        }
       },
       {
         "slot_id": "R32-88",
@@ -2713,7 +2789,12 @@
           "team": "Egypt",
           "code": "EGY"
         },
-        "winner_advances_to": 95
+        "winner_advances_to": 95,
+        "projected_winner": {
+          "source": null,
+          "team": "Australia",
+          "code": "AUS"
+        }
       }
     ],
     "round_of_16": [
@@ -2723,15 +2804,20 @@
         "match_id": 89,
         "home": {
           "source": "Winner Match 74",
-          "team": "TBD",
-          "code": "TBD"
+          "team": "Germany",
+          "code": "GER"
         },
         "away": {
           "source": "Winner Match 77",
-          "team": "TBD",
-          "code": "TBD"
+          "team": "France",
+          "code": "FRA"
         },
-        "winner_advances_to": 97
+        "winner_advances_to": 97,
+        "projected_winner": {
+          "source": null,
+          "team": "France",
+          "code": "FRA"
+        }
       },
       {
         "slot_id": "R16-90",
@@ -2739,15 +2825,20 @@
         "match_id": 90,
         "home": {
           "source": "Winner Match 73",
-          "team": "TBD",
-          "code": "TBD"
+          "team": "Canada",
+          "code": "CAN"
         },
         "away": {
           "source": "Winner Match 75",
-          "team": "TBD",
-          "code": "TBD"
+          "team": "Netherlands",
+          "code": "NED"
         },
-        "winner_advances_to": 97
+        "winner_advances_to": 97,
+        "projected_winner": {
+          "source": null,
+          "team": "Netherlands",
+          "code": "NED"
+        }
       },
       {
         "slot_id": "R16-91",
@@ -2755,15 +2846,20 @@
         "match_id": 91,
         "home": {
           "source": "Winner Match 76",
-          "team": "TBD",
-          "code": "TBD"
+          "team": "Brazil",
+          "code": "BRA"
         },
         "away": {
           "source": "Winner Match 78",
-          "team": "TBD",
-          "code": "TBD"
+          "team": "Norway",
+          "code": "NOR"
         },
-        "winner_advances_to": 99
+        "winner_advances_to": 99,
+        "projected_winner": {
+          "source": null,
+          "team": "Brazil",
+          "code": "BRA"
+        }
       },
       {
         "slot_id": "R16-92",
@@ -2771,15 +2867,20 @@
         "match_id": 92,
         "home": {
           "source": "Winner Match 79",
-          "team": "TBD",
-          "code": "TBD"
+          "team": "Mexico",
+          "code": "MEX"
         },
         "away": {
           "source": "Winner Match 80",
-          "team": "TBD",
-          "code": "TBD"
+          "team": "England",
+          "code": "ENG"
         },
-        "winner_advances_to": 99
+        "winner_advances_to": 99,
+        "projected_winner": {
+          "source": null,
+          "team": "England",
+          "code": "ENG"
+        }
       },
       {
         "slot_id": "R16-93",
@@ -2787,15 +2888,20 @@
         "match_id": 93,
         "home": {
           "source": "Winner Match 83",
-          "team": "TBD",
-          "code": "TBD"
+          "team": "Portugal",
+          "code": "POR"
         },
         "away": {
           "source": "Winner Match 84",
-          "team": "TBD",
-          "code": "TBD"
+          "team": "Spain",
+          "code": "ESP"
         },
-        "winner_advances_to": 98
+        "winner_advances_to": 98,
+        "projected_winner": {
+          "source": null,
+          "team": "Spain",
+          "code": "ESP"
+        }
       },
       {
         "slot_id": "R16-94",
@@ -2803,15 +2909,20 @@
         "match_id": 94,
         "home": {
           "source": "Winner Match 81",
-          "team": "TBD",
-          "code": "TBD"
+          "team": "United States",
+          "code": "USA"
         },
         "away": {
           "source": "Winner Match 82",
-          "team": "TBD",
-          "code": "TBD"
+          "team": "Belgium",
+          "code": "BEL"
         },
-        "winner_advances_to": 98
+        "winner_advances_to": 98,
+        "projected_winner": {
+          "source": null,
+          "team": "Belgium",
+          "code": "BEL"
+        }
       },
       {
         "slot_id": "R16-95",
@@ -2819,15 +2930,20 @@
         "match_id": 95,
         "home": {
           "source": "Winner Match 86",
-          "team": "TBD",
-          "code": "TBD"
+          "team": "Argentina",
+          "code": "ARG"
         },
         "away": {
           "source": "Winner Match 88",
-          "team": "TBD",
-          "code": "TBD"
+          "team": "Australia",
+          "code": "AUS"
         },
-        "winner_advances_to": 100
+        "winner_advances_to": 100,
+        "projected_winner": {
+          "source": null,
+          "team": "Argentina",
+          "code": "ARG"
+        }
       },
       {
         "slot_id": "R16-96",
@@ -2835,15 +2951,20 @@
         "match_id": 96,
         "home": {
           "source": "Winner Match 85",
-          "team": "TBD",
-          "code": "TBD"
+          "team": "Switzerland",
+          "code": "SUI"
         },
         "away": {
           "source": "Winner Match 87",
-          "team": "TBD",
-          "code": "TBD"
+          "team": "Colombia",
+          "code": "COL"
         },
-        "winner_advances_to": 100
+        "winner_advances_to": 100,
+        "projected_winner": {
+          "source": null,
+          "team": "Colombia",
+          "code": "COL"
+        }
       }
     ],
     "quarterfinals": [
@@ -2853,15 +2974,20 @@
         "match_id": 97,
         "home": {
           "source": "Winner Match 89",
-          "team": "TBD",
-          "code": "TBD"
+          "team": "France",
+          "code": "FRA"
         },
         "away": {
           "source": "Winner Match 90",
-          "team": "TBD",
-          "code": "TBD"
+          "team": "Netherlands",
+          "code": "NED"
         },
-        "winner_advances_to": 101
+        "winner_advances_to": 101,
+        "projected_winner": {
+          "source": null,
+          "team": "France",
+          "code": "FRA"
+        }
       },
       {
         "slot_id": "QF-98",
@@ -2869,15 +2995,20 @@
         "match_id": 98,
         "home": {
           "source": "Winner Match 93",
-          "team": "TBD",
-          "code": "TBD"
+          "team": "Spain",
+          "code": "ESP"
         },
         "away": {
           "source": "Winner Match 94",
-          "team": "TBD",
-          "code": "TBD"
+          "team": "Belgium",
+          "code": "BEL"
         },
-        "winner_advances_to": 101
+        "winner_advances_to": 101,
+        "projected_winner": {
+          "source": null,
+          "team": "Spain",
+          "code": "ESP"
+        }
       },
       {
         "slot_id": "QF-99",
@@ -2885,15 +3016,20 @@
         "match_id": 99,
         "home": {
           "source": "Winner Match 91",
-          "team": "TBD",
-          "code": "TBD"
+          "team": "Brazil",
+          "code": "BRA"
         },
         "away": {
           "source": "Winner Match 92",
-          "team": "TBD",
-          "code": "TBD"
+          "team": "England",
+          "code": "ENG"
         },
-        "winner_advances_to": 102
+        "winner_advances_to": 102,
+        "projected_winner": {
+          "source": null,
+          "team": "England",
+          "code": "ENG"
+        }
       },
       {
         "slot_id": "QF-100",
@@ -2901,15 +3037,20 @@
         "match_id": 100,
         "home": {
           "source": "Winner Match 95",
-          "team": "TBD",
-          "code": "TBD"
+          "team": "Argentina",
+          "code": "ARG"
         },
         "away": {
           "source": "Winner Match 96",
-          "team": "TBD",
-          "code": "TBD"
+          "team": "Colombia",
+          "code": "COL"
         },
-        "winner_advances_to": 102
+        "winner_advances_to": 102,
+        "projected_winner": {
+          "source": null,
+          "team": "Argentina",
+          "code": "ARG"
+        }
       }
     ],
     "semifinals": [
@@ -2919,15 +3060,20 @@
         "match_id": 101,
         "home": {
           "source": "Winner Match 97",
-          "team": "TBD",
-          "code": "TBD"
+          "team": "France",
+          "code": "FRA"
         },
         "away": {
           "source": "Winner Match 98",
-          "team": "TBD",
-          "code": "TBD"
+          "team": "Spain",
+          "code": "ESP"
         },
-        "winner_advances_to": 103
+        "winner_advances_to": 103,
+        "projected_winner": {
+          "source": null,
+          "team": "France",
+          "code": "FRA"
+        }
       },
       {
         "slot_id": "SF-102",
@@ -2935,15 +3081,20 @@
         "match_id": 102,
         "home": {
           "source": "Winner Match 99",
-          "team": "TBD",
-          "code": "TBD"
+          "team": "England",
+          "code": "ENG"
         },
         "away": {
           "source": "Winner Match 100",
-          "team": "TBD",
-          "code": "TBD"
+          "team": "Argentina",
+          "code": "ARG"
         },
-        "winner_advances_to": 103
+        "winner_advances_to": 103,
+        "projected_winner": {
+          "source": null,
+          "team": "Argentina",
+          "code": "ARG"
+        }
       }
     ],
     "final": [
@@ -2953,15 +3104,20 @@
         "match_id": 103,
         "home": {
           "source": "Winner Match 101",
-          "team": "TBD",
-          "code": "TBD"
+          "team": "France",
+          "code": "FRA"
         },
         "away": {
           "source": "Winner Match 102",
-          "team": "TBD",
-          "code": "TBD"
+          "team": "Argentina",
+          "code": "ARG"
         },
-        "winner_advances_to": null
+        "winner_advances_to": null,
+        "projected_winner": {
+          "source": null,
+          "team": "Argentina",
+          "code": "ARG"
+        }
       }
     ]
   },
@@ -5409,91 +5565,91 @@
       "code": "ARG",
       "team": "Argentina",
       "rank": 1,
-      "score": 0.1174,
-      "label": "Easy",
-      "avg_opponent_rating": 1488.18,
-      "notes": "Round of 32 vs CPV"
+      "score": 0.5876,
+      "label": "Moderate",
+      "avg_opponent_rating": 1699.73,
+      "notes": "Round of 32 vs CPV; Round of 16 vs AUS; Quarterfinal vs COL; Semifinal vs ENG; Final vs FRA"
     },
     {
       "code": "FRA",
       "team": "France",
       "rank": 2,
-      "score": 0.3259,
-      "label": "Easy",
-      "avg_opponent_rating": 1582.0,
-      "notes": "Round of 32 vs SWE"
+      "score": 0.7295,
+      "label": "Hard",
+      "avg_opponent_rating": 1763.56,
+      "notes": "Round of 32 vs SWE; Round of 16 vs GER; Quarterfinal vs NED; Semifinal vs ESP; Final vs ARG"
     },
     {
       "code": "ESP",
       "team": "Spain",
       "rank": 3,
-      "score": 0.4207,
-      "label": "Moderate",
-      "avg_opponent_rating": 1624.64,
-      "notes": "Round of 32 vs AUT"
+      "score": 0.7046,
+      "label": "Hard",
+      "avg_opponent_rating": 1752.33,
+      "notes": "Round of 32 vs AUT; Round of 16 vs POR; Quarterfinal vs BEL; Semifinal vs FRA"
     },
     {
       "code": "ENG",
       "team": "England",
       "rank": 4,
-      "score": 0.4972,
-      "label": "Moderate",
-      "avg_opponent_rating": 1659.05,
-      "notes": "Round of 32 vs SEN"
+      "score": 0.7076,
+      "label": "Hard",
+      "avg_opponent_rating": 1753.68,
+      "notes": "Round of 32 vs SEN; Round of 16 vs MEX; Quarterfinal vs BRA; Semifinal vs ARG"
     },
     {
       "code": "BRA",
       "team": "Brazil",
       "rank": 5,
-      "score": 0.4771,
+      "score": 0.5806,
       "label": "Moderate",
-      "avg_opponent_rating": 1650.0,
-      "notes": "Round of 32 vs JPN"
+      "avg_opponent_rating": 1696.58,
+      "notes": "Round of 32 vs JPN; Round of 16 vs NOR; Quarterfinal vs ENG"
     },
     {
       "code": "NED",
       "team": "Netherlands",
       "rank": 6,
-      "score": 0.4873,
+      "score": 0.5755,
       "label": "Moderate",
-      "avg_opponent_rating": 1654.61,
-      "notes": "Round of 32 vs MAR"
+      "avg_opponent_rating": 1694.28,
+      "notes": "Round of 32 vs MAR; Round of 16 vs CAN; Quarterfinal vs FRA"
     },
     {
       "code": "POR",
       "team": "Portugal",
       "rank": 7,
-      "score": 0.6655,
-      "label": "Moderate",
-      "avg_opponent_rating": 1734.75,
-      "notes": "Round of 32 vs CRO"
+      "score": 0.8211,
+      "label": "Hard",
+      "avg_opponent_rating": 1804.73,
+      "notes": "Round of 32 vs CRO; Round of 16 vs ESP"
     },
     {
       "code": "BEL",
       "team": "Belgium",
       "rank": 8,
-      "score": 0.339,
-      "label": "Easy",
-      "avg_opponent_rating": 1587.9,
-      "notes": "Round of 32 vs KOR"
+      "score": 0.6124,
+      "label": "Moderate",
+      "avg_opponent_rating": 1710.87,
+      "notes": "Round of 32 vs KOR; Round of 16 vs USA; Quarterfinal vs ESP"
     },
     {
       "code": "GER",
       "team": "Germany",
       "rank": 9,
-      "score": 0.2815,
-      "label": "Easy",
-      "avg_opponent_rating": 1562.0,
-      "notes": "Round of 32 vs PAR"
+      "score": 0.6294,
+      "label": "Moderate",
+      "avg_opponent_rating": 1718.52,
+      "notes": "Round of 32 vs PAR; Round of 16 vs FRA"
     },
     {
       "code": "COL",
       "team": "Colombia",
       "rank": 10,
-      "score": 0.2771,
-      "label": "Easy",
-      "avg_opponent_rating": 1560.02,
-      "notes": "Round of 32 vs GHA"
+      "score": 0.6031,
+      "label": "Moderate",
+      "avg_opponent_rating": 1706.69,
+      "notes": "Round of 32 vs GHA; Round of 16 vs SUI; Quarterfinal vs ARG"
     },
     {
       "code": "CRO",
@@ -5508,28 +5664,28 @@
       "code": "MEX",
       "team": "Mexico",
       "rank": 12,
-      "score": 0.4504,
+      "score": 0.6524,
       "label": "Moderate",
-      "avg_opponent_rating": 1638.0,
-      "notes": "Round of 32 vs ECU"
+      "avg_opponent_rating": 1728.86,
+      "notes": "Round of 32 vs ECU; Round of 16 vs ENG"
     },
     {
       "code": "SUI",
       "team": "Switzerland",
       "rank": 13,
-      "score": 0.3378,
-      "label": "Easy",
-      "avg_opponent_rating": 1587.34,
-      "notes": "Round of 32 vs DZA"
+      "score": 0.4716,
+      "label": "Moderate",
+      "avg_opponent_rating": 1647.52,
+      "notes": "Round of 32 vs DZA; Round of 16 vs COL"
     },
     {
       "code": "USA",
       "team": "United States",
       "rank": 14,
-      "score": 0.2126,
-      "label": "Easy",
-      "avg_opponent_rating": 1531.04,
-      "notes": "Round of 32 vs BIH"
+      "score": 0.4427,
+      "label": "Moderate",
+      "avg_opponent_rating": 1634.52,
+      "notes": "Round of 32 vs BIH; Round of 16 vs BEL"
     },
     {
       "code": "MAR",
@@ -5562,19 +5718,19 @@
       "code": "NOR",
       "team": "Norway",
       "rank": 18,
-      "score": 0.317,
-      "label": "Easy",
-      "avg_opponent_rating": 1578.0,
-      "notes": "Round of 32 vs CIV"
+      "score": 0.531,
+      "label": "Moderate",
+      "avg_opponent_rating": 1674.26,
+      "notes": "Round of 32 vs CIV; Round of 16 vs BRA"
     },
     {
       "code": "AUS",
       "team": "Australia",
       "rank": 19,
-      "score": 0.3722,
-      "label": "Moderate",
-      "avg_opponent_rating": 1602.82,
-      "notes": "Round of 32 vs EGY"
+      "score": 0.6861,
+      "label": "Hard",
+      "avg_opponent_rating": 1744.02,
+      "notes": "Round of 32 vs EGY; Round of 16 vs ARG"
     },
     {
       "code": "EGY",
@@ -5598,10 +5754,10 @@
       "code": "CAN",
       "team": "Canada",
       "rank": 22,
-      "score": 0.1728,
-      "label": "Easy",
-      "avg_opponent_rating": 1513.1,
-      "notes": "Round of 32 vs RSA"
+      "score": 0.4448,
+      "label": "Moderate",
+      "avg_opponent_rating": 1635.49,
+      "notes": "Round of 32 vs RSA; Round of 16 vs NED"
     },
     {
       "code": "AUT",
@@ -5703,117 +5859,9 @@
       "notes": "Projected path unavailable"
     },
     {
-      "code": "CZE",
-      "team": "Czechia",
-      "rank": 34,
-      "score": 0.5,
-      "label": "Moderate",
-      "avg_opponent_rating": 0.0,
-      "notes": "Projected path unavailable"
-    },
-    {
-      "code": "QAT",
-      "team": "Qatar",
-      "rank": 35,
-      "score": 0.5,
-      "label": "Moderate",
-      "avg_opponent_rating": 0.0,
-      "notes": "Projected path unavailable"
-    },
-    {
-      "code": "SCO",
-      "team": "Scotland",
-      "rank": 36,
-      "score": 0.5,
-      "label": "Moderate",
-      "avg_opponent_rating": 0.0,
-      "notes": "Projected path unavailable"
-    },
-    {
-      "code": "HTI",
-      "team": "Haiti",
-      "rank": 37,
-      "score": 0.5,
-      "label": "Moderate",
-      "avg_opponent_rating": 0.0,
-      "notes": "Projected path unavailable"
-    },
-    {
-      "code": "TUR",
-      "team": "Turkey",
-      "rank": 38,
-      "score": 0.5,
-      "label": "Moderate",
-      "avg_opponent_rating": 0.0,
-      "notes": "Projected path unavailable"
-    },
-    {
-      "code": "CUW",
-      "team": "Curacao",
-      "rank": 39,
-      "score": 0.5,
-      "label": "Moderate",
-      "avg_opponent_rating": 0.0,
-      "notes": "Projected path unavailable"
-    },
-    {
-      "code": "TUN",
-      "team": "Tunisia",
-      "rank": 40,
-      "score": 0.5,
-      "label": "Moderate",
-      "avg_opponent_rating": 0.0,
-      "notes": "Projected path unavailable"
-    },
-    {
       "code": "IRI",
       "team": "Iran",
-      "rank": 41,
-      "score": 0.5,
-      "label": "Moderate",
-      "avg_opponent_rating": 0.0,
-      "notes": "Projected path unavailable"
-    },
-    {
-      "code": "NZL",
-      "team": "New Zealand",
-      "rank": 42,
-      "score": 0.5,
-      "label": "Moderate",
-      "avg_opponent_rating": 0.0,
-      "notes": "Projected path unavailable"
-    },
-    {
-      "code": "KSA",
-      "team": "Saudi Arabia",
-      "rank": 43,
-      "score": 0.5,
-      "label": "Moderate",
-      "avg_opponent_rating": 0.0,
-      "notes": "Projected path unavailable"
-    },
-    {
-      "code": "URU",
-      "team": "Uruguay",
-      "rank": 44,
-      "score": 0.5,
-      "label": "Moderate",
-      "avg_opponent_rating": 0.0,
-      "notes": "Projected path unavailable"
-    },
-    {
-      "code": "IRQ",
-      "team": "Iraq",
-      "rank": 45,
-      "score": 0.5,
-      "label": "Moderate",
-      "avg_opponent_rating": 0.0,
-      "notes": "Projected path unavailable"
-    },
-    {
-      "code": "JOR",
-      "team": "Jordan",
-      "rank": 46,
+      "rank": 34,
       "score": 0.5,
       "label": "Moderate",
       "avg_opponent_rating": 0.0,
@@ -5822,6 +5870,114 @@
     {
       "code": "UZB",
       "team": "Uzbekistan",
+      "rank": 35,
+      "score": 0.5,
+      "label": "Moderate",
+      "avg_opponent_rating": 0.0,
+      "notes": "Projected path unavailable"
+    },
+    {
+      "code": "JOR",
+      "team": "Jordan",
+      "rank": 36,
+      "score": 0.5,
+      "label": "Moderate",
+      "avg_opponent_rating": 0.0,
+      "notes": "Projected path unavailable"
+    },
+    {
+      "code": "IRQ",
+      "team": "Iraq",
+      "rank": 37,
+      "score": 0.5,
+      "label": "Moderate",
+      "avg_opponent_rating": 0.0,
+      "notes": "Projected path unavailable"
+    },
+    {
+      "code": "URU",
+      "team": "Uruguay",
+      "rank": 38,
+      "score": 0.5,
+      "label": "Moderate",
+      "avg_opponent_rating": 0.0,
+      "notes": "Projected path unavailable"
+    },
+    {
+      "code": "KSA",
+      "team": "Saudi Arabia",
+      "rank": 39,
+      "score": 0.5,
+      "label": "Moderate",
+      "avg_opponent_rating": 0.0,
+      "notes": "Projected path unavailable"
+    },
+    {
+      "code": "NZL",
+      "team": "New Zealand",
+      "rank": 40,
+      "score": 0.5,
+      "label": "Moderate",
+      "avg_opponent_rating": 0.0,
+      "notes": "Projected path unavailable"
+    },
+    {
+      "code": "HTI",
+      "team": "Haiti",
+      "rank": 41,
+      "score": 0.5,
+      "label": "Moderate",
+      "avg_opponent_rating": 0.0,
+      "notes": "Projected path unavailable"
+    },
+    {
+      "code": "TUN",
+      "team": "Tunisia",
+      "rank": 42,
+      "score": 0.5,
+      "label": "Moderate",
+      "avg_opponent_rating": 0.0,
+      "notes": "Projected path unavailable"
+    },
+    {
+      "code": "CUW",
+      "team": "Curacao",
+      "rank": 43,
+      "score": 0.5,
+      "label": "Moderate",
+      "avg_opponent_rating": 0.0,
+      "notes": "Projected path unavailable"
+    },
+    {
+      "code": "TUR",
+      "team": "Turkey",
+      "rank": 44,
+      "score": 0.5,
+      "label": "Moderate",
+      "avg_opponent_rating": 0.0,
+      "notes": "Projected path unavailable"
+    },
+    {
+      "code": "SCO",
+      "team": "Scotland",
+      "rank": 45,
+      "score": 0.5,
+      "label": "Moderate",
+      "avg_opponent_rating": 0.0,
+      "notes": "Projected path unavailable"
+    },
+    {
+      "code": "QAT",
+      "team": "Qatar",
+      "rank": 46,
+      "score": 0.5,
+      "label": "Moderate",
+      "avg_opponent_rating": 0.0,
+      "notes": "Projected path unavailable"
+    },
+    {
+      "code": "CZE",
+      "team": "Czechia",
       "rank": 47,
       "score": 0.5,
       "label": "Moderate",
@@ -6110,7 +6266,7 @@
   },
   "movement": {
     "has_baseline": true,
-    "baseline_generated_at": "2026-06-28T15:25:24",
+    "baseline_generated_at": "2026-06-28T17:10:03",
     "biggest_movers": [],
     "top_champion_changes": [
       {

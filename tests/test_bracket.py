@@ -5,6 +5,7 @@ from pathlib import Path
 import pandas as pd
 
 from src.bracket import (
+    build_projected_complete_bracket,
     build_projected_round_of_32,
     build_third_place_key,
     get_official_third_place_row,
@@ -72,3 +73,71 @@ def test_projected_round_of_32_resolves_all_slots(repo_root: Path) -> None:
     assert (round_of_32["away_team"] != "TBD").all()
     assert (round_of_32["home_code"] != "TBD").all()
     assert (round_of_32["away_code"] != "TBD").all()
+
+
+def test_projected_complete_bracket_fills_all_rounds(repo_root: Path) -> None:
+    teams = pd.read_csv(repo_root / "data/teams.csv")
+    fixtures = pd.read_csv(repo_root / "data/fixtures.csv")
+    results = pd.read_csv(repo_root / "data/results.csv")
+    ratings = pd.read_csv(repo_root / "data/ratings.csv")
+    bracket_slots = pd.read_csv(repo_root / "data/bracket_slots.csv")
+
+    standings_by_group = calculate_all_group_standings(
+        teams=teams,
+        fixtures=fixtures,
+        results=results,
+    )
+    third_place_table = calculate_current_third_place_table(standings_by_group)
+
+    projected_qualifiers = calculate_current_projected_qualifiers(
+        standings_by_group=standings_by_group,
+        third_place_table=third_place_table,
+    )
+
+    bracket = build_projected_complete_bracket(
+        teams=teams,
+        ratings=ratings,
+        bracket_slots=bracket_slots,
+        projected_qualifiers=projected_qualifiers,
+        seed=42,
+        simulations=500,
+    )
+
+    assert (bracket["home_team"] != "TBD").all()
+    assert (bracket["away_team"] != "TBD").all()
+    assert (bracket["projected_winner_team"] != "TBD").all()
+    assert len(bracket) == len(bracket_slots)
+
+
+def test_projected_complete_bracket_uses_modal_match_winners(repo_root: Path) -> None:
+    teams = pd.read_csv(repo_root / "data/teams.csv")
+    fixtures = pd.read_csv(repo_root / "data/fixtures.csv")
+    results = pd.read_csv(repo_root / "data/results.csv")
+    ratings = pd.read_csv(repo_root / "data/ratings.csv")
+    bracket_slots = pd.read_csv(repo_root / "data/bracket_slots.csv")
+
+    standings_by_group = calculate_all_group_standings(
+        teams=teams,
+        fixtures=fixtures,
+        results=results,
+    )
+    third_place_table = calculate_current_third_place_table(standings_by_group)
+
+    projected_qualifiers = calculate_current_projected_qualifiers(
+        standings_by_group=standings_by_group,
+        third_place_table=third_place_table,
+    )
+
+    bracket = build_projected_complete_bracket(
+        teams=teams,
+        ratings=ratings,
+        bracket_slots=bracket_slots,
+        projected_qualifiers=projected_qualifiers,
+        seed=42,
+        simulations=2_000,
+    )
+
+    match_89 = bracket[bracket["match_id"] == 89].iloc[0]
+    assert match_89["home_code"] == "GER"
+    assert match_89["away_code"] == "FRA"
+    assert match_89["projected_winner_code"] == "FRA"

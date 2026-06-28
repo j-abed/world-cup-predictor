@@ -8,6 +8,15 @@ interface BracketViewProps {
   bracket: Bracket;
   roundOdds: RoundOdds[];
   onSelectTeam: (code: string) => void;
+  projectedBracketSimulations?: number;
+}
+
+type BracketViewMode = "reach" | "path";
+
+function bracketHasProjectedPath(bracket: Bracket): boolean {
+  return ROUND_SEQUENCE.some((roundKey) =>
+    bracket[roundKey].some((match) => Boolean(match.projected_winner?.code)),
+  );
 }
 
 const ROUND_TITLES: Record<BracketRoundKey, string> = {
@@ -84,16 +93,24 @@ function isRoundOpen(
   return openRounds.has(roundKey);
 }
 
-export function BracketView({ bracket, roundOdds, onSelectTeam }: BracketViewProps) {
+export function BracketView({
+  bracket,
+  roundOdds,
+  onSelectTeam,
+  projectedBracketSimulations,
+}: BracketViewProps) {
   const rounds = useMemo(() => orderedBracketRounds(bracket), [bracket]);
   const roundOddsByCode = useMemo(
     () => new Map(roundOdds.map((odds) => [odds.code, odds])),
     [roundOdds],
   );
+  const hasProjectedPath = useMemo(() => bracketHasProjectedPath(bracket), [bracket]);
+  const [viewMode, setViewMode] = useState<BracketViewMode>("reach");
   const [openRounds, setOpenRounds] = useState<Set<BracketRoundKey>>(
     () => new Set(ROUND_SEQUENCE),
   );
   const [focusedRound, setFocusedRound] = useState<BracketRoundKey | "all">("all");
+  const showReachOdds = viewMode === "reach";
 
   const toggleRound = (roundKey: BracketRoundKey) => {
     setOpenRounds((current) => {
@@ -126,15 +143,45 @@ export function BracketView({ bracket, roundOdds, onSelectTeam }: BracketViewPro
       title="Projected knockout bracket"
       subtitle="Built from current group standings — updates as results come in."
     >
-      <CommandNote title="How to read the percentages">
-        <p>
-          Each figure is a simulated chance to reach the next round (or win the
-          title in the final) across thousands of full-tournament runs — not a
-          head-to-head win probability for that specific fixture. Both teams in a
-          matchup can show high reach odds when the model rates them strongly
-          overall.
-        </p>
+      <CommandNote
+        title={showReachOdds ? "How to read the percentages" : "Most likely knockout path"}
+      >
+        {showReachOdds ? (
+          <p>
+            Each figure is a simulated chance to reach the next round (or win the
+            title in the final) across thousands of full-tournament runs — not a
+            head-to-head win probability for that specific fixture. Both teams in a
+            matchup can show high reach odds when the model rates them strongly
+            overall.
+          </p>
+        ) : (
+          <p>
+            Most common winner per match across{" "}
+            {projectedBracketSimulations !== undefined
+              ? `${projectedBracketSimulations.toLocaleString()} knockout simulations`
+              : "thousands of knockout simulations"}{" "}
+            from the current Round of 32 field. Highlighted teams are the modal
+            winners advancing through the tree — not guaranteed to match every
+            reach-odds favorite in each pairing.
+          </p>
+        )}
       </CommandNote>
+
+      {hasProjectedPath ? (
+        <div className="bracket-filter-strip bracket-filter-strip--view-mode">
+          <span className="bracket-filter-strip__label">View</span>
+          <RoundFilterChip
+            label="Reach odds"
+            active={viewMode === "reach"}
+            onClick={() => setViewMode("reach")}
+          />
+          <RoundFilterChip
+            label="Most likely path"
+            active={viewMode === "path"}
+            onClick={() => setViewMode("path")}
+          />
+        </div>
+      ) : null}
 
       <div className="bracket-filter-strip">
         <span className="bracket-filter-strip__label">Focus</span>
@@ -174,6 +221,7 @@ export function BracketView({ bracket, roundOdds, onSelectTeam }: BracketViewPro
             open={isRoundOpen(roundKey, openRounds)}
             onToggle={() => toggleRound(roundKey)}
             hidden={focusedRound !== "all" && focusedRound !== roundKey}
+            showReachOdds={showReachOdds}
           />
         ))}
       </div>
@@ -203,6 +251,7 @@ export function BracketView({ bracket, roundOdds, onSelectTeam }: BracketViewPro
               onSelectTeam={onSelectTeam}
               open={isRoundOpen(roundKey, openRounds)}
               onToggle={() => toggleRound(roundKey)}
+              showReachOdds={showReachOdds}
             />
           ))}
         </div>
@@ -258,6 +307,7 @@ function CollapsibleBracketRound({
   open,
   onToggle,
   hidden = false,
+  showReachOdds,
 }: {
   title: string;
   roundKey: BracketRoundKey;
@@ -267,6 +317,7 @@ function CollapsibleBracketRound({
   open: boolean;
   onToggle: () => void;
   hidden?: boolean;
+  showReachOdds: boolean;
 }) {
   if (hidden) return null;
 
@@ -306,6 +357,7 @@ function CollapsibleBracketRound({
               roundKey={roundKey}
               roundOddsByCode={roundOddsByCode}
               onSelectTeam={onSelectTeam}
+              showReachOdds={showReachOdds}
             />
           ))}
         </div>
@@ -323,6 +375,7 @@ function CollapsibleBracketColumn({
   onSelectTeam,
   open,
   onToggle,
+  showReachOdds,
 }: {
   title: string;
   roundKey: BracketRoundKey;
@@ -332,6 +385,7 @@ function CollapsibleBracketColumn({
   onSelectTeam: (code: string) => void;
   open: boolean;
   onToggle: () => void;
+  showReachOdds: boolean;
 }) {
   const pairs = pairUp(matches);
 
@@ -351,7 +405,7 @@ function CollapsibleBracketColumn({
       {open ? (
         <>
           <p className="mb-3 text-center text-[10px] font-medium uppercase tracking-wide text-muted-foreground/70">
-            {ADVANCE_PROB_FIELD[roundKey].reachLabel}
+            {showReachOdds ? ADVANCE_PROB_FIELD[roundKey].reachLabel : "Most likely winners"}
           </p>
           <div
             className={`flex flex-1 flex-col ${
@@ -369,6 +423,7 @@ function CollapsibleBracketColumn({
                     roundKey={roundKey}
                     roundOddsByCode={roundOddsByCode}
                     onSelectTeam={onSelectTeam}
+                    showReachOdds={showReachOdds}
                   />
                   {second && (
                     <MatchCard
@@ -376,6 +431,7 @@ function CollapsibleBracketColumn({
                       roundKey={roundKey}
                       roundOddsByCode={roundOddsByCode}
                       onSelectTeam={onSelectTeam}
+                      showReachOdds={showReachOdds}
                     />
                   )}
                 </div>
@@ -419,34 +475,55 @@ function MatchCard({
   roundKey,
   roundOddsByCode,
   onSelectTeam,
+  showReachOdds,
 }: {
   match: BracketMatch;
   roundKey: BracketRoundKey;
   roundOddsByCode: Map<string, RoundOdds>;
   onSelectTeam: (code: string) => void;
+  showReachOdds: boolean;
 }) {
-  const homeProb = getAdvanceProb(match.home.code, roundKey, roundOddsByCode);
-  const awayProb = getAdvanceProb(match.away.code, roundKey, roundOddsByCode);
-  const homeFavored = Boolean(
-    homeProb && (!awayProb || homeProb.value >= awayProb.value),
-  );
-  const awayFavored = Boolean(
-    awayProb && (!homeProb || awayProb.value >= homeProb.value),
-  );
+  const homeProb = showReachOdds
+    ? getAdvanceProb(match.home.code, roundKey, roundOddsByCode)
+    : null;
+  const awayProb = showReachOdds
+    ? getAdvanceProb(match.away.code, roundKey, roundOddsByCode)
+    : null;
+  const projectedWinnerCode = match.projected_winner?.code ?? null;
 
   return (
     <div className="command-bracket-card">
       <MatchTeamRow
         slot={match.home}
         advanceProb={homeProb}
-        isFavored={homeProb !== null && awayProb !== null && homeFavored}
+        isFavored={
+          showReachOdds &&
+          homeProb !== null &&
+          awayProb !== null &&
+          homeProb.value >= awayProb.value
+        }
+        isProjectedWinner={
+          !showReachOdds &&
+          projectedWinnerCode !== null &&
+          match.home.code === projectedWinnerCode
+        }
         onSelectTeam={onSelectTeam}
       />
       <div className="my-1 h-px bg-border" />
       <MatchTeamRow
         slot={match.away}
         advanceProb={awayProb}
-        isFavored={homeProb !== null && awayProb !== null && awayFavored}
+        isFavored={
+          showReachOdds &&
+          homeProb !== null &&
+          awayProb !== null &&
+          awayProb.value >= homeProb.value
+        }
+        isProjectedWinner={
+          !showReachOdds &&
+          projectedWinnerCode !== null &&
+          match.away.code === projectedWinnerCode
+        }
         onSelectTeam={onSelectTeam}
       />
       {match.match_id != null && (
@@ -462,11 +539,13 @@ function MatchTeamRow({
   slot,
   advanceProb,
   isFavored,
+  isProjectedWinner,
   onSelectTeam,
 }: {
   slot: BracketMatch["home"];
   advanceProb: AdvanceProb | null;
   isFavored: boolean;
+  isProjectedWinner: boolean;
   onSelectTeam: (code: string) => void;
 }) {
   const isResolved = Boolean(slot.code) && slot.code !== "TBD";
@@ -478,7 +557,7 @@ function MatchTeamRow({
       onClick={() => isResolved && onSelectTeam(slot.code as string)}
       className={`flex w-full items-center gap-2 rounded-lg px-1 py-1 text-left transition ${
         isResolved ? "hover:bg-accent/10" : "cursor-default"
-      }`}
+      }${isProjectedWinner ? " bg-accent/15 ring-1 ring-accent/40" : ""}`}
     >
       <TeamBadge code={slot.code} size="sm" />
       <div className="min-w-0 flex-1">

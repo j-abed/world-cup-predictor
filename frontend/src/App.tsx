@@ -266,6 +266,9 @@ export default function App() {
             bracket={appState.bracket}
             roundOdds={appState.odds.round}
             onSelectTeam={handleSelectTeam}
+            projectedBracketSimulations={
+              appState.metadata.projected_bracket_simulations
+            }
           />
         );
       case "groups":

@@ -387,7 +387,7 @@ def resolve_compiled_source(
     raise ValueError(f"Unknown compiled source type: {source.source_type}")
 
 
-def simulate_knockout_bracket_once(
+def simulate_knockout_winners_by_match(
     projected_qualifiers: pd.DataFrame,
     bracket_slots: pd.DataFrame,
     compiled_bracket: list[CompiledKnockoutMatch],
@@ -395,7 +395,8 @@ def simulate_knockout_bracket_once(
     rng: np.random.Generator,
     third_place_assignment_cache: dict[tuple[str, ...], dict[str, dict]],
     third_place_permutations: pd.DataFrame,
-) -> dict[str, set[str] | str]:
+) -> dict[int, str]:
+    """Simulate one full knockout path and return match_id -> winning team_id."""
     source_to_team_id, third_placeholder_to_team_id = build_fast_qualifier_maps(
         projected_qualifiers=projected_qualifiers,
         bracket_slots=bracket_slots,
@@ -404,13 +405,6 @@ def simulate_knockout_bracket_once(
     )
 
     winners_by_match: dict[int, str] = {}
-
-    r32_teams = set(projected_qualifiers["team_id"])
-    r16_teams: set[str] = set()
-    qf_teams: set[str] = set()
-    sf_teams: set[str] = set()
-    final_teams: set[str] = set()
-    champion: str | None = None
 
     for match in compiled_bracket:
         home_team = resolve_compiled_source(
@@ -427,14 +421,77 @@ def simulate_knockout_bracket_once(
             third_placeholder_to_team_id=third_placeholder_to_team_id,
         )
 
-        winner = advance_knockout_match(
+        winners_by_match[match.match_id] = advance_knockout_match(
             team_a=home_team,
             team_b=away_team,
             rating_lookup=rating_lookup,
             rng=rng,
         )
 
-        winners_by_match[match.match_id] = winner
+    return winners_by_match
+
+
+def simulate_most_likely_knockout_winners_by_match(
+    projected_qualifiers: pd.DataFrame,
+    bracket_slots: pd.DataFrame,
+    compiled_bracket: list[CompiledKnockoutMatch],
+    rating_lookup: dict[str, float],
+    rng: np.random.Generator,
+    third_place_assignment_cache: dict[tuple[str, ...], dict[str, dict]],
+    third_place_permutations: pd.DataFrame,
+    simulations: int,
+) -> dict[int, str]:
+    """Return the modal winner for each knockout match across many simulations."""
+    winner_counts: dict[int, dict[str, int]] = defaultdict(lambda: defaultdict(int))
+
+    for _ in range(simulations):
+        winners_by_match = simulate_knockout_winners_by_match(
+            projected_qualifiers=projected_qualifiers,
+            bracket_slots=bracket_slots,
+            compiled_bracket=compiled_bracket,
+            rating_lookup=rating_lookup,
+            rng=rng,
+            third_place_assignment_cache=third_place_assignment_cache,
+            third_place_permutations=third_place_permutations,
+        )
+
+        for match_id, team_id in winners_by_match.items():
+            winner_counts[match_id][team_id] += 1
+
+    return {
+        match_id: max(counts.items(), key=lambda item: (item[1], item[0]))[0]
+        for match_id, counts in winner_counts.items()
+    }
+
+
+def simulate_knockout_bracket_once(
+    projected_qualifiers: pd.DataFrame,
+    bracket_slots: pd.DataFrame,
+    compiled_bracket: list[CompiledKnockoutMatch],
+    rating_lookup: dict[str, float],
+    rng: np.random.Generator,
+    third_place_assignment_cache: dict[tuple[str, ...], dict[str, dict]],
+    third_place_permutations: pd.DataFrame,
+) -> dict[str, set[str] | str]:
+    winners_by_match = simulate_knockout_winners_by_match(
+        projected_qualifiers=projected_qualifiers,
+        bracket_slots=bracket_slots,
+        compiled_bracket=compiled_bracket,
+        rating_lookup=rating_lookup,
+        rng=rng,
+        third_place_assignment_cache=third_place_assignment_cache,
+        third_place_permutations=third_place_permutations,
+    )
+
+    r32_teams = set(projected_qualifiers["team_id"])
+    r16_teams: set[str] = set()
+    qf_teams: set[str] = set()
+    sf_teams: set[str] = set()
+    final_teams: set[str] = set()
+    champion: str | None = None
+
+    for match in compiled_bracket:
+        winner = winners_by_match[match.match_id]
 
         if match.stage_key == "r16":
             r16_teams.add(winner)

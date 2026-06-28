@@ -6,7 +6,7 @@ from typing import Any
 
 import pandas as pd
 
-from src.bracket import build_projected_round_of_32
+from src.bracket import build_projected_complete_bracket
 from src.knockout import simulate_tournament_round_probabilities
 from src.reporting import (
     calculate_all_group_standings,
@@ -153,9 +153,13 @@ def generate_app_state(
         third_place_table=third_place_table,
     )
 
-    bracket = build_projected_round_of_32(
+    bracket = build_projected_complete_bracket(
+        teams=teams,
+        ratings=ratings,
         bracket_slots=bracket_slots,
         projected_qualifiers=projected_qualifiers,
+        seed=seed,
+        simulations=simulations,
     )
 
     group_finish_probabilities = simulate_all_group_finish_probabilities(
@@ -202,6 +206,7 @@ def generate_app_state(
         tournament_simulations=simulations,
         round_simulations=simulations,
         scenario=scenario,
+        projected_bracket_simulations=simulations,
     )
 
 

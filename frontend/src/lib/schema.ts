@@ -36,6 +36,7 @@ const metadataSchema = z.object({
   refresh_interval_hours: z.number().optional(),
   tournament_final_kickoff: z.string().optional(),
   scenario: scenarioMetadataSchema.optional(),
+  projected_bracket_simulations: z.number().optional(),
 });
 
 const groupCoverageSchema = z.object({
@@ -120,6 +121,7 @@ const bracketMatchSchema = z.object({
   home: bracketTeamSlotSchema,
   away: bracketTeamSlotSchema,
   winner_advances_to: z.number().nullable(),
+  projected_winner: bracketTeamSlotSchema.nullish(),
 });
 
 const bracketSchema = z.object({

@@ -7,6 +7,8 @@ import pandas as pd
 
 THIRD_PLACE_PERMUTATIONS_PATH = "data/third_place_permutations.csv"
 
+PROJECTED_BRACKET_SEED = 42
+
 @dataclass(frozen=True)
 class ThirdPlaceAssignment:
     placeholder_source: str
@@ -283,3 +285,147 @@ def build_projected_round_of_32(
         )
 
     return pd.DataFrame(rows)
+
+
+def build_team_id_lookup(teams: pd.DataFrame) -> dict[str, dict[str, str]]:
+    return {
+        str(row["team_id"]): {
+            "team": str(row["name"]),
+            "code": str(row["code"]),
+        }
+        for _, row in teams.iterrows()
+    }
+
+
+def _resolve_source_to_team_info(
+    source: str,
+    *,
+    qualifier_lookup: dict[str, dict],
+    third_place_assignment: dict[str, dict],
+    winners_by_match: dict[int, str],
+    team_lookup: dict[str, dict[str, str]],
+) -> dict[str, str] | None:
+    winner_prefix = "Winner Match "
+
+    if source.startswith(winner_prefix):
+        match_id = int(source.removeprefix(winner_prefix))
+        team_id = winners_by_match.get(match_id)
+
+        if team_id is None:
+            return None
+
+        return team_lookup.get(str(team_id))
+
+    resolved = resolve_bracket_source(
+        source=source,
+        qualifier_lookup=qualifier_lookup,
+        third_place_assignment=third_place_assignment,
+    )
+
+    if resolved is None:
+        return None
+
+    return {
+        "team": str(resolved["team"]),
+        "code": str(resolved["code"]),
+    }
+
+
+def apply_simulated_knockout_path(
+    bracket: pd.DataFrame,
+    projected_qualifiers: pd.DataFrame,
+    bracket_slots: pd.DataFrame,
+    winners_by_match: dict[int, str],
+    team_lookup: dict[str, dict[str, str]],
+) -> pd.DataFrame:
+    """Fill every bracket slot and attach the simulated winner for each match."""
+    qualifier_lookup = build_qualifier_lookup(projected_qualifiers)
+    third_place_assignment = build_third_place_assignment(
+        bracket_slots=bracket_slots,
+        projected_qualifiers=projected_qualifiers,
+    )
+
+    output = bracket.copy()
+    projected_winner_teams: list[str] = []
+    projected_winner_codes: list[str] = []
+
+    for idx, row in output.iterrows():
+        home_info = _resolve_source_to_team_info(
+            str(row["home_source"]),
+            qualifier_lookup=qualifier_lookup,
+            third_place_assignment=third_place_assignment,
+            winners_by_match=winners_by_match,
+            team_lookup=team_lookup,
+        )
+        away_info = _resolve_source_to_team_info(
+            str(row["away_source"]),
+            qualifier_lookup=qualifier_lookup,
+            third_place_assignment=third_place_assignment,
+            winners_by_match=winners_by_match,
+            team_lookup=team_lookup,
+        )
+
+        if home_info:
+            output.at[idx, "home_team"] = home_info["team"]
+            output.at[idx, "home_code"] = home_info["code"]
+
+        if away_info:
+            output.at[idx, "away_team"] = away_info["team"]
+            output.at[idx, "away_code"] = away_info["code"]
+
+        match_id = int(row["match_id"])
+        winner = team_lookup[str(winners_by_match[match_id])]
+        projected_winner_teams.append(winner["team"])
+        projected_winner_codes.append(winner["code"])
+
+    output["projected_winner_team"] = projected_winner_teams
+    output["projected_winner_code"] = projected_winner_codes
+
+    return output
+
+
+def build_projected_complete_bracket(
+    *,
+    teams: pd.DataFrame,
+    ratings: pd.DataFrame,
+    bracket_slots: pd.DataFrame,
+    projected_qualifiers: pd.DataFrame,
+    seed: int = PROJECTED_BRACKET_SEED,
+    simulations: int = 10_000,
+) -> pd.DataFrame:
+    """Build a full knockout tree using the modal winner per match."""
+    import numpy as np
+
+    from src.knockout import (
+        compile_knockout_bracket,
+        simulate_most_likely_knockout_winners_by_match,
+    )
+    from src.simulator import build_rating_lookup
+
+    bracket = build_projected_round_of_32(
+        bracket_slots=bracket_slots,
+        projected_qualifiers=projected_qualifiers,
+    )
+    compiled_bracket = compile_knockout_bracket(bracket_slots)
+    rating_lookup = build_rating_lookup(ratings)
+    rng = np.random.default_rng(seed)
+    third_place_permutations = load_third_place_permutations()
+
+    winners_by_match = simulate_most_likely_knockout_winners_by_match(
+        projected_qualifiers=projected_qualifiers,
+        bracket_slots=bracket_slots,
+        compiled_bracket=compiled_bracket,
+        rating_lookup=rating_lookup,
+        rng=rng,
+        third_place_assignment_cache={},
+        third_place_permutations=third_place_permutations,
+        simulations=simulations,
+    )
+
+    return apply_simulated_knockout_path(
+        bracket=bracket,
+        projected_qualifiers=projected_qualifiers,
+        bracket_slots=bracket_slots,
+        winners_by_match=winners_by_match,
+        team_lookup=build_team_id_lookup(teams),
+    )
