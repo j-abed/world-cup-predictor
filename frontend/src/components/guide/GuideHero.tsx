@@ -2,9 +2,10 @@ import type { GuideHeroStat } from "../../lib/guideStats";
 
 interface GuideHeroProps {
   stats: GuideHeroStat[];
+  lastUpdated: string;
 }
 
-export function GuideHero({ stats }: GuideHeroProps) {
+export function GuideHero({ stats, lastUpdated }: GuideHeroProps) {
   return (
     <header className="guide-hero">
       <p className="guide-hero__eyebrow">Educational Guide</p>
@@ -15,14 +16,15 @@ export function GuideHero({ stats }: GuideHeroProps) {
         A plain-language tour of the Monte Carlo simulator, the math behind
         match scores and tiebreakers, and how to read the dashboard projections.
       </p>
-      <div className="guide-hero__stats" role="list">
+      <p className="guide-hero__updated">Last updated: {lastUpdated}</p>
+      <dl className="guide-hero__stats">
         {stats.map((stat) => (
-          <div key={stat.label} className="guide-hero__stat" role="listitem">
-            <p className="guide-hero__stat-value">{stat.value}</p>
-            <p className="guide-hero__stat-label">{stat.label}</p>
+          <div key={stat.label} className="guide-hero__stat">
+            <dt className="guide-hero__stat-label">{stat.label}</dt>
+            <dd className="guide-hero__stat-value">{stat.value}</dd>
           </div>
         ))}
-      </div>
+      </dl>
     </header>
   );
 }

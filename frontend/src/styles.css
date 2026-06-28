@@ -3668,6 +3668,8 @@
   border: 1px solid oklch(0.95 0.02 95 / 0.1);
   border-radius: 0.85rem;
   background: oklch(0.1 0.035 158 / 0.65);
+  display: flex;
+  flex-direction: column-reverse;
 }
 
 .guide-hero__stat-value {
@@ -3899,5 +3901,160 @@
 
 .guide-page--embedded .guide-hero__title {
   font-size: clamp(1.35rem, 3vw, 2rem);
+}
+
+.guide-hero__updated {
+  margin: 0.75rem 0 0;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: oklch(0.58 0.04 105);
+}
+
+.guide-start-here {
+  margin: 1.25rem 0 0;
+  padding: 1rem 1.15rem;
+  border: 1px solid oklch(0.72 0.14 145 / 0.35);
+  border-radius: 0.85rem;
+  background: oklch(0.72 0.14 145 / 0.08);
+}
+
+.guide-start-here__title {
+  margin: 0 0 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: oklch(0.78 0.12 145);
+}
+
+.guide-start-here p {
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.55;
+  color: oklch(0.88 0.03 95);
+}
+
+.guide-start-here ol {
+  margin: 0.65rem 0 0;
+  padding-left: 1.25rem;
+  font-size: 0.875rem;
+  line-height: 1.55;
+  color: oklch(0.88 0.03 95);
+}
+
+.guide-start-here li + li {
+  margin-top: 0.35rem;
+}
+
+.guide-note {
+  margin: 1rem 0;
+  padding: 0.85rem 1rem;
+  border-left: 3px solid oklch(0.84 0.17 92 / 0.55);
+  border-radius: 0 0.65rem 0.65rem 0;
+  background: oklch(0.84 0.17 92 / 0.06);
+}
+
+.guide-note__title {
+  margin: 0 0 0.35rem;
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--command-gold);
+}
+
+.guide-note__body {
+  font-size: 0.875rem;
+  line-height: 1.55;
+  color: oklch(0.86 0.03 95);
+}
+
+.guide-note__body p {
+  margin: 0;
+}
+
+.guide-note__body p + p {
+  margin-top: 0.5rem;
+}
+
+.guide-table-wrap {
+  margin: 1rem 0;
+  overflow-x: auto;
+  border: 1px solid oklch(0.95 0.02 95 / 0.1);
+  border-radius: 0.75rem;
+}
+
+.guide-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8125rem;
+  line-height: 1.45;
+}
+
+.guide-table th,
+.guide-table td {
+  padding: 0.55rem 0.75rem;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid oklch(0.95 0.02 95 / 0.08);
+}
+
+.guide-table th {
+  font-family: var(--font-mono);
+  font-size: 0.5625rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: oklch(0.62 0.04 105);
+  background: oklch(0.1 0.035 158 / 0.55);
+}
+
+.guide-table tr:last-child td {
+  border-bottom: none;
+}
+
+.guide-table td:first-child {
+  font-weight: 600;
+  color: oklch(0.92 0.02 95);
+  white-space: nowrap;
+}
+
+.guide-inline-code {
+  padding: 0.1em 0.35em;
+  border-radius: 0.3em;
+  background: oklch(0.95 0.02 95 / 0.08);
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  color: oklch(0.88 0.06 145);
+}
+
+.guide-toc__tier + .guide-toc__tier {
+  margin-top: 0.85rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid oklch(0.95 0.02 95 / 0.08);
+}
+
+.guide-toc__tier-label {
+  margin: 0 0 0.35rem;
+  font-family: var(--font-mono);
+  font-size: 0.5625rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: oklch(0.58 0.04 105);
+}
+
+.guide-toc__tier-hint {
+  display: block;
+  margin-top: 0.15rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  color: oklch(0.52 0.03 105);
+  line-height: 1.35;
 }
 

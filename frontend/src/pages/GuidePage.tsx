@@ -2,10 +2,13 @@ import { useEffect, useMemo } from "react";
 import type { AppState } from "../types";
 import { GuideArticle } from "../components/guide/GuideArticle";
 import { GuideHero } from "../components/guide/GuideHero";
+import { GuideStartHere } from "../components/guide/GuideStartHere";
 import { TableOfContents } from "../components/guide/TableOfContents";
 import {
   buildGuideExportSnapshot,
   buildGuideHeroStats,
+  buildGuideLiveExamples,
+  buildGuidePathHighlight,
   resolveModelQualityForGuide,
 } from "../lib/guideStats";
 import type { GuideDisplayMode } from "../lib/guideRouting";
@@ -19,6 +22,11 @@ interface GuidePageProps {
 export function GuidePage({ appState, mode }: GuidePageProps) {
   const heroStats = useMemo(() => buildGuideHeroStats(appState), [appState]);
   const snapshot = useMemo(() => buildGuideExportSnapshot(appState), [appState]);
+  const live = useMemo(() => buildGuideLiveExamples(appState), [appState]);
+  const pathHighlight = useMemo(
+    () => buildGuidePathHighlight(appState),
+    [appState],
+  );
   const sims = appState.metadata.simulations.tournament;
 
   useEffect(() => {
@@ -38,12 +46,14 @@ export function GuidePage({ appState, mode }: GuidePageProps) {
       ) : null}
 
       <div className="guide-shell">
-        <GuideHero stats={heroStats} />
+        <GuideHero stats={heroStats} lastUpdated={snapshot.exportTimestamp} />
 
         <p className="guide-disclaimer" role="note">
           This is not betting advice. The probabilities are simulated frequencies,
           not guarantees.
         </p>
+
+        <GuideStartHere />
 
         <div className="guide-layout">
           <aside className="guide-layout__toc">
@@ -54,6 +64,8 @@ export function GuidePage({ appState, mode }: GuidePageProps) {
             <GuideArticle
               sims={sims}
               snapshot={snapshot}
+              live={live}
+              pathHighlight={pathHighlight}
               modelQuality={resolveModelQualityForGuide(appState)}
               dataCaveats={appState.metadata.data_caveats}
             />

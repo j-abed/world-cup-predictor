@@ -50,3 +50,83 @@ export function GuideList({ items }: { items: ReactNode[] }) {
 export function GuideDivider() {
   return <hr className="guide-divider" aria-hidden />;
 }
+
+interface GuideNoteProps {
+  title: string;
+  children: ReactNode;
+}
+
+export function GuideNote({ title, children }: GuideNoteProps) {
+  return (
+    <aside className="guide-note">
+      <p className="guide-note__title">{title}</p>
+      <div className="guide-note__body">{children}</div>
+    </aside>
+  );
+}
+
+interface GuideCompareRow {
+  label: string;
+  snapshot: string;
+  projection: string;
+}
+
+export function GuideCompareTable({
+  rows,
+}: {
+  rows: GuideCompareRow[];
+}) {
+  return (
+    <div className="guide-table-wrap">
+      <table className="guide-table">
+        <thead>
+          <tr>
+            <th scope="col" />
+            <th scope="col">Snapshot</th>
+            <th scope="col">Projection</th>
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((row) => (
+            <tr key={row.label}>
+              <th scope="row">{row.label}</th>
+              <td>{row.snapshot}</td>
+              <td>{row.projection}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+interface GuideMetricRow {
+  component: string;
+  exportValue: string;
+  meaning: string;
+}
+
+export function GuideMetricTable({ rows }: { rows: GuideMetricRow[] }) {
+  return (
+    <div className="guide-table-wrap">
+      <table className="guide-table">
+        <thead>
+          <tr>
+            <th scope="col">Component</th>
+            <th scope="col">This export</th>
+            <th scope="col">Meaning</th>
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((row) => (
+            <tr key={row.component}>
+              <th scope="row">{row.component}</th>
+              <td>{row.exportValue}</td>
+              <td>{row.meaning}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}

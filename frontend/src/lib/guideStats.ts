@@ -54,6 +54,27 @@ export interface GuideExportSnapshot {
   biggestMover: string | null;
   liveMatchLabel: string | null;
   liveGroupLabel: string | null;
+  confidenceExpandedLine: string;
+  confidenceComponentRows: Array<{
+    key: string;
+    exportValue: string;
+    meaning: string;
+  }>;
+}
+
+export interface GuideLiveExamples {
+  championTeam: string | null;
+  championWins: number | null;
+  championPctLabel: string | null;
+  sims: number;
+  movers: Array<{ team: string; metricLabel: string; deltaPp: string }>;
+  modelFavoritePct: string | null;
+  marketFavoritePct: string | null;
+}
+
+export interface GuidePathHighlight {
+  team: string;
+  label: string;
 }
 
 function formatUtcTimestamp(iso: string): string {
@@ -145,6 +166,14 @@ export function buildGuideExportSnapshot(state: AppState): GuideExportSnapshot {
     biggestMover = `${topMover.team} — ${metric}, ${sign}${(topMover.delta * 100).toFixed(1)} percentage points`;
   }
 
+  const simPct = Math.round(components.simulation_factor * 100);
+  const resPct = Math.round(components.group_stage_completeness * 100);
+  const backPct = Math.round(components.backtest_calibration * 100);
+  const targetSims =
+    modelQuality.target_simulations ?? metadata.simulations.tournament ?? 10_000;
+
+  const confidenceExpandedLine = `${(weights.simulation_depth).toFixed(2)}(${simPct}\\%) + ${(weights.group_stage_completeness).toFixed(2)}(${resPct}\\%) + ${(weights.backtest_calibration).toFixed(2)}(${backPct}\\%)`;
+
   return {
     monteCarloRuns:
       metadata.simulations.tournament > 0
@@ -191,5 +220,76 @@ export function buildGuideExportSnapshot(state: AppState): GuideExportSnapshot {
     biggestMover,
     liveMatchLabel,
     liveGroupLabel: liveMatch?.group ?? null,
+    confidenceExpandedLine,
+    confidenceComponentRows: [
+      {
+        key: "S",
+        exportValue: `${simPct}%`,
+        meaning: `${metadata.simulations.tournament.toLocaleString()} / ${targetSims.toLocaleString()} target runs`,
+      },
+      {
+        key: "R",
+        exportValue: `${resPct}%`,
+        meaning: `${metadata.completed_result_count} of ${metadata.fixture_count} group fixtures complete`,
+      },
+      {
+        key: "B",
+        exportValue: `${backPct}%`,
+        meaning: "2022 backtest calibration (R16 overlap + champion sanity)",
+      },
+    ],
+  };
+}
+
+export function buildGuideLiveExamples(state: AppState): GuideLiveExamples {
+  const sims = state.metadata.simulations.tournament;
+  const topChampion = [...state.odds.round].sort(
+    (a, b) => b.champion_prob - a.champion_prob,
+  )[0];
+
+  const championWins =
+    topChampion && sims > 0 ? Math.round(topChampion.champion_prob * sims) : null;
+
+  const summary = state.market_comparison?.summary;
+  const teams = state.market_comparison?.teams ?? [];
+
+  const modelTeam = summary
+    ? teams.find((entry) => entry.code === summary.model_favorite_code)
+    : undefined;
+  const marketTeam = summary
+    ? teams.find((entry) => entry.code === summary.market_favorite_code)
+    : undefined;
+
+  const movers = (state.movement?.biggest_movers ?? []).slice(0, 3).map((row) => ({
+    team: row.team,
+    metricLabel: movementMetricLabel(row.metric).toLowerCase(),
+    deltaPp: `${row.delta >= 0 ? "+" : ""}${(row.delta * 100).toFixed(1)} pp`,
+  }));
+
+  return {
+    championTeam: topChampion?.team ?? null,
+    championWins,
+    championPctLabel: topChampion?.champion_prob_label.trim() ?? null,
+    sims,
+    movers,
+    modelFavoritePct: modelTeam
+      ? `${(modelTeam.model_champion_prob * 100).toFixed(1)}%`
+      : null,
+    marketFavoritePct: marketTeam
+      ? `${(marketTeam.market_implied_prob * 100).toFixed(1)}%`
+      : null,
+  };
+}
+
+export function buildGuidePathHighlight(state: AppState): GuidePathHighlight | null {
+  const entry = state.path_difficulty?.[0];
+
+  if (!entry) {
+    return null;
+  }
+
+  return {
+    team: entry.team,
+    label: entry.label,
   };
 }
