@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "generated_at": "2026-06-28T15:25:24",
+    "generated_at": "2026-06-28T17:20:28",
     "team_count": 48,
     "fixture_count": 72,
     "completed_result_count": 69,
@@ -19,7 +19,7 @@
       "Ratings include Elo-style post-match updates for newly completed fixtures.",
       "Fair-play conduct scores are aggregated from ESPN yellow/red card data."
     ],
-    "next_refresh_at": "2026-06-28T16:00:00+00:00",
+    "next_refresh_at": "2026-06-28T18:00:00+00:00",
     "refresh_interval_hours": 2,
     "tournament_final_kickoff": "2026-07-19T18:00:00-04:00"
   },
@@ -5846,16 +5846,16 @@
   "market_comparison": {
     "available": true,
     "source": "the_odds_api:soccer_fifa_world_cup_winner",
-    "as_of": "2026-06-28T15:21:02+00:00",
+    "as_of": "2026-06-28T17:17:35+00:00",
     "methodology": "Compares model championship probability to average implied probability from outright winner odds. Positive delta means the model is more bullish than the market.",
     "teams": [
       {
         "code": "FRA",
         "team": "France",
         "model_champion_prob": 0.1554,
-        "market_implied_prob": 0.224341,
-        "delta": -0.068941,
-        "decimal_odds": 4.457
+        "market_implied_prob": 0.221852,
+        "delta": -0.066452,
+        "decimal_odds": 4.508
       },
       {
         "code": "ENG",
@@ -5869,33 +5869,33 @@
         "code": "BEL",
         "team": "Belgium",
         "model_champion_prob": 0.0391,
-        "market_implied_prob": 0.017621,
-        "delta": 0.021479,
-        "decimal_odds": 56.75
+        "market_implied_prob": 0.018018,
+        "delta": 0.021082,
+        "decimal_odds": 55.5
       },
       {
         "code": "POR",
         "team": "Portugal",
         "model_champion_prob": 0.0469,
-        "market_implied_prob": 0.067797,
-        "delta": -0.020897,
-        "decimal_odds": 14.75
-      },
-      {
-        "code": "NOR",
-        "team": "Norway",
-        "model_champion_prob": 0.0083,
-        "market_implied_prob": 0.025806,
-        "delta": -0.017506,
-        "decimal_odds": 38.75
+        "market_implied_prob": 0.067227,
+        "delta": -0.020327,
+        "decimal_odds": 14.875
       },
       {
         "code": "CRO",
         "team": "Croatia",
         "model_champion_prob": 0.0221,
-        "market_implied_prob": 0.005051,
-        "delta": 0.017049,
-        "decimal_odds": 198.0
+        "market_implied_prob": 0.005391,
+        "delta": 0.016709,
+        "decimal_odds": 185.5
+      },
+      {
+        "code": "NOR",
+        "team": "Norway",
+        "model_champion_prob": 0.0083,
+        "market_implied_prob": 0.024845,
+        "delta": -0.016545,
+        "decimal_odds": 40.25
       },
       {
         "code": "GER",
@@ -5909,17 +5909,17 @@
         "code": "BRA",
         "team": "Brazil",
         "model_champion_prob": 0.0567,
-        "market_implied_prob": 0.066667,
-        "delta": -0.009967,
-        "decimal_odds": 15.0
+        "market_implied_prob": 0.067797,
+        "delta": -0.011097,
+        "decimal_odds": 14.75
       },
       {
         "code": "USA",
         "team": "United States",
         "model_champion_prob": 0.0174,
-        "market_implied_prob": 0.027027,
-        "delta": -0.009627,
-        "decimal_odds": 37.0
+        "market_implied_prob": 0.027778,
+        "delta": -0.010378,
+        "decimal_odds": 36.0
       },
       {
         "code": "NED",
@@ -5930,12 +5930,12 @@
         "decimal_odds": 17.75
       },
       {
-        "code": "ARG",
-        "team": "Argentina",
-        "model_champion_prob": 0.2004,
-        "market_implied_prob": 0.193237,
-        "delta": 0.007163,
-        "decimal_odds": 5.175
+        "code": "JPN",
+        "team": "Japan",
+        "model_champion_prob": 0.0102,
+        "market_implied_prob": 0.016529,
+        "delta": -0.006329,
+        "decimal_odds": 60.5
       },
       {
         "code": "SUI",
@@ -5946,36 +5946,36 @@
         "decimal_odds": 79.5
       },
       {
-        "code": "JPN",
-        "team": "Japan",
-        "model_champion_prob": 0.0102,
-        "market_implied_prob": 0.015873,
-        "delta": -0.005673,
-        "decimal_odds": 63.0
+        "code": "EGY",
+        "team": "Egypt",
+        "model_champion_prob": 0.0077,
+        "market_implied_prob": 0.002594,
+        "delta": 0.005106,
+        "decimal_odds": 385.5
       },
       {
         "code": "AUS",
         "team": "Australia",
         "model_champion_prob": 0.0077,
-        "market_implied_prob": 0.00227,
-        "delta": 0.00543,
-        "decimal_odds": 440.5
-      },
-      {
-        "code": "EGY",
-        "team": "Egypt",
-        "model_champion_prob": 0.0077,
-        "market_implied_prob": 0.002497,
-        "delta": 0.005203,
-        "decimal_odds": 400.5
+        "market_implied_prob": 0.002853,
+        "delta": 0.004847,
+        "decimal_odds": 350.5
       },
       {
         "code": "SEN",
         "team": "Senegal",
         "model_champion_prob": 0.0113,
-        "market_implied_prob": 0.006329,
-        "delta": 0.004971,
-        "decimal_odds": 158.0
+        "market_implied_prob": 0.006536,
+        "delta": 0.004764,
+        "decimal_odds": 153.0
+      },
+      {
+        "code": "ARG",
+        "team": "Argentina",
+        "model_champion_prob": 0.2004,
+        "market_implied_prob": 0.196078,
+        "delta": 0.004322,
+        "decimal_odds": 5.1
       },
       {
         "code": "MAR",
@@ -5997,9 +5997,9 @@
         "code": "DZA",
         "team": "Algeria",
         "model_champion_prob": 0.0041,
-        "market_implied_prob": 0.001508,
-        "delta": 0.002592,
-        "decimal_odds": 663.0
+        "market_implied_prob": 0.001701,
+        "delta": 0.002399,
+        "decimal_odds": 588.0
       },
       {
         "code": "ESP",
@@ -6013,9 +6013,9 @@
         "code": "AUT",
         "team": "Austria",
         "model_champion_prob": 0.0044,
-        "market_implied_prob": 0.002937,
-        "delta": 0.001463,
-        "decimal_odds": 340.5
+        "market_implied_prob": 0.002959,
+        "delta": 0.001441,
+        "decimal_odds": 338.0
       },
       {
         "code": "GHA",
@@ -6029,9 +6029,9 @@
         "code": "CAN",
         "team": "Canada",
         "model_champion_prob": 0.0044,
-        "market_implied_prob": 0.003195,
-        "delta": 0.001205,
-        "decimal_odds": 313.0
+        "market_implied_prob": 0.003356,
+        "delta": 0.001044,
+        "decimal_odds": 298.0
       },
       {
         "code": "COD",
@@ -6042,14 +6042,6 @@
         "decimal_odds": 875.5
       },
       {
-        "code": "SWE",
-        "team": "Sweden",
-        "model_champion_prob": 0.0037,
-        "market_implied_prob": 0.002853,
-        "delta": 0.000847,
-        "decimal_odds": 350.5
-      },
-      {
         "code": "CIV",
         "team": "Ivory Coast",
         "model_champion_prob": 0.004,
@@ -6058,12 +6050,12 @@
         "decimal_odds": 210.5
       },
       {
-        "code": "COL",
-        "team": "Colombia",
-        "model_champion_prob": 0.0272,
-        "market_implied_prob": 0.027778,
-        "delta": -0.000578,
-        "decimal_odds": 36.0
+        "code": "SWE",
+        "team": "Sweden",
+        "model_champion_prob": 0.0037,
+        "market_implied_prob": 0.003026,
+        "delta": 0.000674,
+        "decimal_odds": 330.5
       },
       {
         "code": "PAR",
@@ -6072,6 +6064,14 @@
         "market_implied_prob": 0.00148,
         "delta": 0.00052,
         "decimal_odds": 675.5
+      },
+      {
+        "code": "COL",
+        "team": "Colombia",
+        "model_champion_prob": 0.0272,
+        "market_implied_prob": 0.027397,
+        "delta": -0.000197,
+        "decimal_odds": 36.5
       },
       {
         "code": "RSA",
@@ -6103,14 +6103,14 @@
       "model_favorite_team": "Argentina",
       "market_favorite_code": "FRA",
       "market_favorite_team": "France",
-      "mean_absolute_gap": 0.008805,
+      "mean_absolute_gap": 0.008583,
       "compared_team_count": 31,
       "favorites_agree": false
     }
   },
   "movement": {
     "has_baseline": true,
-    "baseline_generated_at": "2026-06-28T13:59:59",
+    "baseline_generated_at": "2026-06-28T15:25:24",
     "biggest_movers": [],
     "top_champion_changes": [
       {
