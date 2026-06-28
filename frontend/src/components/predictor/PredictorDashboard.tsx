@@ -54,6 +54,17 @@ const EMPTY_MODEL_QUALITY: ModelQuality = {
   backtest_round_of_16_overlap: 0,
 };
 
+/** Converts snake_case identifiers to Title Case for display. */
+function formatRatingsSource(source: string): string {
+  if (/^[a-z][a-z0-9_]*$/.test(source)) {
+    return source
+      .split("_")
+      .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+      .join(" ");
+  }
+  return source;
+}
+
 function formatUtcClock(iso: string): string {
   const parsed = new Date(iso);
 
@@ -206,6 +217,10 @@ export function PredictorDashboard({
     liveContext.days_to_final > 0 ? String(liveContext.days_to_final) : "—";
   const showInsightRail = activeTab === "champion" && insightContext !== null;
 
+  // On the Guide tab the cockpit chrome (live stats, KPI tiles, matchday) is
+  // irrelevant and crowds the long-form content — collapse to a thin strip.
+  const isGuideTab = activeTab === "methodology";
+
   // Sidebar is only visible at ≥1024px; TabNav is only visible below 1024px.
   // We hide the non-visible nav from the AT and tab order to prevent duplication.
   const isDesktopNav = useMediaQuery("(min-width: 1024px)");
@@ -231,7 +246,7 @@ export function PredictorDashboard({
           <header className="command-shell-header command-shell-header--compact">
             <div className="hero-module hero-module--compact">
               <div className="hero-module__bar">
-                <LiveBadge />
+                {!isGuideTab && <LiveBadge />}
                 <HeroStatusLine
                   matchday={matchday}
                   completedResults={metadata.completed_result_count}
@@ -240,46 +255,52 @@ export function PredictorDashboard({
                 />
               </div>
 
-              <HeroHeader
-                simulations={simulations}
-                refreshIntervalHours={refreshHours}
-              />
+              {!isGuideTab && (
+                <HeroHeader
+                  simulations={simulations}
+                  refreshIntervalHours={refreshHours}
+                />
+              )}
 
-              <div className="kpi-grid kpi-grid--compact">
-                <KpiTile
-                  label="Simulations"
-                  value={simulations.toLocaleString()}
-                  hint={KPI_HINTS.simulations}
-                />
-                <KpiTile
-                  label="Proj. confidence"
-                  value={
-                    confidencePercent > 0
-                      ? `${Number(confidencePercent).toFixed(1)}%`
-                      : "—"
-                  }
-                  accent={confidencePercent > 0}
-                  hint={
-                    confidencePercent > 0
-                      ? projectionConfidenceHint(modelQuality)
-                      : KPI_HINTS.projectionConfidenceFallback
-                  }
-                />
-                <KpiTile
-                  label="Days to final"
-                  value={daysToFinal}
-                  hint={KPI_HINTS.daysToFinal}
-                />
-              </div>
+              {!isGuideTab && (
+                <div className="kpi-grid kpi-grid--compact">
+                  <KpiTile
+                    label="Simulations"
+                    value={simulations.toLocaleString()}
+                    hint={KPI_HINTS.simulations}
+                  />
+                  <KpiTile
+                    label="Proj. confidence"
+                    value={
+                      confidencePercent > 0
+                        ? `${Number(confidencePercent).toFixed(1)}%`
+                        : "—"
+                    }
+                    accent={confidencePercent > 0}
+                    hint={
+                      confidencePercent > 0
+                        ? projectionConfidenceHint(modelQuality)
+                        : KPI_HINTS.projectionConfidenceFallback
+                    }
+                  />
+                  <KpiTile
+                    label="Days to final"
+                    value={daysToFinal}
+                    hint={KPI_HINTS.daysToFinal}
+                  />
+                </div>
+              )}
             </div>
 
-            <MatchdayStatus
-              liveContext={liveContext}
-              metadata={metadata}
-              coverage={coverage}
-            />
+            {!isGuideTab && (
+              <MatchdayStatus
+                liveContext={liveContext}
+                metadata={metadata}
+                coverage={coverage}
+              />
+            )}
 
-            {liveAccuracy?.available && liveAccuracy.summary ? (
+            {!isGuideTab && liveAccuracy?.available && liveAccuracy.summary ? (
               <p className="command-meta-strip">{liveAccuracy.summary}</p>
             ) : null}
 
@@ -294,10 +315,10 @@ export function PredictorDashboard({
                       rel="noreferrer"
                       className="underline decoration-border underline-offset-2 hover:text-gold"
                     >
-                      {metadata.ratings_source}
+                      {formatRatingsSource(metadata.ratings_source)}
                     </a>
                   ) : (
-                    metadata.ratings_source
+                    formatRatingsSource(metadata.ratings_source)
                   )}
                 </span>
               </div>
