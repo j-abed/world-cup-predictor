@@ -53,39 +53,34 @@ export function MovementSummary({ movement }: MovementSummaryProps) {
   }
 
   return (
-    <section className="pitch-card mb-8 rounded-3xl p-5 sm:p-6">
-      <div className="mb-4 flex flex-wrap items-end justify-between gap-2">
-        <div>
-          <h3 className="text-lg font-semibold text-foreground">
-            Biggest movers
-          </h3>
-          <p className="mt-1 text-sm text-muted-foreground">
-            Largest probability shifts since the previous refresh
-            {baseline_generated_at ? ` (${baseline_generated_at})` : ""}.
-          </p>
-        </div>
-      </div>
+    <section className="movers-board">
+      <header className="movers-board__header">
+        <p className="movers-board__eyebrow">Run-over-run</p>
+        <h3 className="movers-board__title">Biggest movers</h3>
+        <p className="movers-board__subtitle">
+          Largest probability shifts since the previous refresh
+          {baseline_generated_at ? ` (${baseline_generated_at})` : ""}.
+        </p>
+      </header>
 
-      <ul className="flex flex-col gap-2">
+      <ul className="movers-board__list">
         {biggest_movers.map((row) => (
           <li
             key={`${row.code}-${row.metric}`}
-            className="flex flex-col gap-2 rounded-xl border border-border/60 bg-background/40 p-3 sm:flex-row sm:items-center sm:justify-between"
+            className="movers-board__row"
           >
-            <div className="flex min-w-0 items-center gap-3">
+            <div className="movers-board__team">
               <TeamBadge code={row.code} size="sm" />
               <div className="min-w-0">
-                <p className="truncate text-sm font-medium text-foreground">
-                  {row.team}
-                </p>
-                <p className="text-xs text-muted-foreground">
+                <p className="movers-board__name">{row.team}</p>
+                <p className="movers-board__metric">
                   {movementMetricLabel(row.metric)} odds
                 </p>
               </div>
             </div>
 
-            <div className="flex items-center gap-4 text-sm tabular-nums">
-              <span className="text-muted-foreground">
+            <div className="movers-board__delta">
+              <span className="movers-board__range">
                 {(row.previous * 100).toFixed(1)}% → {(row.current * 100).toFixed(1)}%
               </span>
               <ProbabilityDelta delta={row.delta} />

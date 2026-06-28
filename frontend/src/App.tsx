@@ -4,19 +4,22 @@ import { BracketView } from "./components/BracketView";
 import { ChampionOdds } from "./components/ChampionOdds";
 import { FixturesView } from "./components/FixturesView";
 import { GroupStandings } from "./components/GroupStandings";
-import { Header } from "./components/Header";
+import { CommandPanelStack } from "./components/CommandPanel";
+import { PredictorDashboard } from "./components/predictor/PredictorDashboard";
 import { ProjectedField } from "./components/ProjectedField";
 import { MarketsView } from "./components/MarketsView";
-import { MovementSummary } from "./components/MovementSummary";
 import { QualificationOdds } from "./components/QualificationOdds";
-import { ScenarioView } from "./components/ScenarioView";
-import { TabNav } from "./components/TabNav";
 import { TabErrorBoundary } from "./components/TabErrorBoundary";
 import { TeamDetail } from "./components/TeamDetail";
 import { ThirdPlaceTable } from "./components/ThirdPlaceTable";
-import { AppStateLoadError, loadAppState, loadBacktest2022, loadScenarioAppState } from "./lib/data";
+import {
+  AppStateLoadError,
+  loadAppState,
+  loadBacktest2022,
+} from "./lib/data";
 import { appStateUrl, isRemoteDataUrl } from "./lib/dataUrls";
 import { buildDocumentTitle } from "./lib/documentMeta";
+import { buildInsightContext } from "./lib/insightContext";
 import { TAB_LABELS, type TabId } from "./lib/tabs";
 import { buildTeamIndex } from "./lib/team";
 import { readAppUrlState, writeAppUrlState } from "./lib/urlState";
@@ -25,7 +28,6 @@ import type { AppState } from "./types";
 
 export default function App() {
   const [appState, setAppState] = useState<AppState | null>(null);
-  const [scenarioState, setScenarioState] = useState<AppState | null>(null);
   const [backtestState, setBacktestState] = useState<Backtest2022 | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<TabId>(
@@ -56,18 +58,6 @@ export default function App() {
             ? err.message
             : "Something went wrong loading the prediction data.",
         );
-      });
-
-    loadScenarioAppState()
-      .then((state) => {
-        if (!cancelled) {
-          setScenarioState(state);
-        }
-      })
-      .catch(() => {
-        if (!cancelled) {
-          setScenarioState(null);
-        }
       });
 
     loadBacktest2022()
@@ -113,6 +103,11 @@ export default function App() {
   const teamIndex = useMemo(
     () => (appState ? buildTeamIndex(appState) : null),
     [appState],
+  );
+
+  const insightContext = useMemo(
+    () => (appState ? buildInsightContext(appState, selectedTeamCode) : null),
+    [appState, selectedTeamCode],
   );
 
   useEffect(() => {
@@ -190,15 +185,14 @@ export default function App() {
     switch (activeTab) {
       case "champion":
         return (
-          <>
-            <MovementSummary movement={appState.movement} />
-            <ChampionOdds
-              round={appState.odds.round}
-              movement={appState.movement}
-              pathDifficulty={appState.path_difficulty}
-              onSelectTeam={handleSelectTeam}
-            />
-          </>
+          <ChampionOdds
+            round={appState.odds.round}
+            movement={appState.movement}
+            pathDifficulty={appState.path_difficulty}
+            qualification={appState.odds.qualification}
+            selectedTeamCode={selectedTeamCode}
+            onSelectTeam={handleSelectTeam}
+          />
         );
       case "markets":
         return (
@@ -231,7 +225,7 @@ export default function App() {
         );
       case "groups":
         return (
-          <div className="flex flex-col gap-10">
+          <CommandPanelStack>
             <GroupStandings
               standings={appState.standings}
               thirdPlace={appState.third_place}
@@ -241,20 +235,12 @@ export default function App() {
               thirdPlace={appState.third_place}
               onSelectTeam={handleSelectTeam}
             />
-          </div>
+          </CommandPanelStack>
         );
       case "qualification":
         return (
           <QualificationOdds
             qualification={appState.odds.qualification}
-            onSelectTeam={handleSelectTeam}
-          />
-        );
-      case "scenario":
-        return (
-          <ScenarioView
-            baseline={appState}
-            scenario={scenarioState}
             onSelectTeam={handleSelectTeam}
           />
         );
@@ -274,29 +260,24 @@ export default function App() {
   })();
 
   return (
-    <div className="min-h-screen">
-      <Header
+    <>
+      <PredictorDashboard
         metadata={appState.metadata}
         coverage={appState.coverage}
+        standings={appState.standings}
         liveContext={appState.live_context}
         modelQuality={appState.model_quality}
         liveAccuracy={appState.live_accuracy}
-      />
-
-      <main className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-        <TabNav active={activeTab} onChange={handleTabChange} />
-
+        activeTab={activeTab}
+        onTabChange={handleTabChange}
+        insightContext={insightContext}
+      >
         <TabErrorBoundary key={activeTab} tabLabel={TAB_LABELS[activeTab]}>
           {tabContent}
         </TabErrorBoundary>
-      </main>
-
-      <footer className="border-t border-border px-4 py-6 text-center text-xs text-muted-foreground">
-        Projections are simulation outputs, not betting odds. See the data
-        caveats panel above for methodology notes.
-      </footer>
+      </PredictorDashboard>
 
       <TeamDetail team={selectedTeam} onClose={handleCloseTeam} />
-    </div>
+    </>
   );
 }

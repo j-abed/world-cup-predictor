@@ -249,6 +249,14 @@ export interface ModelQuality {
   };
   backtest_reference: string;
   backtest_round_of_16_overlap: number;
+  projection_tier?: "fast" | "full";
+  component_weights?: {
+    simulation_depth: number;
+    group_stage_completeness: number;
+    backtest_calibration: number;
+  };
+  round_simulations?: number;
+  target_simulations?: number;
 }
 
 export interface PathDifficultyEntry {
