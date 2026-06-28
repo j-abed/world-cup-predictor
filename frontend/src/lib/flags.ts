@@ -61,3 +61,14 @@ export function flagCodeFor(code: string | null | undefined): string | null {
   if (!code) return null;
   return TEAM_FLAG_CODE[code] ?? null;
 }
+
+/** Static SVG path for a team flag (subset copied to public/vendor). */
+export function flagSvgUrl(code: string | null | undefined): string | null {
+  const suffix = flagCodeFor(code);
+
+  if (!suffix) {
+    return null;
+  }
+
+  return `/vendor/flag-icons/flags/1x1/${suffix}.svg`;
+}
