@@ -319,6 +319,17 @@ def upsert_in_progress_results(
     return output, messages
 
 
+def dedupe_results(results: pd.DataFrame) -> pd.DataFrame:
+    if results.empty:
+        return results
+
+    return (
+        results.sort_values("match_id")
+        .drop_duplicates(subset=["match_id"], keep="last")
+        .reset_index(drop=True)
+    )
+
+
 def main() -> None:
     args = parse_args()
 
@@ -358,6 +369,7 @@ def main() -> None:
         print("Dry run only. No files written.")
         return
 
+    updated_results = dedupe_results(updated_results)
     updated_results.to_csv(RESULTS_PATH, index=False)
     print(f"Wrote {RESULTS_PATH}")
 

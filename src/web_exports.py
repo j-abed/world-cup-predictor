@@ -152,7 +152,12 @@ def build_fixtures_payload(
         for _, row in teams.iterrows()
     }
 
-    results_by_match = results.set_index("match_id", drop=False)
+    results_by_match = (
+        results.drop_duplicates(subset=["match_id"], keep="last").set_index(
+            "match_id",
+            drop=False,
+        )
+    )
 
     rows: list[dict[str, Any]] = []
 
