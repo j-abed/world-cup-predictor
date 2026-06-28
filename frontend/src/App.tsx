@@ -8,6 +8,7 @@ import { CommandPanelStack } from "./components/CommandPanel";
 import { PredictorDashboard } from "./components/predictor/PredictorDashboard";
 import { ProjectedField } from "./components/ProjectedField";
 import { MarketsView } from "./components/MarketsView";
+import { MethodologyView } from "./components/MethodologyView";
 import { QualificationOdds } from "./components/QualificationOdds";
 import { TabErrorBoundary } from "./components/TabErrorBoundary";
 import { TeamDetail } from "./components/TeamDetail";
@@ -242,6 +243,16 @@ export default function App() {
           <QualificationOdds
             qualification={appState.odds.qualification}
             onSelectTeam={handleSelectTeam}
+          />
+        );
+      case "methodology":
+        return (
+          <MethodologyView
+            metadata={appState.metadata}
+            modelQuality={appState.model_quality}
+            pathDifficulty={appState.path_difficulty}
+            movement={appState.movement}
+            marketComparison={appState.market_comparison}
           />
         );
       case "backtest":

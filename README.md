@@ -30,6 +30,7 @@ data/*.csv  →  Python model (src/)  →  outputs/web/*.json  →  frontend/pub
 | Knockout bracket | `?tab=bracket` | `app_state.json` |
 | Group standings | `?tab=groups` | `app_state.json` |
 | Qualification odds | `?tab=qualification` | `app_state.json` |
+| How it works (methodology) | `?tab=methodology` | `app_state.json` (metadata + model quality) |
 | 2022 backtest | `?tab=backtest` | `backtest_2022.json` |
 
 Deep-link a team: `?tab=bracket&team=BRA`

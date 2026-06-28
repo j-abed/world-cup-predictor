@@ -70,6 +70,25 @@ function IconQualify() {
   );
 }
 
+function IconMethodology() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden>
+      <path
+        d="M3 2.5h10v11H3V2.5Z"
+        stroke="currentColor"
+        strokeWidth="1.2"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M5.5 5.5h5M5.5 8h5M5.5 10.5h3.5"
+        stroke="currentColor"
+        strokeWidth="1.2"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
 function IconBacktest() {
   return (
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden>
@@ -86,6 +105,7 @@ const NAV_ITEMS: NavItem[] = [
   { id: "bracket", label: "Knockout", icon: <IconKnockout /> },
   { id: "groups", label: "Groups", icon: <IconGroups /> },
   { id: "qualification", label: "Qualify", icon: <IconQualify /> },
+  { id: "methodology", label: "Guide", icon: <IconMethodology /> },
   { id: "backtest", label: "2022", icon: <IconBacktest /> },
 ];
 

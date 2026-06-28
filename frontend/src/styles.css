@@ -1876,6 +1876,152 @@
   margin-top: 0.25rem;
 }
 
+.methodology-prose__p {
+  margin: 0 0 0.65rem;
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  color: oklch(0.78 0.03 95);
+}
+
+.methodology-prose__p--meta {
+  margin-top: 0.75rem;
+  margin-bottom: 0;
+  font-size: 0.6875rem;
+  color: oklch(0.58 0.04 105);
+}
+
+.methodology-prose__list {
+  margin: 0 0 0.65rem;
+  padding-left: 1.1rem;
+  font-size: 0.8125rem;
+  line-height: 1.55;
+  color: oklch(0.74 0.03 95);
+}
+
+.methodology-prose__list li + li {
+  margin-top: 0.35rem;
+}
+
+.methodology-prose__formula {
+  margin: 0 0 0.65rem;
+  padding: 0.55rem 0.65rem;
+  overflow-x: auto;
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  line-height: 1.5;
+  color: oklch(0.82 0.06 92);
+  white-space: pre-wrap;
+  background: oklch(0.08 0.03 158 / 0.85);
+  border: 1px solid oklch(0.84 0.17 92 / 0.14);
+}
+
+.methodology-prose__code {
+  font-family: var(--font-mono);
+  font-size: 0.75em;
+  color: oklch(0.82 0.06 92);
+}
+
+.methodology-prose__katex {
+  margin: 0 0 0.65rem;
+  overflow-x: auto;
+  font-size: 0.8125rem;
+  color: oklch(0.84 0.06 92);
+}
+
+.methodology-prose__katex--display {
+  padding: 0.55rem 0.65rem;
+  text-align: center;
+  background: oklch(0.08 0.03 158 / 0.85);
+  border: 1px solid oklch(0.84 0.17 92 / 0.14);
+}
+
+.methodology-prose__katex .katex {
+  font-size: 1em;
+}
+
+.methodology-section {
+  scroll-margin-top: 5.5rem;
+}
+
+.methodology-toc {
+  margin: 0 0 1rem;
+  padding: 0.65rem 0.75rem;
+  background: oklch(0.08 0.03 158 / 0.55);
+  border: 1px solid oklch(0.84 0.17 92 / 0.12);
+}
+
+.methodology-toc__label {
+  margin: 0 0 0.45rem;
+  font-size: 0.5625rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: oklch(0.62 0.04 105);
+}
+
+.methodology-toc__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  columns: 2;
+  column-gap: 1rem;
+}
+
+@media (max-width: 640px) {
+  .methodology-toc__list {
+    columns: 1;
+  }
+}
+
+.methodology-toc__list li + li {
+  margin-top: 0.25rem;
+}
+
+.methodology-toc__link {
+  display: flex;
+  gap: 0.4rem;
+  align-items: baseline;
+  font-size: 0.6875rem;
+  line-height: 1.45;
+  color: oklch(0.76 0.03 95);
+  text-decoration: none;
+}
+
+.methodology-toc__link:hover {
+  color: oklch(0.88 0.12 92);
+}
+
+.methodology-toc__num {
+  flex-shrink: 0;
+  font-family: var(--font-mono);
+  font-size: 0.5625rem;
+  color: oklch(0.58 0.08 92);
+}
+
+.methodology-glossary {
+  margin: 0;
+}
+
+.methodology-glossary__entry + .methodology-glossary__entry {
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid oklch(0.95 0.02 95 / 0.06);
+}
+
+.methodology-glossary__term {
+  margin: 0 0 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: oklch(0.88 0.06 92);
+}
+
+.methodology-glossary__def {
+  margin: 0;
+  font-size: 0.8125rem;
+  line-height: 1.55;
+  color: oklch(0.74 0.03 95);
+}
+
 .command-toolbar {
   display: flex;
   flex-wrap: wrap;

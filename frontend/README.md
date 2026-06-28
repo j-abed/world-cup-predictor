@@ -142,6 +142,7 @@ src/
     ProjectedField.tsx         32-team projected knockout field
     ScenarioView.tsx           (unused in nav) baseline vs scenario deltas
     BacktestView.tsx           2022 model vs actual comparison
+    MethodologyView.tsx        Educational guide to the simulation stack
     TabNav.tsx                 Mobile sticky tab bar
     TabErrorBoundary.tsx       Per-tab error recovery
     TeamDetail.tsx             Team slide-over panel
