@@ -65,6 +65,15 @@ Full verify from repo root:
 uv run pytest && cd frontend && npm run lint && npm run build
 ```
 
+Cockpit layout regression check (serve preview first, then from repo root):
+
+```bash
+cd frontend && npm run preview -- --port 4173
+node scripts/inspect-layout.mjs
+```
+
+Writes screenshots and bounding-box metrics to `.visual-check/`.
+
 ## URL state
 
 Tabs and team selection sync to the query string:
@@ -120,7 +129,7 @@ src/
     champion/
       InsightRail.tsx          Biggest movers + path to final (desktop right rail)
       TitleOddsBoard.tsx       Ranked title odds table
-      TrendSparkline.tsx       Mini sparkline for movers
+      RunTrendArrow.tsx        Run-over-run trend arrow in title odds board
     MatchdayStatus.tsx         Compact live match + group progress module
     CommandPanel.tsx           Stacked panels for groups tab
     ChampionOdds.tsx           Title-race podium + odds board
