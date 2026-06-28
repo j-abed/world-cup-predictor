@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "generated_at": "2026-06-28T19:19:55",
+    "generated_at": "2026-06-28T19:31:04",
     "team_count": 48,
     "fixture_count": 72,
     "completed_result_count": 69,
@@ -5846,7 +5846,7 @@
   "market_comparison": {
     "available": true,
     "source": "the_odds_api:soccer_fifa_world_cup_winner",
-    "as_of": "2026-06-28T19:15:37+00:00",
+    "as_of": "2026-06-28T19:26:44+00:00",
     "methodology": "Compares model championship probability to average implied probability from outright winner odds. Positive delta means the model is more bullish than the market.",
     "teams": [
       {
@@ -5877,9 +5877,9 @@
         "code": "BEL",
         "team": "Belgium",
         "model_champion_prob": 0.0391,
-        "market_implied_prob": 0.017241,
-        "delta": 0.021859,
-        "decimal_odds": 58.0
+        "market_implied_prob": 0.017621,
+        "delta": 0.021479,
+        "decimal_odds": 56.75
       },
       {
         "code": "CRO",
@@ -5925,9 +5925,9 @@
         "code": "NED",
         "team": "Netherlands",
         "model_champion_prob": 0.0469,
-        "market_implied_prob": 0.056338,
-        "delta": -0.009438,
-        "decimal_odds": 17.75
+        "market_implied_prob": 0.057143,
+        "delta": -0.010243,
+        "decimal_odds": 17.5
       },
       {
         "code": "JPN",
@@ -5965,9 +5965,9 @@
         "code": "SEN",
         "team": "Senegal",
         "model_champion_prob": 0.0113,
-        "market_implied_prob": 0.006757,
-        "delta": 0.004543,
-        "decimal_odds": 148.0
+        "market_implied_prob": 0.006536,
+        "delta": 0.004764,
+        "decimal_odds": 153.0
       },
       {
         "code": "ARG",
@@ -6103,14 +6103,14 @@
       "model_favorite_team": "Argentina",
       "market_favorite_code": "FRA",
       "market_favorite_team": "France",
-      "mean_absolute_gap": 0.008528,
+      "mean_absolute_gap": 0.008549,
       "compared_team_count": 31,
       "favorites_agree": false
     }
   },
   "movement": {
     "has_baseline": true,
-    "baseline_generated_at": "2026-06-28T17:20:28",
+    "baseline_generated_at": "2026-06-28T19:19:55",
     "biggest_movers": [],
     "top_champion_changes": [
       {
