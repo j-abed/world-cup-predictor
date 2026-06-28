@@ -109,8 +109,8 @@ export function TeamDetail({ team, onClose }: TeamDetailProps) {
                   }
                 >
                   {thirdPlace.currently_qualifies
-                    ? "currently qualifying"
-                    : "currently eliminated"}
+                    ? "would qualify today"
+                    : "would not qualify today"}
                 </span>
                 .
               </p>
