@@ -28,6 +28,7 @@ interface PredictorDashboardProps {
   liveAccuracy?: LiveAccuracy;
   activeTab: TabId;
   onTabChange: (tab: TabId) => void;
+  onSelectTeam?: (code: string) => void;
   insightContext?: InsightContext | null;
   children: ReactNode;
 }
@@ -192,6 +193,7 @@ export function PredictorDashboard({
   liveAccuracy,
   activeTab,
   onTabChange,
+  onSelectTeam,
   insightContext = null,
   children,
 }: PredictorDashboardProps) {
@@ -344,6 +346,7 @@ export function PredictorDashboard({
                   pathSteps={insightContext.pathSteps}
                   focusTeam={insightContext.focusTeam}
                   focusCode={insightContext.focusCode}
+                  onSelectTeam={onSelectTeam}
                 />
               </aside>
             ) : null}

@@ -885,7 +885,7 @@
 
 .title-race__stat-label {
   font-family: var(--font-mono);
-  font-size: 0.5rem;
+  font-size: 0.5625rem;
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -1446,11 +1446,11 @@
 
 .terminal-board__head-cell {
   font-family: var(--font-mono);
-  font-size: 0.5rem;
+  font-size: 0.5625rem;
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: oklch(0.55 0.04 105);
+  color: oklch(0.60 0.04 105);
   white-space: nowrap;
 }
 
@@ -1521,7 +1521,7 @@
 }
 
 .terminal-board__team-meta {
-  font-size: 0.5rem;
+  font-size: 0.5625rem;
   color: oklch(0.52 0.04 105);
 }
 
@@ -1664,7 +1664,7 @@
   border-radius: 999px;
   border: 1px solid oklch(0.84 0.17 92 / 0.35);
   font-family: var(--font-mono);
-  font-size: 0.5rem;
+  font-size: 0.5625rem;
   font-weight: 700;
   line-height: 1;
   color: oklch(0.84 0.17 92 / 0.75);
@@ -1784,7 +1784,7 @@
 
 .insight-card__eyebrow {
   font-family: var(--font-mono);
-  font-size: 0.5rem;
+  font-size: 0.5625rem;
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -1841,7 +1841,7 @@
 .insight-movers__metric {
   display: block;
   font-family: var(--font-mono);
-  font-size: 0.5rem;
+  font-size: 0.5625rem;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   color: oklch(0.52 0.04 105);
@@ -1955,7 +1955,7 @@
 
 .path-timeline__footer-label {
   font-family: var(--font-mono);
-  font-size: 0.5rem;
+  font-size: 0.5625rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: oklch(0.52 0.04 105);
@@ -2036,7 +2036,7 @@
 
 .command-stat__label {
   font-family: var(--font-mono);
-  font-size: 0.5rem;
+  font-size: 0.5625rem;
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -2239,7 +2239,7 @@
   color: oklch(0.9 0.02 95);
   background: oklch(0.09 0.035 158 / 0.85);
   border: 1px solid oklch(0.95 0.02 95 / 0.12);
-  border-radius: 0;
+  border-radius: 0.35rem;
 }
 
 .command-toolbar input:focus,
@@ -2336,7 +2336,7 @@
 .command-table thead tr {
   text-align: left;
   font-family: var(--font-mono);
-  font-size: 0.5rem;
+  font-size: 0.5625rem;
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -2452,6 +2452,32 @@
   padding: 0.45rem 0.5rem;
   border: 1px solid oklch(0.95 0.02 95 / 0.08);
   background: oklch(0.09 0.035 158 / 0.75);
+}
+
+.bracket-filter-strip {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-mask-image: linear-gradient(to right, black 0%, black calc(100% - 2rem), transparent 100%);
+  mask-image: linear-gradient(to right, black 0%, black calc(100% - 2rem), transparent 100%);
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.15rem;
+}
+
+.bracket-filter-strip::-webkit-scrollbar {
+  display: none;
+}
+
+.bracket-filter-strip__label {
+  flex-shrink: 0;
+  font-family: var(--font-mono);
+  font-size: 0.5625rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: oklch(0.62 0.04 105);
 }
 
 .command-bracket-round {
@@ -2573,7 +2599,7 @@
 
 .projection-confidence__factor-label {
   font-family: var(--font-mono);
-  font-size: 0.5rem;
+  font-size: 0.5625rem;
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -2627,7 +2653,7 @@
 .command-match-banner__badge {
   padding: 0.18rem 0.45rem;
   font-family: var(--font-mono);
-  font-size: 0.5rem;
+  font-size: 0.5625rem;
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -2727,7 +2753,7 @@
   display: block;
   margin-top: 0.1rem;
   font-family: var(--font-mono);
-  font-size: 0.5rem;
+  font-size: 0.5625rem;
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -3088,7 +3114,7 @@
 .insight-card__subtitle {
   margin-top: 0.15rem;
   font-family: var(--font-mono);
-  font-size: 0.5rem;
+  font-size: 0.5625rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: oklch(0.52 0.04 105);
@@ -3101,6 +3127,24 @@
 .insight-movers__row--compact {
   grid-template-columns: auto 1fr auto;
   padding: 0.28rem 0.32rem;
+}
+
+.insight-movers__row--clickable {
+  width: 100%;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.12s ease, border-color 0.12s ease;
+}
+
+.insight-movers__row--clickable:hover {
+  background: oklch(0.12 0.04 158 / 0.85);
+  border-color: oklch(0.84 0.17 92 / 0.18);
+}
+
+.insight-movers__row--clickable:focus-visible {
+  outline: 1px solid oklch(0.84 0.17 92 / 0.5);
+  outline-offset: 1px;
 }
 
 .insight-movers__delta--compact {
@@ -3267,7 +3311,7 @@
 .matchday-status__label {
   margin: 0 0 0.35rem;
   font-family: var(--font-mono);
-  font-size: 0.5rem;
+  font-size: 0.5625rem;
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -3292,7 +3336,7 @@
   flex-shrink: 0;
   padding: 0.12rem 0.38rem;
   font-family: var(--font-mono);
-  font-size: 0.5rem;
+  font-size: 0.5625rem;
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -3333,7 +3377,7 @@
 .matchday-status__group {
   flex-shrink: 0;
   font-family: var(--font-mono);
-  font-size: 0.5rem;
+  font-size: 0.5625rem;
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -3608,6 +3652,169 @@
   .cockpit-main {
     margin-left: 14.5rem;
   }
+}
+
+/* ── Team detail slide-over (native <dialog>) ───────────────────────────── */
+
+.team-detail-dialog {
+  margin: 0;
+  margin-inline-start: auto;
+  padding: 0;
+  border: none;
+  background: transparent;
+  height: 100dvh;
+  max-height: 100dvh;
+  width: min(28rem, 100vw);
+  max-width: min(28rem, 100vw);
+  overflow: hidden;
+}
+
+.team-detail-dialog::backdrop {
+  background: oklch(0 0 0 / 0.62);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+}
+
+.team-detail-panel {
+  position: relative;
+  height: 100%;
+  overflow-y: auto;
+  padding: 1.5rem;
+  background:
+    linear-gradient(180deg, oklch(0.13 0.05 158 / 0.98), oklch(0.10 0.04 158 / 0.99));
+  border-left: 1px solid oklch(0.95 0.02 95 / 0.12);
+  box-shadow: -8px 0 40px oklch(0 0 0 / 0.35);
+}
+
+.team-detail-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  border: 1px solid oklch(0.95 0.02 95 / 0.14);
+  background: transparent;
+  color: oklch(0.65 0.04 105);
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
+}
+
+.team-detail-close:hover {
+  border-color: oklch(0.84 0.17 92 / 0.4);
+  color: oklch(0.94 0.02 95);
+  background: oklch(1 0 0 / 0.05);
+}
+
+.team-detail-close:focus-visible {
+  outline: 2px solid oklch(0.84 0.17 92 / 0.6);
+  outline-offset: 2px;
+}
+
+.team-detail-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding-right: 2.5rem;
+}
+
+.team-detail-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.45rem, 5vw, 1.85rem);
+  line-height: 1.05;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: oklch(0.97 0.02 95);
+}
+
+.team-detail-group {
+  margin-top: 0.2rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--group-accent, oklch(0.84 0.17 92));
+}
+
+.team-detail-section {
+  margin-top: 1.35rem;
+  padding-top: 1.1rem;
+  border-top: 1px solid oklch(0.95 0.02 95 / 0.1);
+}
+
+.team-detail-section-title {
+  margin: 0 0 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.5625rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: oklch(0.62 0.04 105);
+}
+
+.team-detail-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.4rem;
+}
+
+.team-detail-stat {
+  padding: 0.5rem 0.4rem;
+  border-radius: 0.5rem;
+  background: oklch(0.14 0.05 158 / 0.65);
+  text-align: center;
+}
+
+.team-detail-stat__label {
+  font-family: var(--font-mono);
+  font-size: 0.5625rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: oklch(0.58 0.04 105);
+}
+
+.team-detail-stat__value {
+  margin-top: 0.15rem;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  font-weight: 700;
+  tabular-nums: initial;
+  color: oklch(0.94 0.02 95);
+}
+
+.team-detail-stat__value--gold {
+  background: var(--gradient-gold);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.team-detail-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.team-detail-prose {
+  font-size: 0.875rem;
+  line-height: 1.55;
+  color: oklch(0.76 0.03 105);
+}
+
+.team-detail-prose__strong {
+  font-weight: 600;
+  color: oklch(0.94 0.02 95);
+}
+
+.team-detail-prose__qualify {
+  font-weight: 600;
+  color: oklch(0.74 0.19 145);
+}
+
+.team-detail-prose__eliminate {
+  color: oklch(0.66 0.23 28);
 }
 
 /* ── Educational guide page ─────────────────────────────────────────────── */

@@ -11,6 +11,7 @@ interface InsightRailProps {
   focusTeam: string;
   focusCode: string;
   variant?: "inline" | "cockpit";
+  onSelectTeam?: (code: string) => void;
 }
 
 function pickMovers(movement: Movement | undefined) {
@@ -42,7 +43,7 @@ function MoverSparkline({ delta }: { delta: number }) {
     >
       <polyline points={points} fill="none" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
       {!flat ? (
-        <circle cx={up ? "14" : "14"} cy={up ? "4" : "12"} r="1.2" />
+        <circle cx="14" cy={up ? "4" : "12"} r="1.2" />
       ) : null}
     </svg>
   );
@@ -54,6 +55,7 @@ export function InsightRail({
   focusTeam,
   focusCode,
   variant = "inline",
+  onSelectTeam,
 }: InsightRailProps) {
   const movers = pickMovers(movement);
   const railClass =
@@ -80,10 +82,29 @@ export function InsightRail({
           <ul className="insight-movers insight-movers--compact">
             {movers.map((row) => {
               const isMover = "metric" in row;
+              const key = `${row.code}-${isMover ? row.metric : "champion"}`;
 
-              return (
+              return onSelectTeam ? (
+                <li key={key}>
+                  <button
+                    type="button"
+                    onClick={() => onSelectTeam(row.code)}
+                    className="insight-movers__row insight-movers__row--compact insight-movers__row--clickable"
+                    aria-label={`View ${row.team} detail`}
+                  >
+                    <TeamBadge code={row.code} size="sm" />
+                    <div className="insight-movers__body">
+                      <span className="insight-movers__name">{row.team}</span>
+                    </div>
+                    <div className="insight-movers__delta insight-movers__delta--compact">
+                      <MoverSparkline delta={row.delta} />
+                      <ProbabilityDelta delta={row.delta} />
+                    </div>
+                  </button>
+                </li>
+              ) : (
                 <li
-                  key={`${row.code}-${isMover ? row.metric : "champion"}`}
+                  key={key}
                   className="insight-movers__row insight-movers__row--compact"
                 >
                   <TeamBadge code={row.code} size="sm" />
@@ -137,7 +158,7 @@ export function InsightRail({
                     <span className="path-timeline__prob">{step.probLabel.trim()}</span>
                   </div>
                   <p className="path-timeline__detail path-timeline__detail--subway">
-                    {`${step.shortLabel} — ${step.detail}`}
+                    {step.detail}
                   </p>
                 </div>
               </li>
