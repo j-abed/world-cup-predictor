@@ -207,6 +207,10 @@ export function PredictorDashboard({
     <div
       className={`predictor-command-center${showInsightRail ? " predictor-command-center--with-rail" : ""}`}
     >
+      <a href="#main-content" className="skip-to-content">
+        Skip to main content
+      </a>
+
       <PitchBackground />
 
       <div className="cockpit-shell">
@@ -323,8 +327,12 @@ export function PredictorDashboard({
                 onChange={onTabChange}
                 className="cockpit-tabs-mobile"
               />
-              <main className="command-main command-main--cockpit">
-                <div className="command-content-tight">{children}</div>
+              <main id="main-content" className="command-main command-main--cockpit">
+                <div className="command-content-tight">
+                  <div key={activeTab} className="animate-fade-up">
+                    {children}
+                  </div>
+                </div>
               </main>
             </div>
 
@@ -349,9 +357,16 @@ export function PredictorDashboard({
               </p>
               <p className="command-footer__credit">
                 Made with{" "}
-                <span className="command-footer__heart" aria-hidden>
-                  ♥
-                </span>{" "}
+                <svg
+                  width="12"
+                  height="11"
+                  viewBox="0 0 12 11"
+                  fill="currentColor"
+                  aria-hidden
+                  className="command-footer__heart"
+                >
+                  <path d="M6 10.25C5.5 10.25 1 7.15 1 3.75a2.75 2.75 0 0 1 5-1.57A2.75 2.75 0 0 1 11 3.75c0 3.4-4.5 6.5-5 6.5Z" />
+                </svg>{" "}
                 in NYC
               </p>
             </div>

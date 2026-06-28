@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import {
   TAB_IDS,
   TAB_NAV_LABELS,
@@ -12,6 +13,16 @@ interface TabNavProps {
 }
 
 export function TabNav({ active, onChange, className = "" }: TabNavProps) {
+  const activeRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    activeRef.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "nearest",
+      inline: "center",
+    });
+  }, [active]);
+
   return (
     <nav
       className={`command-tabs sticky top-0 z-30 -mx-4 sm:-mx-6 lg:-mx-8 ${className}`}
@@ -24,6 +35,7 @@ export function TabNav({ active, onChange, className = "" }: TabNavProps) {
           return (
             <button
               key={id}
+              ref={isActive ? activeRef : null}
               type="button"
               onClick={() => onChange(id)}
               aria-current={isActive ? "page" : undefined}

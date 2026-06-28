@@ -23,6 +23,28 @@ function formatPctLabel(label: string): string {
   return label.trim();
 }
 
+function ChevronIcon({ expanded }: { expanded: boolean }) {
+  return (
+    <svg
+      width="10"
+      height="10"
+      viewBox="0 0 10 10"
+      fill="none"
+      aria-hidden
+      className="terminal-board__expand-chevron"
+      style={{ transform: expanded ? "rotate(180deg)" : undefined, transition: "transform 0.2s ease" }}
+    >
+      <path
+        d="M2 3.5l3 3 3-3"
+        stroke="currentColor"
+        strokeWidth="1.4"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
 export function TitleOddsBoard({
   teams,
   championChanges,
@@ -65,6 +87,7 @@ export function TitleOddsBoard({
         <div
           className="terminal-board__grid terminal-board__grid--head"
           role="row"
+          aria-hidden
         >
           {columns.map((column) => {
             const hint =
@@ -95,7 +118,7 @@ export function TitleOddsBoard({
       </div>
 
       <div className="terminal-board__scroll">
-        <ul className="terminal-board__body">
+        <ul className="terminal-board__body" role="list">
           {visibleTeams.map((team, index) => {
             const rank = index + 1;
             const change = championChanges.get(team.code);
@@ -105,13 +128,13 @@ export function TitleOddsBoard({
             const vol = computeVolatility(team);
 
             return (
-              <li key={team.code} role="none">
+              <li key={team.code}>
                 <button
                   type="button"
-                  role="row"
                   onClick={() => onSelectTeam(team.code)}
                   className={`terminal-board__grid terminal-board__row${isSelected ? " terminal-board__row--selected" : ""}`}
-                  aria-selected={isSelected}
+                  aria-pressed={isSelected}
+                  aria-label={`${team.team}, title odds ${formatPctLabel(team.champion_prob_label)}`}
                 >
                   <span className="terminal-board__cell terminal-board__cell--rank">
                     {rank}
@@ -121,7 +144,14 @@ export function TitleOddsBoard({
                     <TeamBadge code={team.code} size="sm" />
                     <span className="terminal-board__team-wrap">
                       <span className="terminal-board__team-name">{team.team}</span>
-                      <span className="terminal-board__team-meta">Grp {team.group}</span>
+                      <span className="terminal-board__team-meta">
+                        <span
+                          data-group={team.group}
+                          className="terminal-board__group-pip"
+                        >
+                          {team.group}
+                        </span>
+                      </span>
                     </span>
                   </span>
 
@@ -176,9 +206,11 @@ export function TitleOddsBoard({
           <button
             type="button"
             onClick={() => setExpanded((value) => !value)}
-            className="terminal-board__expand"
+            className={`terminal-board__expand${expanded ? " terminal-board__expand--expanded" : ""}`}
+            aria-expanded={expanded}
           >
             {expanded ? "Show fewer" : `Show all ${teams.length} teams`}
+            <ChevronIcon expanded={expanded} />
           </button>
         </footer>
       ) : null}

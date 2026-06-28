@@ -40,7 +40,10 @@ export function GuidePage({ appState, mode }: GuidePageProps) {
       {mode === "standalone" ? (
         <header className="guide-topbar">
           <a href={dashboardPath()} className="guide-topbar__back">
-            ← Back to dashboard
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden>
+              <path d="M9 2.5L4.5 7 9 11.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+            Back to dashboard
           </a>
         </header>
       ) : null}
@@ -56,10 +59,6 @@ export function GuidePage({ appState, mode }: GuidePageProps) {
         <GuideStartHere />
 
         <div className="guide-layout">
-          <aside className="guide-layout__toc">
-            <TableOfContents />
-          </aside>
-
           <div className="guide-layout__main">
             <GuideArticle
               sims={sims}
@@ -70,6 +69,10 @@ export function GuidePage({ appState, mode }: GuidePageProps) {
               dataCaveats={appState.metadata.data_caveats}
             />
           </div>
+
+          <aside className="guide-layout__toc">
+            <TableOfContents />
+          </aside>
         </div>
 
         {mode === "embedded" ? (
