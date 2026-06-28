@@ -2,7 +2,7 @@
 
 Track progress here. Check items off as they ship.
 
-**Last updated:** 2026-06-27
+**Last updated:** 2026-06-28
 
 ---
 
@@ -14,11 +14,11 @@ Track progress here. Check items off as they ship.
 | 1 — Automation | 3 | 3 | ✅ Complete |
 | 2 — Data/UI gaps | 7 | 7 | ✅ Complete |
 | 3 — Model | 5 | 5 | ✅ Complete |
-| 4 — UX polish | 5 | 5 | ✅ Complete |
+| 4 — UX polish | 6 | 6 | ✅ Complete |
 | 5 — Stretch | 4 | 5 | 🟡 In progress |
 | 6 — Dashboard intelligence | 7 | 7 | ✅ Complete |
 
-**Overall: 35 / 36** actionable items complete.
+**Overall: 36 / 37** actionable items complete.
 
 ---
 
@@ -74,6 +74,7 @@ Track progress here. Check items off as they ship.
 - [x] **4.3 Error boundary** — per-tab recovery UI
 - [x] **4.4 Dark mode** — `prefers-color-scheme` → `.dark` tokens
 - [x] **4.5 Relative timestamps** — “Updated 2 hours ago” in Header
+- [x] **4.6 Broadcast cockpit dashboard** — three-column shell, title-race podium, insight rail, Matchday Status (desktop layout polish)
 
 ---
 
@@ -103,19 +104,22 @@ Track progress here. Check items off as they ship.
 
 ## Suggested next steps
 
-Phases 0–4 are complete. During the tournament, rely on automation:
+Phases 0–4 and 6 are complete. During the tournament, rely on automation:
 
 ```
 Ops (automatic)
   ✓ refresh-data.yml every 2h (Jun 11 – Jul 20, 2026)
-  ✓ deploy-frontend.yml on push
+  ✓ Vercel Git deploy on push to main
 
 Optional stretch (Phase 5)
-  ✓ Scenario mode
+  ✓ Scenario mode (CLI/GHA — no dashboard tab)
   ✓ 2022 backtest page
   ✓ JSON on CDN (archived — see `archive/cdn/`)
   ✓ Model vs betting markets
   □ Serverless scenario API
+
+Polish backlog
+  □ Mobile/tablet cockpit layout pass
 ```
 
 ---

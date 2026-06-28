@@ -36,3 +36,6 @@ notes/blog-artifacts/
 
 # Playwright MCP debug captures
 .playwright-mcp/
+
+# Local visual QA screenshots
+.visual-check/

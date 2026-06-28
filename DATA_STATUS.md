@@ -121,7 +121,7 @@ Exported in `app_state.json` as `market_comparison` for the **Markets vs model**
 
 - ESPN card sync depends on summary API availability per completed match.
 - Market odds are outright-winner snapshots only (not live in-play prices).
-- What-if scenarios require a separate export/deploy of `scenario_app_state.json`.
+- What-if scenarios (`scenario_app_state.json`) are CLI/GitHub Actions only — not a dashboard tab.
 - The 2022 backtest replays the **current** simulator logic on 2022 data — not a frozen 2022-era model.
 
 ## Planned dashboard metrics (Phase 6)

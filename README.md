@@ -1,6 +1,6 @@
 # World Cup Predictor
 
-Monte Carlo simulator and static React dashboard for the **2026 FIFA World Cup** (48 teams, 12 groups). Includes a **2022 historical backtest** and **what-if scenario** mode.
+Monte Carlo simulator and static React dashboard for the **2026 FIFA World Cup** (48 teams, 12 groups). Includes a **2022 historical backtest**, **model vs betting markets** comparison, and CLI **what-if scenario** workflow (not a dashboard tab).
 
 There is no runtime backend. Python generates JSON snapshots; the frontend reads them from `frontend/public/data/`.
 
@@ -23,13 +23,13 @@ data/*.csv  →  Python model (src/)  →  outputs/web/*.json  →  frontend/pub
 
 | Tab | URL param | Data source |
 |-----|-----------|-------------|
-| Champion odds | `?tab=champion` | `app_state.json` |
+| Dashboard (champion odds) | `?tab=champion` | `app_state.json` |
+| Markets vs model | `?tab=markets` | `app_state.json` (`market_comparison`) |
 | Fixtures | `?tab=fixtures` | `app_state.json` |
 | Projected R32 field | `?tab=field` | `app_state.json` |
 | Knockout bracket | `?tab=bracket` | `app_state.json` |
 | Group standings | `?tab=groups` | `app_state.json` |
 | Qualification odds | `?tab=qualification` | `app_state.json` |
-| What-if scenarios | `?tab=scenario` | `scenario_app_state.json` (optional) |
 | 2022 backtest | `?tab=backtest` | `backtest_2022.json` |
 
 Deep-link a team: `?tab=bracket&team=BRA`
@@ -115,6 +115,9 @@ That syncs ESPN results, updates ratings and fair-play data, runs the model, cop
 | `scripts/add_result.py` | Manually append one result row |
 | `refresh_and_deploy.sh` | Full local refresh + Vercel CLI deploy |
 | `scripts/update_market_odds.py` | Refresh outright winner odds (The Odds API or seed CSV) |
+| `scripts/compare_market_model.py` | Print model vs market champion odds delta table |
+| `scripts/setup_vercel_git.sh` | Link repo to Vercel Git (monorepo `frontend` root) |
+| `scripts/setup_github_vercel_secrets.sh` | Configure GHA secrets for manual Vercel deploy |
 
 Common flags for `update_world_cup_data.py`: `--today`, `--date YYYY-MM-DD`, `--start-date` / `--end-date`, `--force`, `--dry-run`, `--skip-sync`, `--run-model`, `--export-web`, `--update-ratings`, `--update-fair-play`, `--update-market-odds`.
 
@@ -122,9 +125,9 @@ Optional GitHub secret for live market odds: `ODDS_API_KEY` ([The Odds API](http
 
 Optional CDN publish (S3/R2, skip full redeploy) is archived in [`archive/cdn/`](archive/cdn/README.md). Default: commit + Vercel deploy.
 
-## What-if scenarios
+## What-if scenarios (CLI / GitHub Actions)
 
-Override fixture results and rerun Monte Carlo odds without touching live data:
+Override fixture results and rerun Monte Carlo odds without touching live data. Output is **`scenario_app_state.json`** — there is no dashboard tab; use this for offline analysis or future publishing.
 
 ```bash
 uv run python scripts/run_scenario.py \
@@ -141,7 +144,7 @@ uv run python scripts/run_scenario.py \
   --copy-to-frontend
 ```
 
-The **What-if** tab compares `scenario_app_state.json` against the baseline when both are deployed. GitHub Actions can run scenarios manually via `.github/workflows/scenario.yml`.
+GitHub Actions can run scenarios manually via `.github/workflows/scenario.yml`.
 
 ## 2022 historical backtest
 
@@ -163,6 +166,8 @@ uv run pytest
 # Full verify before shipping
 uv run pytest && cd frontend && npm run lint && npm run build
 ```
+
+Integrity tests validate checked-in `frontend/public/data/app_state.json` against export metadata (counts, model quality, label formatting).
 
 ## Automation
 
