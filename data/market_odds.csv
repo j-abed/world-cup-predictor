@@ -1,25 +1,25 @@
 code,team,decimal_odds,implied_prob,source,as_of
-FRA,France,3.05,0.327869,the_odds_api:soccer_fifa_world_cup_winner,2026-07-01T04:14:44+00:00
-ARG,Argentina,5.55,0.18018,the_odds_api:soccer_fifa_world_cup_winner,2026-07-01T04:14:44+00:00
-ESP,Spain,8.65,0.115607,the_odds_api:soccer_fifa_world_cup_winner,2026-07-01T04:14:44+00:00
-ENG,England,8.7,0.114943,the_odds_api:soccer_fifa_world_cup_winner,2026-07-01T04:14:44+00:00
-BRA,Brazil,12.25,0.081633,the_odds_api:soccer_fifa_world_cup_winner,2026-07-01T04:14:44+00:00
-POR,Portugal,15.75,0.063492,the_odds_api:soccer_fifa_world_cup_winner,2026-07-01T04:14:44+00:00
-MAR,Morocco,28.0,0.035714,the_odds_api:soccer_fifa_world_cup_winner,2026-07-01T04:14:44+00:00
-MEX,Mexico,31.5,0.031746,the_odds_api:soccer_fifa_world_cup_winner,2026-07-01T04:14:44+00:00
-COL,Colombia,33.75,0.02963,the_odds_api:soccer_fifa_world_cup_winner,2026-07-01T04:14:44+00:00
-USA,United States,36.25,0.027586,the_odds_api:soccer_fifa_world_cup_winner,2026-07-01T04:14:44+00:00
-NOR,Norway,40.0,0.025,the_odds_api:soccer_fifa_world_cup_winner,2026-07-01T04:14:44+00:00
-BEL,Belgium,64.25,0.015564,the_odds_api:soccer_fifa_world_cup_winner,2026-07-01T04:14:44+00:00
-SUI,Switzerland,100.5,0.00995,the_odds_api:soccer_fifa_world_cup_winner,2026-07-01T04:14:44+00:00
-SEN,Senegal,148.0,0.006757,the_odds_api:soccer_fifa_world_cup_winner,2026-07-01T04:14:44+00:00
-CRO,Croatia,208.0,0.004808,the_odds_api:soccer_fifa_world_cup_winner,2026-07-01T04:14:44+00:00
-CAN,Canada,294.25,0.003398,the_odds_api:soccer_fifa_world_cup_winner,2026-07-01T04:14:44+00:00
-PAR,Paraguay,320.5,0.00312,the_odds_api:soccer_fifa_world_cup_winner,2026-07-01T04:14:44+00:00
-AUT,Austria,383.0,0.002611,the_odds_api:soccer_fifa_world_cup_winner,2026-07-01T04:14:44+00:00
-EGY,Egypt,385.5,0.002594,the_odds_api:soccer_fifa_world_cup_winner,2026-07-01T04:14:44+00:00
-AUS,Australia,438.0,0.002283,the_odds_api:soccer_fifa_world_cup_winner,2026-07-01T04:14:44+00:00
-GHA,Ghana,548.0,0.001825,the_odds_api:soccer_fifa_world_cup_winner,2026-07-01T04:14:44+00:00
-DZA,Algeria,550.5,0.001817,the_odds_api:soccer_fifa_world_cup_winner,2026-07-01T04:14:44+00:00
-COD,DR Congo,875.5,0.001142,the_odds_api:soccer_fifa_world_cup_winner,2026-07-01T04:14:44+00:00
-CPV,Cape Verde,1000.5,0.001,the_odds_api:soccer_fifa_world_cup_winner,2026-07-01T04:14:44+00:00
+FRA,France,3.0,0.333333,the_odds_api:soccer_fifa_world_cup_winner,2026-07-01T09:56:06+00:00
+ARG,Argentina,5.45,0.183486,the_odds_api:soccer_fifa_world_cup_winner,2026-07-01T09:56:06+00:00
+ESP,Spain,8.75,0.114286,the_odds_api:soccer_fifa_world_cup_winner,2026-07-01T09:56:06+00:00
+ENG,England,8.8,0.113636,the_odds_api:soccer_fifa_world_cup_winner,2026-07-01T09:56:06+00:00
+BRA,Brazil,12.25,0.081633,the_odds_api:soccer_fifa_world_cup_winner,2026-07-01T09:56:06+00:00
+POR,Portugal,15.75,0.063492,the_odds_api:soccer_fifa_world_cup_winner,2026-07-01T09:56:06+00:00
+MAR,Morocco,29.0,0.034483,the_odds_api:soccer_fifa_world_cup_winner,2026-07-01T09:56:06+00:00
+COL,Colombia,33.0,0.030303,the_odds_api:soccer_fifa_world_cup_winner,2026-07-01T09:56:06+00:00
+MEX,Mexico,35.0,0.028571,the_odds_api:soccer_fifa_world_cup_winner,2026-07-01T09:56:06+00:00
+USA,United States,36.25,0.027586,the_odds_api:soccer_fifa_world_cup_winner,2026-07-01T09:56:06+00:00
+NOR,Norway,43.75,0.022857,the_odds_api:soccer_fifa_world_cup_winner,2026-07-01T09:56:06+00:00
+BEL,Belgium,64.25,0.015564,the_odds_api:soccer_fifa_world_cup_winner,2026-07-01T09:56:06+00:00
+SUI,Switzerland,100.5,0.00995,the_odds_api:soccer_fifa_world_cup_winner,2026-07-01T09:56:06+00:00
+SEN,Senegal,138.0,0.007246,the_odds_api:soccer_fifa_world_cup_winner,2026-07-01T09:56:06+00:00
+CRO,Croatia,208.0,0.004808,the_odds_api:soccer_fifa_world_cup_winner,2026-07-01T09:56:06+00:00
+CAN,Canada,304.25,0.003287,the_odds_api:soccer_fifa_world_cup_winner,2026-07-01T09:56:06+00:00
+PAR,Paraguay,348.0,0.002874,the_odds_api:soccer_fifa_world_cup_winner,2026-07-01T09:56:06+00:00
+AUT,Austria,363.0,0.002755,the_odds_api:soccer_fifa_world_cup_winner,2026-07-01T09:56:06+00:00
+EGY,Egypt,390.5,0.002561,the_odds_api:soccer_fifa_world_cup_winner,2026-07-01T09:56:06+00:00
+AUS,Australia,438.0,0.002283,the_odds_api:soccer_fifa_world_cup_winner,2026-07-01T09:56:06+00:00
+GHA,Ghana,553.0,0.001808,the_odds_api:soccer_fifa_world_cup_winner,2026-07-01T09:56:06+00:00
+DZA,Algeria,555.5,0.0018,the_odds_api:soccer_fifa_world_cup_winner,2026-07-01T09:56:06+00:00
+COD,DR Congo,875.5,0.001142,the_odds_api:soccer_fifa_world_cup_winner,2026-07-01T09:56:06+00:00
+CPV,Cape Verde,1000.5,0.001,the_odds_api:soccer_fifa_world_cup_winner,2026-07-01T09:56:06+00:00
