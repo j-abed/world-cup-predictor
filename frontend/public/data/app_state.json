@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "generated_at": "2026-07-05T10:23:10",
+    "generated_at": "2026-07-05T13:52:52",
     "team_count": 48,
     "fixture_count": 72,
     "completed_result_count": 72,
@@ -19,7 +19,7 @@
       "Ratings include Elo-style post-match updates for newly completed fixtures.",
       "Fair-play conduct scores are aggregated from ESPN yellow/red card data."
     ],
-    "next_refresh_at": "2026-07-05T12:00:00+00:00",
+    "next_refresh_at": "2026-07-05T14:00:00+00:00",
     "refresh_interval_hours": 2,
     "tournament_final_kickoff": "2026-07-19T18:00:00-04:00",
     "projected_bracket_simulations": 10000
@@ -5965,7 +5965,7 @@
   "market_comparison": {
     "available": true,
     "source": "the_odds_api:soccer_fifa_world_cup_winner",
-    "as_of": "2026-07-05T10:19:15+00:00",
+    "as_of": "2026-07-05T13:48:17+00:00",
     "methodology": "Compares model championship probability to average implied probability from outright winner odds. Positive delta means the model is more bullish than the market.",
     "teams": [
       {
@@ -5980,9 +5980,9 @@
         "code": "POR",
         "team": "Portugal",
         "model_champion_prob": 0.0321,
-        "market_implied_prob": 0.066667,
-        "delta": -0.034567,
-        "decimal_odds": 15.0
+        "market_implied_prob": 0.065574,
+        "delta": -0.033474,
+        "decimal_odds": 15.25
       },
       {
         "code": "ARG",
@@ -6033,20 +6033,20 @@
         "decimal_odds": 6.875
       },
       {
+        "code": "MEX",
+        "team": "Mexico",
+        "model_champion_prob": 0.0207,
+        "market_implied_prob": 0.034783,
+        "delta": -0.014083,
+        "decimal_odds": 28.75
+      },
+      {
         "code": "NOR",
         "team": "Norway",
         "model_champion_prob": 0.0093,
         "market_implied_prob": 0.022222,
         "delta": -0.012922,
         "decimal_odds": 45.0
-      },
-      {
-        "code": "MEX",
-        "team": "Mexico",
-        "model_champion_prob": 0.0207,
-        "market_implied_prob": 0.033613,
-        "delta": -0.012913,
-        "decimal_odds": 29.75
       },
       {
         "code": "USA",
@@ -6060,9 +6060,9 @@
         "code": "SUI",
         "team": "Switzerland",
         "model_champion_prob": 0.02,
-        "market_implied_prob": 0.011173,
-        "delta": 0.008827,
-        "decimal_odds": 89.5
+        "market_implied_prob": 0.011834,
+        "delta": 0.008166,
+        "decimal_odds": 84.5
       },
       {
         "code": "COL",
@@ -6076,9 +6076,9 @@
         "code": "EGY",
         "team": "Egypt",
         "model_champion_prob": 0.0063,
-        "market_implied_prob": 0.002755,
-        "delta": 0.003545,
-        "decimal_odds": 363.0
+        "market_implied_prob": 0.002959,
+        "delta": 0.003341,
+        "decimal_odds": 338.0
       }
     ],
     "summary": {
@@ -6086,14 +6086,14 @@
       "model_favorite_team": "Argentina",
       "market_favorite_code": "FRA",
       "market_favorite_team": "France",
-      "mean_absolute_gap": 0.030781,
+      "mean_absolute_gap": 0.030725,
       "compared_team_count": 14,
       "favorites_agree": false
     }
   },
   "movement": {
     "has_baseline": true,
-    "baseline_generated_at": "2026-07-05T07:35:28",
+    "baseline_generated_at": "2026-07-05T10:23:10",
     "biggest_movers": [],
     "top_champion_changes": [
       {
