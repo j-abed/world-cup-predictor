@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "generated_at": "2026-07-07T07:47:25",
+    "generated_at": "2026-07-07T11:15:53",
     "team_count": 48,
     "fixture_count": 72,
     "completed_result_count": 72,
@@ -19,7 +19,7 @@
       "Ratings include Elo-style post-match updates for newly completed fixtures.",
       "Fair-play conduct scores are aggregated from ESPN yellow/red card data."
     ],
-    "next_refresh_at": "2026-07-07T08:00:00+00:00",
+    "next_refresh_at": "2026-07-07T12:00:00+00:00",
     "refresh_interval_hours": 2,
     "tournament_final_kickoff": "2026-07-19T18:00:00-04:00",
     "projected_bracket_simulations": 10000
@@ -5965,7 +5965,7 @@
   "market_comparison": {
     "available": true,
     "source": "the_odds_api:soccer_fifa_world_cup_winner",
-    "as_of": "2026-07-07T07:42:55+00:00",
+    "as_of": "2026-07-07T11:11:58+00:00",
     "methodology": "Compares model championship probability to average implied probability from outright winner odds. Positive delta means the model is more bullish than the market.",
     "teams": [
       {
@@ -6017,12 +6017,12 @@
         "decimal_odds": 33.0
       },
       {
-        "code": "SUI",
-        "team": "Switzerland",
-        "model_champion_prob": 0.02,
-        "market_implied_prob": 0.012048,
-        "delta": 0.007952,
-        "decimal_odds": 83.0
+        "code": "BEL",
+        "team": "Belgium",
+        "model_champion_prob": 0.0347,
+        "market_implied_prob": 0.026846,
+        "delta": 0.007854,
+        "decimal_odds": 37.25
       },
       {
         "code": "COL",
@@ -6033,12 +6033,12 @@
         "decimal_odds": 26.5
       },
       {
-        "code": "BEL",
-        "team": "Belgium",
-        "model_champion_prob": 0.0347,
-        "market_implied_prob": 0.027586,
-        "delta": 0.007114,
-        "decimal_odds": 36.25
+        "code": "SUI",
+        "team": "Switzerland",
+        "model_champion_prob": 0.02,
+        "market_implied_prob": 0.012422,
+        "delta": 0.007578,
+        "decimal_odds": 80.5
       },
       {
         "code": "EGY",
@@ -6054,14 +6054,14 @@
       "model_favorite_team": "Argentina",
       "market_favorite_code": "FRA",
       "market_favorite_team": "France",
-      "mean_absolute_gap": 0.04462,
+      "mean_absolute_gap": 0.044657,
       "compared_team_count": 10,
       "favorites_agree": false
     }
   },
   "movement": {
     "has_baseline": true,
-    "baseline_generated_at": "2026-07-07T03:50:21",
+    "baseline_generated_at": "2026-07-07T07:47:25",
     "biggest_movers": [],
     "top_champion_changes": [
       {
