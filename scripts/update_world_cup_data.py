@@ -9,6 +9,7 @@ from pathlib import Path
 
 RESULTS_PATH = Path("data/results.csv")
 SYNC_SCRIPT = Path("scripts/sync_results_from_espn.py")
+KNOCKOUT_SYNC_SCRIPT = Path("scripts/sync_knockout_results.py")
 RATINGS_UPDATE_SCRIPT = Path("scripts/update_ratings_from_results.py")
 FAIR_PLAY_SCRIPT = Path("scripts/update_fair_play_from_espn.py")
 MARKET_ODDS_SCRIPT = Path("scripts/update_market_odds.py")
@@ -217,6 +218,11 @@ def main() -> None:
         print("  uv run python main.py")
 
     if args.export_web:
+        # Sync completed knockout results before running the model so that
+        # eliminated teams correctly show 0% probability in later rounds.
+        if KNOCKOUT_SYNC_SCRIPT.exists():
+            run_command(["uv", "run", "python", str(KNOCKOUT_SYNC_SCRIPT)])
+
         require_file(WEB_EXPORT_SCRIPT)
         group_simulations = args.group_simulations or args.simulations
         run_command(

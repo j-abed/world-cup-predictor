@@ -137,7 +137,11 @@ def test_projected_complete_bracket_uses_modal_match_winners(repo_root: Path) ->
         simulations=2_000,
     )
 
+    # Match 89 is the R16 game between the Winner of Match 74 and Winner of Match 77.
+    # Germany lost to Paraguay in Match 74 (actual result), France beat Sweden in Match 77.
+    # France then beat Paraguay 1-0 in Match 89 (actual result).
+    # Completed knockout results are locked in, so these must be reflected exactly.
     match_89 = bracket[bracket["match_id"] == 89].iloc[0]
-    assert match_89["home_code"] == "GER"
+    assert match_89["home_code"] == "PAR"
     assert match_89["away_code"] == "FRA"
     assert match_89["projected_winner_code"] == "FRA"

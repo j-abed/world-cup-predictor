@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from collections import defaultdict
 from dataclasses import dataclass
+from pathlib import Path
 
 import numpy as np
 import pandas as pd
@@ -25,6 +26,25 @@ ROUND_COLUMNS = {
     "final": "final_count",
     "champion": "champion_count",
 }
+
+DEFAULT_KNOCKOUT_RESULTS_PATH = "data/knockout_results.csv"
+
+
+def load_knockout_results(
+    path: str = DEFAULT_KNOCKOUT_RESULTS_PATH,
+) -> dict[int, str]:
+    """Load completed knockout match results from CSV.
+
+    Returns a mapping of {match_id: winner_team_id} for all completed matches.
+    Returns an empty dict if the file does not exist or is empty.
+    """
+    p = Path(path)
+    if not p.exists():
+        return {}
+    df = pd.read_csv(p)
+    if df.empty:
+        return {}
+    return dict(zip(df["match_id"].astype(int), df["winner_team_id"].astype(str)))
 
 
 def group_results_to_projected_qualifiers(
@@ -395,8 +415,15 @@ def simulate_knockout_winners_by_match(
     rng: np.random.Generator,
     third_place_assignment_cache: dict[tuple[str, ...], dict[str, dict]],
     third_place_permutations: pd.DataFrame,
+    completed_results: dict[int, str] | None = None,
 ) -> dict[int, str]:
-    """Simulate one full knockout path and return match_id -> winning team_id."""
+    """Simulate one full knockout path and return match_id -> winning team_id.
+
+    Any match whose match_id appears in ``completed_results`` is treated as
+    already decided — its recorded winner is used directly and the match is
+    not re-simulated.  Downstream matches that depend on those winners resolve
+    correctly because ``winners_by_match`` is populated before they are reached.
+    """
     source_to_team_id, third_placeholder_to_team_id = build_fast_qualifier_maps(
         projected_qualifiers=projected_qualifiers,
         bracket_slots=bracket_slots,
@@ -405,8 +432,13 @@ def simulate_knockout_winners_by_match(
     )
 
     winners_by_match: dict[int, str] = {}
+    _completed = completed_results or {}
 
     for match in compiled_bracket:
+        if match.match_id in _completed:
+            winners_by_match[match.match_id] = _completed[match.match_id]
+            continue
+
         home_team = resolve_compiled_source(
             source=match.home_source,
             winners_by_match=winners_by_match,
@@ -440,8 +472,13 @@ def simulate_most_likely_knockout_winners_by_match(
     third_place_assignment_cache: dict[tuple[str, ...], dict[str, dict]],
     third_place_permutations: pd.DataFrame,
     simulations: int,
+    completed_results: dict[int, str] | None = None,
 ) -> dict[int, str]:
-    """Return the modal winner for each knockout match across many simulations."""
+    """Return the modal winner for each knockout match across many simulations.
+
+    Completed matches (present in ``completed_results``) are locked in with
+    their actual winners; only future matches are simulated.
+    """
     winner_counts: dict[int, dict[str, int]] = defaultdict(lambda: defaultdict(int))
 
     for _ in range(simulations):
@@ -453,6 +490,7 @@ def simulate_most_likely_knockout_winners_by_match(
             rng=rng,
             third_place_assignment_cache=third_place_assignment_cache,
             third_place_permutations=third_place_permutations,
+            completed_results=completed_results,
         )
 
         for match_id, team_id in winners_by_match.items():
@@ -472,6 +510,7 @@ def simulate_knockout_bracket_once(
     rng: np.random.Generator,
     third_place_assignment_cache: dict[tuple[str, ...], dict[str, dict]],
     third_place_permutations: pd.DataFrame,
+    completed_results: dict[int, str] | None = None,
 ) -> dict[str, set[str] | str]:
     winners_by_match = simulate_knockout_winners_by_match(
         projected_qualifiers=projected_qualifiers,
@@ -481,6 +520,7 @@ def simulate_knockout_bracket_once(
         rng=rng,
         third_place_assignment_cache=third_place_assignment_cache,
         third_place_permutations=third_place_permutations,
+        completed_results=completed_results,
     )
 
     r32_teams = set(projected_qualifiers["team_id"])
@@ -527,6 +567,7 @@ def simulate_tournament_round_probabilities(
     *,
     bracket_slots_path: str = "data/bracket_slots.csv",
     third_place_permutations_path: str = "data/third_place_permutations.csv",
+    knockout_results_path: str = DEFAULT_KNOCKOUT_RESULTS_PATH,
     tournament: str = "2026",
 ) -> pd.DataFrame:
     rng = np.random.default_rng(seed)
@@ -541,6 +582,7 @@ def simulate_tournament_round_probabilities(
     third_place_assignment_cache: dict[tuple[str, ...], dict[str, dict]] = {}
     conduct_scores = load_conduct_scores()
     ranking_fallback = load_ranking_fallback()
+    completed_results = load_knockout_results(knockout_results_path)
 
     prepared_groups = prepare_groups(
         teams=teams,
@@ -575,6 +617,7 @@ def simulate_tournament_round_probabilities(
             rng=rng,
             third_place_assignment_cache=third_place_assignment_cache,
             third_place_permutations=third_place_permutations,
+            completed_results=completed_results,
         )
 
         for stage in ["r32", "r16", "qf", "sf", "final"]:

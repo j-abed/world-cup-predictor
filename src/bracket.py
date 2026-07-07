@@ -392,12 +392,18 @@ def build_projected_complete_bracket(
     projected_qualifiers: pd.DataFrame,
     seed: int = PROJECTED_BRACKET_SEED,
     simulations: int = 10_000,
+    knockout_results_path: str = "data/knockout_results.csv",
 ) -> pd.DataFrame:
-    """Build a full knockout tree using the modal winner per match."""
+    """Build a full knockout tree using the modal winner per match.
+
+    Completed knockout matches (from ``knockout_results_path``) are locked in
+    with their actual winners; only future matches are simulated.
+    """
     import numpy as np
 
     from src.knockout import (
         compile_knockout_bracket,
+        load_knockout_results,
         simulate_most_likely_knockout_winners_by_match,
     )
     from src.simulator import build_rating_lookup
@@ -410,6 +416,7 @@ def build_projected_complete_bracket(
     rating_lookup = build_rating_lookup(ratings)
     rng = np.random.default_rng(seed)
     third_place_permutations = load_third_place_permutations()
+    completed_results = load_knockout_results(knockout_results_path)
 
     winners_by_match = simulate_most_likely_knockout_winners_by_match(
         projected_qualifiers=projected_qualifiers,
@@ -420,6 +427,7 @@ def build_projected_complete_bracket(
         third_place_assignment_cache={},
         third_place_permutations=third_place_permutations,
         simulations=simulations,
+        completed_results=completed_results,
     )
 
     return apply_simulated_knockout_path(
