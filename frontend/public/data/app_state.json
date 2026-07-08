@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "generated_at": "2026-07-08T06:35:48",
+    "generated_at": "2026-07-08T10:26:53",
     "team_count": 48,
     "fixture_count": 72,
     "completed_result_count": 72,
@@ -19,7 +19,7 @@
       "Ratings include Elo-style post-match updates for newly completed fixtures.",
       "Fair-play conduct scores are aggregated from ESPN yellow/red card data."
     ],
-    "next_refresh_at": "2026-07-08T08:00:00+00:00",
+    "next_refresh_at": "2026-07-08T12:00:00+00:00",
     "refresh_interval_hours": 2,
     "tournament_final_kickoff": "2026-07-19T18:00:00-04:00",
     "projected_bracket_simulations": 10000
@@ -5965,7 +5965,7 @@
   "market_comparison": {
     "available": true,
     "source": "the_odds_api:soccer_fifa_world_cup_winner",
-    "as_of": "2026-07-08T06:31:31+00:00",
+    "as_of": "2026-07-08T10:22:34+00:00",
     "methodology": "Compares model championship probability to average implied probability from outright winner odds. Positive delta means the model is more bullish than the market.",
     "teams": [
       {
@@ -5980,25 +5980,25 @@
         "code": "ESP",
         "team": "Spain",
         "model_champion_prob": 0.1306,
-        "market_implied_prob": 0.206186,
-        "delta": -0.075586,
-        "decimal_odds": 4.85
+        "market_implied_prob": 0.204082,
+        "delta": -0.073482,
+        "decimal_odds": 4.9
       },
       {
         "code": "ENG",
         "team": "England",
         "model_champion_prob": 0.1027,
-        "market_implied_prob": 0.165975,
-        "delta": -0.063275,
-        "decimal_odds": 6.025
+        "market_implied_prob": 0.168776,
+        "delta": -0.066076,
+        "decimal_odds": 5.925
       },
       {
         "code": "NOR",
         "team": "Norway",
         "model_champion_prob": 0.0093,
-        "market_implied_prob": 0.058824,
-        "delta": -0.049524,
-        "decimal_odds": 17.0
+        "market_implied_prob": 0.060606,
+        "delta": -0.051306,
+        "decimal_odds": 16.5
       },
       {
         "code": "MAR",
@@ -6012,9 +6012,9 @@
         "code": "ARG",
         "team": "Argentina",
         "model_champion_prob": 0.2071,
-        "market_implied_prob": 0.197044,
-        "delta": 0.010056,
-        "decimal_odds": 5.075
+        "market_implied_prob": 0.199005,
+        "delta": 0.008095,
+        "decimal_odds": 5.025
       },
       {
         "code": "SUI",
@@ -6038,14 +6038,14 @@
       "model_favorite_team": "Argentina",
       "market_favorite_code": "FRA",
       "market_favorite_team": "France",
-      "mean_absolute_gap": 0.052201,
+      "mean_absolute_gap": 0.052266,
       "compared_team_count": 8,
       "favorites_agree": false
     }
   },
   "movement": {
     "has_baseline": true,
-    "baseline_generated_at": "2026-07-08T03:19:32",
+    "baseline_generated_at": "2026-07-08T06:35:48",
     "biggest_movers": [],
     "top_champion_changes": [
       {
