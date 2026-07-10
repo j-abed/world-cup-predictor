@@ -1,8 +1,8 @@
 code,team,decimal_odds,implied_prob,source,as_of
-FRA,France,2.49,0.401606,the_odds_api:soccer_fifa_world_cup_winner,2026-07-10T07:39:29+00:00
-ESP,Spain,5.45,0.183486,the_odds_api:soccer_fifa_world_cup_winner,2026-07-10T07:39:29+00:00
-ARG,Argentina,5.475,0.182648,the_odds_api:soccer_fifa_world_cup_winner,2026-07-10T07:39:29+00:00
-ENG,England,5.9,0.169492,the_odds_api:soccer_fifa_world_cup_winner,2026-07-10T07:39:29+00:00
-NOR,Norway,17.25,0.057971,the_odds_api:soccer_fifa_world_cup_winner,2026-07-10T07:39:29+00:00
-BEL,Belgium,38.75,0.025806,the_odds_api:soccer_fifa_world_cup_winner,2026-07-10T07:39:29+00:00
-SUI,Switzerland,42.5,0.023529,the_odds_api:soccer_fifa_world_cup_winner,2026-07-10T07:39:29+00:00
+FRA,France,2.49,0.401606,the_odds_api:soccer_fifa_world_cup_winner,2026-07-10T10:58:15+00:00
+ESP,Spain,5.4,0.185185,the_odds_api:soccer_fifa_world_cup_winner,2026-07-10T10:58:15+00:00
+ARG,Argentina,5.425,0.184332,the_odds_api:soccer_fifa_world_cup_winner,2026-07-10T10:58:15+00:00
+ENG,England,5.9,0.169492,the_odds_api:soccer_fifa_world_cup_winner,2026-07-10T10:58:15+00:00
+NOR,Norway,17.0,0.058824,the_odds_api:soccer_fifa_world_cup_winner,2026-07-10T10:58:15+00:00
+BEL,Belgium,38.75,0.025806,the_odds_api:soccer_fifa_world_cup_winner,2026-07-10T10:58:15+00:00
+SUI,Switzerland,41.5,0.024096,the_odds_api:soccer_fifa_world_cup_winner,2026-07-10T10:58:15+00:00
