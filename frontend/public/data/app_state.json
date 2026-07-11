@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "generated_at": "2026-07-11T13:00:05",
+    "generated_at": "2026-07-11T19:14:21",
     "team_count": 48,
     "fixture_count": 72,
     "completed_result_count": 72,
@@ -19,7 +19,7 @@
       "Ratings include Elo-style post-match updates for newly completed fixtures.",
       "Fair-play conduct scores are aggregated from ESPN yellow/red card data."
     ],
-    "next_refresh_at": "2026-07-11T14:00:00+00:00",
+    "next_refresh_at": "2026-07-11T20:00:00+00:00",
     "refresh_interval_hours": 2,
     "tournament_final_kickoff": "2026-07-19T18:00:00-04:00",
     "projected_bracket_simulations": 10000
@@ -5579,216 +5579,9 @@
       "notes": "Round of 32 vs CIV; Round of 16 vs BRA; Quarterfinal vs ENG"
     },
     {
-      "code": "URU",
-      "team": "Uruguay",
-      "rank": 7,
-      "score": 0.5,
-      "label": "Moderate",
-      "avg_opponent_rating": 0.0,
-      "notes": "Projected path unavailable"
-    },
-    {
-      "code": "NED",
-      "team": "Netherlands",
-      "rank": 8,
-      "score": 0.4838,
-      "label": "Moderate",
-      "avg_opponent_rating": 1654.61,
-      "notes": "Round of 32 vs MAR"
-    },
-    {
-      "code": "JPN",
-      "team": "Japan",
-      "rank": 9,
-      "score": 0.7396,
-      "label": "Hard",
-      "avg_opponent_rating": 1770.51,
-      "notes": "Round of 32 vs BRA"
-    },
-    {
-      "code": "SWE",
-      "team": "Sweden",
-      "rank": 10,
-      "score": 0.9703,
-      "label": "Hard",
-      "avg_opponent_rating": 1875.04,
-      "notes": "Round of 32 vs FRA"
-    },
-    {
-      "code": "TUN",
-      "team": "Tunisia",
-      "rank": 11,
-      "score": 0.5,
-      "label": "Moderate",
-      "avg_opponent_rating": 0.0,
-      "notes": "Projected path unavailable"
-    },
-    {
-      "code": "IRI",
-      "team": "Iran",
-      "rank": 12,
-      "score": 0.5,
-      "label": "Moderate",
-      "avg_opponent_rating": 0.0,
-      "notes": "Projected path unavailable"
-    },
-    {
-      "code": "NZL",
-      "team": "New Zealand",
-      "rank": 13,
-      "score": 0.5,
-      "label": "Moderate",
-      "avg_opponent_rating": 0.0,
-      "notes": "Projected path unavailable"
-    },
-    {
-      "code": "CPV",
-      "team": "Cape Verde",
-      "rank": 14,
-      "score": 1.0,
-      "label": "Hard",
-      "avg_opponent_rating": 1888.49,
-      "notes": "Round of 32 vs ARG"
-    },
-    {
-      "code": "KSA",
-      "team": "Saudi Arabia",
-      "rank": 15,
-      "score": 0.5,
-      "label": "Moderate",
-      "avg_opponent_rating": 0.0,
-      "notes": "Projected path unavailable"
-    },
-    {
-      "code": "IRQ",
-      "team": "Iraq",
-      "rank": 16,
-      "score": 0.5,
-      "label": "Moderate",
-      "avg_opponent_rating": 0.0,
-      "notes": "Projected path unavailable"
-    },
-    {
-      "code": "SEN",
-      "team": "Senegal",
-      "rank": 17,
-      "score": 0.6679,
-      "label": "Moderate",
-      "avg_opponent_rating": 1738.0,
-      "notes": "Round of 32 vs BEL"
-    },
-    {
-      "code": "CIV",
-      "team": "Ivory Coast",
-      "rank": 18,
-      "score": 0.4075,
-      "label": "Moderate",
-      "avg_opponent_rating": 1620.02,
-      "notes": "Round of 32 vs NOR"
-    },
-    {
-      "code": "DZA",
-      "team": "Algeria",
-      "rank": 19,
-      "score": 0.5284,
-      "label": "Moderate",
-      "avg_opponent_rating": 1674.82,
-      "notes": "Round of 32 vs SUI"
-    },
-    {
-      "code": "AUT",
-      "team": "Austria",
-      "rank": 20,
-      "score": 0.9696,
-      "label": "Hard",
-      "avg_opponent_rating": 1874.71,
-      "notes": "Round of 32 vs ESP"
-    },
-    {
-      "code": "JOR",
-      "team": "Jordan",
-      "rank": 21,
-      "score": 0.5,
-      "label": "Moderate",
-      "avg_opponent_rating": 0.0,
-      "notes": "Projected path unavailable"
-    },
-    {
-      "code": "COD",
-      "team": "DR Congo",
-      "rank": 22,
-      "score": 0.8482,
-      "label": "Hard",
-      "avg_opponent_rating": 1819.72,
-      "notes": "Round of 32 vs ENG"
-    },
-    {
-      "code": "UZB",
-      "team": "Uzbekistan",
-      "rank": 23,
-      "score": 0.5,
-      "label": "Moderate",
-      "avg_opponent_rating": 0.0,
-      "notes": "Projected path unavailable"
-    },
-    {
-      "code": "CRO",
-      "team": "Croatia",
-      "rank": 24,
-      "score": 0.7341,
-      "label": "Hard",
-      "avg_opponent_rating": 1768.01,
-      "notes": "Round of 32 vs POR"
-    },
-    {
-      "code": "GHA",
-      "team": "Ghana",
-      "rank": 25,
-      "score": 0.609,
-      "label": "Moderate",
-      "avg_opponent_rating": 1711.34,
-      "notes": "Round of 32 vs COL"
-    },
-    {
-      "code": "ECU",
-      "team": "Ecuador",
-      "rank": 26,
-      "score": 0.5839,
-      "label": "Moderate",
-      "avg_opponent_rating": 1699.95,
-      "notes": "Round of 32 vs MEX"
-    },
-    {
-      "code": "TUR",
-      "team": "Turkey",
-      "rank": 27,
-      "score": 0.5,
-      "label": "Moderate",
-      "avg_opponent_rating": 0.0,
-      "notes": "Projected path unavailable"
-    },
-    {
-      "code": "CUW",
-      "team": "Curacao",
-      "rank": 28,
-      "score": 0.5,
-      "label": "Moderate",
-      "avg_opponent_rating": 0.0,
-      "notes": "Projected path unavailable"
-    },
-    {
-      "code": "POR",
-      "team": "Portugal",
-      "rank": 29,
-      "score": 0.8151,
-      "label": "Hard",
-      "avg_opponent_rating": 1804.73,
-      "notes": "Round of 32 vs CRO; Round of 16 vs ESP"
-    },
-    {
       "code": "MAR",
       "team": "Morocco",
-      "rank": 30,
+      "rank": 7,
       "score": 0.6473,
       "label": "Moderate",
       "avg_opponent_rating": 1728.7,
@@ -5797,7 +5590,7 @@
     {
       "code": "BEL",
       "team": "Belgium",
-      "rank": 31,
+      "rank": 8,
       "score": 0.6603,
       "label": "Moderate",
       "avg_opponent_rating": 1734.59,
@@ -5806,7 +5599,7 @@
     {
       "code": "MEX",
       "team": "Mexico",
-      "rank": 32,
+      "rank": 9,
       "score": 0.6477,
       "label": "Moderate",
       "avg_opponent_rating": 1728.86,
@@ -5815,7 +5608,7 @@
     {
       "code": "CAN",
       "team": "Canada",
-      "rank": 33,
+      "rank": 10,
       "score": 0.3277,
       "label": "Easy",
       "avg_opponent_rating": 1583.86,
@@ -5824,7 +5617,7 @@
     {
       "code": "BRA",
       "team": "Brazil",
-      "rank": 34,
+      "rank": 11,
       "score": 0.4406,
       "label": "Moderate",
       "avg_opponent_rating": 1635.01,
@@ -5833,7 +5626,7 @@
     {
       "code": "USA",
       "team": "United States",
-      "rank": 35,
+      "rank": 12,
       "score": 0.4395,
       "label": "Moderate",
       "avg_opponent_rating": 1634.52,
@@ -5842,7 +5635,7 @@
     {
       "code": "PAR",
       "team": "Paraguay",
-      "rank": 36,
+      "rank": 13,
       "score": 0.797,
       "label": "Hard",
       "avg_opponent_rating": 1796.52,
@@ -5851,34 +5644,34 @@
     {
       "code": "EGY",
       "team": "Egypt",
-      "rank": 37,
+      "rank": 14,
       "score": 0.6905,
       "label": "Hard",
       "avg_opponent_rating": 1748.24,
       "notes": "Round of 32 vs AUS; Round of 16 vs ARG"
     },
     {
+      "code": "POR",
+      "team": "Portugal",
+      "rank": 15,
+      "score": 0.8151,
+      "label": "Hard",
+      "avg_opponent_rating": 1804.73,
+      "notes": "Round of 32 vs CRO; Round of 16 vs ESP"
+    },
+    {
       "code": "COL",
       "team": "Colombia",
-      "rank": 38,
+      "rank": 16,
       "score": 0.4018,
       "label": "Moderate",
       "avg_opponent_rating": 1617.42,
       "notes": "Round of 32 vs GHA; Round of 16 vs SUI"
     },
     {
-      "code": "GER",
-      "team": "Germany",
-      "rank": 39,
-      "score": 0.2794,
-      "label": "Easy",
-      "avg_opponent_rating": 1562.0,
-      "notes": "Round of 32 vs PAR"
-    },
-    {
       "code": "RSA",
       "team": "South Africa",
-      "rank": 40,
+      "rank": 17,
       "score": 0.26,
       "label": "Easy",
       "avg_opponent_rating": 1553.18,
@@ -5887,7 +5680,7 @@
     {
       "code": "KOR",
       "team": "South Korea",
-      "rank": 41,
+      "rank": 18,
       "score": 0.5,
       "label": "Moderate",
       "avg_opponent_rating": 0.0,
@@ -5896,7 +5689,7 @@
     {
       "code": "CZE",
       "team": "Czechia",
-      "rank": 42,
+      "rank": 19,
       "score": 0.5,
       "label": "Moderate",
       "avg_opponent_rating": 0.0,
@@ -5905,7 +5698,7 @@
     {
       "code": "BIH",
       "team": "Bosnia and Herzegovina",
-      "rank": 43,
+      "rank": 20,
       "score": 0.5178,
       "label": "Moderate",
       "avg_opponent_rating": 1670.0,
@@ -5914,7 +5707,7 @@
     {
       "code": "QAT",
       "team": "Qatar",
-      "rank": 44,
+      "rank": 21,
       "score": 0.5,
       "label": "Moderate",
       "avg_opponent_rating": 0.0,
@@ -5923,7 +5716,7 @@
     {
       "code": "SCO",
       "team": "Scotland",
-      "rank": 45,
+      "rank": 22,
       "score": 0.5,
       "label": "Moderate",
       "avg_opponent_rating": 0.0,
@@ -5932,7 +5725,7 @@
     {
       "code": "HTI",
       "team": "Haiti",
-      "rank": 46,
+      "rank": 23,
       "score": 0.5,
       "label": "Moderate",
       "avg_opponent_rating": 0.0,
@@ -5941,11 +5734,218 @@
     {
       "code": "AUS",
       "team": "Australia",
-      "rank": 47,
+      "rank": 24,
       "score": 0.3695,
       "label": "Moderate",
       "avg_opponent_rating": 1602.82,
       "notes": "Round of 32 vs EGY"
+    },
+    {
+      "code": "TUR",
+      "team": "Turkey",
+      "rank": 25,
+      "score": 0.5,
+      "label": "Moderate",
+      "avg_opponent_rating": 0.0,
+      "notes": "Projected path unavailable"
+    },
+    {
+      "code": "GER",
+      "team": "Germany",
+      "rank": 26,
+      "score": 0.2794,
+      "label": "Easy",
+      "avg_opponent_rating": 1562.0,
+      "notes": "Round of 32 vs PAR"
+    },
+    {
+      "code": "CUW",
+      "team": "Curacao",
+      "rank": 27,
+      "score": 0.5,
+      "label": "Moderate",
+      "avg_opponent_rating": 0.0,
+      "notes": "Projected path unavailable"
+    },
+    {
+      "code": "CIV",
+      "team": "Ivory Coast",
+      "rank": 28,
+      "score": 0.4075,
+      "label": "Moderate",
+      "avg_opponent_rating": 1620.02,
+      "notes": "Round of 32 vs NOR"
+    },
+    {
+      "code": "ECU",
+      "team": "Ecuador",
+      "rank": 29,
+      "score": 0.5839,
+      "label": "Moderate",
+      "avg_opponent_rating": 1699.95,
+      "notes": "Round of 32 vs MEX"
+    },
+    {
+      "code": "NED",
+      "team": "Netherlands",
+      "rank": 30,
+      "score": 0.4838,
+      "label": "Moderate",
+      "avg_opponent_rating": 1654.61,
+      "notes": "Round of 32 vs MAR"
+    },
+    {
+      "code": "JPN",
+      "team": "Japan",
+      "rank": 31,
+      "score": 0.7396,
+      "label": "Hard",
+      "avg_opponent_rating": 1770.51,
+      "notes": "Round of 32 vs BRA"
+    },
+    {
+      "code": "SWE",
+      "team": "Sweden",
+      "rank": 32,
+      "score": 0.9703,
+      "label": "Hard",
+      "avg_opponent_rating": 1875.04,
+      "notes": "Round of 32 vs FRA"
+    },
+    {
+      "code": "TUN",
+      "team": "Tunisia",
+      "rank": 33,
+      "score": 0.5,
+      "label": "Moderate",
+      "avg_opponent_rating": 0.0,
+      "notes": "Projected path unavailable"
+    },
+    {
+      "code": "IRI",
+      "team": "Iran",
+      "rank": 34,
+      "score": 0.5,
+      "label": "Moderate",
+      "avg_opponent_rating": 0.0,
+      "notes": "Projected path unavailable"
+    },
+    {
+      "code": "NZL",
+      "team": "New Zealand",
+      "rank": 35,
+      "score": 0.5,
+      "label": "Moderate",
+      "avg_opponent_rating": 0.0,
+      "notes": "Projected path unavailable"
+    },
+    {
+      "code": "CPV",
+      "team": "Cape Verde",
+      "rank": 36,
+      "score": 1.0,
+      "label": "Hard",
+      "avg_opponent_rating": 1888.49,
+      "notes": "Round of 32 vs ARG"
+    },
+    {
+      "code": "KSA",
+      "team": "Saudi Arabia",
+      "rank": 37,
+      "score": 0.5,
+      "label": "Moderate",
+      "avg_opponent_rating": 0.0,
+      "notes": "Projected path unavailable"
+    },
+    {
+      "code": "URU",
+      "team": "Uruguay",
+      "rank": 38,
+      "score": 0.5,
+      "label": "Moderate",
+      "avg_opponent_rating": 0.0,
+      "notes": "Projected path unavailable"
+    },
+    {
+      "code": "SEN",
+      "team": "Senegal",
+      "rank": 39,
+      "score": 0.6679,
+      "label": "Moderate",
+      "avg_opponent_rating": 1738.0,
+      "notes": "Round of 32 vs BEL"
+    },
+    {
+      "code": "IRQ",
+      "team": "Iraq",
+      "rank": 40,
+      "score": 0.5,
+      "label": "Moderate",
+      "avg_opponent_rating": 0.0,
+      "notes": "Projected path unavailable"
+    },
+    {
+      "code": "DZA",
+      "team": "Algeria",
+      "rank": 41,
+      "score": 0.5284,
+      "label": "Moderate",
+      "avg_opponent_rating": 1674.82,
+      "notes": "Round of 32 vs SUI"
+    },
+    {
+      "code": "AUT",
+      "team": "Austria",
+      "rank": 42,
+      "score": 0.9696,
+      "label": "Hard",
+      "avg_opponent_rating": 1874.71,
+      "notes": "Round of 32 vs ESP"
+    },
+    {
+      "code": "JOR",
+      "team": "Jordan",
+      "rank": 43,
+      "score": 0.5,
+      "label": "Moderate",
+      "avg_opponent_rating": 0.0,
+      "notes": "Projected path unavailable"
+    },
+    {
+      "code": "COD",
+      "team": "DR Congo",
+      "rank": 44,
+      "score": 0.8482,
+      "label": "Hard",
+      "avg_opponent_rating": 1819.72,
+      "notes": "Round of 32 vs ENG"
+    },
+    {
+      "code": "UZB",
+      "team": "Uzbekistan",
+      "rank": 45,
+      "score": 0.5,
+      "label": "Moderate",
+      "avg_opponent_rating": 0.0,
+      "notes": "Projected path unavailable"
+    },
+    {
+      "code": "CRO",
+      "team": "Croatia",
+      "rank": 46,
+      "score": 0.7341,
+      "label": "Hard",
+      "avg_opponent_rating": 1768.01,
+      "notes": "Round of 32 vs POR"
+    },
+    {
+      "code": "GHA",
+      "team": "Ghana",
+      "rank": 47,
+      "score": 0.609,
+      "label": "Moderate",
+      "avg_opponent_rating": 1711.34,
+      "notes": "Round of 32 vs COL"
     },
     {
       "code": "PAN",
@@ -5965,16 +5965,16 @@
   "market_comparison": {
     "available": true,
     "source": "the_odds_api:soccer_fifa_world_cup_winner",
-    "as_of": "2026-07-11T14:57:54+00:00",
+    "as_of": "2026-07-11T19:09:45+00:00",
     "methodology": "Compares model championship probability to average implied probability from outright winner odds. Positive delta means the model is more bullish than the market.",
     "teams": [
       {
         "code": "FRA",
         "team": "France",
         "model_champion_prob": 0.2804,
-        "market_implied_prob": 0.390625,
-        "delta": -0.110225,
-        "decimal_odds": 2.56
+        "market_implied_prob": 0.389105,
+        "delta": -0.108705,
+        "decimal_odds": 2.57
       },
       {
         "code": "ARG",
@@ -5988,9 +5988,9 @@
         "code": "ESP",
         "team": "Spain",
         "model_champion_prob": 0.2746,
-        "market_implied_prob": 0.232153,
-        "delta": 0.042447,
-        "decimal_odds": 4.308
+        "market_implied_prob": 0.229489,
+        "delta": 0.045111,
+        "decimal_odds": 4.357
       },
       {
         "code": "NOR",
@@ -6001,20 +6001,20 @@
         "decimal_odds": 17.25
       },
       {
-        "code": "ENG",
-        "team": "England",
-        "model_champion_prob": 0.155,
-        "market_implied_prob": 0.165289,
-        "delta": -0.010289,
-        "decimal_odds": 6.05
-      },
-      {
         "code": "SUI",
         "team": "Switzerland",
         "model_champion_prob": 0.0309,
         "market_implied_prob": 0.020833,
         "delta": 0.010067,
         "decimal_odds": 48.0
+      },
+      {
+        "code": "ENG",
+        "team": "England",
+        "model_champion_prob": 0.155,
+        "market_implied_prob": 0.162602,
+        "delta": -0.007602,
+        "decimal_odds": 6.15
       }
     ],
     "summary": {
@@ -6022,103 +6022,38 @@
       "model_favorite_team": "France",
       "market_favorite_code": "FRA",
       "market_favorite_team": "France",
-      "mean_absolute_gap": 0.045147,
+      "mean_absolute_gap": 0.04489,
       "compared_team_count": 6,
       "favorites_agree": true
     }
   },
   "movement": {
     "has_baseline": true,
-    "baseline_generated_at": "2026-07-07T14:12:47",
-    "biggest_movers": [
-      {
-        "code": "BEL",
-        "team": "Belgium",
-        "metric": "final_prob",
-        "delta": -0.1512,
-        "previous": 0.1512,
-        "current": 0.0
-      },
-      {
-        "code": "ESP",
-        "team": "Spain",
-        "metric": "final_prob",
-        "delta": 0.1296,
-        "previous": 0.3638,
-        "current": 0.4934
-      },
-      {
-        "code": "FRA",
-        "team": "France",
-        "metric": "final_prob",
-        "delta": 0.1029,
-        "previous": 0.4037,
-        "current": 0.5066
-      },
-      {
-        "code": "MAR",
-        "team": "Morocco",
-        "metric": "final_prob",
-        "delta": -0.0813,
-        "previous": 0.0813,
-        "current": 0.0
-      },
-      {
-        "code": "COL",
-        "team": "Colombia",
-        "metric": "final_prob",
-        "delta": -0.0697,
-        "previous": 0.0697,
-        "current": 0.0
-      },
-      {
-        "code": "SUI",
-        "team": "Switzerland",
-        "metric": "final_prob",
-        "delta": 0.0624,
-        "previous": 0.0467,
-        "current": 0.1091
-      },
-      {
-        "code": "ENG",
-        "team": "England",
-        "metric": "champion_prob",
-        "delta": -0.0175,
-        "previous": 0.1725,
-        "current": 0.155
-      },
-      {
-        "code": "ARG",
-        "team": "Argentina",
-        "metric": "final_prob",
-        "delta": 0.0135,
-        "previous": 0.4505,
-        "current": 0.464
-      }
-    ],
+    "baseline_generated_at": "2026-07-11T13:00:05",
+    "biggest_movers": [],
     "top_champion_changes": [
       {
         "code": "FRA",
         "team": "France",
         "rank": 1,
-        "delta": 0.0519,
-        "previous": 0.2285,
+        "delta": 0.0,
+        "previous": 0.2804,
         "current": 0.2804
       },
       {
         "code": "ESP",
         "team": "Spain",
         "rank": 2,
-        "delta": 0.0689,
-        "previous": 0.2057,
+        "delta": 0.0,
+        "previous": 0.2746,
         "current": 0.2746
       },
       {
         "code": "ARG",
         "team": "Argentina",
         "rank": 3,
-        "delta": -0.0054,
-        "previous": 0.2458,
+        "delta": 0.0,
+        "previous": 0.2404,
         "current": 0.2404
       }
     ],
@@ -6127,64 +6062,64 @@
         "code": "FRA",
         "team": "France",
         "rank": 1,
-        "delta": 0.0519,
-        "previous": 0.2285,
+        "delta": 0.0,
+        "previous": 0.2804,
         "current": 0.2804
       },
       {
         "code": "ESP",
         "team": "Spain",
         "rank": 2,
-        "delta": 0.0689,
-        "previous": 0.2057,
+        "delta": 0.0,
+        "previous": 0.2746,
         "current": 0.2746
       },
       {
         "code": "ARG",
         "team": "Argentina",
         "rank": 3,
-        "delta": -0.0054,
-        "previous": 0.2458,
+        "delta": 0.0,
+        "previous": 0.2404,
         "current": 0.2404
       },
       {
         "code": "ENG",
         "team": "England",
         "rank": 4,
-        "delta": -0.0175,
-        "previous": 0.1725,
+        "delta": 0.0,
+        "previous": 0.155,
         "current": 0.155
       },
       {
         "code": "SUI",
         "team": "Switzerland",
         "rank": 5,
-        "delta": 0.0157,
-        "previous": 0.0152,
+        "delta": 0.0,
+        "previous": 0.0309,
         "current": 0.0309
       },
       {
         "code": "NOR",
         "team": "Norway",
         "rank": 6,
-        "delta": -0.0007,
-        "previous": 0.0194,
+        "delta": 0.0,
+        "previous": 0.0187,
         "current": 0.0187
       },
       {
         "code": "MAR",
         "team": "Morocco",
         "rank": 7,
-        "delta": -0.0264,
-        "previous": 0.0264,
+        "delta": 0.0,
+        "previous": 0.0,
         "current": 0.0
       },
       {
         "code": "BEL",
         "team": "Belgium",
         "rank": 8,
-        "delta": -0.0614,
-        "previous": 0.0614,
+        "delta": 0.0,
+        "previous": 0.0,
         "current": 0.0
       },
       {
@@ -6247,8 +6182,8 @@
         "code": "COL",
         "team": "Colombia",
         "rank": 16,
-        "delta": -0.0251,
-        "previous": 0.0251,
+        "delta": 0.0,
+        "previous": 0.0,
         "current": 0.0
       },
       {
