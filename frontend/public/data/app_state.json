@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "generated_at": "2026-07-11T17:05:53",
+    "generated_at": "2026-07-11T13:00:05",
     "team_count": 48,
     "fixture_count": 72,
     "completed_result_count": 72,
@@ -19,7 +19,7 @@
       "Ratings include Elo-style post-match updates for newly completed fixtures.",
       "Fair-play conduct scores are aggregated from ESPN yellow/red card data."
     ],
-    "next_refresh_at": "2026-07-11T18:00:00+00:00",
+    "next_refresh_at": "2026-07-11T14:00:00+00:00",
     "refresh_interval_hours": 2,
     "tournament_final_kickoff": "2026-07-19T18:00:00-04:00",
     "projected_bracket_simulations": 10000
@@ -2498,8 +2498,8 @@
         "winner_advances_to": 89,
         "projected_winner": {
           "source": null,
-          "team": "Germany",
-          "code": "GER"
+          "team": "Paraguay",
+          "code": "PAR"
         }
       },
       {
@@ -2519,8 +2519,8 @@
         "winner_advances_to": 90,
         "projected_winner": {
           "source": null,
-          "team": "Netherlands",
-          "code": "NED"
+          "team": "Morocco",
+          "code": "MAR"
         }
       },
       {
@@ -2792,8 +2792,8 @@
         "winner_advances_to": 95,
         "projected_winner": {
           "source": null,
-          "team": "Australia",
-          "code": "AUS"
+          "team": "Egypt",
+          "code": "EGY"
         }
       }
     ],
@@ -2804,8 +2804,8 @@
         "match_id": 89,
         "home": {
           "source": "Winner Match 74",
-          "team": "Germany",
-          "code": "GER"
+          "team": "Paraguay",
+          "code": "PAR"
         },
         "away": {
           "source": "Winner Match 77",
@@ -2830,14 +2830,14 @@
         },
         "away": {
           "source": "Winner Match 75",
-          "team": "Netherlands",
-          "code": "NED"
+          "team": "Morocco",
+          "code": "MAR"
         },
         "winner_advances_to": 97,
         "projected_winner": {
           "source": null,
-          "team": "Netherlands",
-          "code": "NED"
+          "team": "Morocco",
+          "code": "MAR"
         }
       },
       {
@@ -2857,8 +2857,8 @@
         "winner_advances_to": 99,
         "projected_winner": {
           "source": null,
-          "team": "Brazil",
-          "code": "BRA"
+          "team": "Norway",
+          "code": "NOR"
         }
       },
       {
@@ -2935,8 +2935,8 @@
         },
         "away": {
           "source": "Winner Match 88",
-          "team": "Australia",
-          "code": "AUS"
+          "team": "Egypt",
+          "code": "EGY"
         },
         "winner_advances_to": 100,
         "projected_winner": {
@@ -2962,8 +2962,8 @@
         "winner_advances_to": 100,
         "projected_winner": {
           "source": null,
-          "team": "Colombia",
-          "code": "COL"
+          "team": "Switzerland",
+          "code": "SUI"
         }
       }
     ],
@@ -2979,8 +2979,8 @@
         },
         "away": {
           "source": "Winner Match 90",
-          "team": "Netherlands",
-          "code": "NED"
+          "team": "Morocco",
+          "code": "MAR"
         },
         "winner_advances_to": 101,
         "projected_winner": {
@@ -3016,8 +3016,8 @@
         "match_id": 99,
         "home": {
           "source": "Winner Match 91",
-          "team": "Brazil",
-          "code": "BRA"
+          "team": "Norway",
+          "code": "NOR"
         },
         "away": {
           "source": "Winner Match 92",
@@ -3042,8 +3042,8 @@
         },
         "away": {
           "source": "Winner Match 96",
-          "team": "Colombia",
-          "code": "COL"
+          "team": "Switzerland",
+          "code": "SUI"
         },
         "winner_advances_to": 102,
         "projected_winner": {
@@ -3115,8 +3115,8 @@
         "winner_advances_to": null,
         "projected_winner": {
           "source": null,
-          "team": "Argentina",
-          "code": "ARG"
+          "team": "France",
+          "code": "FRA"
         }
       }
     ]
@@ -4640,40 +4640,22 @@
     ],
     "round": [
       {
-        "team_id": "ARG",
-        "team": "Argentina",
-        "code": "ARG",
-        "group": "J",
-        "r32_prob": 1.0,
-        "r16_prob": 0.8722,
-        "qf_prob": 0.6787,
-        "sf_prob": 0.5012,
-        "final_prob": 0.3362,
-        "champion_prob": 0.2071,
-        "r32_prob_label": "100.0%",
-        "r16_prob_label": " 87.2%",
-        "qf_prob_label": " 67.9%",
-        "sf_prob_label": " 50.1%",
-        "final_prob_label": " 33.6%",
-        "champion_prob_label": " 20.7%"
-      },
-      {
         "team_id": "FRA",
         "team": "France",
         "code": "FRA",
         "group": "I",
         "r32_prob": 1.0,
-        "r16_prob": 0.801,
-        "qf_prob": 0.5691,
-        "sf_prob": 0.4094,
-        "final_prob": 0.2509,
-        "champion_prob": 0.1515,
+        "r16_prob": 1.0,
+        "qf_prob": 1.0,
+        "sf_prob": 1.0,
+        "final_prob": 0.5066,
+        "champion_prob": 0.2804,
         "r32_prob_label": "100.0%",
-        "r16_prob_label": " 80.1%",
-        "qf_prob_label": " 56.9%",
-        "sf_prob_label": " 40.9%",
-        "final_prob_label": " 25.1%",
-        "champion_prob_label": " 15.2%"
+        "r16_prob_label": "100.0%",
+        "qf_prob_label": "100.0%",
+        "sf_prob_label": "100.0%",
+        "final_prob_label": " 50.7%",
+        "champion_prob_label": " 28.0%"
       },
       {
         "team_id": "ESP",
@@ -4681,17 +4663,35 @@
         "code": "ESP",
         "group": "H",
         "r32_prob": 1.0,
-        "r16_prob": 0.7625,
-        "qf_prob": 0.4916,
-        "sf_prob": 0.3483,
-        "final_prob": 0.2154,
-        "champion_prob": 0.1306,
+        "r16_prob": 1.0,
+        "qf_prob": 1.0,
+        "sf_prob": 1.0,
+        "final_prob": 0.4934,
+        "champion_prob": 0.2746,
         "r32_prob_label": "100.0%",
-        "r16_prob_label": " 76.2%",
-        "qf_prob_label": " 49.2%",
-        "sf_prob_label": " 34.8%",
-        "final_prob_label": " 21.5%",
-        "champion_prob_label": " 13.1%"
+        "r16_prob_label": "100.0%",
+        "qf_prob_label": "100.0%",
+        "sf_prob_label": "100.0%",
+        "final_prob_label": " 49.3%",
+        "champion_prob_label": " 27.5%"
+      },
+      {
+        "team_id": "ARG",
+        "team": "Argentina",
+        "code": "ARG",
+        "group": "J",
+        "r32_prob": 1.0,
+        "r16_prob": 1.0,
+        "qf_prob": 1.0,
+        "sf_prob": 0.7275,
+        "final_prob": 0.464,
+        "champion_prob": 0.2404,
+        "r32_prob_label": "100.0%",
+        "r16_prob_label": "100.0%",
+        "qf_prob_label": "100.0%",
+        "sf_prob_label": " 72.8%",
+        "final_prob_label": " 46.4%",
+        "champion_prob_label": " 24.0%"
       },
       {
         "team_id": "ENG",
@@ -4699,161 +4699,17 @@
         "code": "ENG",
         "group": "L",
         "r32_prob": 1.0,
-        "r16_prob": 0.8074,
-        "qf_prob": 0.5318,
-        "sf_prob": 0.3454,
-        "final_prob": 0.1912,
-        "champion_prob": 0.1027,
+        "r16_prob": 1.0,
+        "qf_prob": 1.0,
+        "sf_prob": 0.7094,
+        "final_prob": 0.3422,
+        "champion_prob": 0.155,
         "r32_prob_label": "100.0%",
-        "r16_prob_label": " 80.7%",
-        "qf_prob_label": " 53.2%",
-        "sf_prob_label": " 34.5%",
-        "final_prob_label": " 19.1%",
-        "champion_prob_label": " 10.3%"
-      },
-      {
-        "team_id": "BRA",
-        "team": "Brazil",
-        "code": "BRA",
-        "group": "C",
-        "r32_prob": 1.0,
-        "r16_prob": 0.6343,
-        "qf_prob": 0.4328,
-        "sf_prob": 0.2274,
-        "final_prob": 0.1079,
-        "champion_prob": 0.055,
-        "r32_prob_label": "100.0%",
-        "r16_prob_label": " 63.4%",
-        "qf_prob_label": " 43.3%",
-        "sf_prob_label": " 22.7%",
-        "final_prob_label": " 10.8%",
-        "champion_prob_label": "  5.5%"
-      },
-      {
-        "team_id": "NED",
-        "team": "Netherlands",
-        "code": "NED",
-        "group": "F",
-        "r32_prob": 1.0,
-        "r16_prob": 0.6128,
-        "qf_prob": 0.4521,
-        "sf_prob": 0.2198,
-        "final_prob": 0.1109,
-        "champion_prob": 0.0518,
-        "r32_prob_label": "100.0%",
-        "r16_prob_label": " 61.3%",
-        "qf_prob_label": " 45.2%",
-        "sf_prob_label": " 22.0%",
-        "final_prob_label": " 11.1%",
-        "champion_prob_label": "  5.2%"
-      },
-      {
-        "team_id": "BEL",
-        "team": "Belgium",
-        "code": "BEL",
-        "group": "G",
-        "r32_prob": 1.0,
-        "r16_prob": 0.5911,
-        "qf_prob": 0.37,
-        "sf_prob": 0.1556,
-        "final_prob": 0.0715,
-        "champion_prob": 0.0347,
-        "r32_prob_label": "100.0%",
-        "r16_prob_label": " 59.1%",
-        "qf_prob_label": " 37.0%",
-        "sf_prob_label": " 15.6%",
-        "final_prob_label": "  7.1%",
-        "champion_prob_label": "  3.5%"
-      },
-      {
-        "team_id": "POR",
-        "team": "Portugal",
-        "code": "POR",
-        "group": "K",
-        "r32_prob": 1.0,
-        "r16_prob": 0.5327,
-        "qf_prob": 0.2337,
-        "sf_prob": 0.1388,
-        "final_prob": 0.0689,
-        "champion_prob": 0.0321,
-        "r32_prob_label": "100.0%",
-        "r16_prob_label": " 53.3%",
-        "qf_prob_label": " 23.4%",
-        "sf_prob_label": " 13.9%",
-        "final_prob_label": "  6.9%",
-        "champion_prob_label": "  3.2%"
-      },
-      {
-        "team_id": "COL",
-        "team": "Colombia",
-        "code": "COL",
-        "group": "K",
-        "r32_prob": 1.0,
-        "r16_prob": 0.6672,
-        "qf_prob": 0.3794,
-        "sf_prob": 0.1559,
-        "final_prob": 0.0742,
-        "champion_prob": 0.0301,
-        "r32_prob_label": "100.0%",
-        "r16_prob_label": " 66.7%",
-        "qf_prob_label": " 37.9%",
-        "sf_prob_label": " 15.6%",
-        "final_prob_label": "  7.4%",
-        "champion_prob_label": "  3.0%"
-      },
-      {
-        "team_id": "GER",
-        "team": "Germany",
-        "code": "GER",
-        "group": "E",
-        "r32_prob": 1.0,
-        "r16_prob": 0.6701,
-        "qf_prob": 0.2663,
-        "sf_prob": 0.1484,
-        "final_prob": 0.0694,
-        "champion_prob": 0.0285,
-        "r32_prob_label": "100.0%",
-        "r16_prob_label": " 67.0%",
-        "qf_prob_label": " 26.6%",
-        "sf_prob_label": " 14.8%",
-        "final_prob_label": "  6.9%",
-        "champion_prob_label": "  2.9%"
-      },
-      {
-        "team_id": "CRO",
-        "team": "Croatia",
-        "code": "CRO",
-        "group": "L",
-        "r32_prob": 1.0,
-        "r16_prob": 0.4673,
-        "qf_prob": 0.1899,
-        "sf_prob": 0.1054,
-        "final_prob": 0.0485,
-        "champion_prob": 0.0227,
-        "r32_prob_label": "100.0%",
-        "r16_prob_label": " 46.7%",
-        "qf_prob_label": " 19.0%",
-        "sf_prob_label": " 10.5%",
-        "final_prob_label": "  4.9%",
-        "champion_prob_label": "  2.3%"
-      },
-      {
-        "team_id": "MEX",
-        "team": "Mexico",
-        "code": "MEX",
-        "group": "A",
-        "r32_prob": 1.0,
-        "r16_prob": 0.5709,
-        "qf_prob": 0.2499,
-        "sf_prob": 0.1298,
-        "final_prob": 0.0541,
-        "champion_prob": 0.0207,
-        "r32_prob_label": "100.0%",
-        "r16_prob_label": " 57.1%",
-        "qf_prob_label": " 25.0%",
-        "sf_prob_label": " 13.0%",
-        "final_prob_label": "  5.4%",
-        "champion_prob_label": "  2.1%"
+        "r16_prob_label": "100.0%",
+        "qf_prob_label": "100.0%",
+        "sf_prob_label": " 70.9%",
+        "final_prob_label": " 34.2%",
+        "champion_prob_label": " 15.5%"
       },
       {
         "team_id": "SUI",
@@ -4861,89 +4717,17 @@
         "code": "SUI",
         "group": "B",
         "r32_prob": 1.0,
-        "r16_prob": 0.6027,
-        "qf_prob": 0.3165,
-        "sf_prob": 0.1214,
-        "final_prob": 0.0527,
-        "champion_prob": 0.02,
+        "r16_prob": 1.0,
+        "qf_prob": 1.0,
+        "sf_prob": 0.2725,
+        "final_prob": 0.1091,
+        "champion_prob": 0.0309,
         "r32_prob_label": "100.0%",
-        "r16_prob_label": " 60.3%",
-        "qf_prob_label": " 31.6%",
-        "sf_prob_label": " 12.1%",
-        "final_prob_label": "  5.3%",
-        "champion_prob_label": "  2.0%"
-      },
-      {
-        "team_id": "USA",
-        "team": "United States",
-        "code": "USA",
-        "group": "D",
-        "r32_prob": 1.0,
-        "r16_prob": 0.6502,
-        "qf_prob": 0.2986,
-        "sf_prob": 0.1112,
-        "final_prob": 0.044,
-        "champion_prob": 0.0161,
-        "r32_prob_label": "100.0%",
-        "r16_prob_label": " 65.0%",
-        "qf_prob_label": " 29.9%",
-        "sf_prob_label": " 11.1%",
-        "final_prob_label": "  4.4%",
-        "champion_prob_label": "  1.6%"
-      },
-      {
-        "team_id": "MAR",
-        "team": "Morocco",
-        "code": "MAR",
-        "group": "C",
-        "r32_prob": 1.0,
-        "r16_prob": 0.3872,
-        "qf_prob": 0.2482,
-        "sf_prob": 0.0854,
-        "final_prob": 0.0343,
-        "champion_prob": 0.0126,
-        "r32_prob_label": "100.0%",
-        "r16_prob_label": " 38.7%",
-        "qf_prob_label": " 24.8%",
-        "sf_prob_label": "  8.5%",
-        "final_prob_label": "  3.4%",
-        "champion_prob_label": "  1.3%"
-      },
-      {
-        "team_id": "SEN",
-        "team": "Senegal",
-        "code": "SEN",
-        "group": "I",
-        "r32_prob": 1.0,
-        "r16_prob": 0.4089,
-        "qf_prob": 0.219,
-        "sf_prob": 0.0765,
-        "final_prob": 0.0299,
-        "champion_prob": 0.0115,
-        "r32_prob_label": "100.0%",
-        "r16_prob_label": " 40.9%",
-        "qf_prob_label": " 21.9%",
-        "sf_prob_label": "  7.6%",
-        "final_prob_label": "  3.0%",
-        "champion_prob_label": "  1.1%"
-      },
-      {
-        "team_id": "JPN",
-        "team": "Japan",
-        "code": "JPN",
-        "group": "F",
-        "r32_prob": 1.0,
-        "r16_prob": 0.3657,
-        "qf_prob": 0.2032,
-        "sf_prob": 0.0836,
-        "final_prob": 0.0306,
-        "champion_prob": 0.0096,
-        "r32_prob_label": "100.0%",
-        "r16_prob_label": " 36.6%",
-        "qf_prob_label": " 20.3%",
-        "sf_prob_label": "  8.4%",
-        "final_prob_label": "  3.1%",
-        "champion_prob_label": "  1.0%"
+        "r16_prob_label": "100.0%",
+        "qf_prob_label": "100.0%",
+        "sf_prob_label": " 27.3%",
+        "final_prob_label": " 10.9%",
+        "champion_prob_label": "  3.1%"
       },
       {
         "team_id": "NOR",
@@ -4951,143 +4735,71 @@
         "code": "NOR",
         "group": "I",
         "r32_prob": 1.0,
-        "r16_prob": 0.5482,
-        "qf_prob": 0.209,
-        "sf_prob": 0.0763,
-        "final_prob": 0.0286,
-        "champion_prob": 0.0093,
+        "r16_prob": 1.0,
+        "qf_prob": 1.0,
+        "sf_prob": 0.2906,
+        "final_prob": 0.0847,
+        "champion_prob": 0.0187,
         "r32_prob_label": "100.0%",
-        "r16_prob_label": " 54.8%",
-        "qf_prob_label": " 20.9%",
-        "sf_prob_label": "  7.6%",
-        "final_prob_label": "  2.9%",
-        "champion_prob_label": "  0.9%"
+        "r16_prob_label": "100.0%",
+        "qf_prob_label": "100.0%",
+        "sf_prob_label": " 29.1%",
+        "final_prob_label": "  8.5%",
+        "champion_prob_label": "  1.9%"
       },
       {
-        "team_id": "AUS",
-        "team": "Australia",
-        "code": "AUS",
-        "group": "D",
+        "team_id": "MAR",
+        "team": "Morocco",
+        "code": "MAR",
+        "group": "C",
         "r32_prob": 1.0,
-        "r16_prob": 0.5118,
-        "qf_prob": 0.141,
-        "sf_prob": 0.0629,
-        "final_prob": 0.0249,
-        "champion_prob": 0.0079,
+        "r16_prob": 1.0,
+        "qf_prob": 1.0,
+        "sf_prob": 0.0,
+        "final_prob": 0.0,
+        "champion_prob": 0.0,
         "r32_prob_label": "100.0%",
-        "r16_prob_label": " 51.2%",
-        "qf_prob_label": " 14.1%",
-        "sf_prob_label": "  6.3%",
-        "final_prob_label": "  2.5%",
-        "champion_prob_label": "  0.8%"
+        "r16_prob_label": "100.0%",
+        "qf_prob_label": "100.0%",
+        "sf_prob_label": "  0.0%",
+        "final_prob_label": "  0.0%",
+        "champion_prob_label": "  0.0%"
       },
       {
-        "team_id": "ECU",
-        "team": "Ecuador",
-        "code": "ECU",
-        "group": "E",
-        "r32_prob": 1.0,
-        "r16_prob": 0.4291,
-        "qf_prob": 0.1555,
-        "sf_prob": 0.0697,
-        "final_prob": 0.0258,
-        "champion_prob": 0.0078,
-        "r32_prob_label": "100.0%",
-        "r16_prob_label": " 42.9%",
-        "qf_prob_label": " 15.6%",
-        "sf_prob_label": "  7.0%",
-        "final_prob_label": "  2.6%",
-        "champion_prob_label": "  0.8%"
-      },
-      {
-        "team_id": "EGY",
-        "team": "Egypt",
-        "code": "EGY",
+        "team_id": "BEL",
+        "team": "Belgium",
+        "code": "BEL",
         "group": "G",
         "r32_prob": 1.0,
-        "r16_prob": 0.4882,
-        "qf_prob": 0.1326,
-        "sf_prob": 0.0572,
-        "final_prob": 0.0232,
-        "champion_prob": 0.0063,
+        "r16_prob": 1.0,
+        "qf_prob": 1.0,
+        "sf_prob": 0.0,
+        "final_prob": 0.0,
+        "champion_prob": 0.0,
         "r32_prob_label": "100.0%",
-        "r16_prob_label": " 48.8%",
-        "qf_prob_label": " 13.3%",
-        "sf_prob_label": "  5.7%",
-        "final_prob_label": "  2.3%",
-        "champion_prob_label": "  0.6%"
+        "r16_prob_label": "100.0%",
+        "qf_prob_label": "100.0%",
+        "sf_prob_label": "  0.0%",
+        "final_prob_label": "  0.0%",
+        "champion_prob_label": "  0.0%"
       },
       {
-        "team_id": "DZA",
-        "team": "Algeria",
-        "code": "DZA",
-        "group": "J",
+        "team_id": "MEX",
+        "team": "Mexico",
+        "code": "MEX",
+        "group": "A",
         "r32_prob": 1.0,
-        "r16_prob": 0.3973,
-        "qf_prob": 0.1664,
-        "sf_prob": 0.0478,
-        "final_prob": 0.0155,
-        "champion_prob": 0.0053,
+        "r16_prob": 1.0,
+        "qf_prob": 0.0,
+        "sf_prob": 0.0,
+        "final_prob": 0.0,
+        "champion_prob": 0.0,
         "r32_prob_label": "100.0%",
-        "r16_prob_label": " 39.7%",
-        "qf_prob_label": " 16.6%",
-        "sf_prob_label": "  4.8%",
-        "final_prob_label": "  1.6%",
-        "champion_prob_label": "  0.5%"
-      },
-      {
-        "team_id": "CIV",
-        "team": "Ivory Coast",
-        "code": "CIV",
-        "group": "E",
-        "r32_prob": 1.0,
-        "r16_prob": 0.4518,
-        "qf_prob": 0.155,
-        "sf_prob": 0.0489,
-        "final_prob": 0.0143,
-        "champion_prob": 0.0052,
-        "r32_prob_label": "100.0%",
-        "r16_prob_label": " 45.2%",
-        "qf_prob_label": " 15.5%",
-        "sf_prob_label": "  4.9%",
-        "final_prob_label": "  1.4%",
-        "champion_prob_label": "  0.5%"
-      },
-      {
-        "team_id": "AUT",
-        "team": "Austria",
-        "code": "AUT",
-        "group": "J",
-        "r32_prob": 1.0,
-        "r16_prob": 0.2375,
-        "qf_prob": 0.0848,
-        "sf_prob": 0.0375,
-        "final_prob": 0.013,
-        "champion_prob": 0.0044,
-        "r32_prob_label": "100.0%",
-        "r16_prob_label": " 23.8%",
-        "qf_prob_label": "  8.5%",
-        "sf_prob_label": "  3.8%",
-        "final_prob_label": "  1.3%",
-        "champion_prob_label": "  0.4%"
-      },
-      {
-        "team_id": "GHA",
-        "team": "Ghana",
-        "code": "GHA",
-        "group": "L",
-        "r32_prob": 1.0,
-        "r16_prob": 0.3328,
-        "qf_prob": 0.1377,
-        "sf_prob": 0.0376,
-        "final_prob": 0.0123,
-        "champion_prob": 0.0032,
-        "r32_prob_label": "100.0%",
-        "r16_prob_label": " 33.3%",
-        "qf_prob_label": " 13.8%",
-        "sf_prob_label": "  3.8%",
-        "final_prob_label": "  1.2%",
-        "champion_prob_label": "  0.3%"
+        "r16_prob_label": "100.0%",
+        "qf_prob_label": "  0.0%",
+        "sf_prob_label": "  0.0%",
+        "final_prob_label": "  0.0%",
+        "champion_prob_label": "  0.0%"
       },
       {
         "team_id": "CAN",
@@ -5095,35 +4807,53 @@
         "code": "CAN",
         "group": "B",
         "r32_prob": 1.0,
-        "r16_prob": 0.5404,
-        "qf_prob": 0.1735,
-        "sf_prob": 0.0437,
-        "final_prob": 0.0115,
-        "champion_prob": 0.0031,
+        "r16_prob": 1.0,
+        "qf_prob": 0.0,
+        "sf_prob": 0.0,
+        "final_prob": 0.0,
+        "champion_prob": 0.0,
         "r32_prob_label": "100.0%",
-        "r16_prob_label": " 54.0%",
-        "qf_prob_label": " 17.3%",
-        "sf_prob_label": "  4.4%",
-        "final_prob_label": "  1.1%",
-        "champion_prob_label": "  0.3%"
+        "r16_prob_label": "100.0%",
+        "qf_prob_label": "  0.0%",
+        "sf_prob_label": "  0.0%",
+        "final_prob_label": "  0.0%",
+        "champion_prob_label": "  0.0%"
       },
       {
-        "team_id": "SWE",
-        "team": "Sweden",
-        "code": "SWE",
-        "group": "F",
+        "team_id": "BRA",
+        "team": "Brazil",
+        "code": "BRA",
+        "group": "C",
         "r32_prob": 1.0,
-        "r16_prob": 0.199,
-        "qf_prob": 0.0834,
-        "sf_prob": 0.0335,
-        "final_prob": 0.0099,
-        "champion_prob": 0.0029,
+        "r16_prob": 1.0,
+        "qf_prob": 0.0,
+        "sf_prob": 0.0,
+        "final_prob": 0.0,
+        "champion_prob": 0.0,
         "r32_prob_label": "100.0%",
-        "r16_prob_label": " 19.9%",
-        "qf_prob_label": "  8.3%",
-        "sf_prob_label": "  3.4%",
-        "final_prob_label": "  1.0%",
-        "champion_prob_label": "  0.3%"
+        "r16_prob_label": "100.0%",
+        "qf_prob_label": "  0.0%",
+        "sf_prob_label": "  0.0%",
+        "final_prob_label": "  0.0%",
+        "champion_prob_label": "  0.0%"
+      },
+      {
+        "team_id": "USA",
+        "team": "United States",
+        "code": "USA",
+        "group": "D",
+        "r32_prob": 1.0,
+        "r16_prob": 1.0,
+        "qf_prob": 0.0,
+        "sf_prob": 0.0,
+        "final_prob": 0.0,
+        "champion_prob": 0.0,
+        "r32_prob_label": "100.0%",
+        "r16_prob_label": "100.0%",
+        "qf_prob_label": "  0.0%",
+        "sf_prob_label": "  0.0%",
+        "final_prob_label": "  0.0%",
+        "champion_prob_label": "  0.0%"
       },
       {
         "team_id": "PAR",
@@ -5131,35 +4861,71 @@
         "code": "PAR",
         "group": "D",
         "r32_prob": 1.0,
-        "r16_prob": 0.3299,
-        "qf_prob": 0.0812,
-        "sf_prob": 0.032,
-        "final_prob": 0.0087,
-        "champion_prob": 0.0026,
+        "r16_prob": 1.0,
+        "qf_prob": 0.0,
+        "sf_prob": 0.0,
+        "final_prob": 0.0,
+        "champion_prob": 0.0,
         "r32_prob_label": "100.0%",
-        "r16_prob_label": " 33.0%",
-        "qf_prob_label": "  8.1%",
-        "sf_prob_label": "  3.2%",
-        "final_prob_label": "  0.9%",
-        "champion_prob_label": "  0.3%"
+        "r16_prob_label": "100.0%",
+        "qf_prob_label": "  0.0%",
+        "sf_prob_label": "  0.0%",
+        "final_prob_label": "  0.0%",
+        "champion_prob_label": "  0.0%"
       },
       {
-        "team_id": "BIH",
-        "team": "Bosnia and Herzegovina",
-        "code": "BIH",
-        "group": "B",
+        "team_id": "EGY",
+        "team": "Egypt",
+        "code": "EGY",
+        "group": "G",
         "r32_prob": 1.0,
-        "r16_prob": 0.3498,
-        "qf_prob": 0.1124,
-        "sf_prob": 0.0267,
-        "final_prob": 0.0065,
-        "champion_prob": 0.0019,
+        "r16_prob": 1.0,
+        "qf_prob": 0.0,
+        "sf_prob": 0.0,
+        "final_prob": 0.0,
+        "champion_prob": 0.0,
         "r32_prob_label": "100.0%",
-        "r16_prob_label": " 35.0%",
-        "qf_prob_label": " 11.2%",
-        "sf_prob_label": "  2.7%",
-        "final_prob_label": "  0.7%",
-        "champion_prob_label": "  0.2%"
+        "r16_prob_label": "100.0%",
+        "qf_prob_label": "  0.0%",
+        "sf_prob_label": "  0.0%",
+        "final_prob_label": "  0.0%",
+        "champion_prob_label": "  0.0%"
+      },
+      {
+        "team_id": "POR",
+        "team": "Portugal",
+        "code": "POR",
+        "group": "K",
+        "r32_prob": 1.0,
+        "r16_prob": 1.0,
+        "qf_prob": 0.0,
+        "sf_prob": 0.0,
+        "final_prob": 0.0,
+        "champion_prob": 0.0,
+        "r32_prob_label": "100.0%",
+        "r16_prob_label": "100.0%",
+        "qf_prob_label": "  0.0%",
+        "sf_prob_label": "  0.0%",
+        "final_prob_label": "  0.0%",
+        "champion_prob_label": "  0.0%"
+      },
+      {
+        "team_id": "COL",
+        "team": "Colombia",
+        "code": "COL",
+        "group": "K",
+        "r32_prob": 1.0,
+        "r16_prob": 1.0,
+        "qf_prob": 0.0,
+        "sf_prob": 0.0,
+        "final_prob": 0.0,
+        "champion_prob": 0.0,
+        "r32_prob_label": "100.0%",
+        "r16_prob_label": "100.0%",
+        "qf_prob_label": "  0.0%",
+        "sf_prob_label": "  0.0%",
+        "final_prob_label": "  0.0%",
+        "champion_prob_label": "  0.0%"
       },
       {
         "team_id": "RSA",
@@ -5167,53 +4933,17 @@
         "code": "RSA",
         "group": "A",
         "r32_prob": 1.0,
-        "r16_prob": 0.4596,
-        "qf_prob": 0.1262,
-        "sf_prob": 0.0278,
-        "final_prob": 0.0067,
-        "champion_prob": 0.0016,
+        "r16_prob": 0.0,
+        "qf_prob": 0.0,
+        "sf_prob": 0.0,
+        "final_prob": 0.0,
+        "champion_prob": 0.0,
         "r32_prob_label": "100.0%",
-        "r16_prob_label": " 46.0%",
-        "qf_prob_label": " 12.6%",
-        "sf_prob_label": "  2.8%",
-        "final_prob_label": "  0.7%",
-        "champion_prob_label": "  0.2%"
-      },
-      {
-        "team_id": "COD",
-        "team": "DR Congo",
-        "code": "COD",
-        "group": "K",
-        "r32_prob": 1.0,
-        "r16_prob": 0.1926,
-        "qf_prob": 0.0628,
-        "sf_prob": 0.0189,
-        "final_prob": 0.0049,
-        "champion_prob": 0.0007,
-        "r32_prob_label": "100.0%",
-        "r16_prob_label": " 19.3%",
-        "qf_prob_label": "  6.3%",
-        "sf_prob_label": "  1.9%",
-        "final_prob_label": "  0.5%",
-        "champion_prob_label": "  0.1%"
-      },
-      {
-        "team_id": "CPV",
-        "team": "Cape Verde",
-        "code": "CPV",
-        "group": "H",
-        "r32_prob": 1.0,
-        "r16_prob": 0.1278,
-        "qf_prob": 0.0477,
-        "sf_prob": 0.016,
-        "final_prob": 0.0036,
-        "champion_prob": 0.0005,
-        "r32_prob_label": "100.0%",
-        "r16_prob_label": " 12.8%",
-        "qf_prob_label": "  4.8%",
-        "sf_prob_label": "  1.6%",
-        "final_prob_label": "  0.4%",
-        "champion_prob_label": "  0.1%"
+        "r16_prob_label": "  0.0%",
+        "qf_prob_label": "  0.0%",
+        "sf_prob_label": "  0.0%",
+        "final_prob_label": "  0.0%",
+        "champion_prob_label": "  0.0%"
       },
       {
         "team_id": "KOR",
@@ -5245,6 +4975,24 @@
         "final_prob": 0.0,
         "champion_prob": 0.0,
         "r32_prob_label": "  0.0%",
+        "r16_prob_label": "  0.0%",
+        "qf_prob_label": "  0.0%",
+        "sf_prob_label": "  0.0%",
+        "final_prob_label": "  0.0%",
+        "champion_prob_label": "  0.0%"
+      },
+      {
+        "team_id": "BIH",
+        "team": "Bosnia and Herzegovina",
+        "code": "BIH",
+        "group": "B",
+        "r32_prob": 1.0,
+        "r16_prob": 0.0,
+        "qf_prob": 0.0,
+        "sf_prob": 0.0,
+        "final_prob": 0.0,
+        "champion_prob": 0.0,
+        "r32_prob_label": "100.0%",
         "r16_prob_label": "  0.0%",
         "qf_prob_label": "  0.0%",
         "sf_prob_label": "  0.0%",
@@ -5306,6 +5054,24 @@
         "champion_prob_label": "  0.0%"
       },
       {
+        "team_id": "AUS",
+        "team": "Australia",
+        "code": "AUS",
+        "group": "D",
+        "r32_prob": 1.0,
+        "r16_prob": 0.0,
+        "qf_prob": 0.0,
+        "sf_prob": 0.0,
+        "final_prob": 0.0,
+        "champion_prob": 0.0,
+        "r32_prob_label": "100.0%",
+        "r16_prob_label": "  0.0%",
+        "qf_prob_label": "  0.0%",
+        "sf_prob_label": "  0.0%",
+        "final_prob_label": "  0.0%",
+        "champion_prob_label": "  0.0%"
+      },
+      {
         "team_id": "TUR",
         "team": "Turkey",
         "code": "TUR",
@@ -5324,6 +5090,24 @@
         "champion_prob_label": "  0.0%"
       },
       {
+        "team_id": "GER",
+        "team": "Germany",
+        "code": "GER",
+        "group": "E",
+        "r32_prob": 1.0,
+        "r16_prob": 0.0,
+        "qf_prob": 0.0,
+        "sf_prob": 0.0,
+        "final_prob": 0.0,
+        "champion_prob": 0.0,
+        "r32_prob_label": "100.0%",
+        "r16_prob_label": "  0.0%",
+        "qf_prob_label": "  0.0%",
+        "sf_prob_label": "  0.0%",
+        "final_prob_label": "  0.0%",
+        "champion_prob_label": "  0.0%"
+      },
+      {
         "team_id": "CUW",
         "team": "Curacao",
         "code": "CUW",
@@ -5335,6 +5119,96 @@
         "final_prob": 0.0,
         "champion_prob": 0.0,
         "r32_prob_label": "  0.0%",
+        "r16_prob_label": "  0.0%",
+        "qf_prob_label": "  0.0%",
+        "sf_prob_label": "  0.0%",
+        "final_prob_label": "  0.0%",
+        "champion_prob_label": "  0.0%"
+      },
+      {
+        "team_id": "CIV",
+        "team": "Ivory Coast",
+        "code": "CIV",
+        "group": "E",
+        "r32_prob": 1.0,
+        "r16_prob": 0.0,
+        "qf_prob": 0.0,
+        "sf_prob": 0.0,
+        "final_prob": 0.0,
+        "champion_prob": 0.0,
+        "r32_prob_label": "100.0%",
+        "r16_prob_label": "  0.0%",
+        "qf_prob_label": "  0.0%",
+        "sf_prob_label": "  0.0%",
+        "final_prob_label": "  0.0%",
+        "champion_prob_label": "  0.0%"
+      },
+      {
+        "team_id": "ECU",
+        "team": "Ecuador",
+        "code": "ECU",
+        "group": "E",
+        "r32_prob": 1.0,
+        "r16_prob": 0.0,
+        "qf_prob": 0.0,
+        "sf_prob": 0.0,
+        "final_prob": 0.0,
+        "champion_prob": 0.0,
+        "r32_prob_label": "100.0%",
+        "r16_prob_label": "  0.0%",
+        "qf_prob_label": "  0.0%",
+        "sf_prob_label": "  0.0%",
+        "final_prob_label": "  0.0%",
+        "champion_prob_label": "  0.0%"
+      },
+      {
+        "team_id": "NED",
+        "team": "Netherlands",
+        "code": "NED",
+        "group": "F",
+        "r32_prob": 1.0,
+        "r16_prob": 0.0,
+        "qf_prob": 0.0,
+        "sf_prob": 0.0,
+        "final_prob": 0.0,
+        "champion_prob": 0.0,
+        "r32_prob_label": "100.0%",
+        "r16_prob_label": "  0.0%",
+        "qf_prob_label": "  0.0%",
+        "sf_prob_label": "  0.0%",
+        "final_prob_label": "  0.0%",
+        "champion_prob_label": "  0.0%"
+      },
+      {
+        "team_id": "JPN",
+        "team": "Japan",
+        "code": "JPN",
+        "group": "F",
+        "r32_prob": 1.0,
+        "r16_prob": 0.0,
+        "qf_prob": 0.0,
+        "sf_prob": 0.0,
+        "final_prob": 0.0,
+        "champion_prob": 0.0,
+        "r32_prob_label": "100.0%",
+        "r16_prob_label": "  0.0%",
+        "qf_prob_label": "  0.0%",
+        "sf_prob_label": "  0.0%",
+        "final_prob_label": "  0.0%",
+        "champion_prob_label": "  0.0%"
+      },
+      {
+        "team_id": "SWE",
+        "team": "Sweden",
+        "code": "SWE",
+        "group": "F",
+        "r32_prob": 1.0,
+        "r16_prob": 0.0,
+        "qf_prob": 0.0,
+        "sf_prob": 0.0,
+        "final_prob": 0.0,
+        "champion_prob": 0.0,
+        "r32_prob_label": "100.0%",
         "r16_prob_label": "  0.0%",
         "qf_prob_label": "  0.0%",
         "sf_prob_label": "  0.0%",
@@ -5396,6 +5270,24 @@
         "champion_prob_label": "  0.0%"
       },
       {
+        "team_id": "CPV",
+        "team": "Cape Verde",
+        "code": "CPV",
+        "group": "H",
+        "r32_prob": 1.0,
+        "r16_prob": 0.0,
+        "qf_prob": 0.0,
+        "sf_prob": 0.0,
+        "final_prob": 0.0,
+        "champion_prob": 0.0,
+        "r32_prob_label": "100.0%",
+        "r16_prob_label": "  0.0%",
+        "qf_prob_label": "  0.0%",
+        "sf_prob_label": "  0.0%",
+        "final_prob_label": "  0.0%",
+        "champion_prob_label": "  0.0%"
+      },
+      {
         "team_id": "KSA",
         "team": "Saudi Arabia",
         "code": "KSA",
@@ -5432,6 +5324,24 @@
         "champion_prob_label": "  0.0%"
       },
       {
+        "team_id": "SEN",
+        "team": "Senegal",
+        "code": "SEN",
+        "group": "I",
+        "r32_prob": 1.0,
+        "r16_prob": 0.0,
+        "qf_prob": 0.0,
+        "sf_prob": 0.0,
+        "final_prob": 0.0,
+        "champion_prob": 0.0,
+        "r32_prob_label": "100.0%",
+        "r16_prob_label": "  0.0%",
+        "qf_prob_label": "  0.0%",
+        "sf_prob_label": "  0.0%",
+        "final_prob_label": "  0.0%",
+        "champion_prob_label": "  0.0%"
+      },
+      {
         "team_id": "IRQ",
         "team": "Iraq",
         "code": "IRQ",
@@ -5443,6 +5353,42 @@
         "final_prob": 0.0,
         "champion_prob": 0.0,
         "r32_prob_label": "  0.0%",
+        "r16_prob_label": "  0.0%",
+        "qf_prob_label": "  0.0%",
+        "sf_prob_label": "  0.0%",
+        "final_prob_label": "  0.0%",
+        "champion_prob_label": "  0.0%"
+      },
+      {
+        "team_id": "DZA",
+        "team": "Algeria",
+        "code": "DZA",
+        "group": "J",
+        "r32_prob": 1.0,
+        "r16_prob": 0.0,
+        "qf_prob": 0.0,
+        "sf_prob": 0.0,
+        "final_prob": 0.0,
+        "champion_prob": 0.0,
+        "r32_prob_label": "100.0%",
+        "r16_prob_label": "  0.0%",
+        "qf_prob_label": "  0.0%",
+        "sf_prob_label": "  0.0%",
+        "final_prob_label": "  0.0%",
+        "champion_prob_label": "  0.0%"
+      },
+      {
+        "team_id": "AUT",
+        "team": "Austria",
+        "code": "AUT",
+        "group": "J",
+        "r32_prob": 1.0,
+        "r16_prob": 0.0,
+        "qf_prob": 0.0,
+        "sf_prob": 0.0,
+        "final_prob": 0.0,
+        "champion_prob": 0.0,
+        "r32_prob_label": "100.0%",
         "r16_prob_label": "  0.0%",
         "qf_prob_label": "  0.0%",
         "sf_prob_label": "  0.0%",
@@ -5468,6 +5414,24 @@
         "champion_prob_label": "  0.0%"
       },
       {
+        "team_id": "COD",
+        "team": "DR Congo",
+        "code": "COD",
+        "group": "K",
+        "r32_prob": 1.0,
+        "r16_prob": 0.0,
+        "qf_prob": 0.0,
+        "sf_prob": 0.0,
+        "final_prob": 0.0,
+        "champion_prob": 0.0,
+        "r32_prob_label": "100.0%",
+        "r16_prob_label": "  0.0%",
+        "qf_prob_label": "  0.0%",
+        "sf_prob_label": "  0.0%",
+        "final_prob_label": "  0.0%",
+        "champion_prob_label": "  0.0%"
+      },
+      {
         "team_id": "UZB",
         "team": "Uzbekistan",
         "code": "UZB",
@@ -5479,6 +5443,42 @@
         "final_prob": 0.0,
         "champion_prob": 0.0,
         "r32_prob_label": "  0.0%",
+        "r16_prob_label": "  0.0%",
+        "qf_prob_label": "  0.0%",
+        "sf_prob_label": "  0.0%",
+        "final_prob_label": "  0.0%",
+        "champion_prob_label": "  0.0%"
+      },
+      {
+        "team_id": "CRO",
+        "team": "Croatia",
+        "code": "CRO",
+        "group": "L",
+        "r32_prob": 1.0,
+        "r16_prob": 0.0,
+        "qf_prob": 0.0,
+        "sf_prob": 0.0,
+        "final_prob": 0.0,
+        "champion_prob": 0.0,
+        "r32_prob_label": "100.0%",
+        "r16_prob_label": "  0.0%",
+        "qf_prob_label": "  0.0%",
+        "sf_prob_label": "  0.0%",
+        "final_prob_label": "  0.0%",
+        "champion_prob_label": "  0.0%"
+      },
+      {
+        "team_id": "GHA",
+        "team": "Ghana",
+        "code": "GHA",
+        "group": "L",
+        "r32_prob": 1.0,
+        "r16_prob": 0.0,
+        "qf_prob": 0.0,
+        "sf_prob": 0.0,
+        "final_prob": 0.0,
+        "champion_prob": 0.0,
+        "r32_prob_label": "100.0%",
         "r16_prob_label": "  0.0%",
         "qf_prob_label": "  0.0%",
         "sf_prob_label": "  0.0%",
@@ -5525,220 +5525,220 @@
   },
   "path_difficulty": [
     {
-      "code": "ARG",
-      "team": "Argentina",
-      "rank": 1,
-      "score": 0.585,
-      "label": "Moderate",
-      "avg_opponent_rating": 1700.46,
-      "notes": "Round of 32 vs CPV; Round of 16 vs AUS; Quarterfinal vs COL; Semifinal vs ENG; Final vs FRA"
-    },
-    {
       "code": "FRA",
       "team": "France",
-      "rank": 2,
-      "score": 0.7257,
-      "label": "Hard",
-      "avg_opponent_rating": 1764.21,
-      "notes": "Round of 32 vs SWE; Round of 16 vs GER; Quarterfinal vs NED; Semifinal vs ESP; Final vs ARG"
+      "rank": 1,
+      "score": 0.6113,
+      "label": "Moderate",
+      "avg_opponent_rating": 1712.36,
+      "notes": "Round of 32 vs SWE; Round of 16 vs PAR; Quarterfinal vs MAR; Semifinal vs ESP; Final vs ARG"
     },
     {
       "code": "ESP",
       "team": "Spain",
-      "rank": 3,
+      "rank": 2,
       "score": 0.6975,
       "label": "Hard",
       "avg_opponent_rating": 1751.42,
       "notes": "Round of 32 vs AUT; Round of 16 vs POR; Quarterfinal vs BEL; Semifinal vs FRA"
     },
     {
+      "code": "ARG",
+      "team": "Argentina",
+      "rank": 3,
+      "score": 0.5666,
+      "label": "Moderate",
+      "avg_opponent_rating": 1692.12,
+      "notes": "Round of 32 vs CPV; Round of 16 vs EGY; Quarterfinal vs SUI; Semifinal vs ENG; Final vs FRA"
+    },
+    {
       "code": "ENG",
       "team": "England",
       "rank": 4,
-      "score": 0.6189,
+      "score": 0.5358,
       "label": "Moderate",
-      "avg_opponent_rating": 1715.8,
-      "notes": "Round of 32 vs COD; Round of 16 vs MEX; Quarterfinal vs BRA; Semifinal vs ARG"
-    },
-    {
-      "code": "BRA",
-      "team": "Brazil",
-      "rank": 5,
-      "score": 0.5765,
-      "label": "Moderate",
-      "avg_opponent_rating": 1696.58,
-      "notes": "Round of 32 vs JPN; Round of 16 vs NOR; Quarterfinal vs ENG"
-    },
-    {
-      "code": "NED",
-      "team": "Netherlands",
-      "rank": 6,
-      "score": 0.5714,
-      "label": "Moderate",
-      "avg_opponent_rating": 1694.28,
-      "notes": "Round of 32 vs MAR; Round of 16 vs CAN; Quarterfinal vs FRA"
-    },
-    {
-      "code": "BEL",
-      "team": "Belgium",
-      "rank": 7,
-      "score": 0.6603,
-      "label": "Moderate",
-      "avg_opponent_rating": 1734.59,
-      "notes": "Round of 32 vs SEN; Round of 16 vs USA; Quarterfinal vs ESP"
-    },
-    {
-      "code": "POR",
-      "team": "Portugal",
-      "rank": 8,
-      "score": 0.8151,
-      "label": "Hard",
-      "avg_opponent_rating": 1804.73,
-      "notes": "Round of 32 vs CRO; Round of 16 vs ESP"
-    },
-    {
-      "code": "COL",
-      "team": "Colombia",
-      "rank": 9,
-      "score": 0.6012,
-      "label": "Moderate",
-      "avg_opponent_rating": 1707.78,
-      "notes": "Round of 32 vs GHA; Round of 16 vs SUI; Quarterfinal vs ARG"
-    },
-    {
-      "code": "GER",
-      "team": "Germany",
-      "rank": 10,
-      "score": 0.6249,
-      "label": "Moderate",
-      "avg_opponent_rating": 1718.52,
-      "notes": "Round of 32 vs PAR; Round of 16 vs FRA"
-    },
-    {
-      "code": "CRO",
-      "team": "Croatia",
-      "rank": 11,
-      "score": 0.7341,
-      "label": "Hard",
-      "avg_opponent_rating": 1768.01,
-      "notes": "Round of 32 vs POR"
-    },
-    {
-      "code": "MEX",
-      "team": "Mexico",
-      "rank": 12,
-      "score": 0.6477,
-      "label": "Moderate",
-      "avg_opponent_rating": 1728.86,
-      "notes": "Round of 32 vs ECU; Round of 16 vs ENG"
+      "avg_opponent_rating": 1678.17,
+      "notes": "Round of 32 vs COD; Round of 16 vs MEX; Quarterfinal vs NOR; Semifinal vs ARG"
     },
     {
       "code": "SUI",
       "team": "Switzerland",
-      "rank": 13,
-      "score": 0.4722,
+      "rank": 5,
+      "score": 0.6481,
       "label": "Moderate",
-      "avg_opponent_rating": 1649.34,
-      "notes": "Round of 32 vs DZA; Round of 16 vs COL"
+      "avg_opponent_rating": 1729.06,
+      "notes": "Round of 32 vs DZA; Round of 16 vs COL; Quarterfinal vs ARG"
     },
     {
-      "code": "USA",
-      "team": "United States",
-      "rank": 14,
-      "score": 0.4395,
+      "code": "NOR",
+      "team": "Norway",
+      "rank": 6,
+      "score": 0.6342,
       "label": "Moderate",
-      "avg_opponent_rating": 1634.52,
-      "notes": "Round of 32 vs BIH; Round of 16 vs BEL"
+      "avg_opponent_rating": 1722.74,
+      "notes": "Round of 32 vs CIV; Round of 16 vs BRA; Quarterfinal vs ENG"
     },
     {
-      "code": "MAR",
-      "team": "Morocco",
-      "rank": 15,
-      "score": 0.7117,
-      "label": "Hard",
-      "avg_opponent_rating": 1757.87,
-      "notes": "Round of 32 vs NED"
+      "code": "URU",
+      "team": "Uruguay",
+      "rank": 7,
+      "score": 0.5,
+      "label": "Moderate",
+      "avg_opponent_rating": 0.0,
+      "notes": "Projected path unavailable"
     },
     {
-      "code": "SEN",
-      "team": "Senegal",
-      "rank": 16,
-      "score": 0.6679,
+      "code": "NED",
+      "team": "Netherlands",
+      "rank": 8,
+      "score": 0.4838,
       "label": "Moderate",
-      "avg_opponent_rating": 1738.0,
-      "notes": "Round of 32 vs BEL"
+      "avg_opponent_rating": 1654.61,
+      "notes": "Round of 32 vs MAR"
     },
     {
       "code": "JPN",
       "team": "Japan",
-      "rank": 17,
+      "rank": 9,
       "score": 0.7396,
       "label": "Hard",
       "avg_opponent_rating": 1770.51,
       "notes": "Round of 32 vs BRA"
     },
     {
-      "code": "NOR",
-      "team": "Norway",
-      "rank": 18,
-      "score": 0.5272,
-      "label": "Moderate",
-      "avg_opponent_rating": 1674.26,
-      "notes": "Round of 32 vs CIV; Round of 16 vs BRA"
-    },
-    {
-      "code": "AUS",
-      "team": "Australia",
-      "rank": 19,
-      "score": 0.6848,
+      "code": "SWE",
+      "team": "Sweden",
+      "rank": 10,
+      "score": 0.9703,
       "label": "Hard",
-      "avg_opponent_rating": 1745.66,
-      "notes": "Round of 32 vs EGY; Round of 16 vs ARG"
+      "avg_opponent_rating": 1875.04,
+      "notes": "Round of 32 vs FRA"
     },
     {
-      "code": "ECU",
-      "team": "Ecuador",
-      "rank": 20,
-      "score": 0.5839,
+      "code": "TUN",
+      "team": "Tunisia",
+      "rank": 11,
+      "score": 0.5,
       "label": "Moderate",
-      "avg_opponent_rating": 1699.95,
-      "notes": "Round of 32 vs MEX"
+      "avg_opponent_rating": 0.0,
+      "notes": "Projected path unavailable"
     },
     {
-      "code": "EGY",
-      "team": "Egypt",
-      "rank": 21,
-      "score": 0.381,
+      "code": "IRI",
+      "team": "Iran",
+      "rank": 12,
+      "score": 0.5,
       "label": "Moderate",
-      "avg_opponent_rating": 1608.0,
-      "notes": "Round of 32 vs AUS"
+      "avg_opponent_rating": 0.0,
+      "notes": "Projected path unavailable"
     },
     {
-      "code": "DZA",
-      "team": "Algeria",
-      "rank": 22,
-      "score": 0.5284,
+      "code": "NZL",
+      "team": "New Zealand",
+      "rank": 13,
+      "score": 0.5,
       "label": "Moderate",
-      "avg_opponent_rating": 1674.82,
-      "notes": "Round of 32 vs SUI"
+      "avg_opponent_rating": 0.0,
+      "notes": "Projected path unavailable"
+    },
+    {
+      "code": "CPV",
+      "team": "Cape Verde",
+      "rank": 14,
+      "score": 1.0,
+      "label": "Hard",
+      "avg_opponent_rating": 1888.49,
+      "notes": "Round of 32 vs ARG"
+    },
+    {
+      "code": "KSA",
+      "team": "Saudi Arabia",
+      "rank": 15,
+      "score": 0.5,
+      "label": "Moderate",
+      "avg_opponent_rating": 0.0,
+      "notes": "Projected path unavailable"
+    },
+    {
+      "code": "IRQ",
+      "team": "Iraq",
+      "rank": 16,
+      "score": 0.5,
+      "label": "Moderate",
+      "avg_opponent_rating": 0.0,
+      "notes": "Projected path unavailable"
+    },
+    {
+      "code": "SEN",
+      "team": "Senegal",
+      "rank": 17,
+      "score": 0.6679,
+      "label": "Moderate",
+      "avg_opponent_rating": 1738.0,
+      "notes": "Round of 32 vs BEL"
     },
     {
       "code": "CIV",
       "team": "Ivory Coast",
-      "rank": 23,
+      "rank": 18,
       "score": 0.4075,
       "label": "Moderate",
       "avg_opponent_rating": 1620.02,
       "notes": "Round of 32 vs NOR"
     },
     {
+      "code": "DZA",
+      "team": "Algeria",
+      "rank": 19,
+      "score": 0.5284,
+      "label": "Moderate",
+      "avg_opponent_rating": 1674.82,
+      "notes": "Round of 32 vs SUI"
+    },
+    {
       "code": "AUT",
       "team": "Austria",
-      "rank": 24,
+      "rank": 20,
       "score": 0.9696,
       "label": "Hard",
       "avg_opponent_rating": 1874.71,
       "notes": "Round of 32 vs ESP"
+    },
+    {
+      "code": "JOR",
+      "team": "Jordan",
+      "rank": 21,
+      "score": 0.5,
+      "label": "Moderate",
+      "avg_opponent_rating": 0.0,
+      "notes": "Projected path unavailable"
+    },
+    {
+      "code": "COD",
+      "team": "DR Congo",
+      "rank": 22,
+      "score": 0.8482,
+      "label": "Hard",
+      "avg_opponent_rating": 1819.72,
+      "notes": "Round of 32 vs ENG"
+    },
+    {
+      "code": "UZB",
+      "team": "Uzbekistan",
+      "rank": 23,
+      "score": 0.5,
+      "label": "Moderate",
+      "avg_opponent_rating": 0.0,
+      "notes": "Projected path unavailable"
+    },
+    {
+      "code": "CRO",
+      "team": "Croatia",
+      "rank": 24,
+      "score": 0.7341,
+      "label": "Hard",
+      "avg_opponent_rating": 1768.01,
+      "notes": "Round of 32 vs POR"
     },
     {
       "code": "GHA",
@@ -5750,117 +5750,18 @@
       "notes": "Round of 32 vs COL"
     },
     {
-      "code": "CAN",
-      "team": "Canada",
+      "code": "ECU",
+      "team": "Ecuador",
       "rank": 26,
-      "score": 0.4416,
+      "score": 0.5839,
       "label": "Moderate",
-      "avg_opponent_rating": 1635.49,
-      "notes": "Round of 32 vs RSA; Round of 16 vs NED"
-    },
-    {
-      "code": "SWE",
-      "team": "Sweden",
-      "rank": 27,
-      "score": 0.9703,
-      "label": "Hard",
-      "avg_opponent_rating": 1875.04,
-      "notes": "Round of 32 vs FRA"
-    },
-    {
-      "code": "PAR",
-      "team": "Paraguay",
-      "rank": 28,
-      "score": 0.6237,
-      "label": "Moderate",
-      "avg_opponent_rating": 1718.0,
-      "notes": "Round of 32 vs GER"
-    },
-    {
-      "code": "BIH",
-      "team": "Bosnia and Herzegovina",
-      "rank": 29,
-      "score": 0.5178,
-      "label": "Moderate",
-      "avg_opponent_rating": 1670.0,
-      "notes": "Round of 32 vs USA"
-    },
-    {
-      "code": "RSA",
-      "team": "South Africa",
-      "rank": 30,
-      "score": 0.26,
-      "label": "Easy",
-      "avg_opponent_rating": 1553.18,
-      "notes": "Round of 32 vs CAN"
-    },
-    {
-      "code": "COD",
-      "team": "DR Congo",
-      "rank": 31,
-      "score": 0.8482,
-      "label": "Hard",
-      "avg_opponent_rating": 1819.72,
-      "notes": "Round of 32 vs ENG"
-    },
-    {
-      "code": "CPV",
-      "team": "Cape Verde",
-      "rank": 32,
-      "score": 1.0,
-      "label": "Hard",
-      "avg_opponent_rating": 1888.49,
-      "notes": "Round of 32 vs ARG"
-    },
-    {
-      "code": "KOR",
-      "team": "South Korea",
-      "rank": 33,
-      "score": 0.5,
-      "label": "Moderate",
-      "avg_opponent_rating": 0.0,
-      "notes": "Projected path unavailable"
-    },
-    {
-      "code": "CZE",
-      "team": "Czechia",
-      "rank": 34,
-      "score": 0.5,
-      "label": "Moderate",
-      "avg_opponent_rating": 0.0,
-      "notes": "Projected path unavailable"
-    },
-    {
-      "code": "QAT",
-      "team": "Qatar",
-      "rank": 35,
-      "score": 0.5,
-      "label": "Moderate",
-      "avg_opponent_rating": 0.0,
-      "notes": "Projected path unavailable"
-    },
-    {
-      "code": "SCO",
-      "team": "Scotland",
-      "rank": 36,
-      "score": 0.5,
-      "label": "Moderate",
-      "avg_opponent_rating": 0.0,
-      "notes": "Projected path unavailable"
-    },
-    {
-      "code": "HTI",
-      "team": "Haiti",
-      "rank": 37,
-      "score": 0.5,
-      "label": "Moderate",
-      "avg_opponent_rating": 0.0,
-      "notes": "Projected path unavailable"
+      "avg_opponent_rating": 1699.95,
+      "notes": "Round of 32 vs MEX"
     },
     {
       "code": "TUR",
       "team": "Turkey",
-      "rank": 38,
+      "rank": 27,
       "score": 0.5,
       "label": "Moderate",
       "avg_opponent_rating": 0.0,
@@ -5869,24 +5770,123 @@
     {
       "code": "CUW",
       "team": "Curacao",
+      "rank": 28,
+      "score": 0.5,
+      "label": "Moderate",
+      "avg_opponent_rating": 0.0,
+      "notes": "Projected path unavailable"
+    },
+    {
+      "code": "POR",
+      "team": "Portugal",
+      "rank": 29,
+      "score": 0.8151,
+      "label": "Hard",
+      "avg_opponent_rating": 1804.73,
+      "notes": "Round of 32 vs CRO; Round of 16 vs ESP"
+    },
+    {
+      "code": "MAR",
+      "team": "Morocco",
+      "rank": 30,
+      "score": 0.6473,
+      "label": "Moderate",
+      "avg_opponent_rating": 1728.7,
+      "notes": "Round of 32 vs NED; Round of 16 vs CAN; Quarterfinal vs FRA"
+    },
+    {
+      "code": "BEL",
+      "team": "Belgium",
+      "rank": 31,
+      "score": 0.6603,
+      "label": "Moderate",
+      "avg_opponent_rating": 1734.59,
+      "notes": "Round of 32 vs SEN; Round of 16 vs USA; Quarterfinal vs ESP"
+    },
+    {
+      "code": "MEX",
+      "team": "Mexico",
+      "rank": 32,
+      "score": 0.6477,
+      "label": "Moderate",
+      "avg_opponent_rating": 1728.86,
+      "notes": "Round of 32 vs ECU; Round of 16 vs ENG"
+    },
+    {
+      "code": "CAN",
+      "team": "Canada",
+      "rank": 33,
+      "score": 0.3277,
+      "label": "Easy",
+      "avg_opponent_rating": 1583.86,
+      "notes": "Round of 32 vs RSA; Round of 16 vs MAR"
+    },
+    {
+      "code": "BRA",
+      "team": "Brazil",
+      "rank": 34,
+      "score": 0.4406,
+      "label": "Moderate",
+      "avg_opponent_rating": 1635.01,
+      "notes": "Round of 32 vs JPN; Round of 16 vs NOR"
+    },
+    {
+      "code": "USA",
+      "team": "United States",
+      "rank": 35,
+      "score": 0.4395,
+      "label": "Moderate",
+      "avg_opponent_rating": 1634.52,
+      "notes": "Round of 32 vs BIH; Round of 16 vs BEL"
+    },
+    {
+      "code": "PAR",
+      "team": "Paraguay",
+      "rank": 36,
+      "score": 0.797,
+      "label": "Hard",
+      "avg_opponent_rating": 1796.52,
+      "notes": "Round of 32 vs GER; Round of 16 vs FRA"
+    },
+    {
+      "code": "EGY",
+      "team": "Egypt",
+      "rank": 37,
+      "score": 0.6905,
+      "label": "Hard",
+      "avg_opponent_rating": 1748.24,
+      "notes": "Round of 32 vs AUS; Round of 16 vs ARG"
+    },
+    {
+      "code": "COL",
+      "team": "Colombia",
+      "rank": 38,
+      "score": 0.4018,
+      "label": "Moderate",
+      "avg_opponent_rating": 1617.42,
+      "notes": "Round of 32 vs GHA; Round of 16 vs SUI"
+    },
+    {
+      "code": "GER",
+      "team": "Germany",
       "rank": 39,
-      "score": 0.5,
-      "label": "Moderate",
-      "avg_opponent_rating": 0.0,
-      "notes": "Projected path unavailable"
+      "score": 0.2794,
+      "label": "Easy",
+      "avg_opponent_rating": 1562.0,
+      "notes": "Round of 32 vs PAR"
     },
     {
-      "code": "TUN",
-      "team": "Tunisia",
+      "code": "RSA",
+      "team": "South Africa",
       "rank": 40,
-      "score": 0.5,
-      "label": "Moderate",
-      "avg_opponent_rating": 0.0,
-      "notes": "Projected path unavailable"
+      "score": 0.26,
+      "label": "Easy",
+      "avg_opponent_rating": 1553.18,
+      "notes": "Round of 32 vs CAN"
     },
     {
-      "code": "IRI",
-      "team": "Iran",
+      "code": "KOR",
+      "team": "South Korea",
       "rank": 41,
       "score": 0.5,
       "label": "Moderate",
@@ -5894,8 +5894,8 @@
       "notes": "Projected path unavailable"
     },
     {
-      "code": "NZL",
-      "team": "New Zealand",
+      "code": "CZE",
+      "team": "Czechia",
       "rank": 42,
       "score": 0.5,
       "label": "Moderate",
@@ -5903,17 +5903,17 @@
       "notes": "Projected path unavailable"
     },
     {
-      "code": "KSA",
-      "team": "Saudi Arabia",
+      "code": "BIH",
+      "team": "Bosnia and Herzegovina",
       "rank": 43,
-      "score": 0.5,
+      "score": 0.5178,
       "label": "Moderate",
-      "avg_opponent_rating": 0.0,
-      "notes": "Projected path unavailable"
+      "avg_opponent_rating": 1670.0,
+      "notes": "Round of 32 vs USA"
     },
     {
-      "code": "URU",
-      "team": "Uruguay",
+      "code": "QAT",
+      "team": "Qatar",
       "rank": 44,
       "score": 0.5,
       "label": "Moderate",
@@ -5921,8 +5921,8 @@
       "notes": "Projected path unavailable"
     },
     {
-      "code": "IRQ",
-      "team": "Iraq",
+      "code": "SCO",
+      "team": "Scotland",
       "rank": 45,
       "score": 0.5,
       "label": "Moderate",
@@ -5930,8 +5930,8 @@
       "notes": "Projected path unavailable"
     },
     {
-      "code": "JOR",
-      "team": "Jordan",
+      "code": "HTI",
+      "team": "Haiti",
       "rank": 46,
       "score": 0.5,
       "label": "Moderate",
@@ -5939,13 +5939,13 @@
       "notes": "Projected path unavailable"
     },
     {
-      "code": "UZB",
-      "team": "Uzbekistan",
+      "code": "AUS",
+      "team": "Australia",
       "rank": 47,
-      "score": 0.5,
+      "score": 0.3695,
       "label": "Moderate",
-      "avg_opponent_rating": 0.0,
-      "notes": "Projected path unavailable"
+      "avg_opponent_rating": 1602.82,
+      "notes": "Round of 32 vs EGY"
     },
     {
       "code": "PAN",
@@ -5965,359 +5965,304 @@
   "market_comparison": {
     "available": true,
     "source": "the_odds_api:soccer_fifa_world_cup_winner",
-    "as_of": "2026-07-11T17:01:56+00:00",
+    "as_of": "2026-07-11T14:57:54+00:00",
     "methodology": "Compares model championship probability to average implied probability from outright winner odds. Positive delta means the model is more bullish than the market.",
     "teams": [
       {
         "code": "FRA",
         "team": "France",
-        "model_champion_prob": 0.1515,
-        "market_implied_prob": 0.389105,
-        "delta": -0.237605,
-        "decimal_odds": 2.57
+        "model_champion_prob": 0.2804,
+        "market_implied_prob": 0.390625,
+        "delta": -0.110225,
+        "decimal_odds": 2.56
+      },
+      {
+        "code": "ARG",
+        "team": "Argentina",
+        "model_champion_prob": 0.2404,
+        "market_implied_prob": 0.181818,
+        "delta": 0.058582,
+        "decimal_odds": 5.5
       },
       {
         "code": "ESP",
         "team": "Spain",
-        "model_champion_prob": 0.1306,
+        "model_champion_prob": 0.2746,
         "market_implied_prob": 0.232153,
-        "delta": -0.101553,
+        "delta": 0.042447,
         "decimal_odds": 4.308
-      },
-      {
-        "code": "ENG",
-        "team": "England",
-        "model_champion_prob": 0.1027,
-        "market_implied_prob": 0.162602,
-        "delta": -0.059902,
-        "decimal_odds": 6.15
       },
       {
         "code": "NOR",
         "team": "Norway",
-        "model_champion_prob": 0.0093,
-        "market_implied_prob": 0.058824,
-        "delta": -0.049524,
-        "decimal_odds": 17.0
+        "model_champion_prob": 0.0187,
+        "market_implied_prob": 0.057971,
+        "delta": -0.039271,
+        "decimal_odds": 17.25
       },
       {
-        "code": "ARG",
-        "team": "Argentina",
-        "model_champion_prob": 0.2071,
-        "market_implied_prob": 0.181818,
-        "delta": 0.025282,
-        "decimal_odds": 5.5
+        "code": "ENG",
+        "team": "England",
+        "model_champion_prob": 0.155,
+        "market_implied_prob": 0.165289,
+        "delta": -0.010289,
+        "decimal_odds": 6.05
       },
       {
         "code": "SUI",
         "team": "Switzerland",
-        "model_champion_prob": 0.02,
+        "model_champion_prob": 0.0309,
         "market_implied_prob": 0.020833,
-        "delta": -0.000833,
+        "delta": 0.010067,
         "decimal_odds": 48.0
       }
     ],
     "summary": {
-      "model_favorite_code": "ARG",
-      "model_favorite_team": "Argentina",
+      "model_favorite_code": "FRA",
+      "model_favorite_team": "France",
       "market_favorite_code": "FRA",
       "market_favorite_team": "France",
-      "mean_absolute_gap": 0.079116,
+      "mean_absolute_gap": 0.045147,
       "compared_team_count": 6,
-      "favorites_agree": false
+      "favorites_agree": true
     }
   },
   "movement": {
     "has_baseline": true,
-    "baseline_generated_at": "2026-07-11T15:01:14",
-    "biggest_movers": [],
-    "top_champion_changes": [
+    "baseline_generated_at": "2026-07-07T14:12:47",
+    "biggest_movers": [
       {
-        "code": "ARG",
-        "team": "Argentina",
-        "rank": 1,
-        "delta": 0.0,
-        "previous": 0.2071,
-        "current": 0.2071
-      },
-      {
-        "code": "FRA",
-        "team": "France",
-        "rank": 2,
-        "delta": 0.0,
-        "previous": 0.1515,
-        "current": 0.1515
+        "code": "BEL",
+        "team": "Belgium",
+        "metric": "final_prob",
+        "delta": -0.1512,
+        "previous": 0.1512,
+        "current": 0.0
       },
       {
         "code": "ESP",
         "team": "Spain",
+        "metric": "final_prob",
+        "delta": 0.1296,
+        "previous": 0.3638,
+        "current": 0.4934
+      },
+      {
+        "code": "FRA",
+        "team": "France",
+        "metric": "final_prob",
+        "delta": 0.1029,
+        "previous": 0.4037,
+        "current": 0.5066
+      },
+      {
+        "code": "MAR",
+        "team": "Morocco",
+        "metric": "final_prob",
+        "delta": -0.0813,
+        "previous": 0.0813,
+        "current": 0.0
+      },
+      {
+        "code": "COL",
+        "team": "Colombia",
+        "metric": "final_prob",
+        "delta": -0.0697,
+        "previous": 0.0697,
+        "current": 0.0
+      },
+      {
+        "code": "SUI",
+        "team": "Switzerland",
+        "metric": "final_prob",
+        "delta": 0.0624,
+        "previous": 0.0467,
+        "current": 0.1091
+      },
+      {
+        "code": "ENG",
+        "team": "England",
+        "metric": "champion_prob",
+        "delta": -0.0175,
+        "previous": 0.1725,
+        "current": 0.155
+      },
+      {
+        "code": "ARG",
+        "team": "Argentina",
+        "metric": "final_prob",
+        "delta": 0.0135,
+        "previous": 0.4505,
+        "current": 0.464
+      }
+    ],
+    "top_champion_changes": [
+      {
+        "code": "FRA",
+        "team": "France",
+        "rank": 1,
+        "delta": 0.0519,
+        "previous": 0.2285,
+        "current": 0.2804
+      },
+      {
+        "code": "ESP",
+        "team": "Spain",
+        "rank": 2,
+        "delta": 0.0689,
+        "previous": 0.2057,
+        "current": 0.2746
+      },
+      {
+        "code": "ARG",
+        "team": "Argentina",
         "rank": 3,
-        "delta": 0.0,
-        "previous": 0.1306,
-        "current": 0.1306
+        "delta": -0.0054,
+        "previous": 0.2458,
+        "current": 0.2404
       }
     ],
     "champion_changes": [
       {
-        "code": "ARG",
-        "team": "Argentina",
-        "rank": 1,
-        "delta": 0.0,
-        "previous": 0.2071,
-        "current": 0.2071
-      },
-      {
         "code": "FRA",
         "team": "France",
-        "rank": 2,
-        "delta": 0.0,
-        "previous": 0.1515,
-        "current": 0.1515
+        "rank": 1,
+        "delta": 0.0519,
+        "previous": 0.2285,
+        "current": 0.2804
       },
       {
         "code": "ESP",
         "team": "Spain",
+        "rank": 2,
+        "delta": 0.0689,
+        "previous": 0.2057,
+        "current": 0.2746
+      },
+      {
+        "code": "ARG",
+        "team": "Argentina",
         "rank": 3,
-        "delta": 0.0,
-        "previous": 0.1306,
-        "current": 0.1306
+        "delta": -0.0054,
+        "previous": 0.2458,
+        "current": 0.2404
       },
       {
         "code": "ENG",
         "team": "England",
         "rank": 4,
-        "delta": 0.0,
-        "previous": 0.1027,
-        "current": 0.1027
-      },
-      {
-        "code": "BRA",
-        "team": "Brazil",
-        "rank": 5,
-        "delta": 0.0,
-        "previous": 0.055,
-        "current": 0.055
-      },
-      {
-        "code": "NED",
-        "team": "Netherlands",
-        "rank": 6,
-        "delta": 0.0,
-        "previous": 0.0518,
-        "current": 0.0518
-      },
-      {
-        "code": "BEL",
-        "team": "Belgium",
-        "rank": 7,
-        "delta": 0.0,
-        "previous": 0.0347,
-        "current": 0.0347
-      },
-      {
-        "code": "POR",
-        "team": "Portugal",
-        "rank": 8,
-        "delta": 0.0,
-        "previous": 0.0321,
-        "current": 0.0321
-      },
-      {
-        "code": "COL",
-        "team": "Colombia",
-        "rank": 9,
-        "delta": 0.0,
-        "previous": 0.0301,
-        "current": 0.0301
-      },
-      {
-        "code": "GER",
-        "team": "Germany",
-        "rank": 10,
-        "delta": 0.0,
-        "previous": 0.0285,
-        "current": 0.0285
-      },
-      {
-        "code": "CRO",
-        "team": "Croatia",
-        "rank": 11,
-        "delta": 0.0,
-        "previous": 0.0227,
-        "current": 0.0227
-      },
-      {
-        "code": "MEX",
-        "team": "Mexico",
-        "rank": 12,
-        "delta": 0.0,
-        "previous": 0.0207,
-        "current": 0.0207
+        "delta": -0.0175,
+        "previous": 0.1725,
+        "current": 0.155
       },
       {
         "code": "SUI",
         "team": "Switzerland",
-        "rank": 13,
-        "delta": 0.0,
-        "previous": 0.02,
-        "current": 0.02
-      },
-      {
-        "code": "USA",
-        "team": "United States",
-        "rank": 14,
-        "delta": 0.0,
-        "previous": 0.0161,
-        "current": 0.0161
-      },
-      {
-        "code": "MAR",
-        "team": "Morocco",
-        "rank": 15,
-        "delta": 0.0,
-        "previous": 0.0126,
-        "current": 0.0126
-      },
-      {
-        "code": "SEN",
-        "team": "Senegal",
-        "rank": 16,
-        "delta": 0.0,
-        "previous": 0.0115,
-        "current": 0.0115
-      },
-      {
-        "code": "JPN",
-        "team": "Japan",
-        "rank": 17,
-        "delta": 0.0,
-        "previous": 0.0096,
-        "current": 0.0096
+        "rank": 5,
+        "delta": 0.0157,
+        "previous": 0.0152,
+        "current": 0.0309
       },
       {
         "code": "NOR",
         "team": "Norway",
-        "rank": 18,
-        "delta": 0.0,
-        "previous": 0.0093,
-        "current": 0.0093
+        "rank": 6,
+        "delta": -0.0007,
+        "previous": 0.0194,
+        "current": 0.0187
       },
       {
-        "code": "AUS",
-        "team": "Australia",
-        "rank": 19,
-        "delta": 0.0,
-        "previous": 0.0079,
-        "current": 0.0079
+        "code": "MAR",
+        "team": "Morocco",
+        "rank": 7,
+        "delta": -0.0264,
+        "previous": 0.0264,
+        "current": 0.0
       },
       {
-        "code": "ECU",
-        "team": "Ecuador",
-        "rank": 20,
-        "delta": 0.0,
-        "previous": 0.0078,
-        "current": 0.0078
+        "code": "BEL",
+        "team": "Belgium",
+        "rank": 8,
+        "delta": -0.0614,
+        "previous": 0.0614,
+        "current": 0.0
       },
       {
-        "code": "EGY",
-        "team": "Egypt",
-        "rank": 21,
+        "code": "MEX",
+        "team": "Mexico",
+        "rank": 9,
         "delta": 0.0,
-        "previous": 0.0063,
-        "current": 0.0063
-      },
-      {
-        "code": "DZA",
-        "team": "Algeria",
-        "rank": 22,
-        "delta": 0.0,
-        "previous": 0.0053,
-        "current": 0.0053
-      },
-      {
-        "code": "CIV",
-        "team": "Ivory Coast",
-        "rank": 23,
-        "delta": 0.0,
-        "previous": 0.0052,
-        "current": 0.0052
-      },
-      {
-        "code": "AUT",
-        "team": "Austria",
-        "rank": 24,
-        "delta": 0.0,
-        "previous": 0.0044,
-        "current": 0.0044
-      },
-      {
-        "code": "GHA",
-        "team": "Ghana",
-        "rank": 25,
-        "delta": 0.0,
-        "previous": 0.0032,
-        "current": 0.0032
+        "previous": 0.0,
+        "current": 0.0
       },
       {
         "code": "CAN",
         "team": "Canada",
-        "rank": 26,
+        "rank": 10,
         "delta": 0.0,
-        "previous": 0.0031,
-        "current": 0.0031
+        "previous": 0.0,
+        "current": 0.0
       },
       {
-        "code": "SWE",
-        "team": "Sweden",
-        "rank": 27,
+        "code": "BRA",
+        "team": "Brazil",
+        "rank": 11,
         "delta": 0.0,
-        "previous": 0.0029,
-        "current": 0.0029
+        "previous": 0.0,
+        "current": 0.0
+      },
+      {
+        "code": "USA",
+        "team": "United States",
+        "rank": 12,
+        "delta": 0.0,
+        "previous": 0.0,
+        "current": 0.0
       },
       {
         "code": "PAR",
         "team": "Paraguay",
-        "rank": 28,
+        "rank": 13,
         "delta": 0.0,
-        "previous": 0.0026,
-        "current": 0.0026
+        "previous": 0.0,
+        "current": 0.0
       },
       {
-        "code": "BIH",
-        "team": "Bosnia and Herzegovina",
-        "rank": 29,
+        "code": "EGY",
+        "team": "Egypt",
+        "rank": 14,
         "delta": 0.0,
-        "previous": 0.0019,
-        "current": 0.0019
+        "previous": 0.0,
+        "current": 0.0
+      },
+      {
+        "code": "POR",
+        "team": "Portugal",
+        "rank": 15,
+        "delta": 0.0,
+        "previous": 0.0,
+        "current": 0.0
+      },
+      {
+        "code": "COL",
+        "team": "Colombia",
+        "rank": 16,
+        "delta": -0.0251,
+        "previous": 0.0251,
+        "current": 0.0
       },
       {
         "code": "RSA",
         "team": "South Africa",
-        "rank": 30,
+        "rank": 17,
         "delta": 0.0,
-        "previous": 0.0016,
-        "current": 0.0016
-      },
-      {
-        "code": "COD",
-        "team": "DR Congo",
-        "rank": 31,
-        "delta": 0.0,
-        "previous": 0.0007,
-        "current": 0.0007
-      },
-      {
-        "code": "CPV",
-        "team": "Cape Verde",
-        "rank": 32,
-        "delta": 0.0,
-        "previous": 0.0005,
-        "current": 0.0005
+        "previous": 0.0,
+        "current": 0.0
       },
       {
         "code": "KOR",
         "team": "South Korea",
-        "rank": 33,
+        "rank": 18,
         "delta": 0.0,
         "previous": 0.0,
         "current": 0.0
@@ -6325,7 +6270,15 @@
       {
         "code": "CZE",
         "team": "Czechia",
-        "rank": 34,
+        "rank": 19,
+        "delta": 0.0,
+        "previous": 0.0,
+        "current": 0.0
+      },
+      {
+        "code": "BIH",
+        "team": "Bosnia and Herzegovina",
+        "rank": 20,
         "delta": 0.0,
         "previous": 0.0,
         "current": 0.0
@@ -6333,7 +6286,7 @@
       {
         "code": "QAT",
         "team": "Qatar",
-        "rank": 35,
+        "rank": 21,
         "delta": 0.0,
         "previous": 0.0,
         "current": 0.0
@@ -6341,7 +6294,7 @@
       {
         "code": "SCO",
         "team": "Scotland",
-        "rank": 36,
+        "rank": 22,
         "delta": 0.0,
         "previous": 0.0,
         "current": 0.0
@@ -6349,7 +6302,15 @@
       {
         "code": "HTI",
         "team": "Haiti",
-        "rank": 37,
+        "rank": 23,
+        "delta": 0.0,
+        "previous": 0.0,
+        "current": 0.0
+      },
+      {
+        "code": "AUS",
+        "team": "Australia",
+        "rank": 24,
         "delta": 0.0,
         "previous": 0.0,
         "current": 0.0
@@ -6357,7 +6318,15 @@
       {
         "code": "TUR",
         "team": "Turkey",
-        "rank": 38,
+        "rank": 25,
+        "delta": 0.0,
+        "previous": 0.0,
+        "current": 0.0
+      },
+      {
+        "code": "GER",
+        "team": "Germany",
+        "rank": 26,
         "delta": 0.0,
         "previous": 0.0,
         "current": 0.0
@@ -6365,7 +6334,47 @@
       {
         "code": "CUW",
         "team": "Curacao",
-        "rank": 39,
+        "rank": 27,
+        "delta": 0.0,
+        "previous": 0.0,
+        "current": 0.0
+      },
+      {
+        "code": "CIV",
+        "team": "Ivory Coast",
+        "rank": 28,
+        "delta": 0.0,
+        "previous": 0.0,
+        "current": 0.0
+      },
+      {
+        "code": "ECU",
+        "team": "Ecuador",
+        "rank": 29,
+        "delta": 0.0,
+        "previous": 0.0,
+        "current": 0.0
+      },
+      {
+        "code": "NED",
+        "team": "Netherlands",
+        "rank": 30,
+        "delta": 0.0,
+        "previous": 0.0,
+        "current": 0.0
+      },
+      {
+        "code": "JPN",
+        "team": "Japan",
+        "rank": 31,
+        "delta": 0.0,
+        "previous": 0.0,
+        "current": 0.0
+      },
+      {
+        "code": "SWE",
+        "team": "Sweden",
+        "rank": 32,
         "delta": 0.0,
         "previous": 0.0,
         "current": 0.0
@@ -6373,7 +6382,7 @@
       {
         "code": "TUN",
         "team": "Tunisia",
-        "rank": 40,
+        "rank": 33,
         "delta": 0.0,
         "previous": 0.0,
         "current": 0.0
@@ -6381,7 +6390,7 @@
       {
         "code": "IRI",
         "team": "Iran",
-        "rank": 41,
+        "rank": 34,
         "delta": 0.0,
         "previous": 0.0,
         "current": 0.0
@@ -6389,7 +6398,15 @@
       {
         "code": "NZL",
         "team": "New Zealand",
-        "rank": 42,
+        "rank": 35,
+        "delta": 0.0,
+        "previous": 0.0,
+        "current": 0.0
+      },
+      {
+        "code": "CPV",
+        "team": "Cape Verde",
+        "rank": 36,
         "delta": 0.0,
         "previous": 0.0,
         "current": 0.0
@@ -6397,7 +6414,7 @@
       {
         "code": "KSA",
         "team": "Saudi Arabia",
-        "rank": 43,
+        "rank": 37,
         "delta": 0.0,
         "previous": 0.0,
         "current": 0.0
@@ -6405,7 +6422,15 @@
       {
         "code": "URU",
         "team": "Uruguay",
-        "rank": 44,
+        "rank": 38,
+        "delta": 0.0,
+        "previous": 0.0,
+        "current": 0.0
+      },
+      {
+        "code": "SEN",
+        "team": "Senegal",
+        "rank": 39,
         "delta": 0.0,
         "previous": 0.0,
         "current": 0.0
@@ -6413,7 +6438,23 @@
       {
         "code": "IRQ",
         "team": "Iraq",
-        "rank": 45,
+        "rank": 40,
+        "delta": 0.0,
+        "previous": 0.0,
+        "current": 0.0
+      },
+      {
+        "code": "DZA",
+        "team": "Algeria",
+        "rank": 41,
+        "delta": 0.0,
+        "previous": 0.0,
+        "current": 0.0
+      },
+      {
+        "code": "AUT",
+        "team": "Austria",
+        "rank": 42,
         "delta": 0.0,
         "previous": 0.0,
         "current": 0.0
@@ -6421,7 +6462,15 @@
       {
         "code": "JOR",
         "team": "Jordan",
-        "rank": 46,
+        "rank": 43,
+        "delta": 0.0,
+        "previous": 0.0,
+        "current": 0.0
+      },
+      {
+        "code": "COD",
+        "team": "DR Congo",
+        "rank": 44,
         "delta": 0.0,
         "previous": 0.0,
         "current": 0.0
@@ -6429,6 +6478,22 @@
       {
         "code": "UZB",
         "team": "Uzbekistan",
+        "rank": 45,
+        "delta": 0.0,
+        "previous": 0.0,
+        "current": 0.0
+      },
+      {
+        "code": "CRO",
+        "team": "Croatia",
+        "rank": 46,
+        "delta": 0.0,
+        "previous": 0.0,
+        "current": 0.0
+      },
+      {
+        "code": "GHA",
+        "team": "Ghana",
         "rank": 47,
         "delta": 0.0,
         "previous": 0.0,
