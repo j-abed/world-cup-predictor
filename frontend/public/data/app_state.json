@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "generated_at": "2026-07-11T22:59:00",
+    "generated_at": "2026-07-12T03:25:01",
     "team_count": 48,
     "fixture_count": 72,
     "completed_result_count": 72,
@@ -19,7 +19,7 @@
       "Ratings include Elo-style post-match updates for newly completed fixtures.",
       "Fair-play conduct scores are aggregated from ESPN yellow/red card data."
     ],
-    "next_refresh_at": "2026-07-12T00:00:00+00:00",
+    "next_refresh_at": "2026-07-12T04:00:00+00:00",
     "refresh_interval_hours": 2,
     "tournament_final_kickoff": "2026-07-19T18:00:00-04:00",
     "projected_bracket_simulations": 10000
@@ -3092,8 +3092,8 @@
         "winner_advances_to": 103,
         "projected_winner": {
           "source": null,
-          "team": "Argentina",
-          "code": "ARG"
+          "team": "England",
+          "code": "ENG"
         }
       }
     ],
@@ -3109,14 +3109,14 @@
         },
         "away": {
           "source": "Winner Match 102",
-          "team": "Argentina",
-          "code": "ARG"
+          "team": "England",
+          "code": "ENG"
         },
         "winner_advances_to": null,
         "projected_winner": {
           "source": null,
-          "team": "France",
-          "code": "FRA"
+          "team": "Spain",
+          "code": "ESP"
         }
       }
     ]
@@ -4640,24 +4640,6 @@
     ],
     "round": [
       {
-        "team_id": "FRA",
-        "team": "France",
-        "code": "FRA",
-        "group": "I",
-        "r32_prob": 1.0,
-        "r16_prob": 1.0,
-        "qf_prob": 1.0,
-        "sf_prob": 1.0,
-        "final_prob": 0.5066,
-        "champion_prob": 0.2804,
-        "r32_prob_label": "100.0%",
-        "r16_prob_label": "100.0%",
-        "qf_prob_label": "100.0%",
-        "sf_prob_label": "100.0%",
-        "final_prob_label": " 50.7%",
-        "champion_prob_label": " 28.0%"
-      },
-      {
         "team_id": "ESP",
         "team": "Spain",
         "code": "ESP",
@@ -4666,14 +4648,32 @@
         "r16_prob": 1.0,
         "qf_prob": 1.0,
         "sf_prob": 1.0,
-        "final_prob": 0.4934,
-        "champion_prob": 0.2746,
+        "final_prob": 0.4989,
+        "champion_prob": 0.2684,
         "r32_prob_label": "100.0%",
         "r16_prob_label": "100.0%",
         "qf_prob_label": "100.0%",
         "sf_prob_label": "100.0%",
-        "final_prob_label": " 49.3%",
-        "champion_prob_label": " 27.5%"
+        "final_prob_label": " 49.9%",
+        "champion_prob_label": " 26.8%"
+      },
+      {
+        "team_id": "FRA",
+        "team": "France",
+        "code": "FRA",
+        "group": "I",
+        "r32_prob": 1.0,
+        "r16_prob": 1.0,
+        "qf_prob": 1.0,
+        "sf_prob": 1.0,
+        "final_prob": 0.5011,
+        "champion_prob": 0.2673,
+        "r32_prob_label": "100.0%",
+        "r16_prob_label": "100.0%",
+        "qf_prob_label": "100.0%",
+        "sf_prob_label": "100.0%",
+        "final_prob_label": " 50.1%",
+        "champion_prob_label": " 26.7%"
       },
       {
         "team_id": "ARG",
@@ -4683,15 +4683,15 @@
         "r32_prob": 1.0,
         "r16_prob": 1.0,
         "qf_prob": 1.0,
-        "sf_prob": 0.7275,
-        "final_prob": 0.464,
-        "champion_prob": 0.2404,
+        "sf_prob": 0.7228,
+        "final_prob": 0.4245,
+        "champion_prob": 0.2228,
         "r32_prob_label": "100.0%",
         "r16_prob_label": "100.0%",
         "qf_prob_label": "100.0%",
-        "sf_prob_label": " 72.8%",
-        "final_prob_label": " 46.4%",
-        "champion_prob_label": " 24.0%"
+        "sf_prob_label": " 72.3%",
+        "final_prob_label": " 42.4%",
+        "champion_prob_label": " 22.3%"
       },
       {
         "team_id": "ENG",
@@ -4701,15 +4701,15 @@
         "r32_prob": 1.0,
         "r16_prob": 1.0,
         "qf_prob": 1.0,
-        "sf_prob": 0.7094,
-        "final_prob": 0.3422,
-        "champion_prob": 0.155,
+        "sf_prob": 1.0,
+        "final_prob": 0.481,
+        "champion_prob": 0.2124,
         "r32_prob_label": "100.0%",
         "r16_prob_label": "100.0%",
         "qf_prob_label": "100.0%",
-        "sf_prob_label": " 70.9%",
-        "final_prob_label": " 34.2%",
-        "champion_prob_label": " 15.5%"
+        "sf_prob_label": "100.0%",
+        "final_prob_label": " 48.1%",
+        "champion_prob_label": " 21.2%"
       },
       {
         "team_id": "SUI",
@@ -4719,33 +4719,15 @@
         "r32_prob": 1.0,
         "r16_prob": 1.0,
         "qf_prob": 1.0,
-        "sf_prob": 0.2725,
-        "final_prob": 0.1091,
-        "champion_prob": 0.0309,
+        "sf_prob": 0.2772,
+        "final_prob": 0.0945,
+        "champion_prob": 0.0291,
         "r32_prob_label": "100.0%",
         "r16_prob_label": "100.0%",
         "qf_prob_label": "100.0%",
-        "sf_prob_label": " 27.3%",
-        "final_prob_label": " 10.9%",
-        "champion_prob_label": "  3.1%"
-      },
-      {
-        "team_id": "NOR",
-        "team": "Norway",
-        "code": "NOR",
-        "group": "I",
-        "r32_prob": 1.0,
-        "r16_prob": 1.0,
-        "qf_prob": 1.0,
-        "sf_prob": 0.2906,
-        "final_prob": 0.0847,
-        "champion_prob": 0.0187,
-        "r32_prob_label": "100.0%",
-        "r16_prob_label": "100.0%",
-        "qf_prob_label": "100.0%",
-        "sf_prob_label": " 29.1%",
-        "final_prob_label": "  8.5%",
-        "champion_prob_label": "  1.9%"
+        "sf_prob_label": " 27.7%",
+        "final_prob_label": "  9.4%",
+        "champion_prob_label": "  2.9%"
       },
       {
         "team_id": "MAR",
@@ -4770,6 +4752,24 @@
         "team": "Belgium",
         "code": "BEL",
         "group": "G",
+        "r32_prob": 1.0,
+        "r16_prob": 1.0,
+        "qf_prob": 1.0,
+        "sf_prob": 0.0,
+        "final_prob": 0.0,
+        "champion_prob": 0.0,
+        "r32_prob_label": "100.0%",
+        "r16_prob_label": "100.0%",
+        "qf_prob_label": "100.0%",
+        "sf_prob_label": "  0.0%",
+        "final_prob_label": "  0.0%",
+        "champion_prob_label": "  0.0%"
+      },
+      {
+        "team_id": "NOR",
+        "team": "Norway",
+        "code": "NOR",
+        "group": "I",
         "r32_prob": 1.0,
         "r16_prob": 1.0,
         "qf_prob": 1.0,
@@ -5506,7 +5506,7 @@
     ]
   },
   "live_context": {
-    "days_to_final": 8,
+    "days_to_final": 7,
     "final_kickoff": "2026-07-19T18:00:00-04:00",
     "in_progress_matches": [],
     "next_match": null
@@ -5525,40 +5525,40 @@
   },
   "path_difficulty": [
     {
-      "code": "FRA",
-      "team": "France",
-      "rank": 1,
-      "score": 0.6113,
-      "label": "Moderate",
-      "avg_opponent_rating": 1712.36,
-      "notes": "Round of 32 vs SWE; Round of 16 vs PAR; Quarterfinal vs MAR; Semifinal vs ESP; Final vs ARG"
-    },
-    {
       "code": "ESP",
       "team": "Spain",
-      "rank": 2,
+      "rank": 1,
       "score": 0.6975,
       "label": "Hard",
       "avg_opponent_rating": 1751.42,
       "notes": "Round of 32 vs AUT; Round of 16 vs POR; Quarterfinal vs BEL; Semifinal vs FRA"
     },
     {
+      "code": "FRA",
+      "team": "France",
+      "rank": 2,
+      "score": 0.5809,
+      "label": "Moderate",
+      "avg_opponent_rating": 1698.61,
+      "notes": "Round of 32 vs SWE; Round of 16 vs PAR; Quarterfinal vs MAR; Semifinal vs ESP; Final vs ENG"
+    },
+    {
       "code": "ARG",
       "team": "Argentina",
       "rank": 3,
-      "score": 0.5666,
+      "score": 0.4657,
       "label": "Moderate",
-      "avg_opponent_rating": 1692.12,
-      "notes": "Round of 32 vs CPV; Round of 16 vs EGY; Quarterfinal vs SUI; Semifinal vs ENG; Final vs FRA"
+      "avg_opponent_rating": 1646.39,
+      "notes": "Round of 32 vs CPV; Round of 16 vs EGY; Quarterfinal vs SUI; Semifinal vs ENG"
     },
     {
       "code": "ENG",
       "team": "England",
       "rank": 4,
-      "score": 0.5358,
+      "score": 0.6227,
       "label": "Moderate",
-      "avg_opponent_rating": 1678.17,
-      "notes": "Round of 32 vs COD; Round of 16 vs MEX; Quarterfinal vs NOR; Semifinal vs ARG"
+      "avg_opponent_rating": 1717.55,
+      "notes": "Round of 32 vs COD; Round of 16 vs MEX; Quarterfinal vs NOR; Semifinal vs ARG; Final vs FRA"
     },
     {
       "code": "SUI",
@@ -5570,18 +5570,9 @@
       "notes": "Round of 32 vs DZA; Round of 16 vs COL; Quarterfinal vs ARG"
     },
     {
-      "code": "NOR",
-      "team": "Norway",
-      "rank": 6,
-      "score": 0.6342,
-      "label": "Moderate",
-      "avg_opponent_rating": 1722.74,
-      "notes": "Round of 32 vs CIV; Round of 16 vs BRA; Quarterfinal vs ENG"
-    },
-    {
       "code": "MAR",
       "team": "Morocco",
-      "rank": 7,
+      "rank": 6,
       "score": 0.6473,
       "label": "Moderate",
       "avg_opponent_rating": 1728.7,
@@ -5590,11 +5581,20 @@
     {
       "code": "BEL",
       "team": "Belgium",
-      "rank": 8,
+      "rank": 7,
       "score": 0.6603,
       "label": "Moderate",
       "avg_opponent_rating": 1734.59,
       "notes": "Round of 32 vs SEN; Round of 16 vs USA; Quarterfinal vs ESP"
+    },
+    {
+      "code": "NOR",
+      "team": "Norway",
+      "rank": 8,
+      "score": 0.6342,
+      "label": "Moderate",
+      "avg_opponent_rating": 1722.74,
+      "notes": "Round of 32 vs CIV; Round of 16 vs BRA; Quarterfinal vs ENG"
     },
     {
       "code": "MEX",
@@ -5965,151 +5965,184 @@
   "market_comparison": {
     "available": true,
     "source": "the_odds_api:soccer_fifa_world_cup_winner",
-    "as_of": "2026-07-11T22:54:20+00:00",
+    "as_of": "2026-07-12T03:20:15+00:00",
     "methodology": "Compares model championship probability to average implied probability from outright winner odds. Positive delta means the model is more bullish than the market.",
     "teams": [
       {
         "code": "FRA",
         "team": "France",
-        "model_champion_prob": 0.2804,
-        "market_implied_prob": 0.394477,
-        "delta": -0.114077,
-        "decimal_odds": 2.535
-      },
-      {
-        "code": "ARG",
-        "team": "Argentina",
-        "model_champion_prob": 0.2404,
-        "market_implied_prob": 0.182648,
-        "delta": 0.057752,
-        "decimal_odds": 5.475
-      },
-      {
-        "code": "NOR",
-        "team": "Norway",
-        "model_champion_prob": 0.0187,
-        "market_implied_prob": 0.070175,
-        "delta": -0.051475,
-        "decimal_odds": 14.25
+        "model_champion_prob": 0.2673,
+        "market_implied_prob": 0.3861,
+        "delta": -0.1188,
+        "decimal_odds": 2.59
       },
       {
         "code": "ESP",
         "team": "Spain",
-        "model_champion_prob": 0.2746,
-        "market_implied_prob": 0.236267,
-        "delta": 0.038333,
-        "decimal_odds": 4.232
+        "model_champion_prob": 0.2684,
+        "market_implied_prob": 0.232558,
+        "delta": 0.035842,
+        "decimal_odds": 4.3
+      },
+      {
+        "code": "ARG",
+        "team": "Argentina",
+        "model_champion_prob": 0.2228,
+        "market_implied_prob": 0.189573,
+        "delta": 0.033227,
+        "decimal_odds": 5.275
       },
       {
         "code": "ENG",
         "team": "England",
-        "model_champion_prob": 0.155,
-        "market_implied_prob": 0.145455,
-        "delta": 0.009545,
-        "decimal_odds": 6.875
+        "model_champion_prob": 0.2124,
+        "market_implied_prob": 0.225989,
+        "delta": -0.013589,
+        "decimal_odds": 4.425
       },
       {
         "code": "SUI",
         "team": "Switzerland",
-        "model_champion_prob": 0.0309,
-        "market_implied_prob": 0.022472,
-        "delta": 0.008428,
-        "decimal_odds": 44.5
+        "model_champion_prob": 0.0291,
+        "market_implied_prob": 0.019324,
+        "delta": 0.009776,
+        "decimal_odds": 51.75
       }
     ],
     "summary": {
-      "model_favorite_code": "FRA",
-      "model_favorite_team": "France",
+      "model_favorite_code": "ESP",
+      "model_favorite_team": "Spain",
       "market_favorite_code": "FRA",
       "market_favorite_team": "France",
-      "mean_absolute_gap": 0.046602,
-      "compared_team_count": 6,
-      "favorites_agree": true
+      "mean_absolute_gap": 0.042247,
+      "compared_team_count": 5,
+      "favorites_agree": false
     }
   },
   "movement": {
     "has_baseline": true,
-    "baseline_generated_at": "2026-07-11T20:59:17",
-    "biggest_movers": [],
-    "top_champion_changes": [
+    "baseline_generated_at": "2026-07-11T22:59:00",
+    "biggest_movers": [
+      {
+        "code": "ENG",
+        "team": "England",
+        "metric": "final_prob",
+        "delta": 0.1388,
+        "previous": 0.3422,
+        "current": 0.481
+      },
+      {
+        "code": "NOR",
+        "team": "Norway",
+        "metric": "final_prob",
+        "delta": -0.0847,
+        "previous": 0.0847,
+        "current": 0.0
+      },
+      {
+        "code": "ARG",
+        "team": "Argentina",
+        "metric": "final_prob",
+        "delta": -0.0395,
+        "previous": 0.464,
+        "current": 0.4245
+      },
+      {
+        "code": "SUI",
+        "team": "Switzerland",
+        "metric": "final_prob",
+        "delta": -0.0146,
+        "previous": 0.1091,
+        "current": 0.0945
+      },
       {
         "code": "FRA",
         "team": "France",
-        "rank": 1,
-        "delta": 0.0,
+        "metric": "champion_prob",
+        "delta": -0.0131,
         "previous": 0.2804,
-        "current": 0.2804
+        "current": 0.2673
       },
       {
         "code": "ESP",
         "team": "Spain",
-        "rank": 2,
-        "delta": 0.0,
+        "metric": "champion_prob",
+        "delta": -0.0062,
         "previous": 0.2746,
-        "current": 0.2746
+        "current": 0.2684
+      }
+    ],
+    "top_champion_changes": [
+      {
+        "code": "ESP",
+        "team": "Spain",
+        "rank": 1,
+        "delta": -0.0062,
+        "previous": 0.2746,
+        "current": 0.2684
+      },
+      {
+        "code": "FRA",
+        "team": "France",
+        "rank": 2,
+        "delta": -0.0131,
+        "previous": 0.2804,
+        "current": 0.2673
       },
       {
         "code": "ARG",
         "team": "Argentina",
         "rank": 3,
-        "delta": 0.0,
+        "delta": -0.0176,
         "previous": 0.2404,
-        "current": 0.2404
+        "current": 0.2228
       }
     ],
     "champion_changes": [
       {
-        "code": "FRA",
-        "team": "France",
-        "rank": 1,
-        "delta": 0.0,
-        "previous": 0.2804,
-        "current": 0.2804
-      },
-      {
         "code": "ESP",
         "team": "Spain",
-        "rank": 2,
-        "delta": 0.0,
+        "rank": 1,
+        "delta": -0.0062,
         "previous": 0.2746,
-        "current": 0.2746
+        "current": 0.2684
+      },
+      {
+        "code": "FRA",
+        "team": "France",
+        "rank": 2,
+        "delta": -0.0131,
+        "previous": 0.2804,
+        "current": 0.2673
       },
       {
         "code": "ARG",
         "team": "Argentina",
         "rank": 3,
-        "delta": 0.0,
+        "delta": -0.0176,
         "previous": 0.2404,
-        "current": 0.2404
+        "current": 0.2228
       },
       {
         "code": "ENG",
         "team": "England",
         "rank": 4,
-        "delta": 0.0,
+        "delta": 0.0574,
         "previous": 0.155,
-        "current": 0.155
+        "current": 0.2124
       },
       {
         "code": "SUI",
         "team": "Switzerland",
         "rank": 5,
-        "delta": 0.0,
+        "delta": -0.0018,
         "previous": 0.0309,
-        "current": 0.0309
-      },
-      {
-        "code": "NOR",
-        "team": "Norway",
-        "rank": 6,
-        "delta": 0.0,
-        "previous": 0.0187,
-        "current": 0.0187
+        "current": 0.0291
       },
       {
         "code": "MAR",
         "team": "Morocco",
-        "rank": 7,
+        "rank": 6,
         "delta": 0.0,
         "previous": 0.0,
         "current": 0.0
@@ -6117,9 +6150,17 @@
       {
         "code": "BEL",
         "team": "Belgium",
-        "rank": 8,
+        "rank": 7,
         "delta": 0.0,
         "previous": 0.0,
+        "current": 0.0
+      },
+      {
+        "code": "NOR",
+        "team": "Norway",
+        "rank": 8,
+        "delta": -0.0187,
+        "previous": 0.0187,
         "current": 0.0
       },
       {
