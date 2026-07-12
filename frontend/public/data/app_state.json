@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "generated_at": "2026-07-12T06:41:57",
+    "generated_at": "2026-07-12T09:58:28",
     "team_count": 48,
     "fixture_count": 72,
     "completed_result_count": 72,
@@ -19,7 +19,7 @@
       "Ratings include Elo-style post-match updates for newly completed fixtures.",
       "Fair-play conduct scores are aggregated from ESPN yellow/red card data."
     ],
-    "next_refresh_at": "2026-07-12T08:00:00+00:00",
+    "next_refresh_at": "2026-07-12T10:00:00+00:00",
     "refresh_interval_hours": 2,
     "tournament_final_kickoff": "2026-07-19T18:00:00-04:00",
     "projected_bracket_simulations": 10000
@@ -5965,16 +5965,16 @@
   "market_comparison": {
     "available": true,
     "source": "the_odds_api:soccer_fifa_world_cup_winner",
-    "as_of": "2026-07-12T06:37:14+00:00",
+    "as_of": "2026-07-12T09:53:52+00:00",
     "methodology": "Compares model championship probability to average implied probability from outright winner odds. Positive delta means the model is more bullish than the market.",
     "teams": [
       {
         "code": "FRA",
         "team": "France",
         "model_champion_prob": 0.2635,
-        "market_implied_prob": 0.390625,
-        "delta": -0.127125,
-        "decimal_odds": 2.56
+        "market_implied_prob": 0.392157,
+        "delta": -0.128657,
+        "decimal_odds": 2.55
       },
       {
         "code": "ARG",
@@ -5988,9 +5988,9 @@
         "code": "ENG",
         "team": "England",
         "model_champion_prob": 0.1787,
-        "market_implied_prob": 0.22309,
-        "delta": -0.04439,
-        "decimal_odds": 4.482
+        "market_implied_prob": 0.225606,
+        "delta": -0.046906,
+        "decimal_odds": 4.433
       },
       {
         "code": "ESP",
@@ -6006,79 +6006,38 @@
       "model_favorite_team": "Argentina",
       "market_favorite_code": "FRA",
       "market_favorite_team": "France",
-      "mean_absolute_gap": 0.075838,
+      "mean_absolute_gap": 0.07685,
       "compared_team_count": 4,
       "favorites_agree": false
     }
   },
   "movement": {
     "has_baseline": true,
-    "baseline_generated_at": "2026-07-12T03:25:01",
-    "biggest_movers": [
-      {
-        "code": "ARG",
-        "team": "Argentina",
-        "metric": "final_prob",
-        "delta": 0.1579,
-        "previous": 0.4245,
-        "current": 0.5824
-      },
-      {
-        "code": "SUI",
-        "team": "Switzerland",
-        "metric": "final_prob",
-        "delta": -0.0945,
-        "previous": 0.0945,
-        "current": 0.0
-      },
-      {
-        "code": "ENG",
-        "team": "England",
-        "metric": "final_prob",
-        "delta": -0.0634,
-        "previous": 0.481,
-        "current": 0.4176
-      },
-      {
-        "code": "ESP",
-        "team": "Spain",
-        "metric": "champion_prob",
-        "delta": -0.0048,
-        "previous": 0.2684,
-        "current": 0.2636
-      },
-      {
-        "code": "FRA",
-        "team": "France",
-        "metric": "champion_prob",
-        "delta": -0.0038,
-        "previous": 0.2673,
-        "current": 0.2635
-      }
-    ],
+    "baseline_generated_at": "2026-07-12T06:41:57",
+    "biggest_movers": [],
     "top_champion_changes": [
       {
         "code": "ARG",
         "team": "Argentina",
         "rank": 1,
-        "delta": 0.0714,
-        "previous": 0.2228,
+        "delta": 0.0,
+        "previous": 0.2942,
         "current": 0.2942
       },
       {
         "code": "ESP",
         "team": "Spain",
         "rank": 2,
-        "delta": -0.0048,
-        "previous": 0.2684,
+        "delta": 0.0,
+        "previous": 0.2636,
         "current": 0.2636
       },
       {
         "code": "FRA",
         "team": "France",
         "rank": 3,
-        "delta": -0.0038,
-        "previous": 0.2673,
+        "delta": 0.0,
+        "previous": 0.2635,
         "current": 0.2635
       }
     ],
@@ -6087,40 +6046,40 @@
         "code": "ARG",
         "team": "Argentina",
         "rank": 1,
-        "delta": 0.0714,
-        "previous": 0.2228,
+        "delta": 0.0,
+        "previous": 0.2942,
         "current": 0.2942
       },
       {
         "code": "ESP",
         "team": "Spain",
         "rank": 2,
-        "delta": -0.0048,
-        "previous": 0.2684,
+        "delta": 0.0,
+        "previous": 0.2636,
         "current": 0.2636
       },
       {
         "code": "FRA",
         "team": "France",
         "rank": 3,
-        "delta": -0.0038,
-        "previous": 0.2673,
+        "delta": 0.0,
+        "previous": 0.2635,
         "current": 0.2635
       },
       {
         "code": "ENG",
         "team": "England",
         "rank": 4,
-        "delta": -0.0337,
-        "previous": 0.2124,
+        "delta": 0.0,
+        "previous": 0.1787,
         "current": 0.1787
       },
       {
         "code": "SUI",
         "team": "Switzerland",
         "rank": 5,
-        "delta": -0.0291,
-        "previous": 0.0291,
+        "delta": 0.0,
+        "previous": 0.0,
         "current": 0.0
       },
       {
