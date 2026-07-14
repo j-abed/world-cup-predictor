@@ -1,5 +1,4 @@
 code,team,decimal_odds,implied_prob,source,as_of
-ESP,Spain,1.6925,0.590842,the_odds_api:soccer_fifa_world_cup_winner,2026-07-14T21:03:21+00:00
-ENG,England,3.9875,0.250784,the_odds_api:soccer_fifa_world_cup_winner,2026-07-14T21:03:21+00:00
-ARG,Argentina,5.15,0.194175,the_odds_api:soccer_fifa_world_cup_winner,2026-07-14T21:03:21+00:00
-FRA,France,700.3333,0.001428,the_odds_api:soccer_fifa_world_cup_winner,2026-07-14T21:03:21+00:00
+ESP,Spain,1.705,0.58651,the_odds_api:soccer_fifa_world_cup_winner,2026-07-14T22:59:13+00:00
+ENG,England,4.0,0.25,the_odds_api:soccer_fifa_world_cup_winner,2026-07-14T22:59:13+00:00
+ARG,Argentina,5.1,0.196078,the_odds_api:soccer_fifa_world_cup_winner,2026-07-14T22:59:13+00:00
