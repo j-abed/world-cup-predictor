@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "generated_at": "2026-07-15T19:20:42",
+    "generated_at": "2026-07-15T21:07:41",
     "team_count": 48,
     "fixture_count": 72,
     "completed_result_count": 72,
@@ -19,7 +19,7 @@
       "Ratings include Elo-style post-match updates for newly completed fixtures.",
       "Fair-play conduct scores are aggregated from ESPN yellow/red card data."
     ],
-    "next_refresh_at": "2026-07-15T20:00:00+00:00",
+    "next_refresh_at": "2026-07-15T22:00:00+00:00",
     "refresh_interval_hours": 2,
     "tournament_final_kickoff": "2026-07-19T18:00:00-04:00",
     "projected_bracket_simulations": 10000
@@ -3115,8 +3115,8 @@
         "winner_advances_to": null,
         "projected_winner": {
           "source": null,
-          "team": "Spain",
-          "code": "ESP"
+          "team": "Argentina",
+          "code": "ARG"
         }
       }
     ]
@@ -4640,6 +4640,24 @@
     ],
     "round": [
       {
+        "team_id": "ARG",
+        "team": "Argentina",
+        "code": "ARG",
+        "group": "J",
+        "r32_prob": 1.0,
+        "r16_prob": 1.0,
+        "qf_prob": 1.0,
+        "sf_prob": 1.0,
+        "final_prob": 1.0,
+        "champion_prob": 0.5116,
+        "r32_prob_label": "100.0%",
+        "r16_prob_label": "100.0%",
+        "qf_prob_label": "100.0%",
+        "sf_prob_label": "100.0%",
+        "final_prob_label": "100.0%",
+        "champion_prob_label": " 51.2%"
+      },
+      {
         "team_id": "ESP",
         "team": "Spain",
         "code": "ESP",
@@ -4649,55 +4667,37 @@
         "qf_prob": 1.0,
         "sf_prob": 1.0,
         "final_prob": 1.0,
-        "champion_prob": 0.5141,
+        "champion_prob": 0.4884,
         "r32_prob_label": "100.0%",
         "r16_prob_label": "100.0%",
         "qf_prob_label": "100.0%",
         "sf_prob_label": "100.0%",
         "final_prob_label": "100.0%",
-        "champion_prob_label": " 51.4%"
-      },
-      {
-        "team_id": "ARG",
-        "team": "Argentina",
-        "code": "ARG",
-        "group": "J",
-        "r32_prob": 1.0,
-        "r16_prob": 1.0,
-        "qf_prob": 1.0,
-        "sf_prob": 1.0,
-        "final_prob": 0.5704,
-        "champion_prob": 0.2984,
-        "r32_prob_label": "100.0%",
-        "r16_prob_label": "100.0%",
-        "qf_prob_label": "100.0%",
-        "sf_prob_label": "100.0%",
-        "final_prob_label": " 57.0%",
-        "champion_prob_label": " 29.8%"
-      },
-      {
-        "team_id": "ENG",
-        "team": "England",
-        "code": "ENG",
-        "group": "L",
-        "r32_prob": 1.0,
-        "r16_prob": 1.0,
-        "qf_prob": 1.0,
-        "sf_prob": 1.0,
-        "final_prob": 0.4296,
-        "champion_prob": 0.1875,
-        "r32_prob_label": "100.0%",
-        "r16_prob_label": "100.0%",
-        "qf_prob_label": "100.0%",
-        "sf_prob_label": "100.0%",
-        "final_prob_label": " 43.0%",
-        "champion_prob_label": " 18.8%"
+        "champion_prob_label": " 48.8%"
       },
       {
         "team_id": "FRA",
         "team": "France",
         "code": "FRA",
         "group": "I",
+        "r32_prob": 1.0,
+        "r16_prob": 1.0,
+        "qf_prob": 1.0,
+        "sf_prob": 1.0,
+        "final_prob": 0.0,
+        "champion_prob": 0.0,
+        "r32_prob_label": "100.0%",
+        "r16_prob_label": "100.0%",
+        "qf_prob_label": "100.0%",
+        "sf_prob_label": "100.0%",
+        "final_prob_label": "  0.0%",
+        "champion_prob_label": "  0.0%"
+      },
+      {
+        "team_id": "ENG",
+        "team": "England",
+        "code": "ENG",
+        "group": "L",
         "r32_prob": 1.0,
         "r16_prob": 1.0,
         "qf_prob": 1.0,
@@ -5525,40 +5525,40 @@
   },
   "path_difficulty": [
     {
-      "code": "ESP",
-      "team": "Spain",
-      "rank": 1,
-      "score": 0.758,
-      "label": "Hard",
-      "avg_opponent_rating": 1778.84,
-      "notes": "Round of 32 vs AUT; Round of 16 vs POR; Quarterfinal vs BEL; Semifinal vs FRA; Final vs ARG"
-    },
-    {
       "code": "ARG",
       "team": "Argentina",
-      "rank": 2,
+      "rank": 1,
       "score": 0.5665,
       "label": "Moderate",
       "avg_opponent_rating": 1692.05,
       "notes": "Round of 32 vs CPV; Round of 16 vs EGY; Quarterfinal vs SUI; Semifinal vs ENG; Final vs ESP"
     },
     {
-      "code": "ENG",
-      "team": "England",
-      "rank": 3,
-      "score": 0.5358,
-      "label": "Moderate",
-      "avg_opponent_rating": 1678.17,
-      "notes": "Round of 32 vs COD; Round of 16 vs MEX; Quarterfinal vs NOR; Semifinal vs ARG"
+      "code": "ESP",
+      "team": "Spain",
+      "rank": 2,
+      "score": 0.758,
+      "label": "Hard",
+      "avg_opponent_rating": 1778.84,
+      "notes": "Round of 32 vs AUT; Round of 16 vs POR; Quarterfinal vs BEL; Semifinal vs FRA; Final vs ARG"
     },
     {
       "code": "FRA",
       "team": "France",
-      "rank": 4,
+      "rank": 3,
       "score": 0.5141,
       "label": "Moderate",
       "avg_opponent_rating": 1668.33,
       "notes": "Round of 32 vs SWE; Round of 16 vs PAR; Quarterfinal vs MAR; Semifinal vs ESP"
+    },
+    {
+      "code": "ENG",
+      "team": "England",
+      "rank": 4,
+      "score": 0.5358,
+      "label": "Moderate",
+      "avg_opponent_rating": 1678.17,
+      "notes": "Round of 32 vs COD; Round of 16 vs MEX; Quarterfinal vs NOR; Semifinal vs ARG"
     },
     {
       "code": "SUI",
@@ -5965,105 +5965,130 @@
   "market_comparison": {
     "available": true,
     "source": "the_odds_api:soccer_fifa_world_cup_winner",
-    "as_of": "2026-07-15T19:17:14+00:00",
+    "as_of": "2026-07-15T21:03:45+00:00",
     "methodology": "Compares model championship probability to average implied probability from outright winner odds. Positive delta means the model is more bullish than the market.",
     "teams": [
       {
-        "code": "ARG",
-        "team": "Argentina",
-        "model_champion_prob": 0.2984,
-        "market_implied_prob": 0.205128,
-        "delta": 0.093272,
-        "decimal_odds": 4.875
-      },
-      {
         "code": "ESP",
         "team": "Spain",
-        "model_champion_prob": 0.5141,
-        "market_implied_prob": 0.588235,
-        "delta": -0.074135,
-        "decimal_odds": 1.7
+        "model_champion_prob": 0.4884,
+        "market_implied_prob": 0.607903,
+        "delta": -0.119503,
+        "decimal_odds": 1.645
+      },
+      {
+        "code": "ARG",
+        "team": "Argentina",
+        "model_champion_prob": 0.5116,
+        "market_implied_prob": 0.416667,
+        "delta": 0.094933,
+        "decimal_odds": 2.4
       },
       {
         "code": "ENG",
         "team": "England",
-        "model_champion_prob": 0.1875,
-        "market_implied_prob": 0.244648,
-        "delta": -0.057148,
-        "decimal_odds": 4.088
+        "model_champion_prob": 0.0,
+        "market_implied_prob": 0.02069,
+        "delta": -0.02069,
+        "decimal_odds": 48.333
       }
     ],
     "summary": {
-      "model_favorite_code": "ESP",
-      "model_favorite_team": "Spain",
+      "model_favorite_code": "ARG",
+      "model_favorite_team": "Argentina",
       "market_favorite_code": "ESP",
       "market_favorite_team": "Spain",
-      "mean_absolute_gap": 0.074852,
+      "mean_absolute_gap": 0.078375,
       "compared_team_count": 3,
-      "favorites_agree": true
+      "favorites_agree": false
     }
   },
   "movement": {
     "has_baseline": true,
-    "baseline_generated_at": "2026-07-15T17:25:30",
-    "biggest_movers": [],
-    "top_champion_changes": [
-      {
-        "code": "ESP",
-        "team": "Spain",
-        "rank": 1,
-        "delta": 0.0,
-        "previous": 0.5141,
-        "current": 0.5141
-      },
+    "baseline_generated_at": "2026-07-15T19:20:42",
+    "biggest_movers": [
       {
         "code": "ARG",
         "team": "Argentina",
-        "rank": 2,
-        "delta": 0.0,
-        "previous": 0.2984,
-        "current": 0.2984
+        "metric": "final_prob",
+        "delta": 0.4296,
+        "previous": 0.5704,
+        "current": 1.0
       },
       {
         "code": "ENG",
         "team": "England",
-        "rank": 3,
-        "delta": 0.0,
-        "previous": 0.1875,
-        "current": 0.1875
+        "metric": "final_prob",
+        "delta": -0.4296,
+        "previous": 0.4296,
+        "current": 0.0
+      },
+      {
+        "code": "ESP",
+        "team": "Spain",
+        "metric": "champion_prob",
+        "delta": -0.0257,
+        "previous": 0.5141,
+        "current": 0.4884
       }
     ],
-    "champion_changes": [
-      {
-        "code": "ESP",
-        "team": "Spain",
-        "rank": 1,
-        "delta": 0.0,
-        "previous": 0.5141,
-        "current": 0.5141
-      },
+    "top_champion_changes": [
       {
         "code": "ARG",
         "team": "Argentina",
-        "rank": 2,
-        "delta": 0.0,
+        "rank": 1,
+        "delta": 0.2132,
         "previous": 0.2984,
-        "current": 0.2984
+        "current": 0.5116
       },
       {
-        "code": "ENG",
-        "team": "England",
-        "rank": 3,
-        "delta": 0.0,
-        "previous": 0.1875,
-        "current": 0.1875
+        "code": "ESP",
+        "team": "Spain",
+        "rank": 2,
+        "delta": -0.0257,
+        "previous": 0.5141,
+        "current": 0.4884
       },
       {
         "code": "FRA",
         "team": "France",
-        "rank": 4,
+        "rank": 3,
         "delta": 0.0,
         "previous": 0.0,
+        "current": 0.0
+      }
+    ],
+    "champion_changes": [
+      {
+        "code": "ARG",
+        "team": "Argentina",
+        "rank": 1,
+        "delta": 0.2132,
+        "previous": 0.2984,
+        "current": 0.5116
+      },
+      {
+        "code": "ESP",
+        "team": "Spain",
+        "rank": 2,
+        "delta": -0.0257,
+        "previous": 0.5141,
+        "current": 0.4884
+      },
+      {
+        "code": "FRA",
+        "team": "France",
+        "rank": 3,
+        "delta": 0.0,
+        "previous": 0.0,
+        "current": 0.0
+      },
+      {
+        "code": "ENG",
+        "team": "England",
+        "rank": 4,
+        "delta": -0.1875,
+        "previous": 0.1875,
         "current": 0.0
       },
       {
