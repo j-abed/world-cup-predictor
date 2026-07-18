@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "generated_at": "2026-07-17T22:57:51",
+    "generated_at": "2026-07-18T02:50:30",
     "team_count": 48,
     "fixture_count": 72,
     "completed_result_count": 72,
@@ -19,7 +19,7 @@
       "Ratings include Elo-style post-match updates for newly completed fixtures.",
       "Fair-play conduct scores are aggregated from ESPN yellow/red card data."
     ],
-    "next_refresh_at": "2026-07-18T00:00:00+00:00",
+    "next_refresh_at": "2026-07-18T04:00:00+00:00",
     "refresh_interval_hours": 2,
     "tournament_final_kickoff": "2026-07-19T18:00:00-04:00",
     "projected_bracket_simulations": 10000
@@ -5506,7 +5506,7 @@
     ]
   },
   "live_context": {
-    "days_to_final": 2,
+    "days_to_final": 1,
     "final_kickoff": "2026-07-19T18:00:00-04:00",
     "in_progress_matches": [],
     "next_match": null
@@ -5965,7 +5965,7 @@
   "market_comparison": {
     "available": true,
     "source": "the_odds_api:soccer_fifa_world_cup_winner",
-    "as_of": "2026-07-17T22:53:16+00:00",
+    "as_of": "2026-07-18T02:46:34+00:00",
     "methodology": "Compares model championship probability to average implied probability from outright winner odds. Positive delta means the model is more bullish than the market.",
     "teams": [
       {
@@ -5997,7 +5997,7 @@
   },
   "movement": {
     "has_baseline": true,
-    "baseline_generated_at": "2026-07-17T21:03:11",
+    "baseline_generated_at": "2026-07-17T22:57:51",
     "biggest_movers": [],
     "top_champion_changes": [
       {
