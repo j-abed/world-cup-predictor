@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "generated_at": "2026-07-19T15:04:22",
+    "generated_at": "2026-07-19T17:05:34",
     "team_count": 48,
     "fixture_count": 72,
     "completed_result_count": 72,
@@ -19,7 +19,7 @@
       "Ratings include Elo-style post-match updates for newly completed fixtures.",
       "Fair-play conduct scores are aggregated from ESPN yellow/red card data."
     ],
-    "next_refresh_at": "2026-07-19T16:00:00+00:00",
+    "next_refresh_at": "2026-07-19T18:00:00+00:00",
     "refresh_interval_hours": 2,
     "tournament_final_kickoff": "2026-07-19T18:00:00-04:00",
     "projected_bracket_simulations": 10000
@@ -5965,16 +5965,16 @@
   "market_comparison": {
     "available": true,
     "source": "the_odds_api:soccer_fifa_world_cup_winner",
-    "as_of": "2026-07-19T14:59:46+00:00",
+    "as_of": "2026-07-19T17:01:38+00:00",
     "methodology": "Compares model championship probability to average implied probability from outright winner odds. Positive delta means the model is more bullish than the market.",
     "teams": [
       {
         "code": "ESP",
         "team": "Spain",
         "model_champion_prob": 0.4884,
-        "market_implied_prob": 0.60423,
-        "delta": -0.11583,
-        "decimal_odds": 1.655
+        "market_implied_prob": 0.606061,
+        "delta": -0.117661,
+        "decimal_odds": 1.65
       },
       {
         "code": "ARG",
@@ -5990,14 +5990,14 @@
       "model_favorite_team": "Argentina",
       "market_favorite_code": "ESP",
       "market_favorite_team": "Spain",
-      "mean_absolute_gap": 0.101401,
+      "mean_absolute_gap": 0.102317,
       "compared_team_count": 2,
       "favorites_agree": false
     }
   },
   "movement": {
     "has_baseline": true,
-    "baseline_generated_at": "2026-07-19T13:28:53",
+    "baseline_generated_at": "2026-07-19T15:04:22",
     "biggest_movers": [],
     "top_champion_changes": [
       {
