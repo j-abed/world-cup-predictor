@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "generated_at": "2026-07-19T19:15:44",
+    "generated_at": "2026-07-19T20:59:39",
     "team_count": 48,
     "fixture_count": 72,
     "completed_result_count": 72,
@@ -19,7 +19,7 @@
       "Ratings include Elo-style post-match updates for newly completed fixtures.",
       "Fair-play conduct scores are aggregated from ESPN yellow/red card data."
     ],
-    "next_refresh_at": "2026-07-19T20:00:00+00:00",
+    "next_refresh_at": "2026-07-19T22:00:00+00:00",
     "refresh_interval_hours": 2,
     "tournament_final_kickoff": "2026-07-19T18:00:00-04:00",
     "projected_bracket_simulations": 10000
@@ -5965,24 +5965,24 @@
   "market_comparison": {
     "available": true,
     "source": "the_odds_api:soccer_fifa_world_cup_winner",
-    "as_of": "2026-07-19T19:11:14+00:00",
+    "as_of": "2026-07-19T20:55:03+00:00",
     "methodology": "Compares model championship probability to average implied probability from outright winner odds. Positive delta means the model is more bullish than the market.",
     "teams": [
       {
         "code": "ESP",
         "team": "Spain",
         "model_champion_prob": 0.4884,
-        "market_implied_prob": 0.603318,
-        "delta": -0.114918,
-        "decimal_odds": 1.657
+        "market_implied_prob": 0.636943,
+        "delta": -0.148543,
+        "decimal_odds": 1.57
       },
       {
         "code": "ARG",
         "team": "Argentina",
         "model_champion_prob": 0.5116,
-        "market_implied_prob": 0.42735,
-        "delta": 0.08425,
-        "decimal_odds": 2.34
+        "market_implied_prob": 0.399202,
+        "delta": 0.112398,
+        "decimal_odds": 2.505
       }
     ],
     "summary": {
@@ -5990,14 +5990,14 @@
       "model_favorite_team": "Argentina",
       "market_favorite_code": "ESP",
       "market_favorite_team": "Spain",
-      "mean_absolute_gap": 0.099584,
+      "mean_absolute_gap": 0.13047,
       "compared_team_count": 2,
       "favorites_agree": false
     }
   },
   "movement": {
     "has_baseline": true,
-    "baseline_generated_at": "2026-07-19T17:05:34",
+    "baseline_generated_at": "2026-07-19T19:15:44",
     "biggest_movers": [],
     "top_champion_changes": [
       {
